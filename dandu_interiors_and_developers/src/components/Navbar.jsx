@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import brandLogo from '../assets/logos_and_bg_images/dandu_logo.svg';
 import { useModal } from '../context/ModalContext';
@@ -65,7 +65,7 @@ const Navbar = () => {
       style={{ transform: `translateY(-${navbarOffset}px)` }}
       className={`${isServicesPage ? 'fixed' : 'relative'} top-0 left-0 w-full z-50 bg-white py-4 transition-colors duration-300`}
     >
-      <div className="container-custom">
+      <div className="w-full px-4 lg:px-8">
         <div className="flex justify-between items-center">
           
           {/* Logo */}
@@ -74,9 +74,28 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-8">
-            <Link to="/" className="text-sm font-medium hover:text-[#C49A45] transition-colors">Home</Link>
-            <Link to="/about" className="text-sm font-medium hover:text-[#C49A45] transition-colors">About</Link>
+          <div className="hidden lg:flex items-center gap-3">
+            <NavLink 
+              to="/" 
+              end
+              className={({ isActive }) => `text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 ${
+                isActive 
+                ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]' 
+                : 'text-gray-700 hover:ring-2 hover:ring-inset hover:ring-[#1A1A1A]/40 hover:text-[#1A1A1A] active:ring-[#1A1A1A]'
+              }`}
+            >
+              Home
+            </NavLink>
+            <NavLink 
+              to="/about" 
+              className={({ isActive }) => `text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 ${
+                isActive 
+                ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]' 
+                : 'text-gray-700 hover:ring-2 hover:ring-inset hover:ring-[#1A1A1A]/40 hover:text-[#1A1A1A] active:ring-[#1A1A1A]'
+              }`}
+            >
+              About
+            </NavLink>
             
             {/* Services Dropdown */}
             <div 
@@ -86,39 +105,72 @@ const Navbar = () => {
             >
               <button 
                 onClick={() => setServicesOpen(!servicesOpen)}
-                className="flex items-center gap-1 text-sm font-medium hover:text-[#C49A45] transition-colors py-2"
+                className={`flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 ${
+                  location.pathname.startsWith('/services')
+                  ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]'
+                  : 'text-gray-700 hover:ring-2 hover:ring-inset hover:ring-[#1A1A1A]/40 hover:text-[#1A1A1A] active:ring-[#1A1A1A]'
+                }`}
               >
-                Services <ChevronDown size={14} className={`transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
+                Services <ChevronDown size={14} className={`transition-transform duration-300 ${servicesOpen ? 'rotate-180' : ''}`} />
               </button>
               
-              <div className={`absolute top-full left-1/2 -translate-x-1/2 w-[600px] bg-white shadow-xl rounded-xl p-6 transition-all duration-300 origin-top ${servicesOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
-                <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                  {SERVICES.map((service, idx) => (
-                    <Link 
-                      key={idx} 
-                      to={service.path}
-                      className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#F8F5F2] transition-colors group/item"
-                    >
-                      <div className="w-8 h-8 rounded bg-[#1A1A1A]/5 flex items-center justify-center group-hover/item:bg-[#C49A45]/10 group-hover/item:text-[#C49A45] text-gray-600 transition-colors">
-                        <span className="font-bold text-xs">{String(idx + 1).padStart(2, '0')}</span>
-                      </div>
-                      <span className="font-medium text-sm text-gray-800 group-hover/item:text-[#C49A45] transition-colors">{service.name}</span>
-                    </Link>
-                  ))}
+              
+              <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-all duration-300 origin-top z-50 ${servicesOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
+                <div className="w-[480px] bg-white shadow-xl rounded-xl p-4 border border-[#1A1A1A]/10">
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                    {SERVICES.map((service, idx) => (
+                      <NavLink 
+                        key={idx} 
+                        to={service.path}
+                        className={({ isActive }) => `flex items-center gap-3 p-3 rounded-full transition-colors group/item ${
+                          isActive 
+                          ? 'bg-[#F8F5F2] ring-2 ring-inset ring-[#1A1A1A]' 
+                          : 'hover:bg-[#F8F5F2] hover:ring-2 hover:ring-inset hover:ring-[#1A1A1A]/20'
+                        }`}
+                      >
+                        <div className="w-8 h-8 rounded-full bg-[#1A1A1A]/5 flex items-center justify-center group-hover/item:bg-[#1A1A1A]/10 group-hover/item:text-[#1A1A1A] text-gray-600 transition-colors">
+                          <span className="font-bold text-xs">{String(idx + 1).padStart(2, '0')}</span>
+                        </div>
+                        <span className="font-medium text-sm text-gray-800 group-hover/item:text-[#1A1A1A] transition-colors">{service.name}</span>
+                      </NavLink>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
 
-            <Link to="/projects" className="text-sm font-medium hover:text-[#C49A45] transition-colors">Projects</Link>
-            <Link to="/design-ideas" className="text-sm font-medium hover:text-[#C49A45] transition-colors">Design Ideas</Link>
-            <Link to="/contact" className="text-sm font-medium hover:text-[#C49A45] transition-colors">Contact</Link>
+            <NavLink 
+              to="/projects" 
+              className={({ isActive }) => `text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 ${
+                isActive 
+                ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]' 
+                : 'text-gray-700 hover:ring-2 hover:ring-inset hover:ring-[#1A1A1A]/40 hover:text-[#1A1A1A] active:ring-[#1A1A1A]'
+              }`}
+            >
+              Projects
+            </NavLink>
+            <NavLink 
+              to="/design-ideas" 
+              className={({ isActive }) => `text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 ${
+                isActive 
+                ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]' 
+                : 'text-gray-700 hover:ring-2 hover:ring-inset hover:ring-[#1A1A1A]/40 hover:text-[#1A1A1A] active:ring-[#1A1A1A]'
+              }`}
+            >
+              Design Ideas
+            </NavLink>
+            <NavLink 
+              to="/contact" 
+              className={({ isActive }) => `text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 ${
+                isActive 
+                ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]' 
+                : 'text-gray-700 hover:ring-2 hover:ring-inset hover:ring-[#1A1A1A]/40 hover:text-[#1A1A1A] active:ring-[#1A1A1A]'
+              }`}
+            >
+              Contact
+            </NavLink>
           </div>
 
-          <div className="hidden lg:flex">
-            <button onClick={openQuoteModal} className="btn-primary py-2 px-5 text-sm">
-              Get Quote
-            </button>
-          </div>
 
           {/* Mobile Menu Button */}
           <button 
@@ -132,14 +184,39 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div className={`lg:hidden absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-xl transition-all duration-300 origin-top overflow-y-auto ${isOpen ? 'max-h-[calc(100vh-80px)] py-4 opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="container-custom flex flex-col gap-4 pb-8">
-          <Link to="/" onClick={() => setIsOpen(false)} className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Home</Link>
-          <Link to="/about" onClick={() => setIsOpen(false)} className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">About</Link>
+        <div className="w-full px-4 flex flex-col gap-4 pb-8">
+          <NavLink 
+            to="/" 
+            end
+            onClick={() => setIsOpen(false)} 
+            className={({ isActive }) => `text-lg font-medium p-2 rounded-full transition-colors ${
+              isActive 
+              ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]' 
+              : 'hover:bg-gray-50 active:ring-2 active:ring-inset active:ring-[#1A1A1A]'
+            }`}
+          >
+            Home
+          </NavLink>
+          <NavLink 
+            to="/about" 
+            onClick={() => setIsOpen(false)} 
+            className={({ isActive }) => `text-lg font-medium p-2 rounded-full transition-colors ${
+              isActive 
+              ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]' 
+              : 'hover:bg-gray-50 active:ring-2 active:ring-inset active:ring-[#1A1A1A]'
+            }`}
+          >
+            About
+          </NavLink>
           
           <div className="flex flex-col">
             <button 
               onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-              className="flex justify-between items-center w-full text-lg font-medium p-2 hover:bg-gray-50 rounded-lg text-left"
+              className={`flex justify-between items-center w-full text-lg font-medium p-2 rounded-full text-left transition-colors ${
+                location.pathname.startsWith('/services')
+                ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]'
+                : 'hover:bg-gray-50'
+              }`}
             >
               Services
               <ChevronDown size={20} className={`transition-transform duration-300 ${mobileServicesOpen ? 'rotate-180' : ''}`} />
@@ -148,29 +225,57 @@ const Navbar = () => {
             <div className={`flex flex-col overflow-hidden transition-all duration-300 ${mobileServicesOpen ? 'max-h-[400px] mt-2' : 'max-h-0'}`}>
               <div className="pl-4 border-l-2 border-gray-100 ml-4 py-2 flex flex-col gap-1">
                 {SERVICES.map((service, idx) => (
-                  <Link 
+                  <NavLink 
                     key={idx} 
                     to={service.path}
                     onClick={() => setIsOpen(false)}
-                    className="text-base font-medium p-2 text-gray-600 hover:text-[#C49A45] hover:bg-gray-50 rounded-lg"
+                    className={({ isActive }) => `text-base font-medium p-2 rounded-full transition-colors ${
+                      isActive 
+                      ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A] bg-[#1A1A1A]/5' 
+                      : 'text-gray-600 hover:text-[#1A1A1A] hover:bg-gray-50 active:ring-2 active:ring-inset active:ring-[#1A1A1A]'
+                    }`}
                   >
                     {service.name}
-                  </Link>
+                  </NavLink>
                 ))}
               </div>
             </div>
           </div>
 
-          <Link to="/projects" onClick={() => setIsOpen(false)} className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Projects</Link>
-          <Link to="/design-ideas" onClick={() => setIsOpen(false)} className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Design Ideas</Link>
-          <Link to="/contact" onClick={() => setIsOpen(false)} className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Contact</Link>
-          
-          <button 
-            onClick={() => { setIsOpen(false); openQuoteModal(); }} 
-            className="btn-primary mt-4 w-full justify-center"
+          <NavLink 
+            to="/projects" 
+            onClick={() => setIsOpen(false)} 
+            className={({ isActive }) => `text-lg font-medium p-2 rounded-full transition-colors ${
+              isActive 
+              ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]' 
+              : 'hover:bg-gray-50 active:ring-2 active:ring-inset active:ring-[#1A1A1A]'
+            }`}
           >
-            Get Free Quote
-          </button>
+            Projects
+          </NavLink>
+          <NavLink 
+            to="/design-ideas" 
+            onClick={() => setIsOpen(false)} 
+            className={({ isActive }) => `text-lg font-medium p-2 rounded-full transition-colors ${
+              isActive 
+              ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]' 
+              : 'hover:bg-gray-50 active:ring-2 active:ring-inset active:ring-[#1A1A1A]'
+            }`}
+          >
+            Design Ideas
+          </NavLink>
+          <NavLink 
+            to="/contact" 
+            onClick={() => setIsOpen(false)} 
+            className={({ isActive }) => `text-lg font-medium p-2 rounded-full transition-colors ${
+              isActive 
+              ? 'ring-2 ring-inset ring-[#1A1A1A] text-[#1A1A1A]' 
+              : 'hover:bg-gray-50 active:ring-2 active:ring-inset active:ring-[#1A1A1A]'
+            }`}
+          >
+            Contact
+          </NavLink>
+          
         </div>
       </div>
     </nav>
