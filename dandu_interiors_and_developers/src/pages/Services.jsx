@@ -12,6 +12,8 @@ const Services = () => {
   const [isCardMode, setIsCardMode] = useState(true);
   const { openQuoteModal } = useModal();
   const contentRef = React.useRef(null);
+  const heroRef = React.useRef(null);
+  const [heroOffset, setHeroOffset] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,18 +24,31 @@ const Services = () => {
       setActiveService(services[0]);
     }
 
+    const updateHeight = () => {
+      if (heroRef.current) {
+        // Measure height + top padding/navbar space
+        const rect = heroRef.current.getBoundingClientRect();
+        const navHeight = document.querySelector('nav')?.offsetHeight || 80;
+        setHeroOffset(rect.height + navHeight + 40); // 40px base buffer
+      }
+    };
+
     const handleScroll = () => {
       if (contentRef.current) {
         const top = contentRef.current.getBoundingClientRect().top;
-        const navEl = document.querySelector('nav');
-        const navHeight = navEl ? navEl.offsetHeight : 0;
+        const navHeight = document.querySelector('nav')?.offsetHeight || 0;
         setIsCardMode(top > navHeight);
       }
     };
 
+    updateHeight();
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [id]);
+    window.addEventListener('resize', updateHeight);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, [id, activeService]);
 
   if (id && !services.find(s => s.id === id)) {
     return <Navigate to="/services" replace />;
@@ -45,11 +60,14 @@ const Services = () => {
     <div className="bg-white min-h-screen pb-0 relative">
 
       {/* Static Fixed Header Section - Content slides OVER this */}
-      <div className={`fixed top-0 left-0 h-[60vh] md:h-[70vh] lg:h-[75vh] w-full flex flex-col justify-start overflow-hidden z-0 bg-white pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <div className="w-full relative px-4 md:px-8">
+      <div 
+        className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-hidden z-0 bg-white pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        style={{ height: heroOffset ? `${heroOffset}px` : '50vh' }}
+      >
+        <div ref={heroRef} className="w-full relative px-4 md:px-8">
 
           {/* Static Header Title */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-semibold tracking-tighter text-[#1A1A1A] leading-[0.85] ml-[-0.04em] select-none max-w-[90%]">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[8rem] xl:text-[9.5rem] font-semibold tracking-tighter text-[#1A1A1A] leading-[0.85] ml-[-0.04em] select-none max-w-[95%]">
             {activeService.title}
           </h1>
 
@@ -82,10 +100,11 @@ const Services = () => {
       </div>
 
       {/* Main Content Sections - Seamlessly sliding OVER the fixed header */}
-      <div
+      <div 
         id="services-content"
         ref={contentRef}
-        className={`relative z-10 bg-[#F8F5F2] mt-[60vh] md:mt-[70vh] lg:mt-[75vh] will-change-transform transition-all duration-500 ease-out ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'}`}
+        className={`relative z-10 bg-[#F8F5F2] will-change-transform transition-all duration-500 ease-out ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'}`}
+        style={{ marginTop: heroOffset ? `${heroOffset}px` : '50vh' }}
       >
         {/* Minimal reveal margin */}
         <div className="h-[2vh] md:h-[4vh] bg-[#F8F5F2] rounded-t-2xl md:rounded-t-[32px]"></div>
