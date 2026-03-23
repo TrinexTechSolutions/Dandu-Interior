@@ -45,11 +45,11 @@ const Services = () => {
     <div className="bg-white min-h-screen pb-0 relative">
 
       {/* Static Fixed Header Section - Content slides OVER this */}
-      <div className={`fixed top-0 left-0 h-[50vh] md:h-[60vh] lg:h-[65vh] w-full flex flex-col justify-start overflow-hidden z-0 bg-white pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+      <div className={`fixed top-0 left-0 h-[60vh] md:h-[70vh] lg:h-[75vh] w-full flex flex-col justify-start overflow-hidden z-0 bg-white pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
         <div className="w-full relative px-4 md:px-8">
 
           {/* Static Header Title */}
-          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[10rem] xl:text-[12rem] font-semibold tracking-tighter text-[#1A1A1A] leading-[0.85] ml-[-0.04em] select-none whitespace-nowrap">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[8rem] xl:text-[9rem] font-semibold tracking-tighter text-[#1A1A1A] leading-[0.85] ml-[-0.04em] select-none max-w-[90%]">
             {activeService.title}
           </h1>
 
@@ -85,7 +85,7 @@ const Services = () => {
       <div
         id="services-content"
         ref={contentRef}
-        className={`relative z-10 bg-[#F8F5F2] mt-[55vh] md:mt-[65vh] will-change-transform transition-all duration-500 ease-out ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'}`}
+        className={`relative z-10 bg-[#F8F5F2] mt-[60vh] md:mt-[70vh] lg:mt-[75vh] will-change-transform transition-all duration-500 ease-out ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'}`}
       >
         {/* Minimal reveal margin */}
         <div className="h-[2vh] md:h-[4vh] bg-[#F8F5F2] rounded-t-2xl md:rounded-t-[32px]"></div>
