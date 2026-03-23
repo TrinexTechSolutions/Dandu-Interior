@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import SectionWrapper from '../components/SectionWrapper';
 import { designIdeas } from '../data/designIdeas';
 import { MoveRight } from 'lucide-react';
@@ -15,7 +16,7 @@ const DesignIdeas = () => {
       <SectionWrapper bgClass="bg-[#F8F5F2]">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {designIdeas.map((idea, idx) => (
-            <div key={idx} className="group relative rounded-2xl overflow-hidden cursor-pointer card-hover aspect-square shadow-sm">
+            <Link to={`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`} key={idx} className="block group relative rounded-2xl overflow-hidden cursor-pointer card-hover aspect-square shadow-sm">
               <img 
                 src={idea.image} 
                 alt={idea.title} 
@@ -31,7 +32,7 @@ const DesignIdeas = () => {
                   Explore Gallery <MoveRight size={16} />
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </SectionWrapper>

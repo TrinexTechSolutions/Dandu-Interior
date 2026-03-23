@@ -6,6 +6,7 @@ import { projects } from '../data/projects';
 import { testimonials } from '../data/testimonials';
 import SectionWrapper from '../components/SectionWrapper';
 import CallToAction from '../components/CallToAction';
+import HomeDesignIdeas from '../components/HomeDesignIdeas';
 import { useModal } from '../context/ModalContext';
 
 const Home = () => {
@@ -104,12 +105,10 @@ const Home = () => {
 
       {/* Featured Projects */}
       <SectionWrapper>
-        <div className="flex justify-between items-end mb-12 border-b pb-6">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Projects</h2>
-            <div className="w-24 h-1 bg-[#C49A45] rounded-full"></div>
-          </div>
-          <Link to="/projects" className="hidden sm:flex items-center gap-2 text-[#C49A45] font-semibold hover:text-[#1A1A1A] transition-colors">
+        <div className="relative mb-12 flex flex-col items-center justify-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Featured Projects</h2>
+          <div className="w-24 h-1 bg-[#C49A45] rounded-full"></div>
+          <Link to="/projects" className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[#C49A45] font-semibold hover:text-[#1A1A1A] transition-colors">
             View All Projects <ChevronRight size={20} />
           </Link>
         </div>
@@ -161,6 +160,9 @@ const Home = () => {
           ))}
         </div>
       </SectionWrapper>
+
+      {/* Design Ideas Section */}
+      <HomeDesignIdeas />
 
       {/* Testimonials */}
       <SectionWrapper>

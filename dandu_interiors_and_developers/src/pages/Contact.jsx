@@ -1,12 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
-import SectionWrapper from '../components/SectionWrapper';
+import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import logo from '../assets/logos_and_bg_images/dandu_logo.svg';
 
-// ...
 const Contact = () => {
-  const [isCardMode, setIsCardMode] = useState(true);
-  const contentRef = useRef(null);
-
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -49,44 +45,46 @@ const Contact = () => {
     }, 1500);
   };
 
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    const handleScroll = () => {
-      if (contentRef.current) {
-        const top = contentRef.current.getBoundingClientRect().top;
-        const navEl = document.querySelector('nav');
-        const navHeight = navEl ? navEl.offsetHeight : 0;
-        setIsCardMode(top > navHeight);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <div className="bg-white min-h-screen pb-0 relative">
-      {/* Static Fixed Header Section */}
-      <div className={`fixed top-0 left-0 h-[55vh] md:h-[65vh] w-full flex flex-col justify-start overflow-hidden z-0 bg-white pt-24 md:pt-32 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <div className="w-full relative px-4 md:px-8">
-          <h1 className="text-[14vw] md:text-[11vw] font-semibold tracking-tighter text-[#1A1A1A] leading-none ml-[-0.04em] select-none whitespace-nowrap">
-            Contact Us
-          </h1>
-          <div className="w-full flex flex-col items-end mt-4 md:mt-6">
-            <div className="max-w-[280px] md:max-w-sm text-right mb-8">
-              <p className="text-gray-500 text-sm md:text-lg leading-relaxed font-semibold tracking-wide">
-                Get in touch with our team of experts to discuss your next project.
+    <div className="bg-white min-h-screen relative">
+      
+      {/* Spectacular Hero Section */}
+      <section className="relative pt-20 md:pt-24 bg-white overflow-hidden">
+        {/* Background Decorative Elements */}
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#C49A45]/5 to-transparent pointer-events-none"></div>
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#C49A45]/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C49A45]/20 to-transparent pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            
+            {/* Left Content */}
+            <div className="w-full lg:w-1/2 text-center lg:text-left">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#1A1A1A] leading-[1.1] mb-6">
+                Let's Build Your <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C49A45] to-[#D4AF37]">Dream Space.</span>
+              </h1>
+              <p className="text-gray-600 text-lg md:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
+                Whether you have a full architectural plan ready or just a vision in your head, our team of expert designers and engineers are ready to bring it to life.
               </p>
             </div>
+
+            {/* Right Images / Composition */}
+            <div className="w-full lg:w-1/2 relative hidden md:block">
+              {/* Image without background (Transparent Design) */}
+              <div className="relative w-full aspect-square md:aspect-[4/3] flex items-center justify-center p-8 group">
+                <div className="absolute inset-0 bg-[#C49A45]/5 rounded-full blur-3xl transform group-hover:scale-110 transition-transform duration-1000 pointer-events-none"></div>
+                <img 
+                  src={logo} 
+                  alt="Decorative Design" 
+                  className="w-3/4 h-3/4 object-contain relative z-10 opacity-90 drop-shadow-xl transition-transform duration-1000 group-hover:scale-105"
+                />
+              </div>
+            </div>
+            
           </div>
         </div>
-      </div>
-
-      <div 
-        ref={contentRef}
-        className={`relative z-10 bg-white mt-[50vh] md:mt-[60vh] will-change-transform transition-all duration-500 ease-out ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'} overflow-hidden`}
-      >
-        <div className="h-[2vh] md:h-[4vh]"></div>
+      </section>
 
       <div className="bg-white pt-8 pb-12 md:pt-12 md:pb-20 lg:pt-16 lg:pb-24">
         {/* Contact Bar */}
@@ -282,7 +280,6 @@ const Contact = () => {
             </form>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );

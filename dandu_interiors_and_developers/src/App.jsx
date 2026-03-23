@@ -10,6 +10,7 @@ import Services from './pages/Services';
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
 import DesignIdeas from './pages/DesignIdeas';
+import DesignIdeaDetail from './pages/DesignIdeaDetail';
 import Contact from './pages/Contact';
 
 // Scroll to top on route change
@@ -52,6 +53,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
           </Route>
           <Route path="/projects/:id" element={<ProjectDetail />} />
+          <Route path="/design-ideas/:id" element={<DesignIdeaDetail />} />
         </Routes>
       </ModalProvider>
     </BrowserRouter>
