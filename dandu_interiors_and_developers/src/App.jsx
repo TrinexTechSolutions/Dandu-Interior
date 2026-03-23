@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
 import Projects from './pages/Projects';
+import ProjectDetail from './pages/ProjectDetail';
 import DesignIdeas from './pages/DesignIdeas';
 import Contact from './pages/Contact';
 
@@ -50,6 +51,7 @@ function App() {
             <Route path="design-ideas" element={<DesignIdeas />} />
             <Route path="contact" element={<Contact />} />
           </Route>
+          <Route path="/projects/:id" element={<ProjectDetail />} />
         </Routes>
       </ModalProvider>
     </BrowserRouter>

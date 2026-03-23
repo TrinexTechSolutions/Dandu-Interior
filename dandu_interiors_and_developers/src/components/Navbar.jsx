@@ -27,9 +27,11 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isServicesPage = location.pathname.startsWith('/services');
-      if (isServicesPage && navRef.current) {
-        const contentEl = document.getElementById('services-content');
+      const parallaxPaths = ['/services', '/about', '/contact', '/design-ideas', '/projects'];
+      const isParallaxPage = parallaxPaths.some(path => location.pathname.startsWith(path));
+      
+      if (isParallaxPage && navRef.current) {
+        const contentEl = document.getElementById('services-content') || document.querySelector('.will-change-transform');
         if (contentEl) {
           const rect = contentEl.getBoundingClientRect();
           const navHeight = navRef.current.offsetHeight;
@@ -57,13 +59,14 @@ const Navbar = () => {
     setNavbarOffset(0);
   }, [location.pathname]);
 
-  const isServicesPage = location.pathname.startsWith('/services');
+  const parallaxPaths = ['/services', '/about', '/contact', '/design-ideas', '/projects'];
+  const isParallaxPage = parallaxPaths.some(path => location.pathname.startsWith(path));
 
   return (
     <nav 
       ref={navRef}
       style={{ transform: `translateY(-${navbarOffset}px)` }}
-      className={`${isServicesPage ? 'fixed' : 'relative'} top-0 left-0 w-full z-50 bg-white py-4 transition-colors duration-300`}
+      className={`${isParallaxPage ? 'fixed' : 'relative'} top-0 left-0 w-full z-50 bg-white py-4 transition-colors duration-300`}
     >
       <div className="w-full px-4 lg:px-8">
         <div className="flex justify-between items-center">

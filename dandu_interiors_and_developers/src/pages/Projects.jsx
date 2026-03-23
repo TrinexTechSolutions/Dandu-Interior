@@ -1,9 +1,28 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import SectionWrapper from '../components/SectionWrapper';
 import { projects } from '../data/projects';
 import { ArrowRight, Filter } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Projects = () => {
+  const navigate = useNavigate();
+  const [isCardMode, setIsCardMode] = useState(true);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const handleScroll = () => {
+      if (contentRef.current) {
+        const top = contentRef.current.getBoundingClientRect().top;
+        const navEl = document.querySelector('nav');
+        const navHeight = navEl ? navEl.offsetHeight : 0;
+        setIsCardMode(top > navHeight);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const quotes = [
     { text: "We treat every project as our own, ensuring meticulous care and unwavering dedication to your vision.", bg: "bg-[#FDF6E3]", text_col: "text-[#8B6E32]", h: 1.3 },
     { text: "Transforming your personal ideas into reality with transparent communication at every step.", bg: "bg-[#EBF4F6]", text_col: "text-[#3B5B66]", h: 1.0 },
@@ -69,11 +88,28 @@ const Projects = () => {
   }, [projects]); // Only recompute if projects data changes
 
   return (
-    <div className="bg-[#FAFAFA]">
-      <div className="bg-[#1A1A1A] text-white pt-32 pb-20 px-4 text-center border-b border-white/5">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">Our Projects</h1>
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto">Explore our portfolio of completed masterworks.</p>
+    <div className="bg-white min-h-screen pb-0 relative">
+      {/* Static Fixed Header Section */}
+      <div className={`fixed top-0 left-0 h-[55vh] md:h-[65vh] w-full flex flex-col justify-start overflow-hidden z-0 bg-white pt-24 md:pt-32 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className="w-full relative px-4 md:px-8">
+          <h1 className="text-[14vw] md:text-[11vw] font-semibold tracking-tighter text-[#1A1A1A] leading-none ml-[-0.04em] select-none whitespace-nowrap">
+            Our Projects
+          </h1>
+          <div className="w-full flex flex-col items-end mt-4 md:mt-6">
+            <div className="max-w-[280px] md:max-w-sm text-right mb-8">
+              <p className="text-gray-500 text-sm md:text-lg leading-relaxed font-semibold tracking-wide">
+                Explore our portfolio of completed masterworks.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div 
+        ref={contentRef}
+        className={`relative z-10 bg-white mt-[50vh] md:mt-[60vh] will-change-transform transition-all duration-500 ease-out ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'} overflow-hidden`}
+      >
+        <div className="h-[2vh] md:h-[4vh]"></div>
 
       <SectionWrapper>
         <div className="columns-2 md:columns-3 lg:columns-4 gap-4 sm:gap-6 space-y-4 sm:space-y-6">
@@ -95,7 +131,11 @@ const Projects = () => {
             }
 
             return (
-              <div key={item.itemId} className="break-inside-avoid group relative rounded-3xl overflow-hidden bg-white cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-300 mb-0">
+              <div 
+                key={item.itemId} 
+                className="break-inside-avoid group relative rounded-3xl overflow-hidden bg-white cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-300 mb-0"
+                onClick={() => navigate(`/projects/${item.id}`)}
+              >
                 <img 
                   src={item.image} 
                   alt={item.title} 
@@ -116,6 +156,7 @@ const Projects = () => {
           })}
         </div>
       </SectionWrapper>
+      </div>
     </div>
   );
 };
