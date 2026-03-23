@@ -5,21 +5,24 @@ import { services } from '../data/services';
 import { projects } from '../data/projects';
 import { testimonials } from '../data/testimonials';
 import SectionWrapper from '../components/SectionWrapper';
+import { useModal } from '../context/ModalContext';
 
 const Home = () => {
+  const { openQuoteModal } = useModal();
   return (
     <div>
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80" 
+            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=75&w=1600" 
             alt="Luxury Interior Design" 
+            fetchPriority="high"
             className="w-full h-full object-cover filter brightness-[0.7]"
           />
         </div>
         <div className="container-custom relative z-10 text-center text-white top-[-50px]">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white drop-shadow-lg">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 text-white drop-shadow-lg">
             Furnish Your Life <br/><span className="text-[#D9C3A9]">With Style</span>
           </h1>
           <p className="text-lg md:text-2xl mb-10 max-w-2xl mx-auto font-light drop-shadow-md">
@@ -27,9 +30,9 @@ const Home = () => {
             The premium standard in interior design and development.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/get-quote" className="bg-[#C49A45] hover:bg-[#b0883b] text-white px-8 py-4 rounded-md font-bold text-lg transition-all hover:shadow-xl hover:-translate-y-1">
+            <button onClick={openQuoteModal} className="bg-[#C49A45] hover:bg-[#b0883b] text-white px-8 py-4 rounded-md font-bold text-lg transition-all hover:shadow-xl hover:-translate-y-1">
               Get Free Quote
-            </Link>
+            </button>
             <Link to="/projects" className="bg-white/10 backdrop-blur-sm border-2 border-white hover:bg-white hover:text-[#1A1A1A] text-white px-8 py-4 rounded-md font-bold text-lg transition-all">
               View Our Work
             </Link>
@@ -87,7 +90,12 @@ const Home = () => {
             </div>
           </div>
           <div className="relative">
-            <img src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&q=80" alt="Craftsmanship" className="rounded-2xl shadow-2xl relative z-10" />
+            <img 
+              src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&q=75&w=800" 
+              alt="Craftsmanship" 
+              loading="lazy"
+              className="rounded-2xl shadow-2xl relative z-10" 
+            />
             <div className="absolute -inset-4 bg-[#C49A45]/20 rounded-2xl z-0 translate-x-4 -translate-y-4"></div>
           </div>
         </div>
@@ -107,7 +115,12 @@ const Home = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.slice(0, 3).map((project) => (
             <Link key={project.id} to={`/projects`} className="group relative rounded-xl overflow-hidden shadow-md block h-[400px]">
-              <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <img 
+                src={project.image} 
+                alt={project.title} 
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               <div className="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                 <span className="text-[#C49A45] text-xs font-bold uppercase tracking-wider mb-2 block">{project.category}</span>
@@ -177,9 +190,9 @@ const Home = () => {
         <p className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto mb-10">
           Contact us today for a free consultation and let's discuss how we can bring your dream project to life.
         </p>
-        <Link to="/get-quote" className="bg-[#1A1A1A] hover:bg-black text-white px-10 py-5 rounded-md font-bold text-lg inline-block transition-transform hover:-translate-y-1 shadow-2xl">
+        <button onClick={openQuoteModal} className="bg-[#1A1A1A] hover:bg-black text-white px-10 py-5 rounded-md font-bold text-lg inline-block transition-transform hover:-translate-y-1 shadow-2xl">
           Get Started Now
-        </Link>
+        </button>
       </section>
 
     </div>

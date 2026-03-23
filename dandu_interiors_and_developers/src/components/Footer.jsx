@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
+import brandLogo from '../assets/logos_and_bg_images/dandu_logo.svg';
 
 const Footer = () => {
   return (
@@ -10,14 +11,8 @@ const Footer = () => {
           
           {/* Brand Info */}
           <div className="flex flex-col gap-6">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-[#D9C3A9] text-[#1A1A1A] rounded-lg flex items-center justify-center font-bold text-2xl">
-                D
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-xl leading-none text-white">DANDU</span>
-                <span className="text-[10px] text-gray-400 tracking-wider font-semibold">INTERIORS & DEVELOPERS</span>
-              </div>
+            <Link to="/" className="flex items-center">
+              <img src={brandLogo} alt="Dandu Interiors & Developers" className="h-20 w-auto bg-white/90 p-2 rounded-xl" />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
               Furnish your life with style. We construct, we maintain, we refurbish, we care. One team, all solutions, built on trust.

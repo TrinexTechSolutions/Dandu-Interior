@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import brandLogo from '../assets/logos_and_bg_images/dandu_logo.svg';
+import { useModal } from '../context/ModalContext';
 
 const SERVICES = [
   { name: 'Interior Design', path: '/services/interior-design' },
@@ -17,33 +19,58 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [navbarOffset, setNavbarOffset] = useState(0);
   const location = useLocation();
+  const { openQuoteModal } = useModal();
+  const navRef = React.useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      const isServicesPage = location.pathname.startsWith('/services');
+      if (isServicesPage && navRef.current) {
+        const contentEl = document.getElementById('services-content');
+        if (contentEl) {
+          const rect = contentEl.getBoundingClientRect();
+          const navHeight = navRef.current.offsetHeight;
+          
+          if (rect.top <= navHeight) {
+            setNavbarOffset(Math.max(0, navHeight - rect.top));
+          } else {
+            setNavbarOffset(0);
+          }
+        }
+      } else {
+        setNavbarOffset(0);
+      }
+      setScrolled(window.scrollY > 20);
+    };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   useEffect(() => {
     setIsOpen(false);
     setServicesOpen(false);
-  }, [location]);
+    setMobileServicesOpen(false);
+    setNavbarOffset(0);
+  }, [location.pathname]);
+
+  const isServicesPage = location.pathname.startsWith('/services');
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/95 backdrop-blur-sm shadow-md py-3' : 'bg-white py-5'}`}>
+    <nav 
+      ref={navRef}
+      style={{ transform: `translateY(-${navbarOffset}px)` }}
+      className={`${isServicesPage ? 'fixed' : 'relative'} top-0 left-0 w-full z-50 bg-white py-4 transition-colors duration-300`}
+    >
       <div className="container-custom">
         <div className="flex justify-between items-center">
           
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-[#1A1A1A] text-[#D9C3A9] rounded-lg flex items-center justify-center font-bold text-2xl group-hover:bg-[#C49A45] transition-colors">
-              D
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-xl leading-none">DANDU</span>
-              <span className="text-[10px] text-gray-500 tracking-wider font-semibold">INTERIORS & DEVELOPERS</span>
-            </div>
+          <Link to="/" className="flex items-center group py-1">
+            <img src={brandLogo} alt="Dandu Interiors & Developers" className="h-10 w-auto drop-shadow-sm group-hover:opacity-90 transition-opacity" />
           </Link>
 
           {/* Desktop Nav */}
@@ -57,7 +84,10 @@ const Navbar = () => {
               onMouseEnter={() => setServicesOpen(true)}
               onMouseLeave={() => setServicesOpen(false)}
             >
-              <button className="flex items-center gap-1 text-sm font-medium hover:text-[#C49A45] transition-colors py-2">
+              <button 
+                onClick={() => setServicesOpen(!servicesOpen)}
+                className="flex items-center gap-1 text-sm font-medium hover:text-[#C49A45] transition-colors py-2"
+              >
                 Services <ChevronDown size={14} className={`transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
               </button>
               
@@ -85,9 +115,9 @@ const Navbar = () => {
           </div>
 
           <div className="hidden lg:flex">
-            <Link to="/get-quote" className="btn-primary py-2 px-5 text-sm">
+            <button onClick={openQuoteModal} className="btn-primary py-2 px-5 text-sm">
               Get Quote
-            </Link>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -101,31 +131,46 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`lg:hidden absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-xl transition-all duration-300 origin-top overflow-hidden ${isOpen ? 'max-h-[80vh] py-4 opacity-100' : 'max-h-0 opacity-0'}`}>
-        <div className="container-custom flex flex-col gap-4">
-          <Link to="/" className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Home</Link>
-          <Link to="/about" className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">About</Link>
+      <div className={`lg:hidden absolute top-full left-0 w-full bg-white border-t border-gray-100 shadow-xl transition-all duration-300 origin-top overflow-y-auto ${isOpen ? 'max-h-[calc(100vh-80px)] py-4 opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="container-custom flex flex-col gap-4 pb-8">
+          <Link to="/" onClick={() => setIsOpen(false)} className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Home</Link>
+          <Link to="/about" onClick={() => setIsOpen(false)} className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">About</Link>
           
           <div className="flex flex-col">
-            <div className="text-sm font-bold text-gray-400 px-2 py-1 uppercase tracking-wider">Services</div>
-            {SERVICES.map((service, idx) => (
-              <Link 
-                key={idx} 
-                to={service.path}
-                className="text-base font-medium p-2 pl-4 text-gray-600 hover:text-[#C49A45] hover:bg-gray-50 rounded-lg"
-              >
-                {service.name}
-              </Link>
-            ))}
+            <button 
+              onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+              className="flex justify-between items-center w-full text-lg font-medium p-2 hover:bg-gray-50 rounded-lg text-left"
+            >
+              Services
+              <ChevronDown size={20} className={`transition-transform duration-300 ${mobileServicesOpen ? 'rotate-180' : ''}`} />
+            </button>
+            
+            <div className={`flex flex-col overflow-hidden transition-all duration-300 ${mobileServicesOpen ? 'max-h-[400px] mt-2' : 'max-h-0'}`}>
+              <div className="pl-4 border-l-2 border-gray-100 ml-4 py-2 flex flex-col gap-1">
+                {SERVICES.map((service, idx) => (
+                  <Link 
+                    key={idx} 
+                    to={service.path}
+                    onClick={() => setIsOpen(false)}
+                    className="text-base font-medium p-2 text-gray-600 hover:text-[#C49A45] hover:bg-gray-50 rounded-lg"
+                  >
+                    {service.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <Link to="/projects" className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Projects</Link>
-          <Link to="/design-ideas" className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Design Ideas</Link>
-          <Link to="/contact" className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Contact</Link>
+          <Link to="/projects" onClick={() => setIsOpen(false)} className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Projects</Link>
+          <Link to="/design-ideas" onClick={() => setIsOpen(false)} className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Design Ideas</Link>
+          <Link to="/contact" onClick={() => setIsOpen(false)} className="text-lg font-medium p-2 hover:bg-gray-50 rounded-lg">Contact</Link>
           
-          <Link to="/get-quote" className="btn-primary mt-4 w-full justify-center">
+          <button 
+            onClick={() => { setIsOpen(false); openQuoteModal(); }} 
+            className="btn-primary mt-4 w-full justify-center"
+          >
             Get Free Quote
-          </Link>
+          </button>
         </div>
       </div>
     </nav>

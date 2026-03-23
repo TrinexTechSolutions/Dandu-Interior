@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './layouts/Layout';
+import { ModalProvider } from './context/ModalContext';
 
 // Pages
 import Home from './pages/Home';
@@ -9,7 +10,6 @@ import Services from './pages/Services';
 import Projects from './pages/Projects';
 import DesignIdeas from './pages/DesignIdeas';
 import Contact from './pages/Contact';
-import GetQuote from './pages/GetQuote';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -37,20 +37,21 @@ const WhatsAppButton = () => (
 function App() {
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <WhatsAppButton />
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="services/:id" element={<Services />} />
-          <Route path="services" element={<Services />} />
-          <Route path="projects" element={<Projects />} />
-          <Route path="design-ideas" element={<DesignIdeas />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="get-quote" element={<GetQuote />} />
-        </Route>
-      </Routes>
+      <ModalProvider>
+        <ScrollToTop />
+        <WhatsAppButton />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="services" element={<Services />} />
+            <Route path="services/:id" element={<Services />} />
+            <Route path="projects" element={<Projects />} />
+            <Route path="design-ideas" element={<DesignIdeas />} />
+            <Route path="contact" element={<Contact />} />
+          </Route>
+        </Routes>
+      </ModalProvider>
     </BrowserRouter>
   );
 }

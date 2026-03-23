@@ -26,8 +26,8 @@ const About = () => {
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80" alt="Interior" className="rounded-xl w-full h-64 object-cover" />
-            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80" alt="Development" className="rounded-xl w-full h-64 object-cover mt-8" />
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=75&w=800" alt="Interior" loading="lazy" className="rounded-xl w-full h-64 object-cover" />
+            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=75&w=800" alt="Development" loading="lazy" className="rounded-xl w-full h-64 object-cover mt-8" />
           </div>
         </div>
       </SectionWrapper>

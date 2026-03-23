@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import { services } from '../data/services';
 import SectionWrapper from '../components/SectionWrapper';
-import { ChevronRight, CheckCircle2 } from 'lucide-react';
+import { useModal } from '../context/ModalContext';
 
 const Services = () => {
   const { id } = useParams();
   const [activeService, setActiveService] = useState(null);
+  const [isCardMode, setIsCardMode] = useState(true);
+  const { openQuoteModal } = useModal();
+  const contentRef = React.useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,6 +21,18 @@ const Services = () => {
     } else {
       setActiveService(services[0]);
     }
+
+    const handleScroll = () => {
+      if (contentRef.current) {
+        const top = contentRef.current.getBoundingClientRect().top;
+        const navEl = document.querySelector('nav');
+        const navHeight = navEl ? navEl.offsetHeight : 0;
+        setIsCardMode(top > navHeight);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [id]);
 
   if (id && !services.find(s => s.id === id)) {
@@ -25,80 +42,148 @@ const Services = () => {
   if (!activeService) return null;
 
   return (
-    <div className="bg-[#F8F5F2] min-h-screen pt-24 pb-20">
-      <div className="container-custom flex flex-col lg:flex-row gap-12">
-        
-        {/* Sidebar Nav */}
-        <aside className="lg:w-1/4">
-          <div className="bg-white rounded-2xl p-6 shadow-sm sticky top-28 border border-gray-100">
-            <h3 className="text-xl font-bold mb-6 text-[#1A1A1A] pb-4 border-b">All Services</h3>
-            <ul className="flex flex-col gap-2">
-              {services.map(service => (
-                <li key={service.id}>
-                  <Link 
-                    to={`/services/${service.id}`}
-                    className={`flex items-center justify-between p-3 rounded-lg transition-all ${activeService.id === service.id ? 'bg-[#1A1A1A] text-white font-medium' : 'hover:bg-[#F8F5F2] text-gray-600 hover:text-[#1A1A1A]'}`}
-                  >
-                    <span>{service.title}</span>
-                    <ChevronRight size={16} className={activeService.id === service.id ? 'text-[#C49A45]' : 'text-gray-400'} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-8 bg-[#C49A45]/10 p-6 rounded-xl border border-[#C49A45]/30 text-center">
-              <h4 className="font-bold text-[#1A1A1A] mb-2">Need a custom solution?</h4>
-              <p className="text-sm text-gray-600 mb-4">We provide tailored packages for large scale projects.</p>
-              <Link to="/get-quote" className="text-sm font-bold text-[#C49A45] hover:text-[#1A1A1A] transition-colors uppercase tracking-wider">Contact Us Today</Link>
-            </div>
-          </div>
-        </aside>
-
-        {/* Main Content */}
-        <main className="lg:w-3/4 bg-white rounded-2xl shadow-sm p-8 md:p-12 border border-gray-100">
-          <div className="flex items-center gap-4 mb-6 text-[#C49A45]">
-            <activeService.icon size={48} strokeWidth={1.5} />
-            <h1 className="text-3xl md:text-5xl font-bold text-[#1A1A1A]">{activeService.title}</h1>
-          </div>
+    <div className="bg-white min-h-screen pb-0 relative">
+      
+      {/* Static Fixed Header Section - Content slides OVER this */}
+      <div className={`fixed top-0 left-0 h-[55vh] md:h-[65vh] w-full flex flex-col justify-start overflow-hidden z-0 bg-white pt-24 md:pt-32 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <div className="w-full relative px-4 md:px-8">
           
-          <div className="w-full h-64 md:h-96 bg-gray-200 rounded-xl mb-10 overflow-hidden relative">
-            <img 
-              src={`https://source.unsplash.com/800x600/?${activeService.title.replace(' ', ',')},construction,interior`} 
-              alt={activeService.title} 
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.src = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80";
-              }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-          </div>
+          {/* Static Header Title */}
+          <h1 className="text-[14vw] md:text-[11vw] font-semibold tracking-tighter text-[#1A1A1A] leading-none ml-[-0.04em] select-none whitespace-nowrap">
+            {activeService.title}
+          </h1>
 
-          <div className="prose max-w-none">
-            <h2 className="text-2xl font-bold mb-4">Overview</h2>
-            <p className="text-gray-600 text-lg leading-relaxed mb-10">{activeService.fullDesc}</p>
-
-            <h2 className="text-2xl font-bold mb-6">What We Offer</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-              {activeService.subServices.map((sub, idx) => (
-                <div key={idx} className="bg-[#F8F5F2] p-5 rounded-xl border border-gray-100">
-                  <h4 className="font-bold text-lg text-[#1A1A1A] mb-2">{sub.name}</h4>
-                  <p className="text-sm text-gray-600">{sub.desc}</p>
-                </div>
-              ))}
+          {/* Static Description - Positioned directly under and to the right */}
+          <div className="w-full flex flex-col items-end mt-4 md:mt-6">
+            <div className="max-w-[280px] md:max-w-sm text-right mb-8">
+              <p className="text-gray-500 text-sm md:text-lg leading-relaxed font-semibold tracking-wide">
+                {activeService.fullDesc.split('.')[0]}.
+              </p>
             </div>
-
-            <h2 className="text-2xl font-bold mb-6">Key Benefits</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
-              {activeService.benefits.map((benefit, idx) => (
-                <div key={idx} className="flex items-center gap-3">
-                  <CheckCircle2 className="text-[#C49A45]" size={20} />
-                  <span className="font-medium text-gray-700">{benefit}</span>
-                </div>
-              ))}
+            
+            {/* animated Button Group */}
+            <div className="flex items-center gap-2 group cursor-pointer transition-all duration-500 ease-in-out hover:gap-0 h-12 md:h-14">
+              <button 
+                onClick={openQuoteModal}
+                className="bg-[#1A1A1A] text-white h-full px-8 rounded-l-full rounded-r-md group-hover:rounded-r-none transition-all duration-500 font-bold text-sm md:text-base whitespace-nowrap shadow-xl flex items-center"
+              >
+                Book a call
+              </button>
+              <button 
+                onClick={openQuoteModal}
+                className="bg-[#1A1A1A] text-white h-full px-4 rounded-r-full rounded-l-md group-hover:rounded-l-none transition-all duration-500 flex items-center justify-center shadow-xl border-l border-white/10 group-hover:border-transparent"
+              >
+                <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+              </button>
             </div>
           </div>
-        </main>
 
+        </div>
       </div>
+
+      {/* Main Content Sections - Seamlessly sliding OVER the fixed header */}
+      <div 
+        id="services-content"
+        ref={contentRef}
+        className={`relative z-10 bg-white mt-[50vh] md:mt-[60vh] will-change-transform transition-all duration-500 ease-out ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'}`}
+      >
+        {/* Minimal reveal margin */}
+        <div className="h-[2vh] md:h-[4vh]"></div>
+        {activeService.subServices.map((sub, index) => (
+          <section key={index} className={`py-12 md:py-24 relative ${index % 2 === 0 ? 'bg-white' : 'bg-[#F8F5F2]'}`}>
+            <div className="container-custom">
+              <div className={`flex flex-col gap-12 lg:gap-20 items-center ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
+                
+                {/* Text Content */}
+                <div className="w-full lg:w-1/2">
+                  <div className="relative mb-8 mt-12 lg:mt-20 pl-6 flex items-end">
+                    <span className="text-7xl md:text-[10rem] font-extrabold text-[#C49A45]/15 absolute bottom-0 -left-2 z-0 pointer-events-none select-none leading-[0.75]">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <h2 className="text-3xl md:text-4xl font-bold text-[#1A1A1A] relative z-10 leading-none pb-1">
+                      {sub.name}
+                    </h2>
+                  </div>
+                  <div className="w-20 h-1 bg-[#1A1A1A] mb-8"></div>
+                  <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                    {sub.desc}
+                  </p>
+                  <button 
+                    onClick={openQuoteModal} 
+                    className="inline-flex items-center gap-2 font-bold text-[#C49A45] hover:text-[#1A1A1A] transition-colors uppercase tracking-wider text-sm group"
+                  >
+                    Request this service <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                  </button>
+                </div>
+
+                {/* Image */}
+                <div className="w-full lg:w-1/2 lg:drop-shadow-2xl">
+                  <div className={`relative shadow-2xl lg:shadow-none overflow-hidden aspect-[4/3] group rounded-2xl w-full h-full ${index % 2 === 0 ? 'lg:rounded-l-none lg:rounded-r-3xl lg:[clip-path:polygon(25%_0%,_100%_0%,_100%_100%,_0%_100%)]' : 'lg:rounded-r-none lg:rounded-l-3xl lg:[clip-path:polygon(0%_0%,_75%_0%,_100%_100%,_0%_100%)]'}`}>
+                    <img 
+                      src={sub.image} 
+                      alt={sub.name} 
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      onError={(e) => {
+                        e.target.src = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=75&w=800";
+                      }}
+                    />
+                    <div className="absolute inset-0 border-4 border-[#C49A45]/20 rounded-2xl pointer-events-none lg:hidden"></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        ))}
+      </div>
+
+      {/* Horizontal Bottom Navigation for All Services */}
+      <section className="relative py-20 lg:py-24 overflow-hidden border-t-2 border-[#C49A45]/20">
+        {/* Background Overlay - No Filter, Full Width */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=75&w=1600" 
+            alt="Interior Ambience" 
+            loading="lazy"
+            className="w-full h-full object-cover"
+          />
+        </div>
+
+        <div className="container-custom relative z-10">
+          <div className="bg-white/98 backdrop-blur-sm p-8 md:p-14 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] flex flex-col lg:flex-row items-center gap-12 lg:gap-16 border border-white max-w-7xl mx-auto">
+            
+            {/* Left Side: Content & Button */}
+            <div className="w-full lg:w-1/2 text-left">
+              <h3 className="text-3xl md:text-5xl font-bold text-[#1A1A1A] mb-4">Explore Our Services</h3>
+              <div className="w-16 h-1 bg-[#C49A45] rounded-full mb-6 relative"></div>
+              <p className="text-gray-600 text-base md:text-lg tracking-wide font-light leading-relaxed mb-10 max-w-xl">
+                From visionary interior design to robust structural masonry, our multi-disciplinary approach ensures every phase of your project is handled with precision.
+              </p>
+              <button onClick={openQuoteModal} className="bg-[#1A1A1A] hover:bg-black text-white px-8 py-4 rounded-md font-bold inline-flex items-center justify-center transition-transform hover:-translate-y-1 shadow-2xl text-sm md:text-base">
+                Get a Free Quote
+              </button>
+            </div>
+
+            {/* Right Side: Links */}
+            <div className="w-full lg:w-1/2">
+              <div className="flex flex-wrap justify-start lg:justify-end gap-3 max-w-2xl">
+                {services.map(service => (
+                  <Link 
+                    key={service.id}
+                    to={`/services/${service.id}`}
+                    className={`flex items-center gap-2 px-4 py-3 rounded-full transition-all border text-xs md:text-sm ${activeService.id === service.id ? 'bg-[#1A1A1A] border-[#1A1A1A] text-white shadow-xl shadow-[#1A1A1A]/30 scale-105' : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-white hover:text-[#1A1A1A] hover:border-gray-300 hover:shadow-md'}`}
+                  >
+                    <service.icon size={16} strokeWidth={2} />
+                    <span className="font-semibold tracking-wide whitespace-nowrap">{service.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 };

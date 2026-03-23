@@ -18,12 +18,17 @@
     --border: #E5E7EB;
   }
   
+  html, body, #root {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-white text-[#1A1A1A] font-sans antialiased overflow-x-hidden;
+    @apply bg-white text-[#1A1A1A] font-sans antialiased;
   }
   
   h1, h2, h3, h4, h5, h6 {
