@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-primary: #1A1A1A; /* Black/Dark Gray from logo */
+    --brand-secondary: #D9C3A9; /* Warm Sand/Beige from image background */
+    --brand-accent: #C49A45; /* Deeper gold/brown accent if needed */
+    --brand-light: #F8F5F2; /* Off-white for sections */
+    
+    --background: #FFFFFF;
+    --foreground: #1A1A1A;
+    
+    --muted: #F3F4F6;
+    --muted-foreground: #6B7280;
+    
+    --border: #E5E7EB;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-[#1A1A1A] font-sans antialiased overflow-x-hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+  
+  .btn-primary {
+    @apply bg-[#1A1A1A] text-white px-6 py-3 rounded-md font-medium transition-all hover:bg-black hover:shadow-lg flex items-center justify-center gap-2;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-[#1A1A1A] text-[#1A1A1A] bg-transparent px-6 py-3 rounded-md font-medium transition-all hover:bg-[#1A1A1A] hover:text-white flex items-center justify-center gap-2;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
