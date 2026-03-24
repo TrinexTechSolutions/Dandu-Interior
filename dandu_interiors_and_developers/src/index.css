@@ -6,7 +6,7 @@
   :root {
     --brand-primary: #1A1A1A; /* Black/Dark Gray from logo */
     --brand-secondary: #D9C3A9; /* Warm Sand/Beige from image background */
-    --brand-accent: #C49A45; /* Deeper gold/brown accent if needed */
+    --brand-accent: #1A1A1A; /* Deeper gold/brown accent if needed */
     --brand-light: #F8F5F2; /* Off-white for sections */
     
     --background: #FFFFFF;

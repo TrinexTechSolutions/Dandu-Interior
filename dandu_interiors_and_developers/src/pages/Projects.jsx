@@ -3,11 +3,15 @@ import SectionWrapper from '../components/SectionWrapper';
 import { projects } from '../data/projects';
 import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import ProjectDetailsDrawer from '../components/ProjectDetailsDrawer';
 
 const Projects = () => {
   const navigate = useNavigate();
   const [isCardMode, setIsCardMode] = useState(true);
   const [heroContentTop, setHeroContentTop] = useState(0);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const contentRef = useRef(null);
   const heroTitleRef = useRef(null);
   const gridRef = useRef(null);
@@ -114,6 +118,15 @@ const Projects = () => {
     offset: ["start end", "end end"]
   });
 
+  const handleProjectClick = (project) => {
+    if (windowWidth < 768) {
+      setSelectedProject(project);
+      setIsDrawerOpen(true);
+    } else {
+      navigate(`/projects/${project.id}`);
+    }
+  };
+
   const renderItem = (item, globalIdx) => {
     if (item.type === 'quote') {
       return (
@@ -132,7 +145,7 @@ const Projects = () => {
         key={item.itemId}
         whileHover={{ y: -5 }}
         className="group relative overflow-hidden rounded-xl cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-300"
-        onClick={() => navigate(`/projects/${item.id}`)}
+        onClick={() => handleProjectClick(item)}
       >
         <img
           src={item.image}
@@ -142,7 +155,7 @@ const Projects = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <div className="absolute bottom-0 left-0 w-full p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-          <span className="text-[#C49A45] text-xs font-bold uppercase tracking-wider mb-2 block">{item.category}</span>
+          <span className="text-[#1A1A1A] text-xs font-bold uppercase tracking-wider mb-2 block">{item.category}</span>
           <h3 className="text-white text-lg md:text-xl font-bold leading-tight mb-1">{item.title}</h3>
           <div className="flex items-center gap-1.5 text-gray-300 text-xs md:text-sm">
             <span>📍</span> {item.location}
@@ -219,6 +232,16 @@ const Projects = () => {
         @media (min-width: 1024px) {
           .projects-hero-title { font-size: clamp(80px, 11vw, 119px); letter-spacing: -10.2px; }
         }
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #1A1A1A;
+          border-radius: 10px;
+        }
       `}</style>
 
       {/* Hero Section */}
@@ -258,6 +281,12 @@ const Projects = () => {
           </div>
         </SectionWrapper>
       </div>
+
+      <ProjectDetailsDrawer 
+        isOpen={isDrawerOpen} 
+        onClose={() => setIsDrawerOpen(false)} 
+        project={selectedProject} 
+      />
     </div>
   );
 };

@@ -116,7 +116,7 @@ const Services = () => {
                 {/* Text Content */}
                 <div className="w-full lg:w-1/2">
                   <div className="relative mb-8 mt-12 lg:mt-20 pl-6 flex items-end">
-                    <span className="text-7xl md:text-[10rem] font-extrabold text-[#C49A45]/15 absolute bottom-0 -left-2 z-0 pointer-events-none select-none leading-[0.75]">
+                    <span className="text-7xl md:text-[10rem] font-extrabold text-[#1A1A1A]/15 absolute bottom-0 -left-2 z-0 pointer-events-none select-none leading-[0.75]">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                     <h2 className="text-3xl md:text-4xl font-bold text-[#1A1A1A] relative z-10 leading-none pb-1">
@@ -129,7 +129,7 @@ const Services = () => {
                   </p>
                   <button
                     onClick={openQuoteModal}
-                    className="inline-flex items-center gap-2 font-bold text-[#C49A45] hover:text-[#1A1A1A] transition-colors uppercase tracking-wider text-sm group"
+                    className="inline-flex items-center gap-2 font-bold text-[#1A1A1A] hover:text-[#1A1A1A] transition-colors uppercase tracking-wider text-sm group"
                   >
                     Request this service <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
                   </button>
@@ -147,7 +147,7 @@ const Services = () => {
                         e.target.src = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=75&w=800";
                       }}
                     />
-                    <div className="absolute inset-0 border-4 border-[#C49A45]/20 rounded-2xl pointer-events-none lg:hidden"></div>
+                    <div className="absolute inset-0 border-4 border-[#1A1A1A]/20 rounded-2xl pointer-events-none lg:hidden"></div>
                   </div>
                 </div>
 
@@ -158,7 +158,7 @@ const Services = () => {
       </div>
 
       {/* Horizontal Bottom Navigation for All Services */}
-      <section className="relative py-20 lg:py-24 overflow-hidden border-t-2 border-[#C49A45]/20">
+      <section className="relative py-20 lg:py-24 overflow-hidden border-t-2 border-[#1A1A1A]/20">
         {/* Background Overlay - No Filter, Full Width */}
         <div className="absolute inset-0 z-0">
           <img
@@ -175,7 +175,7 @@ const Services = () => {
             {/* Left Side: Content & Button */}
             <div className="w-full lg:w-1/2 text-left">
               <h3 className="text-3xl md:text-5xl font-bold text-white mb-4">Explore Our Services</h3>
-              <div className="w-16 h-1 bg-[#C49A45] rounded-full mb-6 relative"></div>
+              <div className="w-16 h-1 bg-[#1A1A1A] rounded-full mb-6 relative"></div>
               <p className="text-white/70 text-base md:text-lg tracking-wide font-light leading-relaxed mb-10 max-w-xl">
                 From visionary interior design to robust structural masonry, our multi-disciplinary approach ensures every phase of your project is handled with precision.
               </p>

@@ -27,8 +27,8 @@ const HomeDesignIdeas = () => {
     <SectionWrapper>
       <div className="relative mb-12 flex flex-col items-center justify-center">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Design Ideas</h2>
-        <div className="w-24 h-1 bg-[#C49A45] rounded-full"></div>
-        <Link to="/design-ideas" className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[#C49A45] font-semibold hover:text-[#1A1A1A] transition-colors">
+        <div className="w-24 h-1 bg-[#1A1A1A] rounded-full"></div>
+        <Link to="/design-ideas" className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[#1A1A1A] font-semibold hover:text-[#1A1A1A] transition-colors">
           View More <ChevronRight size={20} />
         </Link>
       </div>

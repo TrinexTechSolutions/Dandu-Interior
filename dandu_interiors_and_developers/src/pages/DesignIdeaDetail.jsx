@@ -19,7 +19,7 @@ const DesignIdeaDetail = () => {
       <div className="min-h-screen flex items-center justify-center bg-[#F8F5F2]">
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-4">Design Idea Not Found</h2>
-          <Link to="/design-ideas" className="text-[#C49A45] flex items-center justify-center gap-2">
+          <Link to="/design-ideas" className="text-[#1A1A1A] flex items-center justify-center gap-2">
             Back to Ideas <ArrowRight size={20} />
           </Link>
         </div>
@@ -53,7 +53,7 @@ const DesignIdeaDetail = () => {
       <div className="fixed top-4 md:top-6 lg:top-8 left-0 w-full z-[70] pointer-events-none">
         <div className="w-full bg-transparent h-24 md:h-28 flex items-center justify-between px-8 md:px-16 pointer-events-auto transition-transform duration-300 relative">
           <div className="text-white drop-shadow-md font-extrabold tracking-widest text-sm md:text-base uppercase flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full bg-[#C49A45] shadow-sm"></span>
+            <span className="w-2 h-2 rounded-full bg-[#1A1A1A] shadow-sm"></span>
             {idea.title}
           </div>
           <Link 
@@ -74,7 +74,7 @@ const DesignIdeaDetail = () => {
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 z-20 flex flex-col justify-end p-8 md:p-16 lg:p-24 max-w-7xl mx-auto w-full">
-          <div className="inline-block px-4 py-1 bg-[#C49A45] text-white text-sm font-bold uppercase tracking-widest mb-4 w-fit rounded">
+          <div className="inline-block px-4 py-1 bg-[#1A1A1A] text-white text-sm font-bold uppercase tracking-widest mb-4 w-fit rounded">
             {idea.count}
           </div>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1]">

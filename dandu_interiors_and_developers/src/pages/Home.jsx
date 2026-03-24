@@ -32,7 +32,7 @@ const Home = () => {
             The premium standard in interior design and development.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button onClick={openQuoteModal} className="bg-[#C49A45] hover:bg-[#b0883b] text-white px-8 py-4 rounded-md font-bold text-lg transition-all hover:shadow-xl hover:-translate-y-1">
+            <button onClick={openQuoteModal} className="bg-[#1A1A1A] hover:bg-[#b0883b] text-white px-8 py-4 rounded-md font-bold text-lg transition-all hover:shadow-xl hover:-translate-y-1">
               Get Free Quote
             </button>
             <Link to="/projects" className="bg-white/10 backdrop-blur-sm border-2 border-white hover:bg-white hover:text-[#1A1A1A] text-white px-8 py-4 rounded-md font-bold text-lg transition-all">
@@ -46,18 +46,18 @@ const Home = () => {
       <SectionWrapper bgClass="bg-[#F8F5F2]" id="services-preview">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Core Services</h2>
-          <div className="w-24 h-1 bg-[#C49A45] mx-auto rounded-full mb-6"></div>
+          <div className="w-24 h-1 bg-[#1A1A1A] mx-auto rounded-full mb-6"></div>
           <p className="text-gray-600 max-w-2xl mx-auto">Providing end-to-end solutions for all your interior and construction needs, delivered with uncompromising quality.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.slice(0, 8).map((service) => (
             <Link key={service.id} to={`/services/${service.id}`} className="bg-white p-8 rounded-xl shadow-sm card-hover border border-gray-100 group flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full bg-[#F8F5F2] flex items-center justify-center mb-6 group-hover:bg-[#C49A45] group-hover:text-white transition-colors text-[#1A1A1A]">
+              <div className="w-16 h-16 rounded-full bg-[#F8F5F2] flex items-center justify-center mb-6 group-hover:bg-[#1A1A1A] group-hover:text-white transition-colors text-[#1A1A1A]">
                 <service.icon size={32} />
               </div>
               <h3 className="text-xl font-bold mb-3">{service.title}</h3>
               <p className="text-gray-500 text-sm mb-6 flex-grow">{service.shortDesc}</p>
-              <div className="text-[#C49A45] font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+              <div className="text-[#1A1A1A] font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
                 Learn more <ChevronRight size={16} />
               </div>
             </Link>
@@ -70,7 +70,7 @@ const Home = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Why Choose Dandu Interiors?</h2>
-            <div className="w-24 h-1 bg-[#C49A45] rounded-full mb-8"></div>
+            <div className="w-24 h-1 bg-[#1A1A1A] rounded-full mb-8"></div>
             <p className="text-gray-400 mb-8 leading-relaxed">
               We are not just a name - it's a brand built on trust and excellence. With years of experience and a multi-disciplinary team, we manage your project from concept to completion, ensuring it is delivered on time, within budget, and beyond expectations.
             </p>
@@ -82,7 +82,7 @@ const Home = () => {
                 { icon: Users, title: 'Client Centric', desc: 'Transparent and continuous communication.' }
               ].map((item, idx) => (
                 <div key={idx} className="flex gap-4">
-                  <div className="text-[#C49A45] mt-1 shrink-0"><item.icon size={24} /></div>
+                  <div className="text-[#1A1A1A] mt-1 shrink-0"><item.icon size={24} /></div>
                   <div>
                     <h4 className="font-bold text-white mb-1">{item.title}</h4>
                     <p className="text-sm text-gray-400">{item.desc}</p>
@@ -98,7 +98,7 @@ const Home = () => {
               loading="lazy"
               className="rounded-2xl shadow-2xl relative z-10" 
             />
-            <div className="absolute -inset-4 bg-[#C49A45]/20 rounded-2xl z-0 translate-x-4 -translate-y-4"></div>
+            <div className="absolute -inset-4 bg-[#1A1A1A]/20 rounded-2xl z-0 translate-x-4 -translate-y-4"></div>
           </div>
         </div>
       </SectionWrapper>
@@ -107,8 +107,8 @@ const Home = () => {
       <SectionWrapper>
         <div className="relative mb-12 flex flex-col items-center justify-center">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Featured Projects</h2>
-          <div className="w-24 h-1 bg-[#C49A45] rounded-full"></div>
-          <Link to="/projects" className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[#C49A45] font-semibold hover:text-[#1A1A1A] transition-colors">
+          <div className="w-24 h-1 bg-[#1A1A1A] rounded-full"></div>
+          <Link to="/projects" className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[#1A1A1A] font-semibold hover:text-[#1A1A1A] transition-colors">
             View All Projects <ChevronRight size={20} />
           </Link>
         </div>
@@ -123,7 +123,7 @@ const Home = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
               <div className="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <span className="text-[#C49A45] text-xs font-bold uppercase tracking-wider mb-2 block">{project.category}</span>
+                <span className="text-[#1A1A1A] text-xs font-bold uppercase tracking-wider mb-2 block">{project.category}</span>
                 <h3 className="text-white text-2xl font-bold mb-1">{project.title}</h3>
                 <p className="text-gray-300 text-sm mb-4">{project.location}</p>
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
@@ -139,7 +139,7 @@ const Home = () => {
       <SectionWrapper bgClass="bg-[#F8F5F2]">
         <div className="text-center mb-20">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
-          <div className="w-24 h-1 bg-[#C49A45] mx-auto rounded-full mb-6"></div>
+          <div className="w-24 h-1 bg-[#1A1A1A] mx-auto rounded-full mb-6"></div>
           <p className="text-gray-600 max-w-2xl mx-auto">A seamless, transparent process designed to bring your vision to reality without the stress.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
@@ -151,7 +151,7 @@ const Home = () => {
             { step: '04', title: 'Handover', desc: 'Final walkthrough and handing over your new space.' }
           ].map((item, idx) => (
             <div key={idx} className="relative z-10 flex flex-col items-center text-center">
-              <div className="w-24 h-24 rounded-full bg-white border-[6px] border-[#F8F5F2] shadow-xl flex items-center justify-center mb-6 text-3xl font-bold text-[#C49A45]">
+              <div className="w-24 h-24 rounded-full bg-white border-[6px] border-[#F8F5F2] shadow-xl flex items-center justify-center mb-6 text-3xl font-bold text-[#1A1A1A]">
                 {item.step}
               </div>
               <h3 className="text-xl font-bold mb-3">{item.title}</h3>
@@ -168,13 +168,13 @@ const Home = () => {
       <SectionWrapper>
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Client Testimonials</h2>
-          <div className="w-24 h-1 bg-[#C49A45] mx-auto rounded-full mb-6"></div>
+          <div className="w-24 h-1 bg-[#1A1A1A] mx-auto rounded-full mb-6"></div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {testimonials.map((testimonial) => (
             <div key={testimonial.id} className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] relative mt-8">
               <div className="absolute -top-6 left-8 w-12 h-12 bg-[#1A1A1A] text-white flex items-center justify-center rounded-full text-3xl font-serif">"</div>
-              <div className="flex gap-1 mb-4 text-[#C49A45] mt-4">
+              <div className="flex gap-1 mb-4 text-[#1A1A1A] mt-4">
                 {[...Array(testimonial.rating)].map((_, i) => <Star key={i} size={16} fill="currentColor" stroke="none" />)}
               </div>
               <p className="text-gray-600 italic mb-6 text-sm leading-relaxed">"{testimonial.content}"</p>

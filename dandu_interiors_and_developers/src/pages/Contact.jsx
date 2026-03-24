@@ -146,7 +146,7 @@ const Contact = () => {
 
                 <div className="space-y-10">
                   <div className="flex items-center gap-6 group">
-                    <div className="text-[#1A1A1A] group-hover:text-[#C49A45] transition-colors duration-300">
+                    <div className="text-[#1A1A1A] group-hover:text-[#1A1A1A] transition-colors duration-300">
                       <Phone size={32} strokeWidth={1.5} />
                     </div>
                     <div>
@@ -156,7 +156,7 @@ const Contact = () => {
                   </div>
 
                   <div className="flex items-center gap-6 group">
-                    <div className="text-[#1A1A1A] group-hover:text-[#C49A45] transition-colors duration-300">
+                    <div className="text-[#1A1A1A] group-hover:text-[#1A1A1A] transition-colors duration-300">
                       <Mail size={32} strokeWidth={1.5} />
                     </div>
                     <div>
@@ -269,7 +269,7 @@ const Contact = () => {
                       animate={{ opacity: 1, y: 0 }}
                       className="p-5 rounded-2xl bg-black text-white flex items-center gap-4"
                     >
-                      <CheckCircle2 className="text-[#C49A45]" size={24} />
+                      <CheckCircle2 className="text-[#1A1A1A]" size={24} />
                       <p className="font-medium">{status.message}</p>
                     </motion.div>
                   )}
