@@ -96,13 +96,13 @@ const Contact = () => {
       
       {/* Monumental Marquee Hero Section - FIXED */}
       <section 
-        className={`fixed top-0 left-0 w-full flex items-center bg-[#F8F5F2] select-none pt-8 md:pt-12 z-0 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed top-0 left-0 w-full flex items-center bg-[#F8F5F2] select-none pt-2 md:pt-4 z-0 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         style={{ height: heroOffset ? `${heroOffset}px` : '50vh' }}
       >
         <motion.div 
           ref={heroRef} 
           style={{ y: bouncyY, scale: bouncyScale }}
-          className="w-full overflow-hidden whitespace-nowrap flex py-8"
+          className="w-full overflow-hidden whitespace-nowrap flex py-4"
         >
           <motion.div
             initial={{ x: 0 }}
@@ -110,10 +110,10 @@ const Contact = () => {
             transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
             className="flex items-center"
           >
-            <h1 className="text-[20vh] md:text-[35vh] font-bold uppercase tracking-tighter text-[#1A1A1A] leading-none pr-12">
+            <h1 className="text-[15vh] md:text-[25vh] font-semibold tracking-tighter text-[#1A1A1A] leading-none pr-12">
               {marqueeText}
             </h1>
-            <h1 className="text-[20vh] md:text-[35vh] font-bold uppercase tracking-tighter text-[#1A1A1A] leading-none pr-12">
+            <h1 className="text-[15vh] md:text-[25vh] font-semibold tracking-tighter text-[#1A1A1A] leading-none pr-12">
               {marqueeText}
             </h1>
           </motion.div>
@@ -139,29 +139,29 @@ const Contact = () => {
                   <h2 className="text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-6 tracking-tight">
                     Let's Connect
                   </h2>
-                  <p className="text-gray-500 text-lg leading-relaxed max-w-sm">
-                    Have a project in mind? We'd love to hear from you. Reach out and let's create something extraordinary.
+                  <p className="text-gray-500 text-xl md:text-2xl leading-relaxed max-w-2xl font-light mb-10">
+                    Have a vision for your dream space? From bespoke luxury interiors to innovative architectural designs, we're here to bring your ideas to life with precision and passion. Reach out and let's create something extraordinary together.
                   </p>
                 </div>
 
-                <div className="space-y-8">
-                  <div className="flex items-center gap-5 group">
-                    <div className="w-12 h-12 bg-white rounded-full border border-black/5 flex items-center justify-center text-[#1A1A1A] group-hover:bg-[#1A1A1A] group-hover:text-white transition-all duration-300">
-                      <Phone size={20} />
+                <div className="space-y-10">
+                  <div className="flex items-center gap-6 group">
+                    <div className="text-[#1A1A1A] group-hover:text-[#C49A45] transition-colors duration-300">
+                      <Phone size={32} strokeWidth={1.5} />
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400 font-medium uppercase tracking-widest mb-0.5">Call Us</p>
-                      <p className="text-lg font-semibold text-[#1A1A1A]">+91 98661 66612</p>
+                      <p className="text-base text-gray-400 font-medium uppercase tracking-[0.2em] mb-1">Call Us</p>
+                      <p className="text-2xl md:text-3xl font-bold text-[#1A1A1A] tracking-tight">+91 98661 66612</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-5 group">
-                    <div className="w-12 h-12 bg-white rounded-full border border-black/5 flex items-center justify-center text-[#1A1A1A] group-hover:bg-[#1A1A1A] group-hover:text-white transition-all duration-300">
-                      <Mail size={20} />
+                  <div className="flex items-center gap-6 group">
+                    <div className="text-[#1A1A1A] group-hover:text-[#C49A45] transition-colors duration-300">
+                      <Mail size={32} strokeWidth={1.5} />
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400 font-medium uppercase tracking-widest mb-0.5">Email Us</p>
-                      <p className="text-lg font-semibold text-[#1A1A1A]">danduinteriordesigns@gmail.com</p>
+                      <p className="text-base text-gray-400 font-medium uppercase tracking-[0.2em] mb-1">Email Us</p>
+                      <p className="text-2xl md:text-3xl font-bold text-[#1A1A1A] tracking-tight">danduinteriordesigns@gmail.com</p>
                     </div>
                   </div>
                 </div>
@@ -298,12 +298,9 @@ const Contact = () => {
         <section className="bg-white py-20 lg:py-32">
           <div className="container-custom">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-              <h2 className="text-4xl md:text-6xl font-bold text-[#1A1A1A] tracking-tight">
+              <h2 className="text-5xl md:text-8xl font-bold text-[#1A1A1A] tracking-tight">
                 Our Studios
               </h2>
-              <p className="text-gray-500 max-w-sm text-right hidden md:block">
-                Visit our experience centers in Hyderabad and Bapatla to see our craftsmanship in person.
-              </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
@@ -321,10 +318,6 @@ const Contact = () => {
                   ></iframe>
                 </div>
                 <div className="px-2">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#C49A45] mb-2">
-                    <MapPin size={14} />
-                    Reg. Office
-                  </div>
                   <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">Hyderabad</h3>
                   <p className="text-gray-500 leading-relaxed">D-603, Vertex Pristine, Nizampet Road, Hyderabad, Telangana</p>
                 </div>
@@ -344,10 +337,6 @@ const Contact = () => {
                   ></iframe>
                 </div>
                 <div className="px-2">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#C49A45] mb-2">
-                    <MapPin size={14} />
-                    Branch Office
-                  </div>
                   <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">Bapatla</h3>
                   <p className="text-gray-500 leading-relaxed">Dr No: 9-4-12/B, Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101</p>
                 </div>
