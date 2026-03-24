@@ -101,22 +101,48 @@ const DesignIdeas = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 pb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-16">
             {designIdeas.map((idea, idx) => (
-              <Link to={`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`} key={idx} className="block group relative rounded-2xl overflow-hidden cursor-pointer card-hover aspect-square shadow-sm">
+              <Link to={`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`} key={idx} className="block group relative rounded-2xl overflow-hidden cursor-pointer aspect-square bg-[#F8F5F2]">
                 <img 
                   src={idea.image} 
                   alt={idea.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                  className="w-full h-full object-cover" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+                {/* Center Hover Overlay */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6 z-10 text-center">
+                  <h2 className="text-white text-3xl md:text-4xl font-extrabold tracking-tight leading-[1.1] translate-y-4 group-hover:translate-y-0 transition-transform duration-300 drop-shadow-md">
+                    {idea.title}
+                  </h2>
+                </div>
                 
-                <div className="absolute bottom-0 left-0 w-full p-6">
-                  <span className="text-[#C49A45] font-bold text-sm mb-1 block uppercase tracking-wider">{idea.count}</span>
-                  <h3 className="text-white text-xl font-bold mb-0">{idea.title}</h3>
+                {/* Top-Left Cutout Layer (Name) */}
+                <div className="absolute top-0 left-0 bg-[#F8F5F2] max-w-[80%] pb-3 pr-4 rounded-tl-2xl rounded-br-[24px] z-20 pointer-events-none">
+                  <svg className="absolute top-0 w-6 h-6 text-[#F8F5F2] fill-current pointer-events-none" style={{ left: 'calc(100% - 1px)' }} viewBox="0 0 24 24">
+                    <path d="M 0 0 L 24 0 C 10.745 0 0 10.745 0 24 Z" />
+                  </svg>
+                  <svg className="absolute left-0 w-6 h-6 text-[#F8F5F2] fill-current pointer-events-none" style={{ top: 'calc(100% - 1px)' }} viewBox="0 0 24 24">
+                    <path d="M 0 0 L 24 0 C 10.745 0 0 10.745 0 24 Z" />
+                  </svg>
                   
-                  <div className="flex items-center gap-2 text-[#C49A45] text-sm font-medium mt-3 opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
-                    Explore Gallery <MoveRight size={16} />
+                  <div className="px-4 pt-4 text-xs sm:text-sm font-extrabold text-[#1d322d] tracking-widest uppercase bg-transparent whitespace-nowrap truncate relative z-10">
+                    {idea.title}
+                  </div>
+                </div>
+
+                {/* Bottom-Right Cutout Layer (Explore button) */}
+                <div className="absolute bottom-0 right-0 bg-[#F8F5F2] max-w-[80%] pt-4 pl-4 rounded-br-2xl rounded-tl-[24px] z-20 pointer-events-none">
+                  <svg className="absolute right-0 w-6 h-6 text-[#F8F5F2] fill-current pointer-events-none" style={{ bottom: 'calc(100% - 1px)' }} viewBox="0 0 24 24">
+                    <path d="M 24 24 L 0 24 C 13.255 24 24 13.255 24 0 Z" />
+                  </svg>
+                  <svg className="absolute bottom-0 w-6 h-6 text-[#F8F5F2] fill-current pointer-events-none" style={{ right: 'calc(100% - 1px)' }} viewBox="0 0 24 24">
+                    <path d="M 24 24 L 0 24 C 13.255 24 24 13.255 24 0 Z" />
+                  </svg>
+                  
+                  <div className="px-4 pb-4 flex items-center justify-end text-xs sm:text-sm font-extrabold text-[#1d322d] tracking-widest uppercase bg-transparent whitespace-nowrap relative z-10">
+                    <span className="transition-colors duration-300">EXPLORE</span>
+                    <MoveRight size={16} className="w-0 opacity-0 group-hover:w-4 group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 -translate-x-2 group-hover:translate-x-0" />
                   </div>
                 </div>
               </Link>
@@ -124,21 +150,31 @@ const DesignIdeas = () => {
           </div>
         </SectionWrapper>
         
-        {/* CTA Inline */}
-        <SectionWrapper bgClass="bg-transparent">
-          <div className="bg-[#1A1A1A] rounded-3xl p-12 text-center relative overflow-hidden mb-16">
-            <div className="absolute top-0 left-0 w-64 h-64 bg-[#C49A45]/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#C49A45]/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
-            
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 relative z-10">Found something you like?</h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-10 relative z-10">
-              Let our expert designers customize these ideas to fit your space perfectly. Book a free consultation today.
-            </p>
-            <a href="/get-quote" className="inline-block bg-[#C49A45] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-[#1A1A1A] transition-colors relative z-10">
-              Book Free Consultation
-            </a>
+        {/* CTA Section */}
+        <section className="relative py-20 lg:py-24 overflow-hidden border-t border-gray-200 mt-10">
+          {/* Background Overlay - Full Width */}
+          <div className="absolute inset-0 z-0">
+            <img 
+              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=2000" 
+              alt="Interior Background" 
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
           </div>
-        </SectionWrapper>
+
+          <div className="container-custom relative z-10">
+            <div className="bg-[#37302F] p-8 md:p-14 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] text-center relative overflow-hidden border border-white/5 max-w-7xl mx-auto">
+              
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 relative z-10">Found something you like?</h2>
+              <p className="text-gray-400 text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto mb-10 relative z-10">
+                Let our expert designers customize these ideas to fit your space perfectly. Book a free consultation today.
+              </p>
+              <a href="/get-quote" className="inline-block bg-white text-[#1A1A1A] hover:bg-gray-100 px-8 py-4 rounded-md font-bold transition-transform hover:-translate-y-1 shadow-2xl relative z-10 text-sm md:text-base">
+                Book Free Consultation
+              </a>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

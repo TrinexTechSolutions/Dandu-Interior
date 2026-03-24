@@ -170,7 +170,7 @@ const Services = () => {
         </div>
 
         <div className="container-custom relative z-10">
-          <div className="bg-[#1A1A1A] p-8 md:p-14 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row items-center gap-12 lg:gap-16 border border-white/5 max-w-7xl mx-auto">
+          <div className="bg-[#37302F] p-8 md:p-14 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row items-center gap-12 lg:gap-16 border border-white/5 max-w-7xl mx-auto">
 
             {/* Left Side: Content & Button */}
             <div className="w-full lg:w-1/2 text-left">

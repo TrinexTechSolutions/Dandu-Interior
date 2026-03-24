@@ -1,206 +1,200 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CallToAction from '../components/CallToAction';
-import { Target, Eye, Shield, Heart } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { useScroll, useTransform, motion } from 'framer-motion';
 
 const About = () => {
+  const [hoveredValue, setHoveredValue] = useState(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const coreValues = [
+    {
+      id: '01',
+      title: 'Integrity',
+      desc: 'Honest pricing and transparent processes. We stand by our word from blueprint to handover.',
+      img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: '02',
+      title: 'Passion',
+      desc: 'We love what we do, and it reflects in the meticulous, obsessive details.',
+      img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: '03',
+      title: 'Excellence',
+      desc: 'Settling for "good enough" is never in our vocabulary. Perfection is the baseline.',
+      img: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      id: '04',
+      title: 'Client-First',
+      desc: 'Your vision drives our direction. We exist to serve and continuously exceed expectations.',
+      img: 'https://images.unsplash.com/photo-1510629681534-11029c9df37c?auto=format&fit=crop&q=80&w=800'
+    }
+  ];
+
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-[#F8F5F2] min-h-screen text-[#37302F] selection:bg-[#37302F] selection:text-[#F8F5F2] font-sans overflow-hidden">
       
-      {/* 1. The Epic Hero */}
-      <div className="relative h-[70vh] md:h-[80vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img 
-            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=1600" 
-            alt="Dandu Interiors Architecture" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/60"></div>
-        </div>
-        <div className="relative z-10 text-center max-w-5xl mx-auto px-4 mt-16 md:mt-24">
-          <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full border border-white/20 text-white text-xs font-bold uppercase tracking-[0.2em] mb-8 backdrop-blur-md">
-            Established Legacy
-          </div>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 tracking-tight">
-            We Are <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C49A45] to-[#E8D09E]">Dandu.</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed">
-            Crafting extraordinary environments where form meets function, and vision transforms into reality.
-          </p>
-        </div>
-        
-        {/* Subtle scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center animate-bounce">
-          <div className="w-px h-16 bg-gradient-to-b from-white/50 to-transparent"></div>
-        </div>
-      </div>
-
-      {/* 2. The Legacy (Our Story) */}
-      <section className="py-24 md:py-32 bg-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            
-            {/* Visual Composition */}
-            <div className="relative h-[500px] md:h-[600px] w-full">
-              <div className="absolute top-0 left-0 w-4/5 h-4/5 rounded-3xl overflow-hidden shadow-2xl z-10 group">
-                <img 
-                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800" 
-                  alt="Interior Planning" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
-                />
-              </div>
-              <div className="absolute bottom-0 right-0 w-3/5 h-3/5 rounded-3xl overflow-hidden shadow-2xl flex items-center justify-center border-8 border-white z-20 group">
-                <img 
-                  src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=800" 
-                  alt="Development Execution" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
-                />
-              </div>
-              <div className="absolute -top-10 -left-10 w-64 h-64 bg-[#C49A45]/10 rounded-full blur-3xl -z-10"></div>
-            </div>
-            
-            {/* Content */}
-            <div className="relative">
-              <div className="absolute -top-20 -left-10 text-[150px] font-black text-gray-50 opacity-60 pointer-events-none select-none tracking-tighter hidden md:block z-0">
-                STORY
-              </div>
-              <div className="relative z-10">
-                <span className="text-[#C49A45] font-bold tracking-[0.2em] uppercase text-sm mb-4 block">The Genesis</span>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-[#1A1A1A] leading-[1.1]">
-                  Not Just a Name.<br/>It's a <span className="italic font-light text-[#C49A45]">Legacy.</span>
-                </h2>
-                <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
-                  <p>
-                    Dandu Interiors & Developers was founded on a simple premise: to redefine the standards of interior design and construction. We believe every space has a story waiting to be told, and we are the craftsmen who bring that story to life.
-                  </p>
-                  <p>
-                    From humble beginnings to becoming a trusted name in luxury residential and dynamic commercial spaces, our journey is fueled by an unwavering commitment to quality, transparency, and innovation. We don't just build spaces; we build lifelong relationships.
-                  </p>
-                </div>
-                
-                <div className="mt-12 flex items-center gap-6 p-6 bg-[#F8F5F2] rounded-2xl border-l-4 border-[#C49A45]">
-                  <div className="w-16 h-16 rounded-full border-2 border-white shadow-md overflow-hidden shrink-0">
-                     <img 
-                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=200" 
-                        alt="D. Ramakrishna" 
-                        className="w-full h-full object-cover grayscale"
-                     />
-                  </div>
-                  <div>
-                    <p className="font-bold text-[#1A1A1A] text-xl">D. Ramakrishna</p>
-                    <p className="text-[#C49A45] text-xs font-bold uppercase tracking-wider">Founder & Director</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Mission & Vision (Minimalist) */}
-      <section className="bg-white px-4 pb-24 md:pb-32">
-        <div className="max-w-7xl mx-auto rounded-3xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)]">
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            {/* Mission */}
-            <div className="bg-[#1A1A1A] p-16 md:p-24 relative overflow-hidden group">
-              <div className="absolute -right-10 -bottom-20 text-[300px] font-black text-gray-800 opacity-20 group-hover:scale-110 transition-transform duration-1000 pointer-events-none z-0 leading-none">
-                M
-              </div>
-              <div className="relative z-10 text-white">
-                <Target size={48} className="text-[#C49A45] mb-8" />
-                <h3 className="text-4xl md:text-5xl font-bold mb-6">Our Mission</h3>
-                <p className="text-gray-400 text-lg leading-relaxed mix-blend-lighten">
-                  To deliver exceptional interior and construction solutions that enhance the quality of life and business operations for our clients, executing every project with integrity and precision.
-                </p>
-              </div>
-            </div>
-            
-            {/* Vision */}
-            <div className="bg-[#F8F5F2] p-16 md:p-24 relative overflow-hidden group">
-              <div className="absolute -right-10 -bottom-20 text-[300px] font-black text-white/50 opacity-100 group-hover:scale-110 transition-transform duration-1000 pointer-events-none z-0 leading-none">
-                V
-              </div>
-              <div className="relative z-10 text-[#1A1A1A]">
-                <Eye size={48} className="text-[#C49A45] mb-8" />
-                <h3 className="text-4xl md:text-5xl font-bold mb-6">Our Vision</h3>
-                <p className="text-gray-600 text-lg leading-relaxed">
-                  To be the most trusted and innovative premier interiors and developers brand, recognized universally for transforming visions into enduring realities.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Core Values (Bento Grid) */}
-      <section className="py-24 md:py-32 bg-[#1A1A1A] relative overflow-hidden">
-        {/* Abstract Glowing Orbs */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#C49A45]/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#C49A45]/5 rounded-full blur-[120px] pointer-events-none"></div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <span className="text-[#C49A45] font-bold tracking-[0.2em] uppercase text-sm mb-4 block">The Foundation</span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              We Construct. We Maintain.<br/><span className="italic font-light text-[#C49A45]">We Care.</span>
-            </h2>
-            <p className="text-gray-400 text-lg">
-              Our core values dictate every sketch we draw, every brick we lay, and every client interaction. True success is measured by the satisfaction of the people who inhabit our spaces.
+      {/* 1. Editorial Hero */}
+      <section className="pt-40 pb-20 md:pt-48 md:pb-32 px-6 md:px-12 max-w-[1600px] mx-auto relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-end relative z-10">
+          
+          <div className="lg:col-span-7 xl:col-span-8 z-10">
+            <span className="text-[#37302F]/60 text-xs font-bold tracking-[0.3em] uppercase mb-8 block">Dandu Interiors & Developers</span>
+            <h1 className="text-[5rem] sm:text-8xl md:text-[9rem] lg:text-[10rem] xl:text-[12rem] font-medium leading-[0.8] tracking-tighter mb-10 -ml-2">
+              The <br/> <span className="font-serif italic text-[#37302F]/70 pr-4 block lg:inline">Studio.</span>
+            </h1>
+            <p className="text-xl md:text-3xl font-light text-[#37302F]/70 max-w-xl leading-relaxed">
+              We don't just draft blueprints; we curate feelings. Transforming raw geometry into enduring, breathing architecture.
             </p>
           </div>
 
-          {/* Premium Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* Integrity (Wide) */}
-            <div className="md:col-span-2 bg-white/5 border border-white/10 rounded-3xl p-10 md:p-14 backdrop-blur-sm relative overflow-hidden group hover:bg-white/10 transition-colors duration-500">
-              <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#C49A45]/20 rounded-full blur-3xl group-hover:bg-[#C49A45]/40 transition-all duration-500"></div>
-              <Shield className="text-[#C49A45] mb-6" size={40} />
-              <h4 className="font-bold text-3xl text-white mb-4">Integrity</h4>
-              <p className="text-lg text-gray-400 max-w-md">Honest pricing, transparent processes, and no hidden surprises. We stand by our word from blueprint to handover.</p>
-            </div>
-
-            {/* Passion (Square) */}
-            <div className="md:col-span-1 bg-white/5 border border-white/10 rounded-3xl p-10 md:p-14 backdrop-blur-sm relative overflow-hidden group hover:bg-white/10 transition-colors duration-500">
-               <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-[#C49A45]/20 rounded-full blur-3xl group-hover:bg-[#C49A45]/40 transition-all duration-500"></div>
-               <Heart className="text-[#C49A45] mb-6" size={40} />
-               <h4 className="font-bold text-3xl text-white mb-4">Passion</h4>
-               <p className="text-lg text-gray-400">We love what we do, and it reflects in the meticulous details.</p>
-            </div>
-
-            {/* Excellence (Square) */}
-            <div className="md:col-span-1 bg-white/5 border border-white/10 rounded-3xl p-10 md:p-14 backdrop-blur-sm relative overflow-hidden group hover:bg-white/10 transition-colors duration-500">
-               <div className="absolute -left-10 -top-10 w-40 h-40 bg-[#C49A45]/20 rounded-full blur-3xl group-hover:bg-[#C49A45]/40 transition-all duration-500"></div>
-               <Target className="text-[#C49A45] mb-6" size={40} />
-               <h4 className="font-bold text-3xl text-white mb-4">Excellence</h4>
-               <p className="text-lg text-gray-400">Settling for 'good enough' is never in our vocabulary.</p>
-            </div>
-
-            {/* Client-First (Wide) */}
-            <div className="md:col-span-2 bg-[#C49A45]/10 border border-[#C49A45]/20 rounded-3xl p-10 md:p-14 backdrop-blur-sm relative overflow-hidden group hover:bg-[#C49A45]/20 transition-colors duration-500 flex flex-col justify-end">
-               <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-[#C49A45]/30 rounded-full blur-3xl group-hover:bg-[#C49A45]/50 transition-all duration-500"></div>
-               <div className="relative z-10 w-full flex flex-col md:flex-row md:items-center justify-between gap-8">
-                 <div>
-                   <h4 className="font-bold text-3xl text-white mb-4">Client-First</h4>
-                   <p className="text-lg text-[#E8D09E] max-w-md">Your vision drives our direction. We are here to serve your needs and continuously exceed expectations.</p>
-                 </div>
-                 <div className="rounded-full border border-[#C49A45]/30 p-6 self-start shrink-0 mix-blend-screen bg-[#C49A45]/10">
-                    <Heart className="text-[#C49A45]" size={40} />
-                 </div>
-               </div>
-            </div>
-
+          <div className="lg:col-span-5 xl:col-span-4 relative h-[60vh] lg:h-[75vh] w-full overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl">
+             <img 
+               src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=1200" 
+               alt="Hero Architecture" 
+               className="w-full h-full object-cover object-center absolute inset-0 transform hover:scale-105 transition-transform duration-1000"
+             />
+             {/* Decorative Structural lines overlay */}
+             <div className="absolute inset-0 border border-white/20 m-4 pointer-events-none"></div>
           </div>
+        </div>
+        
+        {/* Abstract Background Typography */}
+        <div className="absolute top-32 right-0 text-[15vw] font-black text-[#37302F]/5 select-none pointer-events-none leading-none -z-10 tracking-tighter">
+          DESIGN
         </div>
       </section>
 
+      {/* Breakline */}
+      <div className="w-full border-t border-[#37302F]/10"></div>
+
+      {/* 2. The Manifesto (Oversized Scroll) */}
+      <section className="py-24 md:py-48 px-6 md:px-12 max-w-[1400px] mx-auto">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-[1.3] text-[#37302F] tracking-tight">
+            "Founded on a singular uncompromising premise: the spaces we inhabit should profoundly elevate the human experience. We blend timeless elegance with strict functional utility to forge lifelong relationships."
+          </h2>
+        </div>
+      </section>
+
+      {/* Breakline */}
+      <div className="w-full border-t border-[#37302F]/10"></div>
+
+      {/* 3. The Principal (Founder Profile) */}
+      <section className="py-24 md:py-32 px-6 md:px-12 max-w-[1600px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+          
+          {/* Portrait */}
+          <div className="lg:col-span-5 h-[60vh] md:h-[80vh] w-full relative overflow-hidden group">
+            <img 
+              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=1000" 
+              alt="D. Ramakrishna - Founder" 
+              className="w-full h-full object-cover grayscale contrast-125 transform group-hover:scale-105 transition-transform duration-1000"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60"></div>
+            <div className="absolute bottom-8 left-8 text-white text-xs tracking-widest font-bold uppercase mix-blend-screen flex items-center gap-3">
+              <span className="w-8 h-px bg-white block"></span> Founder & Director
+            </div>
+          </div>
+
+          {/* Minimalist Data */}
+          <div className="lg:col-span-7 flex flex-col justify-between h-full py-0 lg:py-8">
+            <div>
+              <h3 className="text-5xl md:text-7xl font-serif italic text-[#37302F] mb-16 tracking-tight">D. Ramakrishna</h3>
+              
+              <div className="border-t border-[#37302F]/10 py-10">
+                <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#37302F]/40 block mb-6">Philosophy</span>
+                <p className="text-2xl md:text-4xl font-light leading-[1.4] tracking-tight">
+                  "Architecture is fundamentally an act of optimism. Every line we draw is a commitment to a better, more intentional future for our clients."
+                </p>
+              </div>
+
+              <div className="border-t border-b border-[#37302F]/10 py-10">
+                <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#37302F]/40 block mb-6">Expertise Focus</span>
+                <div className="flex flex-wrap gap-3 text-xs md:text-sm uppercase tracking-widest font-bold text-[#37302F]">
+                  <span className="px-5 py-3 border border-[#37302F]/20 rounded-full hover:bg-[#37302F] hover:text-[#F8F5F2] transition-colors cursor-default">Residential Luxury</span>
+                  <span className="px-5 py-3 border border-[#37302F]/20 rounded-full hover:bg-[#37302F] hover:text-[#F8F5F2] transition-colors cursor-default">Commercial Architecture</span>
+                  <span className="px-5 py-3 border border-[#37302F]/20 rounded-full hover:bg-[#37302F] hover:text-[#F8F5F2] transition-colors cursor-default">Spatial Planning</span>
+                  <span className="px-5 py-3 border border-[#37302F]/20 rounded-full hover:bg-[#37302F] hover:text-[#F8F5F2] transition-colors cursor-default">Execution & Built</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-12 lg:mt-32 relative">
+               <span className="text-[20vw] lg:text-[180px] font-medium leading-none text-[#37302F]/5 select-none -ml-2 lg:-ml-4 tracking-tighter block">
+                 Vision.
+               </span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 4. The Practice (Interactive Vertical Index) */}
+      <section className="pt-24 pb-32 md:pt-40 md:pb-48 bg-[#1A1A1A] text-[#F8F5F2] px-6 md:px-12 relative overflow-hidden">
+         {/* Floating Hover Image Generator */}
+         {hoveredValue && (
+           <div className="hidden lg:block fixed top-1/2 left-1/2 -translate-y-1/2 w-[35vw] h-[65vh] pointer-events-none z-50 transition-opacity duration-500 ease-out shadow-2xl animate-fade-in mix-blend-lighten opacity-80">
+             <img 
+               src={coreValues.find(v => v.id === hoveredValue)?.img} 
+               alt="Core Value Preview" 
+               className="w-full h-full object-cover filter grayscale sepia-[0.2]"
+             />
+           </div>
+         )}
+
+         <div className="max-w-[1600px] mx-auto relative z-10">
+            <div className="mb-24 md:mb-40 flex justify-between items-end border-b border-white/20 pb-12">
+              <div>
+                <h2 className="text-xs font-bold tracking-[0.4em] uppercase text-[#37302F]/60 mb-8 flex items-center gap-4">
+                  <span className="w-12 h-px bg-[#37302F]/40 block"></span> Our Practice
+                </h2>
+                <h3 className="text-5xl md:text-7xl lg:text-[7rem] font-light tracking-tighter leading-[0.9]">
+                  The <span className="font-serif italic text-[#37302F]/70">Foundation.</span>
+                </h3>
+              </div>
+            </div>
+
+            <div className="flex flex-col border-b border-white/20 relative z-10">
+              {coreValues.map((value) => (
+                <div 
+                  key={value.id}
+                  className="group flex flex-col lg:flex-row lg:items-center justify-between border-t border-white/20 py-12 lg:py-20 transition-all duration-700 hover:bg-[#F8F5F2] hover:text-[#1A1A1A] cursor-crosshair px-6 lg:px-12 -mx-6 lg:-mx-12"
+                  onMouseEnter={() => setHoveredValue(value.id)}
+                  onMouseLeave={() => setHoveredValue(null)}
+                >
+                  <div className="flex items-start lg:items-center gap-8 lg:gap-16 mb-8 lg:mb-0">
+                    <span className="text-xl md:text-3xl font-bold tracking-widest text-[#37302F]/40 group-hover:text-[#37302F]/60 transition-colors">
+                      {value.id}
+                    </span>
+                    <h4 className="text-4xl md:text-6xl lg:text-[5rem] font-medium tracking-tighter group-hover:translate-x-8 transition-transform duration-700 ease-out">
+                      {value.title}
+                    </h4>
+                  </div>
+                  <div className="lg:w-1/3 xl:w-1/4">
+                    <p className="text-lg lg:text-xl font-light text-white/50 group-hover:text-[#1A1A1A] transition-colors duration-700 leading-relaxed">
+                      {value.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+         </div>
+      </section>
+
       {/* 5. Statement & Call To Action */}
-      <section className="bg-white">
-        <div className="py-24 md:py-32 text-center px-4 relative overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-px bg-gradient-to-r from-transparent via-[#C49A45]/30 to-transparent"></div>
-          <div className="max-w-5xl mx-auto relative z-10">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif text-[#1A1A1A] font-light italic leading-tight">
-              "One Team. All Solutions. <br/>
-              <span className="font-bold text-[#C49A45] not-italic">Built on Trust.</span>"
+      <section className="bg-[#F8F5F2]">
+        <div className="py-32 md:py-48 text-center px-6 relative overflow-hidden flex flex-col items-center border-b border-[#37302F]/10">
+          <div className="max-w-[1400px] mx-auto relative z-10 w-full">
+            <h2 className="text-[3rem] sm:text-6xl md:text-8xl lg:text-[10rem] font-sans text-[#37302F] tracking-tighter font-light leading-[0.85] text-left md:text-center">
+              One Team.<br/> <span className="text-[#37302F]/40 italic font-serif">All Solutions.</span> <br/>
+              <span className="font-bold text-[#37302F]/80 tracking-tighter block mt-8 md:mt-12 text-[4rem] sm:text-7xl md:text-9xl lg:text-[12rem] text-left md:text-right">Built on Trust.</span>
             </h2>
           </div>
         </div>
@@ -208,7 +202,6 @@ const About = () => {
         {/* Global CTA */}
         <CallToAction />
       </section>
-
     </div>
   );
 };

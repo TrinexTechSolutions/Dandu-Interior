@@ -37,14 +37,33 @@ const DesignIdeaDetail = () => {
   ];
 
   return (
-    <div className="bg-white min-h-screen text-gray-900 relative">
-      {/* Top Right Close Button */}
-      <Link 
-        to="/design-ideas" 
-        className="absolute top-6 right-6 z-50 w-12 h-12 bg-white/20 backdrop-blur-md border border-white/50 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-[#1A1A1A] transition-all duration-300 shadow-xl"
-      >
-        <X size={24} />
-      </Link>
+    <div className="bg-white min-h-screen text-gray-900 relative pt-4 md:pt-6 lg:pt-8">
+      {/* Permanent Fixed Solid Top Mask for Scrolling Frame Continuity */}
+      <div className="fixed top-0 left-0 w-full h-4 md:h-6 lg:h-8 bg-white z-[60] pointer-events-none"></div>
+
+      {/* Deepened Top Screen Corner Masks */}
+      <svg className="fixed top-4 md:top-6 lg:top-8 left-0 w-10 h-10 md:w-24 md:h-24 text-white fill-current pointer-events-none z-[60]" viewBox="0 0 24 24">
+        <path d="M 0 0 L 24 0 C 10.745 0 0 10.745 0 24 Z" />
+      </svg>
+      <svg className="fixed top-4 md:top-6 lg:top-8 right-0 w-10 h-10 md:w-24 md:h-24 text-white fill-current pointer-events-none z-[60]" viewBox="0 0 24 24">
+        <path d="M 0 0 L 24 0 L 24 24 C 24 10.745 13.255 0 0 0 Z" />
+      </svg>
+
+      {/* Transparent Sticky Header */}
+      <div className="fixed top-4 md:top-6 lg:top-8 left-0 w-full z-[70] pointer-events-none">
+        <div className="w-full bg-transparent h-24 md:h-28 flex items-center justify-between px-8 md:px-16 pointer-events-auto transition-transform duration-300 relative">
+          <div className="text-white drop-shadow-md font-extrabold tracking-widest text-sm md:text-base uppercase flex items-center gap-3">
+            <span className="w-2 h-2 rounded-full bg-[#C49A45] shadow-sm"></span>
+            {idea.title}
+          </div>
+          <Link 
+            to="/design-ideas" 
+            className="w-12 h-12 bg-white/20 backdrop-blur-md border border-white/50 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-[#1A1A1A] transition-all duration-300 shadow-xl group"
+          >
+            <X size={24} strokeWidth={2.5} className="group-hover:rotate-90 transition-transform duration-300" />
+          </Link>
+        </div>
+      </div>
 
       {/* Hero Section */}
       <div className="relative h-[60vh] md:h-[70vh] w-full overflow-hidden">
