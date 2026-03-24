@@ -30,13 +30,17 @@ const Projects = () => {
     const measureHero = () => {
       if (heroTitleRef.current) {
         const rect = heroTitleRef.current.getBoundingClientRect();
-        setHeroContentTop(rect.bottom + window.scrollY + 28);
+        setHeroContentTop(rect.bottom + window.scrollY + 24);
       }
     };
     measureHero();
     const ro = new ResizeObserver(measureHero);
     if (heroTitleRef.current) ro.observe(heroTitleRef.current);
-    return () => ro.disconnect();
+    window.addEventListener('resize', measureHero);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measureHero);
+    };
   }, []);
 
   const { scrollY } = useScroll();
@@ -115,7 +119,7 @@ const Projects = () => {
       return (
         <div
           key={item.itemId}
-          className={`relative overflow-hidden rounded-xl w-full ${item.aspect} ${item.bg} flex flex-col justify-center items-center p-6 sm:p-10 text-center mb-4 sm:mb-6`}
+          className={`relative overflow-hidden rounded-xl w-full ${item.aspect} ${item.bg} flex flex-col justify-center items-center p-6 sm:p-10 text-center`}
         >
           <span className={`text-6xl absolute -top-1 left-4 ${item.text_col} opacity-[0.1] font-serif leading-none`}>"</span>
           <p className={`font-medium text-sm md:text-base lg:text-lg leading-relaxed ${item.text_col} relative z-10 font-serif italic line-clamp-4`}>{item.text}</p>
@@ -127,7 +131,7 @@ const Projects = () => {
       <motion.div
         key={item.itemId}
         whileHover={{ y: -5 }}
-        className="group relative overflow-hidden rounded-xl cursor-pointer mb-4 sm:mb-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+        className="group relative overflow-hidden rounded-xl cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-300"
         onClick={() => navigate(`/projects/${item.id}`)}
       >
         <img
@@ -149,20 +153,50 @@ const Projects = () => {
   };
 
   const Column = ({ col, colIdx, totalCols }) => {
-    // Determine relative speeds/offsets
-    // We want them to start staggered (not at same level)
-    // and align at the end.
-    // Let's use a simple staggered progress.
-    const speed = [0, 0.15, 0.08, 0.22][colIdx % 4];
-    const y = useTransform(scrollYProgress, [0, 1], [colIdx * 40, 0]);
+    const colRef = useRef(null);
+    const [colHeight, setColHeight] = useState(0);
+    const [maxHeight, setMaxHeight] = useState(0);
+
+    useEffect(() => {
+      const measure = () => {
+        if (colRef.current && colRef.current.parentElement) {
+          const myHeight = colRef.current.offsetHeight;
+          const siblings = Array.from(colRef.current.parentElement.children);
+          const maxSiblingHeight = Math.max(...siblings.map(s => s.offsetHeight));
+          setColHeight(myHeight);
+          setMaxHeight(maxSiblingHeight);
+        }
+      };
+
+      measure();
+      window.addEventListener('resize', measure);
+      const observer = new ResizeObserver(measure);
+      if (colRef.current) observer.observe(colRef.current);
+      if (colRef.current && colRef.current.parentElement) observer.observe(colRef.current.parentElement);
+
+      const timer = setTimeout(measure, 500);
+      const timer2 = setTimeout(measure, 1500);
+
+      return () => {
+        window.removeEventListener('resize', measure);
+        observer.disconnect();
+        clearTimeout(timer);
+        clearTimeout(timer2);
+      };
+    }, [col, totalCols]);
+
+    const deltaY = Math.max(0, maxHeight - colHeight);
+    const y = useTransform(scrollYProgress, [0, 1], [0, deltaY]);
 
     return (
-      <motion.div
-        style={{ y }}
-        className="flex-1 min-w-0"
-      >
-        {col.map((item, idx) => renderItem(item, idx * totalCols + colIdx))}
-      </motion.div>
+      <div ref={colRef} className="flex-1 min-w-0 flex flex-col gap-4 sm:gap-6 h-max">
+        {col.length > 0 && renderItem(col[0], colIdx)}
+        {col.length > 1 && (
+          <motion.div style={{ y }} className="flex flex-col gap-4 sm:gap-6 h-max">
+            {col.slice(1).map((item, idx) => renderItem(item, (idx + 1) * totalCols + colIdx))}
+          </motion.div>
+        )}
+      </div>
     );
   };
 
@@ -205,13 +239,14 @@ const Projects = () => {
         style={{ marginTop: heroContentTop > 0 ? `${heroContentTop}px` : '38vh' }}
         className="relative z-10 bg-[#F8F5F2] will-change-transform"
       >
-        <SectionWrapper bgClass="bg-transparent" containerClass="w-full px-4 lg:px-8">
-          <div className="w-full flex justify-start mb-8 md:mb-16">
-            <div className="text-left max-w-lg">
-              <p className="text-[#3a3a3a] text-sm md:text-lg leading-relaxed font-semibold tracking-wide lowercase">
-                Explore our portfolio of completed masterworks — each space a
-                testament to design, craft, and the vision of those who dare
-                to transform the ordinary into the extraordinary.
+        <SectionWrapper bgClass="bg-transparent" paddingClass="pt-0.5 pb-16" containerClass="w-full px-4 lg:px-8">
+          <div className="w-full flex justify-start mt-6 mb-8 md:mb-16">
+            <div className="text-left max-w-4xl">
+              <p 
+                className="text-[#1d322d] text-[16px] font-medium leading-[1.5] tracking-[-0.02em] text-left line-clamp-2"
+                style={{ fontFamily: '"Inter", "Inter Placeholder", sans-serif' }}
+              >
+                Explore our portfolio of completed masterworks — each space a testament to design, craft, and the vision of those who dare to transform the ordinary into the extraordinary.
               </p>
             </div>
           </div>
