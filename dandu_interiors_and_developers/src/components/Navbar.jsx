@@ -66,7 +66,7 @@ const Navbar = () => {
     <nav 
       ref={navRef}
       style={{ transform: `translateY(-${navbarOffset}px)` }}
-      className={`${isParallaxPage ? 'fixed' : 'relative'} top-0 left-0 w-full z-50 bg-white py-4 transition-colors duration-300`}
+      className={`${isParallaxPage ? 'fixed bg-[#F8F5F2]' : 'relative bg-white'} top-0 left-0 w-full z-50 py-4 transition-colors duration-300`}
     >
       <div className="w-full px-4 lg:px-8">
         <div className="flex justify-between items-center">

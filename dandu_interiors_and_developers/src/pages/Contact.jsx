@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
-import logo from '../assets/logos_and_bg_images/dandu_logo.svg';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { MapPin, Phone, Mail, Send, CheckCircle2 } from 'lucide-react';
 
 const Contact = () => {
+  const heroRef = React.useRef(null);
+  const contentRef = React.useRef(null);
+  const [heroOffset, setHeroOffset] = React.useState(0);
+  const [isCardMode, setIsCardMode] = React.useState(true);
+
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -17,6 +22,45 @@ const Contact = () => {
     error: false,
     message: "",
   });
+
+  const { scrollY } = useScroll();
+  const yRange = useTransform(scrollY, [0, 500], [0, 60]);
+  const scaleRange = useTransform(scrollY, [0, 500], [1, 1.05]);
+  const bouncyY = useSpring(yRange, { stiffness: 100, damping: 20 });
+  const bouncyScale = useSpring(scaleRange, { stiffness: 100, damping: 20 });
+
+  React.useEffect(() => {
+    const updateHeight = () => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        const navHeight = document.querySelector('nav')?.offsetHeight || 80;
+        setHeroOffset(rect.height + navHeight + 40); // 40px buffer
+      }
+    };
+
+    const handleScroll = () => {
+      if (contentRef.current) {
+        const top = contentRef.current.getBoundingClientRect().top;
+        const navHeight = document.querySelector('nav')?.offsetHeight || 80;
+        setIsCardMode(top > navHeight);
+      }
+    };
+
+    updateHeight();
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', updateHeight);
+    window.addEventListener('load', updateHeight);
+    
+    // Refresh after a short delay to catch final layout
+    const timer = setTimeout(updateHeight, 100);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateHeight);
+      window.removeEventListener('load', updateHeight);
+      clearTimeout(timer);
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +77,7 @@ const Contact = () => {
         submitting: false,
         submitted: true,
         error: false,
-        message: "Thank you! Your message has been sent successfully.",
+        message: "Your request has been received. Our team will contact you shortly.",
       });
       setFormData({
         name: "",
@@ -45,244 +89,276 @@ const Contact = () => {
     }, 1500);
   };
 
+  const marqueeText = "Let's Build Your Dream Space. ";
+
   return (
-    <div className="bg-white min-h-screen relative">
+    <div className="bg-[#F8F5F2] min-h-screen relative font-sans overflow-x-hidden">
       
-      {/* Spectacular Hero Section */}
-      <section className="relative pt-20 md:pt-24 bg-white overflow-hidden">
-        {/* Background Decorative Elements */}
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#C49A45]/5 to-transparent pointer-events-none"></div>
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#C49A45]/10 rounded-full blur-[100px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C49A45]/20 to-transparent pointer-events-none"></div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            
-            {/* Left Content */}
-            <div className="w-full lg:w-1/2 text-center lg:text-left">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#1A1A1A] leading-[1.1] mb-6">
-                Let's Build Your <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C49A45] to-[#D4AF37]">Dream Space.</span>
-              </h1>
-              <p className="text-gray-600 text-lg md:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Whether you have a full architectural plan ready or just a vision in your head, our team of expert designers and engineers are ready to bring it to life.
-              </p>
-            </div>
-
-            {/* Right Images / Composition */}
-            <div className="w-full lg:w-1/2 relative hidden md:block">
-              {/* Image without background (Transparent Design) */}
-              <div className="relative w-full aspect-square md:aspect-[4/3] flex items-center justify-center p-8 group">
-                <div className="absolute inset-0 bg-[#C49A45]/5 rounded-full blur-3xl transform group-hover:scale-110 transition-transform duration-1000 pointer-events-none"></div>
-                <img 
-                  src={logo} 
-                  alt="Decorative Design" 
-                  className="w-3/4 h-3/4 object-contain relative z-10 opacity-90 drop-shadow-xl transition-transform duration-1000 group-hover:scale-105"
-                />
-              </div>
-            </div>
-            
-          </div>
-        </div>
+      {/* Monumental Marquee Hero Section - FIXED */}
+      <section 
+        className={`fixed top-0 left-0 w-full flex items-center bg-[#F8F5F2] select-none pt-8 md:pt-12 z-0 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        style={{ height: heroOffset ? `${heroOffset}px` : '50vh' }}
+      >
+        <motion.div 
+          ref={heroRef} 
+          style={{ y: bouncyY, scale: bouncyScale }}
+          className="w-full overflow-hidden whitespace-nowrap flex py-8"
+        >
+          <motion.div
+            initial={{ x: 0 }}
+            animate={{ x: "-50%" }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="flex items-center"
+          >
+            <h1 className="text-[20vh] md:text-[35vh] font-bold uppercase tracking-tighter text-[#1A1A1A] leading-none pr-12">
+              {marqueeText}
+            </h1>
+            <h1 className="text-[20vh] md:text-[35vh] font-bold uppercase tracking-tighter text-[#1A1A1A] leading-none pr-12">
+              {marqueeText}
+            </h1>
+          </motion.div>
+        </motion.div>
       </section>
 
-      <div className="bg-white pt-8 pb-12 md:pt-12 md:pb-20 lg:pt-16 lg:pb-24">
-        {/* Contact Bar */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-          <div className="flex justify-around items-center gap-8 flex-wrap">
-            <div className="flex items-center gap-6">
-              <div className="w-16 h-16 bg-[#F8F5F2] text-[#C49A45] rounded-full flex justify-center items-center shrink-0">
-                <Phone size={28} />
+      {/* Main Content Sections - Sliding OVER the fixed header */}
+      <div 
+        id="contact-content"
+        ref={contentRef}
+        className="relative z-10 transition-all duration-300 ease-out"
+        style={{ marginTop: heroOffset ? `${heroOffset}px` : '50vh' }}
+      >
+        
+        {/* Section 1: Minimalist Contact Form */}
+        <section className="bg-[#F8F5F2] py-10 lg:py-16">
+          <div className="container-custom">
+            <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-20">
+              
+              {/* Left Side: Contact Info & Intent */}
+              <div className="flex flex-col justify-start space-y-12">
+                <div>
+                  <h2 className="text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-6 tracking-tight">
+                    Let's Connect
+                  </h2>
+                  <p className="text-gray-500 text-lg leading-relaxed max-w-sm">
+                    Have a project in mind? We'd love to hear from you. Reach out and let's create something extraordinary.
+                  </p>
+                </div>
+
+                <div className="space-y-8">
+                  <div className="flex items-center gap-5 group">
+                    <div className="w-12 h-12 bg-white rounded-full border border-black/5 flex items-center justify-center text-[#1A1A1A] group-hover:bg-[#1A1A1A] group-hover:text-white transition-all duration-300">
+                      <Phone size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 font-medium uppercase tracking-widest mb-0.5">Call Us</p>
+                      <p className="text-lg font-semibold text-[#1A1A1A]">+91 98661 66612</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-5 group">
+                    <div className="w-12 h-12 bg-white rounded-full border border-black/5 flex items-center justify-center text-[#1A1A1A] group-hover:bg-[#1A1A1A] group-hover:text-white transition-all duration-300">
+                      <Mail size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-400 font-medium uppercase tracking-widest mb-0.5">Email Us</p>
+                      <p className="text-lg font-semibold text-[#1A1A1A]">danduinteriordesigns@gmail.com</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl mb-1 text-[#C49A45] font-semibold">Call Us</h3>
-                <p className="text-lg text-[#1A1A1A] font-medium">+91 9866166612</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-6">
-              <div className="w-16 h-16 bg-[#F8F5F2] text-[#C49A45] rounded-full flex justify-center items-center shrink-0">
-                <Mail size={28} />
-              </div>
-              <div>
-                <h3 className="text-xl mb-1 text-[#C49A45] font-semibold">Email Us</h3>
-                <p className="text-lg text-[#1A1A1A] font-medium">danduinteriordesigns@gmail.com</p>
+
+              {/* Right Side: Re-styled Form */}
+              <div className="bg-[#F8F5F2] p-8 md:p-12 rounded-[32px] border border-black/20">
+                <h2 className="text-3xl font-bold text-[#1A1A1A] mb-10 text-center lg:text-left">Start a Conversation</h2>
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Your Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="Ex: John Doe"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-transparent border border-black/20 rounded-xl py-4 px-5 focus:border-[#1A1A1A] outline-none transition-all text-lg font-medium placeholder:text-gray-300"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">WhatsApp Number</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        placeholder="+91 00000 00000"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-transparent border border-black/20 rounded-xl py-4 px-5 focus:border-[#1A1A1A] outline-none transition-all text-lg font-medium placeholder:text-gray-300"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Location</label>
+                      <div className="relative">
+                        <select
+                          name="propertyLocation"
+                          value={formData.propertyLocation}
+                          onChange={handleChange}
+                          required
+                          className="w-full bg-transparent border border-black/20 rounded-xl py-4 px-5 focus:border-[#1A1A1A] outline-none transition-all text-lg font-medium appearance-none"
+                        >
+                          <option value="">Select Location</option>
+                          <option value="Hyderabad">Hyderabad</option>
+                          <option value="Bapatla">Bapatla</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                          <Send size={16} className="rotate-90" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Property Type</label>
+                      <div className="relative">
+                        <select
+                          name="propertyType"
+                          value={formData.propertyType}
+                          onChange={handleChange}
+                          required
+                          className="w-full bg-transparent border border-black/20 rounded-xl py-4 px-5 focus:border-[#1A1A1A] outline-none transition-all text-lg font-medium appearance-none"
+                        >
+                          <option value="">Select Type</option>
+                          <option value=" Villa">Villa</option>
+                          <option value="Apartment">Apartment</option>
+                          <option value="Commercial">Commercial</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                          <Send size={16} className="rotate-90" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Requirement</label>
+                    <div className="relative">
+                      <select
+                        name="requirement"
+                        value={formData.requirement}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-transparent border border-black/20 rounded-xl py-4 px-5 focus:border-[#1A1A1A] outline-none transition-all text-lg font-medium appearance-none"
+                      >
+                        <option value="">What do you need?</option>
+                        <option value="Full Home Interior">Full Home Interior</option>
+                        <option value="Renovation">Renovation</option>
+                        <option value="Other">Other</option>
+                      </select>
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                        <Send size={16} className="rotate-90" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {status.submitted && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-5 rounded-2xl bg-black text-white flex items-center gap-4"
+                    >
+                      <CheckCircle2 className="text-[#C49A45]" size={24} />
+                      <p className="font-medium">{status.message}</p>
+                    </motion.div>
+                  )}
+
+                  <div className="pt-6">
+                    <button
+                      type="submit"
+                      disabled={status.submitting}
+                      className="w-full bg-transparent border-2 border-black text-black py-4 rounded-xl font-bold text-lg hover:bg-black hover:text-white active:bg-black active:text-white transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 group"
+                    >
+                      {status.submitting ? "Sending..." : (
+                        <>
+                          <span>Send Message</span>
+                          <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Addresses & Maps */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
-          <h2 className="text-center text-4xl md:text-5xl font-bold mb-16 text-[#1A1A1A]">Our Locations</h2>
-
-          <div className="flex flex-col gap-16">
-            {/* Hyderabad Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-16 items-center">
-              <div className="flex items-start lg:items-center gap-6">
-                <div className="w-14 h-14 bg-[#F8F5F2] text-[#C49A45] rounded-full flex justify-center items-center shrink-0">
-                  <MapPin size={24} />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <h3 className="text-2xl md:text-3xl font-bold text-[#1A1A1A]">Registered Office (Hyderabad)</h3>
-                  <p className="text-lg leading-relaxed text-gray-600">D-603, Vertex Pristine, Nizampet Road, Hyderabad, Telangana</p>
-                </div>
-              </div>
-              <div className="rounded-2xl overflow-hidden shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100 h-[300px]">
-                <iframe
-                  title="Hyderabad Office Map"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.2750371465227!2d78.38466631487779!3d17.50269998801121!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91f56fa6da1d%3A0xc3dc8f5eb23db71a!2sVertex%20Pristine!5e0!3m2!1sen!2sin!4v1683446400000!5m2!1sen!2sin"
-                  width="100%"
-                  height="100%"
-                  className="border-0"
-                  allowFullScreen
-                  loading="lazy"
-                ></iframe>
-              </div>
-            </div>
-
-            <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-full"></div>
-
-            {/* Bapatla Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-16 items-center">
-              <div className="flex items-start lg:items-center gap-6">
-                <div className="w-14 h-14 bg-[#F8F5F2] text-[#C49A45] rounded-full flex justify-center items-center shrink-0">
-                  <MapPin size={24} />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <h3 className="text-2xl md:text-3xl font-bold text-[#1A1A1A]">Bapatla Address</h3>
-                  <p className="text-lg leading-relaxed text-gray-600">Dr No: 9-4-12/B, Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101</p>
-                </div>
-              </div>
-              <div className="rounded-2xl overflow-hidden shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100 h-[300px]">
-                <iframe
-                  title="Bapatla Office Map"
-                  src={`https://maps.google.com/maps?q=${encodeURIComponent("Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101")}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
-                  width="100%"
-                  height="100%"
-                  className="border-0"
-                  allowFullScreen
-                  loading="lazy"
-                ></iframe>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Contact Form Section */}
-      <div className="bg-[#F8F5F2] py-16 lg:py-24 relative z-10 w-full">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div>
-            <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#1A1A1A]">Schedule a Free Design Consultation</h2>
-              <p className="text-gray-600 text-lg">
-                Reach out to us immediately to arrange for a customised quotation from one of our assessors.
+        {/* Section 2: Precise Locations */}
+        <section className="bg-white py-20 lg:py-32">
+          <div className="container-custom">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+              <h2 className="text-4xl md:text-6xl font-bold text-[#1A1A1A] tracking-tight">
+                Our Studios
+              </h2>
+              <p className="text-gray-500 max-w-sm text-right hidden md:block">
+                Visit our experience centers in Hyderabad and Bapatla to see our craftsmanship in person.
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Jane Smith"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white border border-gray-200 rounded-xl p-4 focus:ring-2 focus:ring-[#C49A45] focus:border-transparent outline-none transition-all"
-                  />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+              {/* Hyderabad */}
+              <div className="space-y-6">
+                <div className="rounded-[32px] overflow-hidden transition-all duration-700 h-[400px] border border-black/5 shadow-xl relative group">
+                  <iframe
+                    title="Hyderabad Office Map"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.2750371465227!2d78.38466631487779!3d17.50269998801121!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91f56fa6da1d%3A0xc3dc8f5eb23db71a!2sVertex%20Pristine!5e0!3m2!1sen!2sin!4v1683446400000!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    className="border-0"
+                    allowFullScreen
+                    loading="lazy"
+                  ></iframe>
                 </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">WhatsApp mobile number</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="+91 00000 00000"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white border border-gray-200 rounded-xl p-4 focus:ring-2 focus:ring-[#C49A45] focus:border-transparent outline-none transition-all"
-                  />
+                <div className="px-2">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#C49A45] mb-2">
+                    <MapPin size={14} />
+                    Reg. Office
+                  </div>
+                  <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">Hyderabad</h3>
+                  <p className="text-gray-500 leading-relaxed">D-603, Vertex Pristine, Nizampet Road, Hyderabad, Telangana</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Where's your property located?</label>
-                  <select
-                    name="propertyLocation"
-                    value={formData.propertyLocation}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white border border-gray-200 rounded-xl p-4 focus:ring-2 focus:ring-[#C49A45] focus:border-transparent outline-none transition-all appearance-none"
-                  >
-                    <option value="">Select…</option>
-                    <option value="Hyderabad">Hyderabad</option>
-                    <option value="Bapatla">Bapatla</option>
-                    <option value="Other">Other</option>
-                  </select>
+              {/* Bapatla */}
+              <div className="space-y-6">
+                <div className="rounded-[32px] overflow-hidden transition-all duration-700 h-[400px] border border-black/5 shadow-xl relative group">
+                  <iframe
+                    title="Bapatla Office Map"
+                    src={`https://maps.google.com/maps?q=${encodeURIComponent("Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101")}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+                    width="100%"
+                    height="100%"
+                    className="border-0"
+                    allowFullScreen
+                    loading="lazy"
+                  ></iframe>
                 </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Type of property</label>
-                  <select
-                    name="propertyType"
-                    value={formData.propertyType}
-                    onChange={handleChange}
-                    required
-                    className="w-full bg-white border border-gray-200 rounded-xl p-4 focus:ring-2 focus:ring-[#C49A45] focus:border-transparent outline-none transition-all appearance-none"
-                  >
-                    <option value="">Select…</option>
-                    <option value="Villa">Villa</option>
-                    <option value="Apartment">Apartment</option>
-                    <option value="Commercial">Commercial</option>
-                    <option value="Other">Other</option>
-                  </select>
+                <div className="px-2">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#C49A45] mb-2">
+                    <MapPin size={14} />
+                    Branch Office
+                  </div>
+                  <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">Bapatla</h3>
+                  <p className="text-gray-500 leading-relaxed">Dr No: 9-4-12/B, Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101</p>
                 </div>
               </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Interior Design Requirement</label>
-                <select
-                  name="requirement"
-                  value={formData.requirement}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-white border border-gray-200 rounded-xl p-4 focus:ring-2 focus:ring-[#C49A45] focus:border-transparent outline-none transition-all appearance-none"
-                >
-                  <option value="">Select…</option>
-                  <option value="Full Home Interior">Full Home Interior</option>
-                  <option value="Kitchen Only">Kitchen Only</option>
-                  <option value="Living Room Only">Living Room Only</option>
-                  <option value="Wardrobes / Storage">Wardrobes / Storage</option>
-                  <option value="Renovation">Renovation</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-
-              {status.submitted && (
-                <div className={`p-4 rounded-xl text-center font-medium ${status.error ? "bg-red-50 text-red-600" : "bg-green-50 text-green-700"}`}>
-                  {status.message}
-                </div>
-              )}
-
-              <div className="mt-4 flex justify-center">
-                <button
-                  type="submit"
-                  disabled={status.submitting}
-                  className="bg-[#1A1A1A] hover:bg-[#C49A45] text-white px-10 py-4 rounded-xl font-bold text-lg transition-colors w-full md:w-auto disabled:opacity-70"
-                >
-                  {status.submitting ? "Processing..." : "Get Free Consultation"}
-                </button>
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
 };
 
 export default Contact;
+

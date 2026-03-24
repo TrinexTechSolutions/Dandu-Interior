@@ -29,7 +29,7 @@ const Services = () => {
         // Measure height + top padding/navbar space
         const rect = heroRef.current.getBoundingClientRect();
         const navHeight = document.querySelector('nav')?.offsetHeight || 80;
-        setHeroOffset(rect.height + navHeight + 40); // 40px base buffer
+        setHeroOffset(rect.height + navHeight + 80); // 80px base buffer
       }
     };
 
@@ -57,11 +57,11 @@ const Services = () => {
   if (!activeService) return null;
 
   return (
-    <div className="bg-white min-h-screen pb-0 relative">
+    <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
 
       {/* Static Fixed Header Section - Content slides OVER this */}
-      <div 
-        className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-hidden z-0 bg-white pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      <div
+        className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-hidden z-0 bg-[#F8F5F2] pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         style={{ height: heroOffset ? `${heroOffset}px` : '50vh' }}
       >
         <div ref={heroRef} className="w-full relative px-4 md:px-8">
@@ -100,16 +100,16 @@ const Services = () => {
       </div>
 
       {/* Main Content Sections - Seamlessly sliding OVER the fixed header */}
-      <div 
+      <div
         id="services-content"
         ref={contentRef}
-        className={`relative z-10 bg-[#F8F5F2] will-change-transform transition-all duration-500 ease-out ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'}`}
+        className={`relative z-10 bg-white will-change-transform transition-all duration-500 ease-out ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'}`}
         style={{ marginTop: heroOffset ? `${heroOffset}px` : '50vh' }}
       >
         {/* Minimal reveal margin */}
-        <div className="h-[2vh] md:h-[4vh] bg-[#F8F5F2] rounded-t-2xl md:rounded-t-[32px]"></div>
+        <div className="h-[2vh] md:h-[4vh] bg-white rounded-t-2xl md:rounded-t-[32px]"></div>
         {activeService.subServices.map((sub, index) => (
-          <section key={index} className={`py-8 md:py-16 relative ${index % 2 === 0 ? 'bg-[#F8F5F2]' : 'bg-white'}`}>
+          <section key={index} className={`py-8 md:py-16 relative ${index % 2 === 0 ? 'bg-white' : 'bg-[#F8F5F2]'}`}>
             <div className="container-custom">
               <div className={`flex flex-col gap-8 lg:gap-12 items-center ${index % 2 === 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
 
@@ -137,7 +137,7 @@ const Services = () => {
 
                 {/* Image */}
                 <div className="w-full lg:w-1/2 lg:drop-shadow-2xl">
-                  <div className={`relative shadow-2xl lg:shadow-none overflow-hidden aspect-[4/3] group rounded-2xl w-full h-full ${index % 2 === 0 ? 'lg:rounded-r-none lg:rounded-l-3xl lg:[clip-path:polygon(0%_0%,_75%_0%,_100%_100%,_0%_100%)]' : 'lg:rounded-l-none lg:rounded-r-3xl lg:[clip-path:polygon(25%_0%,_100%_0%,_100%_100%,_0%_100%)]'}`}>
+                  <div className={`relative shadow-2xl lg:shadow-none overflow-hidden aspect-[4/3] group w-full h-full ${index % 2 === 0 ? 'rounded-2xl lg:rounded-r-none lg:rounded-l-3xl lg:[clip-path:polygon(0%_0%,_75%_0%,_100%_100%,_0%_100%)]' : 'rounded-2xl lg:rounded-l-none lg:rounded-r-3xl lg:[clip-path:polygon(25%_0%,_100%_0%,_100%_100%,_0%_100%)]'}`}>
                     <img
                       src={sub.image}
                       alt={sub.name}
