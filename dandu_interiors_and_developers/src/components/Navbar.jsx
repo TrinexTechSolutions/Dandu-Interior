@@ -84,7 +84,7 @@ const Navbar = () => {
     <nav 
       ref={navRef}
       style={{ transform: `translateY(-${navbarOffset}px)` }}
-      className={`fixed top-0 left-0 w-full z-[100] py-4 transition-colors duration-300 border-b ${
+      className={`fixed top-0 left-0 w-full z-[100] py-3 transition-colors duration-300 border-b ${
         location.pathname === '/' && !scrolled
           ? 'bg-transparent border-[#37302F]/15'
           : 'bg-[#F8F5F2] border-[#37302F]/5'
