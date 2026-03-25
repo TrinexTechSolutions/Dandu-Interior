@@ -92,7 +92,7 @@ const DesignIdeas = () => {
         <SectionWrapper bgClass="bg-transparent" paddingClass="pt-0.5 pb-16" containerClass="w-full px-4 lg:px-8">
           <div className="w-full flex justify-start mt-6 mb-8 md:mb-16">
             <div className="text-left max-w-4xl">
-              <p 
+              <p
                 className="text-[#1d322d] text-[16px] font-medium leading-[1.5] tracking-[-0.02em] text-left line-clamp-2"
                 style={{ fontFamily: '"Inter", "Inter Placeholder", sans-serif' }}
               >
@@ -104,10 +104,10 @@ const DesignIdeas = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-16">
             {designIdeas.map((idea, idx) => (
               <Link to={`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`} key={idx} className="block group relative rounded-2xl overflow-hidden cursor-pointer aspect-square bg-[#F8F5F2]">
-                <img 
-                  src={idea.image} 
-                  alt={idea.title} 
-                  className="w-full h-full object-cover" 
+                <img
+                  src={idea.image}
+                  alt={idea.title}
+                  className="w-full h-full object-cover"
                 />
 
                 {/* Center Hover Overlay */}
@@ -116,7 +116,7 @@ const DesignIdeas = () => {
                     {idea.title}
                   </h2>
                 </div>
-                
+
                 {/* Top-Left Cutout Layer (Name) */}
                 <div className="absolute top-0 left-0 bg-[#F8F5F2] max-w-[80%] pb-3 pr-4 rounded-tl-2xl rounded-br-[24px] z-20 pointer-events-none">
                   <svg className="absolute top-0 w-6 h-6 text-[#F8F5F2] fill-current pointer-events-none" style={{ left: 'calc(100% - 1px)' }} viewBox="0 0 24 24">
@@ -125,7 +125,7 @@ const DesignIdeas = () => {
                   <svg className="absolute left-0 w-6 h-6 text-[#F8F5F2] fill-current pointer-events-none" style={{ top: 'calc(100% - 1px)' }} viewBox="0 0 24 24">
                     <path d="M 0 0 L 24 0 C 10.745 0 0 10.745 0 24 Z" />
                   </svg>
-                  
+
                   <div className="px-4 pt-4 text-xs sm:text-sm font-extrabold text-[#1d322d] tracking-widest uppercase bg-transparent whitespace-nowrap truncate relative z-10">
                     {idea.title}
                   </div>
@@ -139,7 +139,7 @@ const DesignIdeas = () => {
                   <svg className="absolute bottom-0 w-6 h-6 text-[#F8F5F2] fill-current pointer-events-none" style={{ right: 'calc(100% - 1px)' }} viewBox="0 0 24 24">
                     <path d="M 24 24 L 0 24 C 13.255 24 24 13.255 24 0 Z" />
                   </svg>
-                  
+
                   <div className="px-4 pb-4 flex items-center justify-end text-xs sm:text-sm font-extrabold text-[#1d322d] tracking-widest uppercase bg-transparent whitespace-nowrap relative z-10">
                     <span className="transition-colors duration-300">EXPLORE</span>
                     <MoveRight size={16} className="w-0 opacity-0 group-hover:w-4 group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 -translate-x-2 group-hover:translate-x-0" />
@@ -149,22 +149,22 @@ const DesignIdeas = () => {
             ))}
           </div>
         </SectionWrapper>
-        
+
         {/* CTA Section */}
         <section className="relative py-20 lg:py-24 overflow-hidden border-t border-gray-200 mt-10">
           {/* Background Overlay - Full Width */}
           <div className="absolute inset-0 z-0">
-            <img 
-              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=2000" 
-              alt="Interior Background" 
+            <img
+              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=2000"
+              alt="Interior Background"
               loading="lazy"
               className="w-full h-full object-cover"
             />
           </div>
 
           <div className="container-custom relative z-10">
-            <div className="bg-[#37302F] p-8 md:p-14 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] text-center relative overflow-hidden border border-white/5 max-w-7xl mx-auto">
-              
+            <div className="bg-[#1A1A1A] p-8 md:p-14 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] text-center relative overflow-hidden border border-white/5 max-w-7xl mx-auto">
+
               <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 relative z-10">Found something you like?</h2>
               <p className="text-gray-400 text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto mb-10 relative z-10">
                 Let our expert designers customize these ideas to fit your space perfectly. Book a free consultation today.

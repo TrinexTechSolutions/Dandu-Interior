@@ -17,11 +17,13 @@ const Home = () => {
       <section className="relative h-screen flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=75&w=1600" 
+            src="https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&q=80&w=1600" 
             alt="Luxury Interior Design" 
             fetchPriority="high"
-            className="w-full h-full object-cover filter brightness-[0.7]"
+            className="w-full h-full object-cover filter brightness-[0.75]"
           />
+          {/* Light gradient strictly at the top to protect the dark navbar text readability */}
+          <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-[#F8F5F2]/60 to-transparent"></div>
         </div>
         <div className="container-custom relative z-10 text-center text-white top-[-50px]">
           <h1 className="text-6xl md:text-[8rem] lg:text-[10rem] font-light tracking-tighter leading-[0.85] mb-8 text-white drop-shadow-lg">

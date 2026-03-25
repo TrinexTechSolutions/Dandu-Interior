@@ -5,15 +5,15 @@ import brandLogo from '../assets/logos_and_bg_images/dandu_logo.svg';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#1A1A1A] text-[#F8F5F2] pt-24 pb-12">
+    <footer className="bg-[#1A1A1A] text-[#F8F5F2] pt-12 pb-8">
       <div className="container-custom px-6 lg:px-12">
-        
+
         {/* Top: Brand & Social */}
-        <div className="flex flex-col lg:flex-row justify-between items-center gap-8 mb-16 border-b border-white/5 pb-16">
+        <div className="flex flex-col lg:flex-row justify-between items-center gap-8 mb-8 border-b border-white/5 pb-8">
           <Link to="/" className="inline-block">
             <img src={brandLogo} alt="Dandu Interiors" className="h-12 w-auto brightness-200 invert grayscale" />
           </Link>
-          
+
           <div className="flex gap-8">
             {[
               { name: 'Instagram', icon: Instagram },
@@ -21,9 +21,9 @@ const Footer = () => {
               { name: 'Pinterest', icon: Twitter },
               { name: 'LinkedIn', icon: Linkedin }
             ].map((social) => (
-              <a 
+              <a
                 key={social.name}
-                href="#" 
+                href="#"
                 className="text-white/40 hover:text-white transition-colors duration-300"
                 aria-label={social.name}
               >
@@ -34,8 +34,8 @@ const Footer = () => {
         </div>
 
         {/* Middle: Asymmetric Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-16">
-          
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-8">
+
           <div className="lg:col-span-4 flex flex-col gap-6">
             <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/30">Navigation</span>
             <div className="grid grid-cols-2 gap-3">
@@ -47,7 +47,7 @@ const Footer = () => {
                 { name: 'Services', path: '/services' },
                 { name: 'Get Quote', path: '/get-quote' }
               ].map((link) => (
-                <Link 
+                <Link
                   key={link.name}
                   to={link.path}
                   className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/50 hover:text-white transition-colors"
@@ -94,8 +94,8 @@ const Footer = () => {
 
         {/* Bottom: Legal & Credits */}
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-[10px] font-bold tracking-widest uppercase text-white/20">
-            &copy; {new Date().getFullYear()} Dandu Interiors <span className="mx-2 opacity-50">/</span> Built with Precision
+          <p className="text-[10px] font-bold tracking-widest uppercase text-white/20 text-center md:text-left">
+            Developed by Trinex Tech Solutions <span className="mx-2 opacity-50">|</span> &copy; {new Date().getFullYear()} Dandu Interiors <span className="mx-2 opacity-50">/</span> Built with Precision
           </p>
           <div className="flex gap-10">
             <a href="#" className="text-[10px] font-bold tracking-widest uppercase text-white/20 hover:text-white/50 transition-colors">Privacy Policy</a>
