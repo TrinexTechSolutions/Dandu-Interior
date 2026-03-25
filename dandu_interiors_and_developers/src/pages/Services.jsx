@@ -15,6 +15,9 @@ const Services = () => {
   const heroRef = React.useRef(null);
   const [heroOffset, setHeroOffset] = useState(0);
 
+  const { scrollY } = useScroll();
+  const heroTranslateY = useTransform(scrollY, [0, 500], [0, -125]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     if (id) {
@@ -60,15 +63,21 @@ const Services = () => {
     <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
 
       {/* Static Fixed Header Section - Content slides OVER this */}
-      <div
+      <motion.div
         className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-hidden z-0 bg-[#F8F5F2] pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        style={{ height: heroOffset ? `${heroOffset}px` : '50vh' }}
+        style={{ height: heroOffset ? `${heroOffset}px` : '50vh', y: heroTranslateY }}
       >
         <div ref={heroRef} className="w-full relative px-4 md:px-8">
 
           {/* Static Header Title */}
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[8rem] xl:text-[9.5rem] font-light tracking-tighter text-[#1A1A1A] leading-[0.85] ml-[-0.04em] select-none max-w-[95%]">
-            {activeService.title}
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[8rem] xl:text-[9.5rem] font-medium tracking-tighter text-[#37302F] leading-[0.85] ml-[-0.04em] select-none max-w-[95%]">
+            {activeService.title.split(' ').length > 1 ? (
+              <>
+                {activeService.title.split(' ').slice(0, -1).join(' ')} <span className="font-serif italic text-[#37302F]/70">{activeService.title.split(' ').slice(-1)}</span>
+              </>
+            ) : (
+              activeService.title
+            )}
           </h1>
 
           {/* Static Description - Positioned directly under and to the right */}
@@ -97,7 +106,7 @@ const Services = () => {
           </div>
 
         </div>
-      </div>
+      </motion.div>
 
       {/* Main Content Sections - Seamlessly sliding OVER the fixed header */}
       <div
@@ -119,9 +128,9 @@ const Services = () => {
                     <span className="text-7xl md:text-[10rem] font-extrabold text-[#1A1A1A]/15 absolute bottom-0 -left-2 z-0 pointer-events-none select-none leading-[0.75]">
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] relative z-10 leading-none pb-1">
-                      {sub.name.split(' ')[0]} <br />
-                      <span className="font-serif italic text-black/30">{sub.name.split(' ').slice(1).join(' ')}</span>
+                    <h2 className="text-4xl md:text-6xl font-medium tracking-tighter text-[#37302F] relative z-10 leading-none pb-1 whitespace-nowrap lg:whitespace-normal">
+                      {sub.name.split(' ')[0]}{' '}
+                      <span className="font-serif italic text-[#37302F]/70">{sub.name.split(' ').slice(1).join(' ')}</span>
                     </h2>
                   </div>
                   <div className="w-20 h-[1px] bg-black/10 mb-8"></div>

@@ -56,10 +56,10 @@ const DesignIdeas = () => {
         .design-ideas-hero-title {
           font-family: "Inter", "Inter Placeholder", sans-serif;
           font-style: normal;
-          font-weight: 300;
+          font-weight: 500;
           line-height: 100%;
           text-align: left;
-          color: #1A1A1A;
+          color: #37302F;
           font-size: clamp(38px, 11vw, 56px);
           letter-spacing: -2px;
         }
@@ -78,7 +78,7 @@ const DesignIdeas = () => {
       >
         <div className="w-full relative px-4 md:px-8">
           <h1 ref={heroTitleRef} className="design-ideas-hero-title select-none whitespace-nowrap leading-[0.85]">
-            Design <span className="font-serif italic opacity-30">Ideas</span>
+            Design <span className="font-serif italic text-[#37302F]/70">Ideas</span>
           </h1>
         </div>
       </motion.div>

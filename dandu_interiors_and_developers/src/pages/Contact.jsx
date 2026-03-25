@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { MapPin, Phone, Mail, Send, CheckCircle2 } from 'lucide-react';
+import { MapPin, Phone, Mail, Send, CheckCircle2, ChevronDown } from 'lucide-react';
 
 const Contact = () => {
   const heroRef = React.useRef(null);
@@ -136,8 +136,8 @@ const Contact = () => {
               {/* Left Side: Contact Info & Intent */}
               <div className="flex flex-col justify-start space-y-12">
                 <div>
-                  <h2 className="text-5xl md:text-7xl font-light text-[#1A1A1A] mb-8 tracking-tighter leading-none">
-                    Let's <span className="font-serif italic text-[#1A1A1A]/30">Connect</span>
+                  <h2 className="text-5xl md:text-7xl font-medium text-[#37302F] mb-8 tracking-tighter leading-none">
+                    Let's <span className="font-serif italic text-[#37302F]/70">Connect</span>
                   </h2>
                   <p className="text-gray-500 text-xl md:text-2xl leading-relaxed max-w-2xl font-light mb-10">
                     Have a vision for your dream space? From bespoke luxury interiors to innovative architectural designs, we're here to bring your ideas to life with precision and passion. Reach out and let's create something extraordinary together.
@@ -169,8 +169,8 @@ const Contact = () => {
 
               {/* Right Side: Re-styled Form */}
               <div className="bg-[#F8F5F2] p-8 md:p-14 rounded-[32px] border border-black/5">
-                <h2 className="text-4xl font-light text-[#1A1A1A] tracking-tighter mb-12 leading-none">
-                  Start a <span className="font-serif italic text-black/30">Conversation</span>
+                <h2 className="text-4xl font-medium text-[#37302F] tracking-tighter mb-12 leading-none">
+                  Start a <span className="font-serif italic text-[#37302F]/70">Conversation</span>
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -183,7 +183,7 @@ const Contact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full bg-white border-none rounded-xl py-4 px-5 focus:ring-1 focus:ring-black/10 outline-none transition-all text-sm font-medium placeholder:text-black/5"
+                        className="w-full bg-transparent border border-[#37302F]/10 rounded-xl py-4 px-5 focus:border-[#37302F]/30 focus:ring-1 focus:ring-[#37302F]/10 outline-none transition-all text-sm font-medium placeholder:text-black/30 text-[#37302F]"
                       />
                     </div>
                     <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
@@ -195,7 +195,7 @@ const Contact = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        className="w-full bg-white border-none rounded-xl py-4 px-5 focus:ring-1 focus:ring-black/10 outline-none transition-all text-sm font-medium placeholder:text-black/5"
+                        className="w-full bg-transparent border border-[#37302F]/10 rounded-xl py-4 px-5 focus:border-[#37302F]/30 focus:ring-1 focus:ring-[#37302F]/10 outline-none transition-all text-sm font-medium placeholder:text-black/30 text-[#37302F]"
                       />
                     </div>
                   </div>
@@ -209,15 +209,15 @@ const Contact = () => {
                           value={formData.propertyLocation}
                           onChange={handleChange}
                           required
-                          className="w-full bg-white border-none rounded-xl py-4 px-5 focus:ring-1 focus:ring-black/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer"
+                          className="w-full bg-transparent border border-[#37302F]/10 rounded-xl py-4 px-5 focus:border-[#37302F]/30 focus:ring-1 focus:ring-[#37302F]/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer text-[#37302F]"
                         >
                           <option value="">Select Location</option>
                           <option value="Hyderabad">Hyderabad</option>
                           <option value="Bapatla">Bapatla</option>
                           <option value="Other">Other</option>
                         </select>
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-black/10">
-                          <Send size={14} className="rotate-90" />
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#37302F]/40">
+                          <ChevronDown size={16} />
                         </div>
                       </div>
                     </div>
@@ -229,16 +229,16 @@ const Contact = () => {
                           value={formData.propertyType}
                           onChange={handleChange}
                           required
-                          className="w-full bg-white border-none rounded-xl py-4 px-5 focus:ring-1 focus:ring-black/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer"
+                          className="w-full bg-transparent border border-[#37302F]/10 rounded-xl py-4 px-5 focus:border-[#37302F]/30 focus:ring-1 focus:ring-[#37302F]/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer text-[#37302F]"
                         >
                           <option value="">Select Type</option>
-                          <option value=" Villa">Villa</option>
+                          <option value="Villa">Villa</option>
                           <option value="Apartment">Apartment</option>
                           <option value="Commercial">Commercial</option>
                           <option value="Other">Other</option>
                         </select>
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-black/10">
-                          <Send size={14} className="rotate-90" />
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#37302F]/40">
+                          <ChevronDown size={16} />
                         </div>
                       </div>
                     </div>
@@ -252,15 +252,15 @@ const Contact = () => {
                         value={formData.requirement}
                         onChange={handleChange}
                         required
-                        className="w-full bg-white border-none rounded-xl py-4 px-5 focus:ring-1 focus:ring-black/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer"
+                        className="w-full bg-transparent border border-[#37302F]/10 rounded-xl py-4 px-5 focus:border-[#37302F]/30 focus:ring-1 focus:ring-[#37302F]/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer text-[#37302F]"
                       >
                         <option value="">What do you need?</option>
                         <option value="Full Home Interior">Full Home Interior</option>
                         <option value="Renovation">Renovation</option>
                         <option value="Other">Other</option>
                       </select>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-black/10">
-                        <Send size={14} className="rotate-90" />
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#37302F]/40">
+                        <ChevronDown size={16} />
                       </div>
                     </div>
                   </div>
@@ -300,8 +300,8 @@ const Contact = () => {
         <section className="bg-[#F8F5F2] py-20 lg:py-32">
           <div className="container-custom">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-              <h2 className="text-5xl md:text-8xl font-light text-[#1A1A1A] tracking-tighter leading-none">
-                Our <span className="font-serif italic text-black/30">Studios</span>
+              <h2 className="text-5xl md:text-8xl font-medium text-[#37302F] tracking-tighter leading-none">
+                Our <span className="font-serif italic text-[#37302F]/70">Offices</span>
               </h2>
             </div>
 
