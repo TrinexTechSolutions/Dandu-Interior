@@ -24,6 +24,7 @@ const Navbar = () => {
   const location = useLocation();
   const { openQuoteModal } = useModal();
   const navRef = React.useRef(null);
+  const dropdownTimeoutRef = React.useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,12 +32,15 @@ const Navbar = () => {
       const isParallaxPage = parallaxPaths.some(path => location.pathname.startsWith(path));
       
       if (isParallaxPage && navRef.current) {
-        const contentEl = document.getElementById('services-content') || document.querySelector('.will-change-transform');
+        // Only target explicit content IDs to prevent unwanted hiding on other pages
+        const contentEl = document.getElementById('services-content') || document.getElementById('projects-grid');
         if (contentEl) {
           const rect = contentEl.getBoundingClientRect();
           const navHeight = navRef.current.offsetHeight;
           
-          if (rect.top <= navHeight) {
+          // Add a 5px threshold to prevent jitter when moving mouse or small scrolls
+          const threshold = 5;
+          if (rect.top <= navHeight + threshold) {
             setNavbarOffset(Math.max(0, navHeight - rect.top));
           } else {
             setNavbarOffset(0);
@@ -49,7 +53,10 @@ const Navbar = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    };
   }, [location.pathname]);
 
   useEffect(() => {
@@ -59,6 +66,17 @@ const Navbar = () => {
     setNavbarOffset(0);
   }, [location.pathname]);
 
+  const handleMouseEnter = () => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setServicesOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setServicesOpen(false);
+    }, 250); // Increased grace period to 250ms
+  };
+
   const parallaxPaths = ['/services', '/about', '/contact', '/design-ideas', '/projects'];
   const isParallaxPage = parallaxPaths.some(path => location.pathname.startsWith(path));
 
@@ -66,7 +84,7 @@ const Navbar = () => {
     <nav 
       ref={navRef}
       style={{ transform: `translateY(-${navbarOffset}px)` }}
-      className={`fixed top-0 left-0 w-full z-50 py-4 transition-colors duration-300 border-b ${
+      className={`fixed top-0 left-0 w-full z-[100] py-4 transition-colors duration-300 border-b ${
         location.pathname === '/' && !scrolled
           ? 'bg-transparent border-[#37302F]/15'
           : 'bg-[#F8F5F2] border-[#37302F]/5'
@@ -105,8 +123,8 @@ const Navbar = () => {
             {/* Services Dropdown */}
             <div 
               className="relative group"
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={() => setServicesOpen(false)}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               <button 
                 onClick={() => setServicesOpen(!servicesOpen)}
@@ -119,7 +137,10 @@ const Navbar = () => {
                 Services <ChevronDown size={10} className={`transition-transform duration-300 ${servicesOpen ? 'rotate-180' : ''}`} />
               </button>
               
-              <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-5 transition-all duration-300 origin-top z-50 ${servicesOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
+              {/* Dropdown Container with "Bridge" - using 80% top to ensure a thick overlap zone */}
+              <div className={`absolute top-[80%] left-1/2 -translate-x-1/2 pt-8 transition-all duration-300 origin-top z-[110] ${servicesOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
+                {/* Invisible hover bridge */}
+                <div className="absolute top-0 left-0 w-full h-8 cursor-default" />
                 <div className="w-[520px] bg-[#F8F5F2] shadow-2xl border border-[#37302F]/10 p-6">
                   <div className="grid grid-cols-2 gap-x-2 gap-y-1">
                     {SERVICES.map((service, idx) => (

@@ -26,8 +26,10 @@
   body,
   #root {
     overflow-x: hidden;
-    overflow-y: overlay;
+    overflow-y: auto;
     width: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: #37302F transparent;
   }
 
   html {
@@ -45,24 +47,6 @@
   h5,
   h6 {
     @apply font-semibold tracking-tight;
-  }
-}
-
-/* Custom Cursor Overrides */
-@media (pointer: fine) {
-
-  html,
-  body,
-  #root,
-  a,
-  button,
-  [role="button"],
-  input,
-  select,
-  textarea,
-  .interactive,
-  [data-cursor-text] {
-    cursor: none !important;
   }
 }
 
@@ -90,7 +74,7 @@
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -98,10 +82,14 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #37302F;
+  background: #1A1A1A;
+  background-clip: content-box;
+  border: 3px solid transparent;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #1A1A1A;
+  background: black;
+  background-clip: content-box;
+  border: 2px solid transparent;
 }

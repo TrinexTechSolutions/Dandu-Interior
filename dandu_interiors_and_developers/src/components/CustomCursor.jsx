@@ -16,10 +16,16 @@ const CustomCursor = () => {
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+      const x = e.clientX;
+      const y = e.clientY;
+      mouseX.set(x);
+      mouseY.set(y);
       
-      if (!isVisible) setIsVisible(true);
+      if (!isVisible) {
+        setIsVisible(true);
+        trailX.set(x);
+        trailY.set(y);
+      }
 
       const target = e.target;
       if (!target) return;
@@ -85,37 +91,37 @@ const CustomCursor = () => {
   // Cursor Variants
   const variants = {
     default: {
-      width: 32,
-      height: 32,
+      width: 24,
+      height: 24,
       backgroundColor: 'transparent',
       borderColor: 'rgba(26, 26, 26, 0.3)',
       borderWidth: '1px',
     },
     hover: {
-      width: 64,
-      height: 64,
+      width: 40,
+      height: 40,
       backgroundColor: 'rgba(26, 26, 26, 0.03)',
       borderColor: 'rgba(26, 26, 26, 0.8)',
       borderWidth: '1px',
     },
     click: {
-      width: 24,
-      height: 24,
+      width: 20,
+      height: 20,
       backgroundColor: '#1A1A1A',
       borderColor: '#1A1A1A',
       borderWidth: '1px',
       scale: 0.9
     },
     text: {
-      width: 90,
-      height: 90,
+      width: 60,
+      height: 60,
       backgroundColor: '#1A1A1A',
       borderColor: '#1A1A1A',
       borderWidth: '1px',
     },
     invert: {
-      width: 80,
-      height: 80,
+      width: 50,
+      height: 50,
       backgroundColor: 'transparent',
       borderColor: 'rgba(26, 26, 26, 0.1)',
       borderWidth: '0.5px',
