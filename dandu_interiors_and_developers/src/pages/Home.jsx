@@ -24,8 +24,9 @@ const Home = () => {
           />
         </div>
         <div className="container-custom relative z-10 text-center text-white top-[-50px]">
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 text-white drop-shadow-lg">
-            Furnish Your Life <br/><span className="text-[#D9C3A9]">With Style</span>
+          <h1 className="text-6xl md:text-[8rem] lg:text-[10rem] font-light tracking-tighter leading-[0.85] mb-8 text-white drop-shadow-lg">
+            Furnish Your Life <br/>
+            <span className="font-serif italic text-white/30">With Style</span>
           </h1>
           <p className="text-lg md:text-2xl mb-10 max-w-2xl mx-auto font-light drop-shadow-md">
             We Construct. We Maintain. We Refurbish. We Care.
@@ -44,10 +45,12 @@ const Home = () => {
 
       {/* Services Preview */}
       <SectionWrapper bgClass="bg-[#F8F5F2]" id="services-preview">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Core Services</h2>
-          <div className="w-24 h-1 bg-[#1A1A1A] mx-auto rounded-full mb-6"></div>
-          <p className="text-gray-600 max-w-2xl mx-auto">Providing end-to-end solutions for all your interior and construction needs, delivered with uncompromising quality.</p>
+        <div className="text-center mb-24">
+          <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] mb-4 leading-none">
+            Core <span className="font-serif italic text-black/30">Services</span>
+          </h2>
+          <div className="w-20 h-[1px] bg-black/10 mx-auto mb-8"></div>
+          <p className="text-black/50 text-[13px] tracking-wide font-light max-w-2xl mx-auto uppercase">Providing end-to-end solutions for all your interior and construction needs.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.slice(0, 8).map((service) => (
@@ -57,8 +60,8 @@ const Home = () => {
               </div>
               <h3 className="text-xl font-bold mb-3">{service.title}</h3>
               <p className="text-gray-500 text-sm mb-6 flex-grow">{service.shortDesc}</p>
-              <div className="text-[#1A1A1A] font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
-                Learn more <ChevronRight size={16} />
+              <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] flex items-center gap-1 group-hover:gap-2 transition-all">
+                Learn more <ChevronRight size={14} />
               </div>
             </Link>
           ))}
@@ -69,8 +72,10 @@ const Home = () => {
       <SectionWrapper bgClass="bg-[#1A1A1A] text-white" paddingClass="py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Why Choose Dandu Interiors?</h2>
-            <div className="w-24 h-1 bg-[#1A1A1A] rounded-full mb-8"></div>
+            <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-white mb-6 leading-none">
+              Why <span className="font-serif italic text-white/30">Choose Us?</span>
+            </h2>
+            <div className="w-20 h-[1px] bg-white/10 rounded-full mb-8"></div>
             <p className="text-gray-400 mb-8 leading-relaxed">
               We are not just a name - it's a brand built on trust and excellence. With years of experience and a multi-disciplinary team, we manage your project from concept to completion, ensuring it is delivered on time, within budget, and beyond expectations.
             </p>
@@ -105,11 +110,13 @@ const Home = () => {
 
       {/* Featured Projects */}
       <SectionWrapper>
-        <div className="relative mb-12 flex flex-col items-center justify-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Featured Projects</h2>
-          <div className="w-24 h-1 bg-[#1A1A1A] rounded-full"></div>
-          <Link to="/projects" className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[#1A1A1A] font-semibold hover:text-[#1A1A1A] transition-colors">
-            View All Projects <ChevronRight size={20} />
+        <div className="relative mb-20 flex flex-col items-center justify-center">
+          <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] text-center mb-4 leading-none">
+            Featured <span className="font-serif italic text-black/30">Projects</span>
+          </h2>
+          <div className="w-20 h-[1px] bg-black/10"></div>
+          <Link to="/projects" className="mt-8 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-6 py-2 rounded-full border border-black/5 transition-all">
+            View All Work <ChevronRight size={14} />
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -137,10 +144,12 @@ const Home = () => {
 
       {/* How It Works */}
       <SectionWrapper bgClass="bg-[#F8F5F2]">
-        <div className="text-center mb-20">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
-          <div className="w-24 h-1 bg-[#1A1A1A] mx-auto rounded-full mb-6"></div>
-          <p className="text-gray-600 max-w-2xl mx-auto">A seamless, transparent process designed to bring your vision to reality without the stress.</p>
+        <div className="text-center mb-24">
+          <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] mb-4 leading-none">
+            How It <span className="font-serif italic text-black/30">Works</span>
+          </h2>
+          <div className="w-20 h-[1px] bg-black/10 mx-auto mb-8"></div>
+          <p className="text-black/50 text-[13px] tracking-wide font-light max-w-2xl mx-auto uppercase">A seamless, transparent process designed to bring your vision to reality.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
           <div className="hidden md:block absolute top-[50px] left-1/8 right-1/8 h-0.5 bg-gray-300 z-0"></div>

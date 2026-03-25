@@ -55,7 +55,7 @@ const ProjectDetail = () => {
 
       {/* Top Banner section */}
       <div className="pt-24 md:pt-32 pb-12 px-4 md:px-8 max-w-7xl mx-auto">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#1A1A1A] mb-8 truncate leading-snug">{project.title}</h1>
+        <h1 className="text-5xl md:text-7xl lg:text-[10rem] font-light tracking-tighter text-[#1A1A1A] mb-12 leading-[0.85]">{project.title}</h1>
         <p className="text-gray-600 max-w-4xl text-lg md:text-2xl leading-relaxed mb-16 font-light">
           {project.description} This meticulously crafted space harmonizes aesthetic elegance with functional brilliance, utilizing top-tier materials and bespoke design elements. Every corner has been thoughtfully curated to elevate the everyday experience, bringing a sense of warmth, luxury, and timeless appeal to the environment.
         </p>

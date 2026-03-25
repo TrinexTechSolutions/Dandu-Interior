@@ -25,11 +25,13 @@ const HomeDesignIdeas = () => {
 
   return (
     <SectionWrapper>
-      <div className="relative mb-12 flex flex-col items-center justify-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">Design Ideas</h2>
-        <div className="w-24 h-1 bg-[#1A1A1A] rounded-full"></div>
-        <Link to="/design-ideas" className="mt-6 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[#1A1A1A] font-semibold hover:text-[#1A1A1A] transition-colors">
-          View More <ChevronRight size={20} />
+      <div className="relative mb-16 flex flex-col items-center justify-center">
+        <h2 className="text-4xl md:text-5xl font-light tracking-tighter text-[#1A1A1A] text-center mb-4 leading-none">
+          Design <span className="font-serif italic text-black/30">Ideas</span>
+        </h2>
+        <div className="w-20 h-[1px] bg-black/10"></div>
+        <Link to="/design-ideas" className="mt-8 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-6 py-2 rounded-full border border-black/5 transition-all">
+          Explore All <ChevronRight size={14} />
         </Link>
       </div>
 
@@ -51,9 +53,10 @@ const HomeDesignIdeas = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
             
             {/* Title Text positioned exactly as in screenshot */}
-            <div className="absolute bottom-4 left-6">
-              <h3 className="text-white text-xl md:text-2xl font-bold tracking-wide shadow-black drop-shadow-lg">
-                {idea.title}
+            <div className="absolute bottom-6 left-6 right-6">
+              <h3 className="text-white text-2xl md:text-3xl font-light tracking-tighter leading-none drop-shadow-md">
+                {idea.title.split(' ')[0]} <br />
+                <span className="font-serif italic text-white/40">{idea.title.split(' ').slice(1).join(' ')}</span>
               </h3>
             </div>
           </Link>

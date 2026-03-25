@@ -56,7 +56,7 @@ const DesignIdeas = () => {
         .design-ideas-hero-title {
           font-family: "Inter", "Inter Placeholder", sans-serif;
           font-style: normal;
-          font-weight: 600;
+          font-weight: 300;
           line-height: 100%;
           text-align: left;
           color: #1A1A1A;
@@ -77,8 +77,8 @@ const DesignIdeas = () => {
         className={`fixed top-0 left-0 h-screen w-full flex flex-col justify-start z-0 bg-[#F8F5F2] pt-24 md:pt-32 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <div className="w-full relative px-4 md:px-8">
-          <h1 ref={heroTitleRef} className="design-ideas-hero-title select-none whitespace-nowrap">
-            Design Ideas
+          <h1 ref={heroTitleRef} className="design-ideas-hero-title select-none whitespace-nowrap leading-[0.85]">
+            Design <span className="font-serif italic opacity-30">Ideas</span>
           </h1>
         </div>
       </motion.div>

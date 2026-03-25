@@ -61,7 +61,7 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
 
             {/* Header */}
             <div className="flex items-center justify-between px-6 pb-4 border-b border-black/5 bg-[#F8F5F2]/80 backdrop-blur-md sticky top-0 z-10">
-              <h2 className="text-xl font-bold text-[#1A1A1A] truncate max-w-[80%]">{project.title}</h2>
+              <h2 className="text-sm font-bold text-[#1A1A1A] tracking-[0.2em] uppercase">{project.title}</h2>
               <button
                 onClick={onClose}
                 className="p-2 hover:bg-black/5 rounded-full transition-colors"
@@ -82,8 +82,9 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
 
                 {/* Description and Title */}
                 <div className="space-y-6">
-                  <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-[#1A1A1A] leading-tight">
-                    {project.title}
+                  <h1 className="text-4xl md:text-6xl lg:text-8xl font-light tracking-tighter text-[#1A1A1A] leading-[0.85]">
+                    {project.title.split(' ')[0]} <br />
+                    <span className="font-serif italic text-black/30">{project.title.split(' ').slice(1).join(' ')}</span>
                   </h1>
                   <p className="text-gray-600 text-lg md:text-xl leading-relaxed font-light">
                     {project.description} This meticulously crafted space harmonizes aesthetic elegance with functional brilliance, utilizing top-tier materials and bespoke design elements. Every corner has been thoughtfully curated to elevate the everyday experience, bringing a sense of warmth, luxury, and timeless appeal to the environment.
@@ -93,25 +94,25 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
                 {/* Stats Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-10 border-t border-b border-black/10 relative overflow-hidden">
                   <div className="flex flex-col items-center justify-center text-center space-y-2 relative z-10">
-                    <Tag size={20} className="text-[#C49A45]" />
+                    <Tag size={20} />
                     <span className="text-xl font-bold text-[#1A1A1A]">{project.category || 'Villa'}</span>
                     <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Category</span>
                   </div>
                   
                   <div className="flex flex-col items-center justify-center text-center space-y-2 relative z-10">
-                    <Maximize2 size={20} className="text-[#C49A45]" />
+                    <Maximize2 size={20} />
                     <span className="text-xl font-bold text-[#1A1A1A]">{area} sq.ft</span>
                     <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Plan Area</span>
                   </div>
 
                   <div className="flex flex-col items-center justify-center text-center space-y-2 relative z-10">
-                    <MapPin size={20} className="text-[#C49A45]" />
+                    <MapPin size={20} />
                     <span className="text-xl font-bold text-[#1A1A1A]">{project.location}</span>
                     <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Location</span>
                   </div>
 
                   <div className="flex flex-col items-center justify-center text-center space-y-2 relative z-10">
-                    <DollarSign size={20} className="text-[#C49A45]" />
+                    <DollarSign size={20} />
                     <span className="text-xl font-bold text-[#1A1A1A]">{val}</span>
                     <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Valuation</span>
                   </div>
@@ -125,7 +126,7 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
                 {/* Photo Gallery Grid */}
                 <div className="space-y-8">
                   <div className="flex items-center justify-between">
-                    <h2 className="text-2xl md:text-3xl font-bold text-[#1A1A1A]">Project <span className="text-[#C49A45]">Gallery</span></h2>
+                    <h2 className="text-2xl md:text-3xl font-light tracking-tighter text-[#1A1A1A]">Project <span className="font-serif italic opacity-30">Gallery</span></h2>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[250px] md:auto-rows-[300px]">
@@ -170,7 +171,7 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
               </div>
               <button 
                 onClick={onClose}
-                className="flex-1 sm:flex-none py-4 px-8 bg-[#1A1A1A] text-white rounded-2xl font-bold hover:bg-[#C49A45] transition-all duration-300 shadow-xl"
+                className="flex-1 sm:flex-none py-4 px-8 bg-[#1A1A1A] text-white rounded-2xl font-bold hover:bg-black/90 transition-all duration-300 shadow-xl"
               >
                 Inquire About This Project
               </button>

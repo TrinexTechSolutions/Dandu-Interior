@@ -110,10 +110,10 @@ const Contact = () => {
             transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
             className="flex items-center"
           >
-            <h1 className="text-[15vh] md:text-[25vh] font-semibold tracking-tighter text-[#1A1A1A] leading-none pr-12">
+            <h1 className="text-[15vh] md:text-[25vh] font-light tracking-tighter text-[#1A1A1A] leading-none pr-12">
               {marqueeText}
             </h1>
-            <h1 className="text-[15vh] md:text-[25vh] font-semibold tracking-tighter text-[#1A1A1A] leading-none pr-12">
+            <h1 className="text-[15vh] md:text-[25vh] font-light tracking-tighter text-[#1A1A1A] leading-none pr-12">
               {marqueeText}
             </h1>
           </motion.div>
@@ -136,8 +136,8 @@ const Contact = () => {
               {/* Left Side: Contact Info & Intent */}
               <div className="flex flex-col justify-start space-y-12">
                 <div>
-                  <h2 className="text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-6 tracking-tight">
-                    Let's Connect
+                  <h2 className="text-5xl md:text-7xl font-light text-[#1A1A1A] mb-8 tracking-tighter leading-none">
+                    Let's <span className="font-serif italic text-[#1A1A1A]/30">Connect</span>
                   </h2>
                   <p className="text-gray-500 text-xl md:text-2xl leading-relaxed max-w-2xl font-light mb-10">
                     Have a vision for your dream space? From bespoke luxury interiors to innovative architectural designs, we're here to bring your ideas to life with precision and passion. Reach out and let's create something extraordinary together.
@@ -150,8 +150,8 @@ const Contact = () => {
                       <Phone size={32} strokeWidth={1.5} />
                     </div>
                     <div>
-                      <p className="text-base text-gray-400 font-medium uppercase tracking-[0.2em] mb-1">Call Us</p>
-                      <p className="text-2xl md:text-3xl font-bold text-[#1A1A1A] tracking-tight">+91 98661 66612</p>
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mb-2">Call Us</p>
+                      <p className="text-2xl md:text-3xl font-light text-[#1A1A1A] tracking-tighter">+91 98661 66612</p>
                     </div>
                   </div>
 
@@ -160,20 +160,22 @@ const Contact = () => {
                       <Mail size={32} strokeWidth={1.5} />
                     </div>
                     <div>
-                      <p className="text-base text-gray-400 font-medium uppercase tracking-[0.2em] mb-1">Email Us</p>
-                      <p className="text-2xl md:text-3xl font-bold text-[#1A1A1A] tracking-tight">danduinteriordesigns@gmail.com</p>
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mb-2">Email Us</p>
+                      <p className="text-xl md:text-2xl font-light text-[#1A1A1A] tracking-tighter break-all">danduinteriordesigns@gmail.com</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Right Side: Re-styled Form */}
-              <div className="bg-[#F8F5F2] p-8 md:p-12 rounded-[32px] border border-black/20">
-                <h2 className="text-3xl font-bold text-[#1A1A1A] mb-10 text-center lg:text-left">Start a Conversation</h2>
+              <div className="bg-[#F8F5F2] p-8 md:p-14 rounded-[32px] border border-black/5">
+                <h2 className="text-4xl font-light text-[#1A1A1A] tracking-tighter mb-12 leading-none">
+                  Start a <span className="font-serif italic text-black/30">Conversation</span>
+                </h2>
                 <form onSubmit={handleSubmit} className="space-y-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Your Name</label>
+                    <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
+                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Your Name</label>
                       <input
                         type="text"
                         name="name"
@@ -181,11 +183,11 @@ const Contact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full bg-transparent border border-black/20 rounded-xl py-4 px-5 focus:border-[#1A1A1A] outline-none transition-all text-lg font-medium placeholder:text-gray-300"
+                        className="w-full bg-white border-none rounded-xl py-4 px-5 focus:ring-1 focus:ring-black/10 outline-none transition-all text-sm font-medium placeholder:text-black/5"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">WhatsApp Number</label>
+                    <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
+                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">WhatsApp Number</label>
                       <input
                         type="tel"
                         name="phone"
@@ -193,41 +195,41 @@ const Contact = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        className="w-full bg-transparent border border-black/20 rounded-xl py-4 px-5 focus:border-[#1A1A1A] outline-none transition-all text-lg font-medium placeholder:text-gray-300"
+                        className="w-full bg-white border-none rounded-xl py-4 px-5 focus:ring-1 focus:ring-black/10 outline-none transition-all text-sm font-medium placeholder:text-black/5"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Location</label>
+                    <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
+                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Location</label>
                       <div className="relative">
                         <select
                           name="propertyLocation"
                           value={formData.propertyLocation}
                           onChange={handleChange}
                           required
-                          className="w-full bg-transparent border border-black/20 rounded-xl py-4 px-5 focus:border-[#1A1A1A] outline-none transition-all text-lg font-medium appearance-none"
+                          className="w-full bg-white border-none rounded-xl py-4 px-5 focus:ring-1 focus:ring-black/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer"
                         >
                           <option value="">Select Location</option>
                           <option value="Hyderabad">Hyderabad</option>
                           <option value="Bapatla">Bapatla</option>
                           <option value="Other">Other</option>
                         </select>
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                          <Send size={16} className="rotate-90" />
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-black/10">
+                          <Send size={14} className="rotate-90" />
                         </div>
                       </div>
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Property Type</label>
+                    <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
+                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Property Type</label>
                       <div className="relative">
                         <select
                           name="propertyType"
                           value={formData.propertyType}
                           onChange={handleChange}
                           required
-                          className="w-full bg-transparent border border-black/20 rounded-xl py-4 px-5 focus:border-[#1A1A1A] outline-none transition-all text-lg font-medium appearance-none"
+                          className="w-full bg-white border-none rounded-xl py-4 px-5 focus:ring-1 focus:ring-black/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer"
                         >
                           <option value="">Select Type</option>
                           <option value=" Villa">Villa</option>
@@ -235,30 +237,30 @@ const Contact = () => {
                           <option value="Commercial">Commercial</option>
                           <option value="Other">Other</option>
                         </select>
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                          <Send size={16} className="rotate-90" />
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-black/10">
+                          <Send size={14} className="rotate-90" />
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-wider text-gray-400 ml-1">Requirement</label>
+                  <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
+                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Requirement</label>
                     <div className="relative">
                       <select
                         name="requirement"
                         value={formData.requirement}
                         onChange={handleChange}
                         required
-                        className="w-full bg-transparent border border-black/20 rounded-xl py-4 px-5 focus:border-[#1A1A1A] outline-none transition-all text-lg font-medium appearance-none"
+                        className="w-full bg-white border-none rounded-xl py-4 px-5 focus:ring-1 focus:ring-black/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer"
                       >
                         <option value="">What do you need?</option>
                         <option value="Full Home Interior">Full Home Interior</option>
                         <option value="Renovation">Renovation</option>
                         <option value="Other">Other</option>
                       </select>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                        <Send size={16} className="rotate-90" />
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-black/10">
+                        <Send size={14} className="rotate-90" />
                       </div>
                     </div>
                   </div>
@@ -278,12 +280,12 @@ const Contact = () => {
                     <button
                       type="submit"
                       disabled={status.submitting}
-                      className="w-full bg-transparent border-2 border-black text-black py-4 rounded-xl font-bold text-lg hover:bg-black hover:text-white active:bg-black active:text-white transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 group"
+                      className="w-full bg-[#1A1A1A] text-white py-5 rounded-2xl font-bold text-sm tracking-[0.3em] uppercase hover:bg-black transition-all duration-300 shadow-2xl hover:shadow-black/20 group flex items-center justify-center gap-4"
                     >
                       {status.submitting ? "Sending..." : (
                         <>
                           <span>Send Message</span>
-                          <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                          <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                         </>
                       )}
                     </button>
@@ -295,11 +297,11 @@ const Contact = () => {
         </section>
 
         {/* Section 2: Precise Locations */}
-        <section className="bg-white py-20 lg:py-32">
+        <section className="bg-[#F8F5F2] py-20 lg:py-32">
           <div className="container-custom">
             <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-              <h2 className="text-5xl md:text-8xl font-bold text-[#1A1A1A] tracking-tight">
-                Our Studios
+              <h2 className="text-5xl md:text-8xl font-light text-[#1A1A1A] tracking-tighter leading-none">
+                Our <span className="font-serif italic text-black/30">Studios</span>
               </h2>
             </div>
 

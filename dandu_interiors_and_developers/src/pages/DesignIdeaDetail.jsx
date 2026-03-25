@@ -77,7 +77,7 @@ const DesignIdeaDetail = () => {
           <div className="inline-block px-4 py-1 bg-[#1A1A1A] text-white text-sm font-bold uppercase tracking-widest mb-4 w-fit rounded">
             {idea.count}
           </div>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1]">
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-light text-white leading-[0.9] tracking-tighter">
             {idea.title}
           </h1>
         </div>

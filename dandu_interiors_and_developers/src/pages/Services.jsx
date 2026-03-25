@@ -67,7 +67,7 @@ const Services = () => {
         <div ref={heroRef} className="w-full relative px-4 md:px-8">
 
           {/* Static Header Title */}
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[8rem] xl:text-[9.5rem] font-semibold tracking-tighter text-[#1A1A1A] leading-[0.85] ml-[-0.04em] select-none max-w-[95%]">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[8rem] xl:text-[9.5rem] font-light tracking-tighter text-[#1A1A1A] leading-[0.85] ml-[-0.04em] select-none max-w-[95%]">
             {activeService.title}
           </h1>
 
@@ -119,19 +119,20 @@ const Services = () => {
                     <span className="text-7xl md:text-[10rem] font-extrabold text-[#1A1A1A]/15 absolute bottom-0 -left-2 z-0 pointer-events-none select-none leading-[0.75]">
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <h2 className="text-3xl md:text-4xl font-bold text-[#1A1A1A] relative z-10 leading-none pb-1">
-                      {sub.name}
+                    <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] relative z-10 leading-none pb-1">
+                      {sub.name.split(' ')[0]} <br />
+                      <span className="font-serif italic text-black/30">{sub.name.split(' ').slice(1).join(' ')}</span>
                     </h2>
                   </div>
-                  <div className="w-20 h-1 bg-[#1A1A1A] mb-6"></div>
+                  <div className="w-20 h-[1px] bg-black/10 mb-8"></div>
                   <p className="text-gray-600 text-lg leading-relaxed mb-6">
                     {sub.desc}
                   </p>
                   <button
                     onClick={openQuoteModal}
-                    className="inline-flex items-center gap-2 font-bold text-[#1A1A1A] hover:text-[#1A1A1A] transition-colors uppercase tracking-wider text-sm group"
+                    className="inline-flex items-center gap-3 font-bold text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-8 py-4 rounded-xl border border-black/5 transition-all group"
                   >
-                    Request this service <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                    Request Service <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
 
