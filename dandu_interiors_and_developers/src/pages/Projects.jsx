@@ -145,6 +145,7 @@ const Projects = () => {
         key={item.itemId}
         whileHover={{ y: -5 }}
         className="group relative overflow-hidden rounded-xl cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-300"
+        data-cursor-text="VIEW"
         onClick={() => handleProjectClick(item)}
       >
         <img

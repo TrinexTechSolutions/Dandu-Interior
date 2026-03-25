@@ -14,6 +14,7 @@ import DesignIdeaDetail from './pages/DesignIdeaDetail';
 import Contact from './pages/Contact';
 
 import SmoothScroll from './components/SmoothScroll';
+import CustomCursor from './components/CustomCursor';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -29,6 +30,7 @@ function App() {
     <BrowserRouter>
       <SmoothScroll>
         <ModalProvider>
+          <CustomCursor />
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Layout />}>

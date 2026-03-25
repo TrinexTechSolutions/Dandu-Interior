@@ -42,6 +42,7 @@ const HomeDesignIdeas = () => {
             to={`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`} 
             key={idx} 
             className={`group relative overflow-hidden block rounded-xl ${gridClasses[idx]}`}
+            data-cursor-text="VIEW"
           >
             <img 
               src={idea.image} 

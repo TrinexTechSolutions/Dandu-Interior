@@ -36,6 +36,13 @@
   }
 }
 
+/* Custom Cursor Overrides */
+@media (pointer: fine) {
+  html, body, #root, a, button, [role="button"], input, select, textarea, .interactive, [data-cursor-text] {
+    cursor: none !important;
+  }
+}
+
 @layer components {
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
