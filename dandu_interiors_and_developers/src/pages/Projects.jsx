@@ -205,7 +205,7 @@ const Projects = () => {
     }, [col, totalCols]);
 
     const deltaY = Math.max(0, stats.maxHeight - stats.colHeight);
-    const y = useTransform(smoothProgress, [0, 1], [0, deltaY]);
+    const y = useTransform(smoothProgress, [0, 1], [0, deltaY], { clamp: true });
 
     return (
       <div ref={colRef} className="flex-1 min-w-0 h-max relative">
@@ -263,9 +263,9 @@ const Projects = () => {
       <div
         ref={contentRef}
         style={{ marginTop: heroOffset > 0 ? `${heroOffset}px` : '38vh' }}
-        className="relative z-10 bg-[#F8F5F2] will-change-transform"
+        className="relative z-[10] bg-[#F8F5F2] will-change-transform"
       >
-        <SectionWrapper bgClass="bg-transparent" paddingClass="pt-0.5 pb-16" containerClass="w-full px-4 lg:px-8">
+        <SectionWrapper bgClass="bg-transparent" paddingClass="pt-0.5 pb-24" containerClass="w-full px-4 lg:px-8">
           <div className="w-full flex justify-start mt-6 mb-8 md:mb-16">
             <div className="text-left max-w-4xl">
               <p 

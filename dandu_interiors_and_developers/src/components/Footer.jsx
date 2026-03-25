@@ -5,7 +5,7 @@ import brandLogo from '../assets/logos_and_bg_images/dandu_logo.svg';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#1A1A1A] text-[#F8F5F2] pt-12 pb-8">
+    <footer className="bg-[#1A1A1A] text-[#F8F5F2] pt-12 pb-8 relative z-[20]">
       <div className="container-custom px-6 lg:px-12">
 
         {/* Top: Brand & Social */}
