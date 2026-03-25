@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { MapPin, Phone, Mail, Send, CheckCircle2, ChevronDown } from 'lucide-react';
 
 const Contact = () => {
@@ -14,8 +14,10 @@ const Contact = () => {
     propertyLocation: "",
     propertyType: "",
     requirement: "",
+    customLocation: "",
   });
 
+  const [toast, setToast] = useState({ show: false, message: "" });
   const [status, setStatus] = useState({
     submitting: false,
     submitted: false,
@@ -70,22 +72,29 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus({ submitting: true, submitted: false, error: false, message: "" });
+    setToast({ show: false, message: "" });
 
     // Simulate form submission
     setTimeout(() => {
-      setStatus({
-        submitting: false,
-        submitted: true,
-        error: false,
-        message: "Your request has been received. Our team will contact you shortly.",
-      });
+      setStatus({ submitting: false, submitted: false, error: false, message: "" });
+
+      if (formData.propertyLocation === 'Hyderabad' || formData.propertyLocation === 'Bapatla') {
+        setToast({ 
+          show: true, 
+          message: "Your request has been received. Our team will contact you shortly." 
+        });
+      } else {
+        setToast({ 
+          show: true, 
+          message: "Currently, we don't provide services in that location. We have noted your request." 
+        });
+      }
+
       setFormData({
-        name: "",
-        phone: "",
-        propertyLocation: "",
-        propertyType: "",
-        requirement: ""
+        name: "", phone: "", propertyLocation: "", propertyType: "", requirement: "", customLocation: ""
       });
+
+      setTimeout(() => setToast({ show: false, message: "" }), 6000);
     }, 1500);
   };
 
@@ -168,7 +177,7 @@ const Contact = () => {
               </div>
 
               {/* Right Side: Re-styled Form */}
-              <div className="bg-[#F8F5F2] p-8 md:p-14 rounded-[32px] border border-black/5">
+              <div className="bg-[#F8F5F2] p-8 md:p-14 rounded-[32px] border border-[#37302F]/40 shadow-xl">
                 <h2 className="text-4xl font-medium text-[#37302F] tracking-tighter mb-12 leading-none">
                   Start a <span className="font-serif italic text-[#37302F]/70">Conversation</span>
                 </h2>
@@ -183,7 +192,7 @@ const Contact = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full bg-transparent border border-[#37302F]/10 rounded-xl py-4 px-5 focus:border-[#37302F]/30 focus:ring-1 focus:ring-[#37302F]/10 outline-none transition-all text-sm font-medium placeholder:text-black/30 text-[#37302F]"
+                        className="w-full bg-transparent border border-[#37302F]/40 rounded-xl py-4 px-5 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all text-sm font-medium placeholder:text-black/30 text-[#37302F]"
                       />
                     </div>
                     <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
@@ -195,7 +204,7 @@ const Contact = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        className="w-full bg-transparent border border-[#37302F]/10 rounded-xl py-4 px-5 focus:border-[#37302F]/30 focus:ring-1 focus:ring-[#37302F]/10 outline-none transition-all text-sm font-medium placeholder:text-black/30 text-[#37302F]"
+                        className="w-full bg-transparent border border-[#37302F]/40 rounded-xl py-4 px-5 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all text-sm font-medium placeholder:text-black/30 text-[#37302F]"
                       />
                     </div>
                   </div>
@@ -209,7 +218,7 @@ const Contact = () => {
                           value={formData.propertyLocation}
                           onChange={handleChange}
                           required
-                          className="w-full bg-transparent border border-[#37302F]/10 rounded-xl py-4 px-5 focus:border-[#37302F]/30 focus:ring-1 focus:ring-[#37302F]/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer text-[#37302F]"
+                          className="w-full bg-transparent border border-[#37302F]/40 rounded-xl py-4 px-5 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all text-sm font-medium appearance-none cursor-pointer text-[#37302F]"
                         >
                           <option value="">Select Location</option>
                           <option value="Hyderabad">Hyderabad</option>
@@ -229,7 +238,7 @@ const Contact = () => {
                           value={formData.propertyType}
                           onChange={handleChange}
                           required
-                          className="w-full bg-transparent border border-[#37302F]/10 rounded-xl py-4 px-5 focus:border-[#37302F]/30 focus:ring-1 focus:ring-[#37302F]/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer text-[#37302F]"
+                          className="w-full bg-transparent border border-[#37302F]/40 rounded-xl py-4 px-5 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all text-sm font-medium appearance-none cursor-pointer text-[#37302F]"
                         >
                           <option value="">Select Type</option>
                           <option value="Villa">Villa</option>
@@ -244,6 +253,21 @@ const Contact = () => {
                     </div>
                   </div>
 
+                  {formData.propertyLocation === 'Other' && (
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-1.5 focus-within:translate-x-1 transition-transform col-span-1 md:col-span-2">
+                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Custom Location</label>
+                      <input
+                        type="text"
+                        name="customLocation"
+                        placeholder="Please specify your city or area"
+                        value={formData.customLocation}
+                        onChange={handleChange}
+                        required
+                        className="w-full bg-transparent border border-[#37302F]/40 rounded-xl py-4 px-5 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all text-sm font-medium placeholder:text-black/30 text-[#37302F]"
+                      />
+                    </motion.div>
+                  )}
+
                   <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
                     <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Requirement</label>
                     <div className="relative">
@@ -252,7 +276,7 @@ const Contact = () => {
                         value={formData.requirement}
                         onChange={handleChange}
                         required
-                        className="w-full bg-transparent border border-[#37302F]/10 rounded-xl py-4 px-5 focus:border-[#37302F]/30 focus:ring-1 focus:ring-[#37302F]/10 outline-none transition-all text-sm font-medium appearance-none cursor-pointer text-[#37302F]"
+                        className="w-full bg-transparent border border-[#37302F]/40 rounded-xl py-4 px-5 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all text-sm font-medium appearance-none cursor-pointer text-[#37302F]"
                       >
                         <option value="">What do you need?</option>
                         <option value="Full Home Interior">Full Home Interior</option>
@@ -264,17 +288,6 @@ const Contact = () => {
                       </div>
                     </div>
                   </div>
-
-                  {status.submitted && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="p-5 rounded-2xl bg-black text-white flex items-center gap-4"
-                    >
-                      <CheckCircle2 className="text-[#1A1A1A]" size={24} />
-                      <p className="font-medium">{status.message}</p>
-                    </motion.div>
-                  )}
 
                   <div className="pt-6">
                     <button
@@ -347,6 +360,22 @@ const Contact = () => {
           </div>
         </section>
       </div>
+
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast.show && (
+          <motion.div
+            initial={{ opacity: 0, x: 50, y: 0 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            exit={{ opacity: 0, x: 50, y: 0 }}
+            className="fixed top-24 right-4 md:right-8 bg-black text-[#F8F5F2] px-6 py-4 rounded-xl shadow-2xl z-[100] flex items-center gap-4 max-w-sm border border-white/10"
+          >
+            <CheckCircle2 className="text-[#F8F5F2] shrink-0" size={24} />
+            <p className="text-sm font-light leading-snug tracking-wide">{toast.message}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 };

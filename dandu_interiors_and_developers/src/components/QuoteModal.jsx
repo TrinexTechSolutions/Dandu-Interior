@@ -96,11 +96,11 @@ const QuoteModal = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-6">
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                       <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Full Name</label>
-                      <input type="text" className="w-full bg-white border-none rounded-lg p-3 md:p-3.5 text-xs focus:ring-1 focus:ring-black/10 outline-none transition-shadow placeholder:text-black/10" placeholder="John Doe" required />
+                      <input type="text" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="John Doe" required />
                     </div>
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                       <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Phone Number</label>
-                      <input type="tel" className="w-full bg-white border-none rounded-lg p-3 md:p-3.5 text-xs focus:ring-1 focus:ring-black/10 outline-none transition-shadow placeholder:text-black/10" placeholder="+91 00000 00000" required />
+                      <input type="tel" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="+91 00000 00000" required />
                     </div>
                   </div>
                 </div>
@@ -111,18 +111,18 @@ const QuoteModal = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-6">
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                       <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Email Address</label>
-                      <input type="email" className="w-full bg-white border-none rounded-lg p-3 md:p-3.5 text-xs focus:ring-1 focus:ring-black/10 outline-none transition-shadow placeholder:text-black/10" placeholder="hello@example.com" />
+                      <input type="email" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="hello@example.com" />
                     </div>
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                       <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Location</label>
-                      <input type="text" className="w-full bg-white border-none rounded-lg p-3 md:p-3.5 text-xs focus:ring-1 focus:ring-black/10 outline-none transition-shadow placeholder:text-black/10" placeholder="City or Landmark" />
+                      <input type="text" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="City or Landmark" />
                     </div>
                   </div>
                   
                   <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                     <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Service Type</label>
                     <div className="relative">
-                      <select className="w-full bg-white border-none rounded-lg p-3 md:p-3.5 text-xs appearance-none focus:ring-1 focus:ring-black/10 outline-none transition-shadow cursor-pointer" required defaultValue="">
+                      <select className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] appearance-none focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all cursor-pointer" required defaultValue="">
                         <option value="" disabled>Select a theme or service</option>
                         {services.map(s => (
                           <option key={s.id} value={s.id}>{s.title}</option>
@@ -143,7 +143,7 @@ const QuoteModal = () => {
                     {['Under 1L', '1L - 5L', '5L - 25L', '25L+'].map((range, idx) => (
                       <label key={idx} className="relative group cursor-pointer">
                         <input type="radio" name="modal_budget" value={range} className="peer absolute opacity-0" />
-                        <div className="bg-white border border-transparent peer-checked:border-black peer-checked:bg-black peer-checked:text-white rounded-lg md:rounded-xl p-2.5 md:p-3 text-center transition-all duration-300 group-hover:shadow-lg">
+                        <div className="bg-transparent border border-[#37302F]/40 peer-checked:border-[#1A1A1A] peer-checked:bg-[#1A1A1A] peer-checked:text-white text-[#37302F] rounded-lg md:rounded-xl p-2.5 md:p-3 text-center transition-all duration-300 group-hover:shadow-lg">
                           <span className="text-[8.5px] font-bold tracking-widest uppercase">{range}</span>
                         </div>
                       </label>
