@@ -3,29 +3,39 @@ import { Link } from 'react-router-dom';
 import SectionWrapper from '../components/SectionWrapper';
 import { designIdeas } from '../data/designIdeas';
 import { MoveRight } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const DesignIdeas = () => {
   const [isCardMode, setIsCardMode] = useState(true);
-  const [heroContentTop, setHeroContentTop] = useState(0);
+  const [heroOffset, setHeroOffset] = useState(0);
   const contentRef = useRef(null);
   const heroTitleRef = useRef(null);
 
   useEffect(() => {
     const measureHero = () => {
       if (heroTitleRef.current) {
+        // Measure initial height/bottom relative to fixed container
         const rect = heroTitleRef.current.getBoundingClientRect();
-        setHeroContentTop(rect.bottom + window.scrollY + 24);
+        
+        // IMPORTANT: We do NOT add window.scrollY here.
+        setHeroOffset(rect.bottom + 24); 
       }
     };
+
     measureHero();
     const ro = new ResizeObserver(measureHero);
     if (heroTitleRef.current) ro.observe(heroTitleRef.current);
-    return () => ro.disconnect();
+    window.addEventListener('resize', measureHero);
+    
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measureHero);
+    };
   }, []);
 
   const { scrollY } = useScroll();
-  const heroTranslateY = useTransform(scrollY, [0, 500], [0, -125]);
+  const yRange = useTransform(scrollY, [0, 500], [0, -320]);
+  const heroTranslateY = useSpring(yRange, { stiffness: 160, damping: 15 });
 
   // Ensure the body background matches the page to prevent "white leaks" during parallax
   useEffect(() => {
@@ -86,7 +96,7 @@ const DesignIdeas = () => {
       {/* Content Section */}
       <div
         ref={contentRef}
-        style={{ marginTop: heroContentTop > 0 ? `${heroContentTop}px` : '38vh' }}
+        style={{ marginTop: heroOffset > 0 ? `${heroOffset}px` : '38vh' }}
         className="relative z-10 bg-[#F8F5F2] will-change-transform"
       >
         <SectionWrapper bgClass="bg-transparent" paddingClass="pt-0.5 pb-16" containerClass="w-full px-4 lg:px-8">

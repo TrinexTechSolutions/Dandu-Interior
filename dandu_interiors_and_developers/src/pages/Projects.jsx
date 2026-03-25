@@ -2,13 +2,13 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import SectionWrapper from '../components/SectionWrapper';
 import { projects } from '../data/projects';
 import { useNavigate } from 'react-router-dom';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import ProjectDetailsDrawer from '../components/ProjectDetailsDrawer';
 
 const Projects = () => {
   const navigate = useNavigate();
   const [isCardMode, setIsCardMode] = useState(true);
-  const [heroContentTop, setHeroContentTop] = useState(0);
+  const [heroOffset, setHeroOffset] = useState(0);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -33,14 +33,27 @@ const Projects = () => {
   useEffect(() => {
     const measureHero = () => {
       if (heroTitleRef.current) {
+        // Measure initial height/bottom relative to fixed container
+        // We use rect.height + pt or just rect.bottom as long as we are measured 
+        // without scroll if possible, but rect.bottom of a FIXED element 
+        // is its absolute position in the viewport (which is document-static 
+        // if its top is fixed).
         const rect = heroTitleRef.current.getBoundingClientRect();
-        setHeroContentTop(rect.bottom + window.scrollY + 24);
+        
+        // IMPORTANT: We do NOT add window.scrollY here.
+        // Also, if the element is already transformed by y: heroTranslateY,
+        // we should conceptually "reverse" it or just measure once on mount.
+        // To be safe, let's use a stable measurement pattern.
+        const navHeight = document.querySelector('nav')?.offsetHeight || 80;
+        setHeroOffset(rect.bottom + 24); 
       }
     };
+
     measureHero();
     const ro = new ResizeObserver(measureHero);
     if (heroTitleRef.current) ro.observe(heroTitleRef.current);
     window.addEventListener('resize', measureHero);
+    
     return () => {
       ro.disconnect();
       window.removeEventListener('resize', measureHero);
@@ -48,7 +61,8 @@ const Projects = () => {
   }, []);
 
   const { scrollY } = useScroll();
-  const heroTranslateY = useTransform(scrollY, [0, 500], [0, -125]);
+  const yRange = useTransform(scrollY, [0, 500], [0, -320]);
+  const heroTranslateY = useSpring(yRange, { stiffness: 160, damping: 15 });
 
   // Ensure the body background matches the page to prevent "white leaks" during parallax
   useEffect(() => {
@@ -260,7 +274,7 @@ const Projects = () => {
       {/* Content Section */}
       <div
         ref={contentRef}
-        style={{ marginTop: heroContentTop > 0 ? `${heroContentTop}px` : '38vh' }}
+        style={{ marginTop: heroOffset > 0 ? `${heroOffset}px` : '38vh' }}
         className="relative z-10 bg-[#F8F5F2] will-change-transform"
       >
         <SectionWrapper bgClass="bg-transparent" paddingClass="pt-0.5 pb-16" containerClass="w-full px-4 lg:px-8">

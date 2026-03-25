@@ -26,10 +26,10 @@ const Contact = () => {
   });
 
   const { scrollY } = useScroll();
-  const yRange = useTransform(scrollY, [0, 500], [0, -180]);
+  const yRange = useTransform(scrollY, [0, 500], [0, -320]);
   const scaleRange = useTransform(scrollY, [0, 500], [1, 1.05]);
-  const bouncyY = useSpring(yRange, { stiffness: 100, damping: 20 });
-  const bouncyScale = useSpring(scaleRange, { stiffness: 100, damping: 20 });
+  const bouncyY = useSpring(yRange, { stiffness: 160, damping: 15 });
+  const bouncyScale = useSpring(scaleRange, { stiffness: 160, damping: 15 });
 
   React.useEffect(() => {
     const updateHeight = () => {
