@@ -24,15 +24,19 @@ const CustomCursor = () => {
       const target = e.target;
       if (!target) return;
 
-      // Check for interactive elements
       const interactiveEl = target.closest('a, button, [role="button"], input, select, textarea, .interactive');
       const customTextEl = target.closest('[data-cursor-text]');
-      
+      const isText = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'B', 'I', 'LI', 'LABEL'].includes(target.tagName) || 
+                     (target.childNodes.length === 1 && target.childNodes[0].nodeType === 3);
+      const isImage = target.tagName === 'IMG' || target.tagName === 'SVG' || target.closest('svg');
+
       if (customTextEl) {
         setCursorType('text');
         setCursorText(customTextEl.getAttribute('data-cursor-text'));
       } else if (interactiveEl) {
         setCursorType('hover');
+      } else if (isText || isImage) {
+        setCursorType('invert');
       } else {
         setCursorType('default');
       }
@@ -40,8 +44,24 @@ const CustomCursor = () => {
 
     const handleMouseDown = () => setCursorType('click');
     const handleMouseUp = (e) => {
-      const interactiveEl = e.target.closest('a, button, [role="button"], input, select, textarea, .interactive');
-      setCursorType(interactiveEl ? 'hover' : 'default');
+      const target = e.target;
+      if (!target) return;
+      
+      const interactiveEl = target.closest('a, button, [role="button"], input, select, textarea, .interactive');
+      const customTextEl = target.closest('[data-cursor-text]');
+      const isText = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'B', 'I', 'LI', 'LABEL'].includes(target.tagName) || 
+                     (target.childNodes.length === 1 && target.childNodes[0].nodeType === 3);
+      const isImage = target.tagName === 'IMG' || target.tagName === 'SVG' || target.closest('svg');
+
+      if (customTextEl) {
+        setCursorType('text');
+      } else if (interactiveEl) {
+        setCursorType('hover');
+      } else if (isText || isImage) {
+        setCursorType('invert');
+      } else {
+        setCursorType('default');
+      }
     };
     
     const handleMouseLeave = () => setIsVisible(false);
@@ -92,6 +112,13 @@ const CustomCursor = () => {
       backgroundColor: '#1A1A1A',
       borderColor: '#1A1A1A',
       borderWidth: '1px',
+    },
+    invert: {
+      width: 80,
+      height: 80,
+      backgroundColor: 'transparent',
+      borderColor: 'rgba(26, 26, 26, 0.1)',
+      borderWidth: '0.5px',
     }
   };
 
@@ -120,9 +147,11 @@ const CustomCursor = () => {
               animate={{ 
                 opacity: 1, 
                 scale: 1,
-                ...variants[cursorType === 'click' ? 'click' : cursorType]
+                backdropFilter: cursorType === 'invert' ? 'invert(100%)' : 'none',
+                ...variants[cursorType]
               }}
               exit={{ opacity: 0, scale: 0 }}
+              className="fixed top-0 left-0 rounded-full flex items-center justify-center overflow-hidden z-10 will-change-transform"
               style={{
                 x: trailX,
                 y: trailY,
@@ -136,7 +165,6 @@ const CustomCursor = () => {
                 mass: 0.5,
                 opacity: { duration: 0.2 }
               }}
-              className="fixed top-0 left-0 rounded-full flex items-center justify-center overflow-hidden z-10"
             >
               <AnimatePresence>
                 {cursorType === 'text' && (
