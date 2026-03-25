@@ -9,7 +9,7 @@ import CallToAction from '../components/CallToAction';
 import HomeDesignIdeas from '../components/HomeDesignIdeas';
 import { useModal } from '../context/ModalContext';
 
-import heroImage from '../assets/hero-interior-v3.png';
+const heroImage = "https://images.unsplash.com/photo-1613545325278-f24b0cae1224?q=80&w=2600&auto=format&fit=crop";
 
 const Home = () => {
   const { openQuoteModal } = useModal();
@@ -17,6 +17,7 @@ const Home = () => {
   const [expandedService, setExpandedService] = React.useState(null);
   const scrollRef = React.useRef(null);
   const [isHoveringServices, setIsHoveringServices] = React.useState(false);
+  const [isHovering, setIsHovering] = React.useState(false);
 
   // Smooth auto-scroll for Core Services
   React.useEffect(() => {
@@ -56,23 +57,26 @@ const Home = () => {
             alt="Dandu Interior Banner" 
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/60 backdrop-blur-[1px]"></div>
+          <div className="absolute inset-0 bg-[#F8F5F2]/20 backdrop-blur-[1px]"></div>
           
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-            <h1 className="text-white text-5xl md:text-8xl font-light tracking-tighter mb-8 max-w-5xl leading-[0.9] filter drop-shadow-2xl">
-              Elevating <span className="font-serif italic text-white/50">Spaces</span>, <br />
-              Exceeding <span className="font-serif italic text-white/50">Expectations</span>.
+            <h2 className="text-[#37302F]/60 text-xs font-bold tracking-[0.4em] uppercase mb-8 block lg:mb-12">
+              Dandu Interiors & Developers
+            </h2>
+            <h1 className="text-[#37302F] text-5xl md:text-8xl font-light tracking-tighter mb-8 max-w-5xl leading-[0.9] filter">
+              Elevating <span className="font-serif italic text-[#37302F]/50">Spaces</span>, <br />
+              Exceeding <span className="font-serif italic text-[#37302F]/50">Expectations</span>.
             </h1>
-            <p className="text-white/80 text-base md:text-lg max-w-2xl font-light mb-12 tracking-wide uppercase">
+            <p className="text-[#37302F]/70 text-base md:text-lg max-w-2xl font-light mb-12 tracking-wide uppercase">
               The Finest Interior Designers and Construction Experts in the Region.
             </p>
             <div className="flex gap-4">
-              <Link to="/projects" className="bg-white text-black px-10 py-4 rounded-full font-bold tracking-[0.2em] uppercase text-[10px] hover:bg-[#F8F5F2] transition-all shadow-xl">
+              <Link to="/projects" className="bg-[#37302F] text-[#F8F5F2] px-10 py-4 rounded-full font-bold tracking-[0.2em] uppercase text-[10px] hover:bg-[#37302F]/90 transition-all shadow-xl">
                 View Projects
               </Link>
               <button 
                 onClick={openQuoteModal} 
-                className="bg-transparent text-white border border-white/30 backdrop-blur-md px-10 py-4 rounded-full font-bold tracking-[0.2em] uppercase text-[10px] hover:bg-white hover:text-black transition-all"
+                className="bg-transparent text-[#37302F] border border-[#37302F]/30 backdrop-blur-md px-10 py-4 rounded-full font-bold tracking-[0.2em] uppercase text-[10px] hover:bg-[#37302F] hover:text-[#F8F5F2] transition-all"
               >
                 Get a Quote
               </button>
