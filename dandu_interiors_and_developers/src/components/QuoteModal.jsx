@@ -9,22 +9,28 @@ const QuoteModal = () => {
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+
     if (isQuoteModalOpen) {
-      document.body.style.overflow = 'hidden';
+      html.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      html.style.overflow = 'unset';
+      body.style.overflow = 'unset';
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      html.style.overflow = 'unset';
+      body.style.overflow = 'unset';
     };
   }, [isQuoteModalOpen]);
 
   return (
     <AnimatePresence>
       {isQuoteModalOpen && (
-        <div className="fixed inset-0 z-[150] flex items-end md:items-center justify-center">
+        <div className="fixed inset-0 z-[150] flex items-end md:items-center justify-center" data-lenis-prevent>
           {/* Backdrop */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -33,20 +39,20 @@ const QuoteModal = () => {
           />
 
           {/* Modal/Drawer Container */}
-          <motion.div 
+          <motion.div
             initial={{ y: '100%', opacity: 0.5 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0.5 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="relative w-full max-w-4xl max-h-[92vh] md:max-h-[90vh] bg-white rounded-t-[32px] md:rounded-3xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col md:flex-row m-0 md:m-4"
+            className="relative w-full max-w-4xl h-[92vh] md:h-auto md:max-h-[85vh] bg-[#F8F5F2] rounded-t-[32px] md:rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col md:flex-row m-0 md:m-4"
           >
             {/* Mobile Handle Bar */}
             <div className="w-full flex md:hidden justify-center pt-4 pb-2">
               <div className="w-12 h-1 bg-gray-200 rounded-full" />
             </div>
-            
+
             {/* Close Button */}
-            <button 
+            <button
               onClick={closeQuoteModal}
               className="absolute top-5 right-5 z-20 p-2 bg-black/5 hover:bg-black text-[#1A1A1A] hover:text-white rounded-full transition-all duration-300"
             >
@@ -58,7 +64,7 @@ const QuoteModal = () => {
               <div className="absolute top-[-5%] right-[-5%] text-[15rem] font-serif italic text-white/[0.03] pointer-events-none select-none">
                 Q
               </div>
-              
+
               <div className="relative z-10">
                 <div className="mb-8">
                   <ClipboardList size={32} strokeWidth={1} className="text-white/40" />
@@ -71,7 +77,7 @@ const QuoteModal = () => {
                   Our estimation team will review your requirements and get back to you within 24 hours.
                 </p>
               </div>
-              
+
               <div className="relative z-10 border-t border-white/5 pt-8">
                 <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-white/30 block mb-3">Direct Inquiry</span>
                 <a href="tel:+919866166612" className="text-xl font-light tracking-tighter text-white hover:text-white/70 transition-colors">
@@ -81,7 +87,7 @@ const QuoteModal = () => {
             </div>
 
             {/* Form Content */}
-            <div className="w-full md:w-[67%] bg-[#F8F5F2] p-5 md:p-10 overflow-y-auto custom-scrollbar">
+            <div className="w-full md:w-[67%] bg-[#F8F5F2] p-5 md:p-10 overflow-y-auto custom-scrollbar" data-lenis-prevent>
               <div className="md:hidden mb-4">
                 <h2 className="text-2xl font-light tracking-tighter text-[#1A1A1A] leading-none mb-1">
                   Request <span className="font-serif italic text-black/30">A Quote</span>
@@ -89,7 +95,7 @@ const QuoteModal = () => {
               </div>
 
               <form onSubmit={(e) => { e.preventDefault(); closeQuoteModal(); alert('Quote Request Sent!'); }} className="space-y-4 md:space-y-7">
-                
+
                 {/* Form Section: Personal Details */}
                 <div className="space-y-2.5 md:space-y-4">
                   <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-black/20 block">01. Personal Details</span>
@@ -118,7 +124,7 @@ const QuoteModal = () => {
                       <input type="text" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="City or Landmark" />
                     </div>
                   </div>
-                  
+
                   <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                     <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Service Type</label>
                     <div className="relative">

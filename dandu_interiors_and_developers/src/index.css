@@ -72,36 +72,43 @@
   }
 }
 
-/* Custom Scrollbar - Universal Cross-browser Stability */
-
-/* Firefox */
+/* Universal Scrollbar Hiding - achieve premium, seamless look */
+html,
+body,
 * {
-  scrollbar-width: thin;
-  scrollbar-color: #1A1A1A transparent;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE/Edge */
 }
 
-/* Chrome, Safari, Edge */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px; /* For horizontal scrollbars */
+::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important; /* Chrome/Safari/Edge */
 }
 
-::-webkit-scrollbar-track,
-::-webkit-scrollbar-corner {
-  background: transparent !important;
+/* Selective Scrollbar Restoration for Drawers/Modals */
+.custom-scrollbar::-webkit-scrollbar {
+  display: block;
+  width: 4px;
+  height: 4px;
 }
 
-::-webkit-scrollbar-button {
-  display: none;
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #1A1A1A;
-  background-clip: content-box;
-  border: 3px solid transparent; /* Creates the floating 2px appearance */
-  border-radius: 20px;
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #1A1A1A;
+  border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: #000000;
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #000000;
+}
+
+/* Ensure firefox supports selective restoration if needed */
+.custom-scrollbar {
+  scrollbar-width: thin !important;
+  scrollbar-color: #1A1A1A transparent !important;
 }

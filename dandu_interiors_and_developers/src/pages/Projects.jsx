@@ -235,16 +235,6 @@ const Projects = () => {
         @media (min-width: 1024px) {
           .projects-hero-title { font-size: clamp(80px, 11vw, 119px); letter-spacing: -10.2px; }
         }
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #1A1A1A;
-          border-radius: 10px;
-        }
       `}</style>
 
       {/* Hero Section */}

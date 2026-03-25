@@ -6,13 +6,19 @@ import CallToAction from './CallToAction';
 const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
   // Prevent body scroll when drawer is open
   useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      html.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      html.style.overflow = 'unset';
+      body.style.overflow = 'unset';
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      html.style.overflow = 'unset';
+      body.style.overflow = 'unset';
     };
   }, [isOpen]);
 
@@ -72,7 +78,7 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
             </div>
 
             {/* Content Area */}
-            <div className="overflow-y-auto flex-1 custom-scrollbar">
+            <div className="overflow-y-auto flex-1 custom-scrollbar" data-lenis-prevent>
               <div className="px-4 md:px-8 py-6 max-w-5xl mx-auto space-y-12">
                 
                 {/* Hero section */}
