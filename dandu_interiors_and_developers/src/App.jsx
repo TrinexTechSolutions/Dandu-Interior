@@ -15,6 +15,7 @@ import Contact from './pages/Contact';
 
 import SmoothScroll from './components/SmoothScroll';
 import CustomCursor from './components/CustomCursor';
+import QuoteModal from './components/QuoteModal';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -45,6 +46,7 @@ function App() {
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/design-ideas/:id" element={<DesignIdeaDetail />} />
           </Routes>
+          <QuoteModal />
         </ModalProvider>
       </SmoothScroll>
     </BrowserRouter>

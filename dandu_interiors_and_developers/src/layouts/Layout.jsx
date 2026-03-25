@@ -19,7 +19,6 @@ const Layout = () => {
         <Outlet />
       </main>
       <Footer />
-      <QuoteModal />
       <ScrollToTopButton />
     </div>
   );

@@ -6,6 +6,7 @@ export const services = [
     title: 'Interior Design',
     icon: Home,
     shortDesc: 'Transform your space into a stunning, functional environment with our expert interior design solutions.',
+    description: 'From luxurious residential sanctuaries to dynamic corporate offices, we blend high-end aesthetics with functional utility. Our expert designers use premium materials and innovative layouts to transform your vision into a stunning reality.',
     fullDesc: 'Our interior design service covers everything from concept to completion. We listen to your vision and bring it to life, creating spaces that are both beautiful and practical. Whether it is a cozy residential home or a modern corporate office, we use premium materials and innovative layouts to maximize the potential of your property.',
     benefits: ['Space Optimization', 'Custom Furniture Design', 'Color Psychology', 'Lighting Consultation'],
     subServices: [
@@ -31,6 +32,7 @@ export const services = [
     title: 'Masonry Works',
     icon: Grid,
     shortDesc: 'Precision tile fixing, grouting, and marble installation for durable and aesthetic finishes.',
+    description: 'Precision structural and aesthetic masonry, specializing in flawless marble flooring, expert tile fixing, and robust brickwork. We ensure every surface is perfectly leveled and built to last with professional-grade finishing.',
     fullDesc: 'Our masonry division provides the structural and aesthetic backbone of your property. We employ seasoned masons who take pride in precision and structural integrity. From flawless marble flooring that elevates a lobby\'s grandeur to heavy duty brickwork, our masonry works are executed with rigorous quality control, ensuring longevity and impeccable finishes.',
     benefits: ['High Durability', 'Premium Materials', 'Flawless Finish', 'Timely Execution'],
     subServices: [
@@ -51,6 +53,7 @@ export const services = [
     title: 'Renovation',
     icon: Hammer,
     shortDesc: 'Complete home, bathroom, and kitchen makeovers designed to elevate your living experience.',
+    description: 'Complete property transformations including modern kitchen makeovers, waterproofed bathroom sanctuaries, and vertical floor additions. We manage the entire lifecycle from structural modifications to high-end final finishes.',
     fullDesc: 'Revitalize your aging property with our comprehensive renovation services. We manage the entire lifecycle from tearing down the old structure to upgrading the plumbing/electrical lines, and applying the final modern finishes. Our renovations dramatically improve the utility, aesthetic, and market value of your property.',
     benefits: ['Increased Home Value', 'Modernized Systems', 'Better Space Utilization', 'Energy Efficiency'],
     subServices: [
@@ -68,6 +71,7 @@ export const services = [
     title: 'Office Partitions',
     icon: SplitSquareHorizontal,
     shortDesc: 'Intelligent spatial division using glass, aluminum, and demountable systems for modern workspaces.',
+    description: 'Intelligent spatial division for modern workspaces using premium frameless glass, durable aluminum, and demountable systems. Achieve superior acoustic insulation while maintaining natural light flow and corporate elegance.',
     fullDesc: 'Space optimization is crucial in commercial environments. Our premium partition systems allow you to carve out private meeting rooms, executive offices, and collaborative zones without undertaking heavy, permanent civil construction. We offer visually striking, sound-insulated partition setups tailored for modern corporate aesthetics.',
     benefits: ['Acoustic Insulation', 'Natural Light Flow', 'Flexible Layouts', 'Quick Installation'],
     subServices: [
@@ -84,6 +88,7 @@ export const services = [
     title: 'Painting',
     icon: Paintbrush,
     shortDesc: 'Professional interior and exterior painting services for residential and commercial properties.',
+    description: 'Flawless color transformations using premium low-VOC interior emulsions and weather-shielding exterior coatings. Our 4-step preparation process ensures silky smooth surfaces and long-lasting protection for your property.',
     fullDesc: 'A flawless paint job requires 80% preparation and 20% execution. Our professional painting division takes no shortcuts. From intense scraping and sanding to applying premium primers and low-VOC paints, we deliver silky smooth, long-lasting color transformations that drastically uplift the visual appeal of any structure.',
     benefits: ['Surface Preparation', 'Premium Paints', 'Color Consultation', 'Clean Execution'],
     subServices: [
@@ -102,6 +107,7 @@ export const services = [
     title: 'Electrical Works',
     icon: Zap,
     shortDesc: 'Safe, reliable electrical installations, repairs, and lighting solutions by certified professionals.',
+    description: 'Certified safety-first electrical solutions including complete new system wiring, smart home integration, and rapid fault diagnosis. We ensure absolute compliance with safety regulations and energy-efficient lighting.',
     fullDesc: 'Electrical integrity is non-negotiable for safety. Our certified electricians handle everything from complex wiring of new villas to tracing and fixing elusive short circuits. We ensure absolute compliance with local safety regulations while delivering smart, energy-efficient power and lighting solutions.',
     benefits: ['Certified Electricians', 'Safety Compliance', 'Smart Home Ready', 'Energy Efficient'],
     subServices: [
@@ -121,6 +127,7 @@ export const services = [
     title: 'Plumbing Works',
     icon: Wrench,
     shortDesc: 'Expert leak repair, pipe installations, and sanitary fitting services to keep systems flowing smoothly.',
+    description: 'Expert leak prevention and high-pressure water supply networks. From precision sanitary fitting installations to complex drainage systems, we use premium materials to keep your property\'s systems flowing smoothly.',
     fullDesc: 'Water damage is a property\'s worst enemy. Our expert plumbers deliver robust piping solutions that guarantee high pressure, leak-free operation, and efficient drainage. Whether dealing with a midnight pipe burst or designing a complex bathroom plumbing layout from scratch, our team executes with absolute precision and premium materials.',
     benefits: ['24/7 Support Available', 'Leak Detection', 'High-Quality Fittings', 'Water Pressure Optimization'],
     subServices: [
@@ -143,6 +150,7 @@ export const services = [
     title: 'Handyman Services',
     icon: Ruler,
     shortDesc: 'Quick, reliable fixes for mounting, drilling, furniture assembly, and general home maintenance.',
+    description: 'Professional mounting, drilling, and furniture assembly services. Whether it\'s heavy TV bracket mounting, secure curtain rod installation, or perfect wallpaper fixing, we handle your to-do list with surgical precision.',
     fullDesc: 'Don\'t stress over the small stuff. Our professional handyman division is here to tackle your to-do list with speed and precision. Equipped with the right tools and fixings for every wall type, we handle everything from safely mounting massive TVs to assembling complex flat-pack furniture, leaving your home perfectly organized and clean.',
     benefits: ['Multi-skilled Workers', 'Quick Turnaround', 'Fully Equipped Toolkits', 'Neat Workmanship'],
     subServices: [

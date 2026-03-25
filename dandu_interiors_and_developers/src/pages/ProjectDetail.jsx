@@ -153,9 +153,12 @@ const ProjectDetail = () => {
         </div>
       </div>
 
-      <div>
+      <div className="hidden md:block">
         <CallToAction />
         <Footer />
+      </div>
+      <div className="md:hidden">
+        <CallToAction />
       </div>
     </div>
   );
