@@ -25,6 +25,25 @@ const Home = () => {
     return typeof window !== 'undefined' && window.innerWidth < 1024 ? -1 : 0;
   });
   const [isHoveringProcess, setIsHoveringProcess] = React.useState(false);
+  
+  // Timer refs for resuming auto-scroll
+  const serviceResumeTimer = React.useRef(null);
+  const testimonialResumeTimer = React.useRef(null);
+
+  const resetServiceInteraction = () => {
+    if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
+    serviceResumeTimer.current = setTimeout(() => {
+      setIsInteracting(false);
+      setIsManualScroll(false);
+    }, 4000); // Resume auto-scroll after 4s of no activity
+  };
+
+  const resetTestimonialInteraction = () => {
+    if (testimonialResumeTimer.current) clearTimeout(testimonialResumeTimer.current);
+    testimonialResumeTimer.current = setTimeout(() => {
+      setIsTestimonialInteracting(false);
+    }, 4000);
+  };
 
   // Auto-loop for process steps on desktop
   React.useEffect(() => {
@@ -36,7 +55,11 @@ const Home = () => {
       }
     }, 3000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
+      if (testimonialResumeTimer.current) clearTimeout(testimonialResumeTimer.current);
+    };
   }, [isHoveringProcess]);
 
   // Mobile scroll tracking with precise center detection
@@ -129,6 +152,7 @@ const Home = () => {
 
   const handleManualScroll = (direction) => {
     setIsManualScroll(true);
+    resetServiceInteraction(); // Start the resume timer
     if (scrollRef.current) {
       const scrollAmount = window.innerWidth * 0.4;
       scrollRef.current.scrollBy({
@@ -231,12 +255,16 @@ const Home = () => {
               ref={scrollRef}
               className="flex overflow-x-auto gap-6 pb-8 px-4 md:px-8 relative hide-scrollbar"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              onMouseEnter={() => setIsInteracting(true)}
-              onMouseLeave={() => setIsInteracting(false)}
-              onTouchStart={() => setIsInteracting(true)}
-              onTouchEnd={() => {
-                setTimeout(() => setIsInteracting(false), 1000);
+              onMouseEnter={() => {
+                setIsInteracting(true);
+                if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
               }}
+              onMouseLeave={() => resetServiceInteraction()}
+              onTouchStart={() => {
+                setIsInteracting(true);
+                if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
+              }}
+              onTouchEnd={() => resetServiceInteraction()}
             >
             <style>{`
               .hide-scrollbar::-webkit-scrollbar { display: none !important; }
@@ -342,37 +370,60 @@ const Home = () => {
         </div>
       </SectionWrapper>
 
-      {/* Featured Projects */}
+      {/* Featured Projects - Cinematic Redesign */}
       <SectionWrapper>
         <div className="relative mb-20 flex flex-col items-center justify-center">
           <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] text-center mb-4 leading-none">
-            Featured <span className="font-serif italic text-black/30">Projects</span>
+            Our <span className="font-serif italic text-black/30">Projects</span>
           </h2>
           <div className="w-20 h-[1px] bg-black/10"></div>
           <Link to="/projects" className="mt-8 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-6 py-2 rounded-full border border-black/5 transition-all">
             View All Work <ChevronRight size={14} />
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.slice(0, 3).map((project) => (
-            <Link key={project.id} to={`/projects`} className="group relative rounded-xl overflow-hidden shadow-md block h-[400px]" data-cursor-text="VIEW">
-              <img 
-                src={project.image} 
-                alt={project.title} 
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <span className="text-[#1A1A1A] text-xs font-bold uppercase tracking-wider mb-2 block">{project.category}</span>
-                <h3 className="text-white text-2xl font-bold mb-1">{project.title}</h3>
-                <p className="text-gray-300 text-sm mb-4">{project.location}</p>
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-                  <span className="text-white bg-white/20 backdrop-blur-md px-4 py-2 rounded-full text-sm font-medium">View Detail</span>
+        
+        <div className="grid grid-cols-3 gap-3 md:gap-4 lg:gap-8 auto-rows-[220px] md:auto-rows-[240px] lg:auto-rows-[220px]">
+          {projects.slice(0, 3).map((project, idx) => {
+            const isFeature = idx === 0;
+            return (
+              <Link 
+                key={project.id} 
+                to={`/projects`} 
+                className={`group relative rounded-2xl overflow-hidden shadow-sm block transition-all duration-700 hover:shadow-2xl h-full ${isFeature ? 'col-span-2 row-span-2' : 'col-span-1 row-span-1'}`}
+                data-cursor-text="VIEW"
+              >
+                <img 
+                  src={project.image} 
+                  alt={project.title} 
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-100" 
+                />
+                
+                {/* Immersive Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                {/* Content Overlay - Precision Glassmorphism */}
+                <div className={`absolute bottom-0 left-0 w-full lg:p-10 ${isFeature ? 'p-5 sm:p-6' : 'p-3 sm:p-4'}`}>
+                  <div className="flex flex-col items-start gap-2 lg:gap-3">
+                    
+                    <div className="overflow-hidden">
+                      <h3 className={`text-white font-light tracking-tighter leading-none transition-all duration-700 group-hover:tracking-normal group-hover:scale-[1.02] origin-left drop-shadow-lg ${isFeature ? 'text-2xl sm:text-3xl lg:text-4xl' : 'text-sm sm:text-lg lg:text-2xl'}`}>
+                        {project.title.split(' ')[0]} <br />
+                        <span className="font-serif italic text-white/40 group-hover:text-white/60 transition-colors duration-500">{project.title.split(' ').slice(1).join(' ')}</span>
+                      </h3>
+                    </div>
+                    
+                    <div className={`flex items-center gap-3 mt-2 lg:mt-4 opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700 delay-100 ${isFeature ? 'flex' : 'hidden sm:flex'}`}>
+                      <p className={`text-white/60 font-light tracking-[0.1em] uppercase border-l border-white/30 pl-3 ${isFeature ? 'text-[9px] lg:text-[10px]' : 'text-[7px] lg:text-[9px]'}`}>
+                        {project.location}
+                      </p>
+                      <div className="w-8 lg:w-12 h-[1px] bg-white/30"></div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       </SectionWrapper>
 
@@ -447,18 +498,22 @@ const Home = () => {
           <div 
             ref={testimonialScrollRef}
             className="flex md:grid md:grid-cols-2 lg:grid-cols-4 overflow-x-auto md:overflow-hidden gap-6 md:gap-8 pb-12 px-4 md:px-8 relative hide-scrollbar"
-            onMouseEnter={() => setIsTestimonialInteracting(true)}
-            onMouseLeave={() => setIsTestimonialInteracting(false)}
-            onTouchStart={() => setIsTestimonialInteracting(true)}
-            onTouchEnd={() => {
-              setTimeout(() => setIsTestimonialInteracting(false), 1000);
+            onMouseEnter={() => {
+              setIsTestimonialInteracting(true);
+              if (testimonialResumeTimer.current) clearTimeout(testimonialResumeTimer.current);
             }}
+            onMouseLeave={() => resetTestimonialInteraction()}
+            onTouchStart={() => {
+              setIsTestimonialInteracting(true);
+              if (testimonialResumeTimer.current) clearTimeout(testimonialResumeTimer.current);
+            }}
+            onTouchEnd={() => resetTestimonialInteraction()}
           >
             {/* On Desktop we use original sliced array, on Mobile we use infinite array */}
             {(window.innerWidth >= 1024 ? testimonials.slice(0, 4) : infiniteTestimonials).map((testimonial, idx) => (
               <div 
                 key={`${testimonial.id}-${idx}`} 
-                className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] relative mt-8 flex flex-col h-full min-w-[85vw] md:min-w-0 group transition-all duration-300 hover:shadow-2xl"
+                className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] relative mt-8 flex flex-col h-[400px] lg:h-full min-w-[85vw] md:min-w-0 lg:min-w-0 group transition-all duration-300 hover:shadow-2xl justify-between"
               >
                 <div className="absolute -top-6 left-8 w-12 h-12 bg-[#1A1A1A] text-white flex items-center justify-center rounded-full text-3xl font-serif">"</div>
                 
