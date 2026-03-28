@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CallToAction from '../components/CallToAction';
 import { ArrowRight } from 'lucide-react';
 import { useScroll, useTransform, motion } from 'framer-motion';
-import FounderImg from '../assets/about_page_images/Founder_img_1.png';
+import FounderImg from '../assets/about_page_images/Founder_img_3.jpeg';
 
 const About = () => {
   const [hoveredValue, setHoveredValue] = useState(null);
@@ -42,27 +42,28 @@ const About = () => {
     <div className="bg-[#F8F5F2] min-h-screen text-[#37302F] selection:bg-[#37302F] selection:text-[#F8F5F2] font-sans overflow-hidden">
 
       {/* 1. Editorial Hero */}
-      <section className="pt-32 pb-20 md:pt-40 md:pb-32 px-6 md:px-12 max-w-[1600px] mx-auto relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start relative z-10">
+      <section className="pt-24 pb-12 md:pt-32 md:pb-24 px-6 md:px-12 max-w-[1600px] mx-auto relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-start relative z-10">
 
           <div className="lg:col-span-7 xl:col-span-8 z-10">
-            <span className="text-[#37302F]/60 text-xs font-bold tracking-[0.3em] uppercase mb-8 block">Dandu Interiors & Developers</span>
-            <h1 className="text-[5rem] sm:text-8xl md:text-[9rem] lg:text-[10rem] xl:text-[12rem] font-medium leading-[0.8] tracking-tighter mb-10 -ml-2">
-              The <br /> <span className="font-serif italic text-[#37302F]/70 pr-4 block lg:inline">Practice.</span>
+            <span className="text-[#37302F]/60 text-xs font-bold tracking-[0.3em] uppercase mb-4 md:mb-8 block">Dandu Interiors & Developers</span>
+            <h1 className="text-[3.5rem] sm:text-6xl md:text-8xl lg:text-[7rem] xl:text-[9rem] font-medium leading-[0.9] tracking-tighter mb-6 md:mb-8">
+              Our <br /> <span className="font-serif italic text-[#37302F]/70 pr-4 block lg:inline">Practice.</span>
             </h1>
-            <p className="text-xl md:text-3xl font-light text-[#37302F]/70 max-w-xl leading-relaxed">
-              We fuse Civil Engineering precision with refined interior aesthetics to build spaces that profoundly endure.
+            <p className="text-base md:text-2xl lg:text-4xl font-light text-[#37302F] max-w-4xl leading-relaxed">
+              We blend the strength and precision of civil engineering
+              with elegant, thoughtfully crafted interiors
+              to create spaces that not only look exceptional
+              but are built to last for generations.
             </p>
           </div>
 
-          <div className="lg:col-span-5 xl:col-span-4 relative h-[60vh] lg:h-[75vh] w-full overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl">
+          <div className="lg:col-span-5 xl:col-span-4 relative h-[45vw] max-h-[400px] lg:h-[75vh] lg:max-h-none w-full overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl">
             <img
               src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=1200"
               alt="Hero Architecture"
               className="w-full h-full object-cover object-center absolute inset-0 transform hover:scale-105 transition-transform duration-1000"
             />
-            {/* Decorative Structural lines overlay */}
-            <div className="absolute inset-0 border border-white/20 m-4 pointer-events-none"></div>
           </div>
         </div>
 
@@ -72,11 +73,10 @@ const About = () => {
         </div>
       </section>
 
-      {/* Breakline */}
-      <div className="w-full border-t border-[#37302F]/10"></div>
+      {/* Breakline Removed */}
 
       {/* 2. The Manifesto (Oversized Scroll) */}
-      <section className="py-24 md:py-48 px-6 md:px-12 max-w-[1400px] mx-auto">
+      <section className="py-16 md:py-32 px-6 md:px-12 max-w-[1400px] mx-auto">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-[1.3] text-[#37302F] tracking-tight">
             "Founded on the principle that the spaces we inhabit must be masterpieces of both engineering and art. We blend structural integrity with refined luxury to forge lifelong foundations."
@@ -84,19 +84,18 @@ const About = () => {
         </div>
       </section>
 
-      {/* Breakline */}
-      <div className="w-full border-t border-[#37302F]/10"></div>
+      {/* Breakline Removed */}
 
       {/* 3. The Principal (Founder Profile) */}
-      <section className="py-24 md:py-32 px-6 md:px-12 max-w-[1600px] mx-auto">
+      <section className="py-16 md:py-24 px-6 md:px-12 max-w-[1600px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
 
           {/* Portrait */}
-          <div className="lg:col-span-5 h-[60vh] md:h-[80vh] w-full relative overflow-hidden group">
+          <div className="lg:col-span-5 h-[60vh] md:h-[80vh] w-full relative overflow-hidden">
             <img
               src={FounderImg}
               alt="D. Anudeep - Founder"
-              className="w-full h-full object-cover grayscale contrast-125 transform group-hover:scale-105 transition-transform duration-1000"
+              className="w-full h-full object-cover object-top grayscale contrast-125"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60"></div>
             <div className="absolute bottom-8 left-8 text-white text-xs tracking-widest font-bold uppercase mix-blend-screen flex items-center gap-3">
@@ -109,21 +108,26 @@ const About = () => {
             <div>
               <h3 className="text-5xl md:text-7xl font-serif italic text-[#37302F] mb-16 tracking-tight">D. Anudeep</h3>
 
-              <div className="border-t border-[#37302F]/10 py-10">
+              <div className="py-10">
                 <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#37302F]/40 block mb-6">Philosophy</span>
                 <p className="text-2xl md:text-3xl font-light leading-[1.4] tracking-tight">
                   "As a degreed Civil Engineer, my approach is rooted in structural integrity and technical precision. We provide 360° services—from luxury interior curation and architectural masonry to complex electrical and plumbing systems—ensuring every project is as robust as it is beautiful."
                 </p>
               </div>
 
-              <div className="border-t border-b border-[#37302F]/10 py-10">
+              <div className="py-10">
                 <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#37302F]/40 block mb-6">Expertise Focus</span>
-                <div className="flex flex-wrap gap-3 text-xs md:text-sm uppercase tracking-widest font-bold text-[#37302F]">
-                  <span className="px-5 py-3 border border-[#37302F]/20 rounded-full hover:bg-[#37302F] hover:text-[#F8F5F2] transition-colors cursor-default">Civil Engineering</span>
-                  <span className="px-5 py-3 border border-[#37302F]/20 rounded-full hover:bg-[#37302F] hover:text-[#F8F5F2] transition-colors cursor-default">Structural Integrity</span>
-                  <span className="px-5 py-3 border border-[#37302F]/20 rounded-full hover:bg-[#37302F] hover:text-[#F8F5F2] transition-colors cursor-default">Luxury Interiors</span>
-                  <span className="px-5 py-3 border border-[#37302F]/20 rounded-full hover:bg-[#37302F] hover:text-[#F8F5F2] transition-colors cursor-default">Full-Scale Renovations</span>
-                  <span className="px-5 py-3 border border-[#37302F]/20 rounded-full hover:bg-[#37302F] hover:text-[#F8F5F2] transition-colors cursor-default">Turnkey Solutions</span>
+                {/* Desktop: pill tags */}
+                <div className="hidden md:flex flex-wrap gap-3 text-xs md:text-sm uppercase tracking-widest font-bold text-[#37302F]">
+                  {['Civil Engineering', 'Structural Integrity', 'Luxury Interiors', 'Full-Scale Renovations', 'Turnkey Solutions'].map(tag => (
+                    <span key={tag} className="px-5 py-3 border border-[#37302F]/20 rounded-full hover:bg-[#37302F] hover:text-[#F8F5F2] transition-colors cursor-default">{tag}</span>
+                  ))}
+                </div>
+                {/* Mobile: clean stacked divider list */}
+                <div className="flex flex-col md:hidden divide-y divide-[#37302F]/10">
+                  {['Civil Engineering', 'Structural Integrity', 'Luxury Interiors', 'Full-Scale Renovations', 'Turnkey Solutions'].map(tag => (
+                    <span key={tag} className="py-3 text-sm font-bold uppercase tracking-[0.2em] text-[#37302F]">{tag}</span>
+                  ))}
                 </div>
               </div>
             </div>
@@ -133,7 +137,7 @@ const About = () => {
       </section>
 
       {/* 4. The Practice (Interactive Vertical Index) */}
-      <section className="pt-24 pb-32 md:pt-40 md:pb-48 bg-[#1A1A1A] text-[#F8F5F2] px-6 md:px-12 relative overflow-hidden">
+      <section className="pt-16 pb-24 md:pt-24 md:pb-32 bg-[#1A1A1A] text-[#F8F5F2] px-6 md:px-12 relative overflow-hidden">
         {/* Floating Hover Image Generator */}
         {hoveredValue && (
           <div className="hidden lg:block fixed top-1/2 left-1/2 -translate-y-1/2 w-[35vw] h-[65vh] pointer-events-none z-50 transition-opacity duration-500 ease-out shadow-2xl animate-fade-in mix-blend-lighten opacity-80">
@@ -146,22 +150,22 @@ const About = () => {
         )}
 
         <div className="max-w-[1600px] mx-auto relative z-10">
-          <div className="mb-24 md:mb-40 flex justify-between items-end border-b border-white/20 pb-12">
+          <div className="mb-24 md:mb-40 flex justify-between items-end pb-12">
             <div>
-              <h2 className="text-xs font-bold tracking-[0.4em] uppercase text-[#37302F]/60 mb-8 flex items-center gap-4">
-                <span className="w-12 h-px bg-[#37302F]/40 block"></span> Our Practice
+              <h2 className="text-xs font-bold tracking-[0.4em] uppercase text-[#F8F5F2]/60 mb-8 flex items-center gap-4">
+                <span className="w-12 h-px bg-[#F8F5F2]/40 block"></span> Our Practice
               </h2>
-              <h3 className="text-5xl md:text-7xl lg:text-[7rem] font-light tracking-tighter leading-[0.9]">
-                The <span className="font-serif italic text-[#37302F]/70">Foundation.</span>
+              <h3 className="text-5xl md:text-7xl lg:text-[7rem] font-light tracking-tighter leading-[0.9] text-[#F8F5F2]">
+                Our <span className="font-serif italic text-[#F8F5F2]/70">Foundation.</span>
               </h3>
             </div>
           </div>
 
-          <div className="flex flex-col border-b border-white/20 relative z-10">
+          <div className="flex flex-col relative z-10">
             {coreValues.map((value) => (
               <div
                 key={value.id}
-                className="group flex flex-col lg:flex-row lg:items-center justify-between border-t border-white/20 py-12 lg:py-20 transition-all duration-700 hover:bg-[#F8F5F2] hover:text-[#1A1A1A] cursor-crosshair px-6 lg:px-12 -mx-6 lg:-mx-12"
+                className="group flex flex-col lg:flex-row lg:items-center justify-between py-12 lg:py-20 transition-all duration-700 hover:bg-[#F8F5F2] hover:text-[#1A1A1A] cursor-crosshair px-6 lg:px-12 -mx-6 lg:-mx-12"
                 onMouseEnter={() => setHoveredValue(value.id)}
                 onMouseLeave={() => setHoveredValue(null)}
               >
@@ -186,12 +190,12 @@ const About = () => {
 
       {/* 5. Statement & Call To Action */}
       <section className="bg-[#F8F5F2]">
-        <div className="py-32 md:py-48 text-center px-6 relative overflow-hidden flex flex-col items-center border-b border-[#37302F]/10">
-          <div className="max-w-[1400px] mx-auto relative z-10 w-full text-left">
-            <h2 className="text-[3rem] sm:text-6xl md:text-8xl lg:text-[10rem] font-sans text-[#37302F] tracking-tighter font-light leading-[0.85]">
-              <span className="block md:text-left">One Team.</span>
-              <span className="text-[#37302F]/40 italic font-serif block md:text-center">All Solutions.</span>
-              <span className="font-bold text-[#37302F]/80 tracking-tighter block mt-8 md:mt-12 text-[4rem] sm:text-7xl md:text-9xl lg:text-[12rem] md:text-right">Built on Trust.</span>
+        <div className="pt-16 pb-0 md:py-32 px-6 relative overflow-hidden flex flex-col items-center">
+          <div className="max-w-[1400px] mx-auto relative z-10 w-full">
+            <h2 className="text-[2.4rem] sm:text-6xl md:text-8xl lg:text-[10rem] font-sans text-[#37302F] tracking-tighter font-light leading-[0.9]">
+              <span className="block text-left">One Team.</span>
+              <span className="text-[#37302F]/40 italic font-serif block text-center">All Solutions.</span>
+              <span className="font-bold text-[#37302F]/80 tracking-tighter block text-[2.6rem] sm:text-7xl md:text-9xl lg:text-[12rem] text-right">Built on Trust.</span>
             </h2>
           </div>
         </div>
