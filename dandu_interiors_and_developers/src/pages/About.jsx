@@ -9,6 +9,39 @@ const About = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    const handleScroll = () => {
+      // Only auto-highlight on mobile/tablet (< 1024px)
+      if (window.innerWidth >= 1024) return;
+
+      const stepElements = document.querySelectorAll('.foundation-step-card');
+      const centerY = window.innerHeight / 2;
+      const triggerZone = window.innerHeight * 0.2; // 20% of screen height as trigger zone
+      
+      let currentActiveId = null;
+      let minDistance = Infinity;
+
+      stepElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const elCenter = rect.top + rect.height / 2;
+        const distance = Math.abs(centerY - elCenter);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          currentActiveId = el.getAttribute('data-id');
+        }
+      });
+
+      // Only set if card is actually in the center zone
+      if (minDistance < triggerZone) {
+        setHoveredValue(currentActiveId);
+      } else {
+        setHoveredValue(null);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const coreValues = [
@@ -165,28 +198,32 @@ const About = () => {
           </div>
 
           <div className="flex flex-col relative z-10">
-            {coreValues.map((value) => (
-              <div
-                key={value.id}
-                className="group flex flex-col lg:flex-row lg:items-center justify-between py-12 lg:py-20 transition-all duration-700 hover:bg-[#F8F5F2] hover:text-[#1A1A1A] cursor-crosshair px-6 lg:px-12 -mx-6 lg:-mx-12"
-                onMouseEnter={() => setHoveredValue(value.id)}
-                onMouseLeave={() => setHoveredValue(null)}
-              >
-                <div className="flex items-start lg:items-center gap-8 lg:gap-16 mb-8 lg:mb-0">
-                  <span className="text-xl md:text-3xl font-bold tracking-widest text-[#37302F]/40 group-hover:text-[#37302F]/60 transition-colors">
-                    {value.id}
-                  </span>
-                  <h4 className="text-4xl md:text-6xl lg:text-[5rem] font-medium tracking-tighter group-hover:translate-x-8 transition-transform duration-700 ease-out">
-                    {value.title}
-                  </h4>
+            {coreValues.map((value) => {
+              const isActive = hoveredValue === value.id;
+              return (
+                <div
+                  key={value.id}
+                  data-id={value.id}
+                  className={`foundation-step-card group flex flex-col lg:flex-row lg:items-center justify-between py-12 lg:py-20 transition-all duration-700 cursor-crosshair px-6 lg:px-12 -mx-6 lg:-mx-12 ${isActive ? 'bg-[#F8F5F2] text-[#1A1A1A]' : 'hover:bg-[#F8F5F2] hover:text-[#1A1A1A]'}`}
+                  onMouseEnter={() => setHoveredValue(value.id)}
+                  onMouseLeave={() => setHoveredValue(null)}
+                >
+                  <div className="flex items-start lg:items-center gap-8 lg:gap-16 mb-8 lg:mb-0">
+                    <span className={`text-xl md:text-3xl font-bold tracking-widest transition-colors ${isActive ? 'text-[#37302F]/60' : 'text-[#37302F]/40 group-hover:text-[#37302F]/60'}`}>
+                      {value.id}
+                    </span>
+                    <h4 className={`text-4xl md:text-6xl lg:text-[5rem] font-medium tracking-tighter transition-transform duration-700 ease-out ${isActive ? 'translate-x-8' : 'group-hover:translate-x-8'}`}>
+                      {value.title}
+                    </h4>
+                  </div>
+                  <div className="lg:w-1/3 xl:w-1/4">
+                    <p className={`text-lg lg:text-xl font-light transition-colors duration-700 leading-relaxed ${isActive ? 'text-[#1A1A1A]' : 'text-white/50 group-hover:text-[#1A1A1A]'}`}>
+                      {value.desc}
+                    </p>
+                  </div>
                 </div>
-                <div className="lg:w-1/3 xl:w-1/4">
-                  <p className="text-lg lg:text-xl font-light text-white/50 group-hover:text-[#1A1A1A] transition-colors duration-700 leading-relaxed">
-                    {value.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

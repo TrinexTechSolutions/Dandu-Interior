@@ -33,12 +33,12 @@ const ScrollToTopButton = () => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="fixed top-1/2 right-4 md:right-8 -translate-y-1/2 z-[100] cursor-pointer group"
+          className="fixed bottom-10 right-6 md:bottom-auto md:top-1/2 md:right-8 md:-translate-y-1/2 z-[100] cursor-pointer group"
           onClick={scrollToTop}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}

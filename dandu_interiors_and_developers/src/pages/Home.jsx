@@ -271,10 +271,14 @@ const Home = () => {
             }}
             onMouseLeave={() => resetServiceInteraction()}
             onTouchStart={() => {
-              setIsInteracting(true);
-              if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
+              if (window.innerWidth >= 1024) {
+                setIsInteracting(true);
+                if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
+              }
             }}
-            onTouchEnd={() => resetServiceInteraction()}
+            onTouchEnd={() => {
+              if (window.innerWidth >= 1024) resetServiceInteraction();
+            }}
           >
             <style>{`
               .hide-scrollbar::-webkit-scrollbar { display: none !important; }
@@ -518,10 +522,14 @@ const Home = () => {
             }}
             onMouseLeave={() => resetTestimonialInteraction()}
             onTouchStart={() => {
-              setIsTestimonialInteracting(true);
-              if (testimonialResumeTimer.current) clearTimeout(testimonialResumeTimer.current);
+              if (window.innerWidth >= 1024) {
+                setIsTestimonialInteracting(true);
+                if (testimonialResumeTimer.current) clearTimeout(testimonialResumeTimer.current);
+              }
             }}
-            onTouchEnd={() => resetTestimonialInteraction()}
+            onTouchEnd={() => {
+              if (window.innerWidth >= 1024) resetTestimonialInteraction();
+            }}
           >
             {/* Desktop: Static 4-column grid | Mobile: Infinite flex scroll */}
             {(typeof window !== 'undefined' && window.innerWidth >= 1024 ? testimonials.slice(0, 4) : infiniteTestimonials).map((testimonial, idx) => (
