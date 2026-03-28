@@ -205,8 +205,12 @@ const About = () => {
                   key={value.id}
                   data-id={value.id}
                   className={`foundation-step-card group flex flex-col lg:flex-row lg:items-center justify-between py-12 lg:py-20 transition-all duration-700 cursor-crosshair px-6 lg:px-12 -mx-6 lg:-mx-12 ${isActive ? 'bg-[#F8F5F2] text-[#1A1A1A]' : 'hover:bg-[#F8F5F2] hover:text-[#1A1A1A]'}`}
-                  onMouseEnter={() => setHoveredValue(value.id)}
-                  onMouseLeave={() => setHoveredValue(null)}
+                  onMouseEnter={() => {
+                    if (window.innerWidth >= 1024) setHoveredValue(value.id);
+                  }}
+                  onMouseLeave={() => {
+                    if (window.innerWidth >= 1024) setHoveredValue(null);
+                  }}
                 >
                   <div className="flex items-start lg:items-center gap-8 lg:gap-16 mb-8 lg:mb-0">
                     <span className={`text-xl md:text-3xl font-bold tracking-widest transition-colors ${isActive ? 'text-[#37302F]/60' : 'text-[#37302F]/40 group-hover:text-[#37302F]/60'}`}>

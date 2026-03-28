@@ -98,6 +98,9 @@ const Home = () => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
+    // Force initial scroll position to 0 to prevent "sticky" start on iOS
+    scrollContainer.scrollLeft = 0;
+
     let animationId;
     let lastTime = 0;
     const speed = 0.5; // Constant base speed
@@ -117,8 +120,9 @@ const Home = () => {
         }
 
         // Loop detection: reset to 0 once we've scrolled half the total (duplicated) content
+        // iOS Safari uses fractional scrollLeft - we use a larger 2px buffer for robustness
         const halfWidth = scrollContainer.scrollWidth / 2;
-        if (halfWidth > 0 && scrollContainer.scrollLeft >= halfWidth - 1) {
+        if (halfWidth > 0 && scrollContainer.scrollLeft >= halfWidth - 2) {
           scrollContainer.scrollLeft = 0;
         }
       }
@@ -137,6 +141,9 @@ const Home = () => {
     const scrollContainer = testimonialScrollRef.current;
     if (!scrollContainer) return;
 
+    // Force initial scroll position to 0
+    scrollContainer.scrollLeft = 0;
+
     let animationId;
     let lastTime = 0;
     const speed = 0.45;
@@ -154,7 +161,7 @@ const Home = () => {
         }
 
         const halfWidth = scrollContainer.scrollWidth / 2;
-        if (halfWidth > 0 && scrollContainer.scrollLeft >= halfWidth - 1) {
+        if (halfWidth > 0 && scrollContainer.scrollLeft >= halfWidth - 2) {
           scrollContainer.scrollLeft = 0;
         }
       }
@@ -264,7 +271,11 @@ const Home = () => {
           <div
             ref={scrollRef}
             className="flex overflow-x-auto gap-6 pb-8 px-4 md:px-8 relative hide-scrollbar"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            style={{ 
+              scrollbarWidth: 'none', 
+              msOverflowStyle: 'none',
+              scrollBehavior: 'auto !important'  // Disable smooth-scroll conflict with JS loop
+            }}
             onMouseEnter={() => {
               setIsInteracting(true);
               if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
@@ -282,7 +293,11 @@ const Home = () => {
           >
             <style>{`
               .hide-scrollbar::-webkit-scrollbar { display: none !important; }
-              .hide-scrollbar { -ms-overflow-style: none !important; scrollbar-width: none !important; }
+              .hide-scrollbar { 
+                -ms-overflow-style: none !important; 
+                scrollbar-width: none !important;
+                -webkit-overflow-scrolling: auto !important; /* Disable OS momentum logic during JS loop */
+              }
             `}</style>
 
             {infiniteServices.map((service, idx) => {
