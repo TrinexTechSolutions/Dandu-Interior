@@ -7,20 +7,50 @@ import { designIdeas } from '../data/designIdeas';
 const HomeDesignIdeas = () => {
   // We take exactly 6 items for our special masonry grid
   const displayIdeas = designIdeas.slice(0, 6);
+  const scrollRef = React.useRef(null);
+  const [isInteracting, setIsInteracting] = React.useState(false);
 
-  // Define responsive grid classes to match the asymmetrical layout from the user's screenshot
-  // Total of 4 columns on large screens.
-  // 1: Left tall (1 col, 2 row)
-  // 2: Top middle wide (2 col, 1 row)
-  // 3: Top right small (1 col, 1 row)
-  // 4, 5, 6: Bottom right smalls (1 col, 1 row each)
+  // Auto-scroll for mobile
+  React.useEffect(() => {
+    const isMobile = window.innerWidth < 1024;
+    if (!isMobile) return;
+
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    let animationId;
+    let lastTime = performance.now();
+    const speed = 0.4;
+
+    const animate = (currentTime) => {
+      if (!isInteracting) {
+        const deltaTime = currentTime - lastTime;
+        scrollContainer.scrollLeft += speed * (deltaTime / 16);
+
+        // Infinite loop logic
+        const halfWidth = scrollContainer.scrollWidth / 2;
+        if (scrollContainer.scrollLeft >= halfWidth) {
+          scrollContainer.scrollLeft = 0;
+        }
+      }
+      lastTime = currentTime;
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationId);
+  }, [isInteracting]);
+
+  // Use doubled array for mobile infinite scroll
+  const mobileIdeas = [...displayIdeas, ...displayIdeas];
+
   const gridClasses = [
-    "lg:col-span-1 lg:row-span-2 md:col-span-2 md:row-span-1 col-span-1 aspect-square lg:aspect-auto", // Item 1
-    "lg:col-span-2 lg:row-span-1 md:col-span-2 md:row-span-1 col-span-1 aspect-video lg:aspect-auto", // Item 2
-    "lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1 col-span-1 aspect-square lg:aspect-auto", // Item 3
-    "lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1 col-span-1 aspect-square lg:aspect-auto", // Item 4
-    "lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1 col-span-1 aspect-square lg:aspect-auto", // Item 5
-    "lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1 col-span-1 aspect-square lg:aspect-auto"  // Item 6
+    "lg:col-span-1 lg:row-span-2 md:col-span-1 md:row-span-2 col-span-1", // Item 1
+    "lg:col-span-2 lg:row-span-1 md:col-span-1 md:row-span-1 col-span-1", // Item 2
+    "lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1 col-span-1", // Item 3
+    "lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1 col-span-1", // Item 4
+    "lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1 col-span-1", // Item 5
+    "lg:col-span-1 lg:row-span-1 md:col-span-1 md:row-span-1 col-span-1"  // Item 6
   ];
 
   return (
@@ -35,33 +65,46 @@ const HomeDesignIdeas = () => {
         </Link>
       </div>
 
-      {/* Asymmetric CSS Grid matching the user's screenshot */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[250px] gap-4">
-        {displayIdeas.map((idea, idx) => (
-          <Link 
-            to={`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`} 
-            key={idx} 
-            className={`group relative overflow-hidden block rounded-xl ${gridClasses[idx]}`}
-            data-cursor-text="VIEW"
-          >
-            <img 
-              src={idea.image} 
-              alt={idea.title} 
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-            />
-            {/* Gradient Overlay for Text Readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
-            
-            {/* Title Text positioned exactly as in screenshot */}
-            <div className="absolute bottom-6 left-6 right-6">
-              <h3 className="text-white text-2xl md:text-3xl font-light tracking-tighter leading-none drop-shadow-md">
-                {idea.title.split(' ')[0]} <br />
-                <span className="font-serif italic text-white/40">{idea.title.split(' ').slice(1).join(' ')}</span>
-              </h3>
-            </div>
-          </Link>
-        ))}
+      <div className="relative group/ideas -mx-4 md:-mx-8 lg:mx-0">
+        {/* Side Blur Overlays (Only visible on mobile scroll) */}
+        <div className="absolute left-0 inset-y-0 w-8 md:w-20 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none lg:hidden"></div>
+        <div className="absolute right-0 inset-y-0 w-8 md:w-20 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none lg:hidden"></div>
+
+        <div 
+          ref={scrollRef}
+          className="flex lg:grid lg:grid-cols-4 lg:auto-rows-[250px] overflow-x-auto lg:overflow-visible gap-4 pb-8 px-4 md:px-8 lg:px-0 relative hide-scrollbar"
+          onMouseEnter={() => setIsInteracting(true)}
+          onMouseLeave={() => setIsInteracting(false)}
+          onTouchStart={() => setIsInteracting(true)}
+          onTouchEnd={() => {
+            setTimeout(() => setIsInteracting(false), 1000);
+          }}
+        >
+          {/* On Desktop we use original, on Mobile we use infinite array */}
+          {(window.innerWidth >= 1024 ? displayIdeas : mobileIdeas).map((idea, idx) => (
+            <Link 
+              to={`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`} 
+              key={`${idea.title}-${idx}`} 
+              className={`group relative overflow-hidden block rounded-xl shrink-0 w-[85vw] md:w-[45vw] lg:w-full aspect-[4/5] lg:aspect-auto ${gridClasses[idx % 6]}`}
+              data-cursor-text="VIEW"
+            >
+              <img 
+                src={idea.image} 
+                alt={idea.title} 
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <div className="absolute bottom-6 left-6 right-6">
+                <h3 className="text-white text-2xl md:text-3xl font-light tracking-tighter leading-none drop-shadow-md">
+                  {idea.title.split(' ')[0]} <br />
+                  <span className="font-serif italic text-white/40">{idea.title.split(' ').slice(1).join(' ')}</span>
+                </h3>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </SectionWrapper>
   );

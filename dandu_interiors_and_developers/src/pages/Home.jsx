@@ -1,6 +1,7 @@
 import React from 'react';
+import heroBg from '../assets/herosection_banners/hero1.jpeg';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Clock, Award, Users, ChevronRight, Star, Maximize2, Minimize2 } from 'lucide-react';
+import { ShieldCheck, Clock, Award, Users, ChevronRight, ChevronLeft, Star } from 'lucide-react';
 import { services } from '../data/services';
 import { projects } from '../data/projects';
 import { testimonials } from '../data/testimonials';
@@ -9,15 +10,65 @@ import CallToAction from '../components/CallToAction';
 import HomeDesignIdeas from '../components/HomeDesignIdeas';
 import { useModal } from '../context/ModalContext';
 
-const heroImage = "https://images.unsplash.com/photo-1613545325278-f24b0cae1224?q=80&w=2600&auto=format&fit=crop";
+const heroImage = heroBg;
 
 const Home = () => {
   const { openQuoteModal } = useModal();
   const [expandedTestimonial, setExpandedTestimonial] = React.useState(null);
-  const [expandedService, setExpandedService] = React.useState(null);
   const scrollRef = React.useRef(null);
-  const [isHoveringServices, setIsHoveringServices] = React.useState(false);
-  const [isHovering, setIsHovering] = React.useState(false);
+  const [isInteracting, setIsInteracting] = React.useState(false);
+  const [isManualScroll, setIsManualScroll] = React.useState(false);
+  const testimonialScrollRef = React.useRef(null);
+  const [isTestimonialInteracting, setIsTestimonialInteracting] = React.useState(false);
+  const [activeProcessStep, setActiveProcessStep] = React.useState(() => {
+    // Start with 0 on desktop for auto-loop, -1 on mobile for scroll-driven
+    return typeof window !== 'undefined' && window.innerWidth < 1024 ? -1 : 0;
+  });
+  const [isHoveringProcess, setIsHoveringProcess] = React.useState(false);
+
+  // Auto-loop for process steps on desktop
+  React.useEffect(() => {
+    // Only auto-loop on desktop (>= 1024px). For mobile, expansion is scroll-driven.
+    const interval = setInterval(() => {
+      const isMobile = window.innerWidth < 1024;
+      if (!isMobile && !isHoveringProcess) {
+        setActiveProcessStep((prev) => (prev + 1) % 4);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isHoveringProcess]);
+
+  // Mobile scroll tracking with precise center detection
+  React.useEffect(() => {
+    const isMobile = window.innerWidth < 1024;
+    if (!isMobile) return;
+
+    const handleScroll = () => {
+      const stepElements = document.querySelectorAll('.process-step-card');
+      const centerY = window.innerHeight / 2;
+      const triggerRange = window.innerHeight * 0.15; // 15% of screen height as trigger zone
+      
+      let currentActive = -1;
+
+      stepElements.forEach((el, index) => {
+        const rect = el.getBoundingClientRect();
+        const elCenter = rect.top + rect.height / 2;
+        
+        // Only activate if the card is literally in the center zone
+        if (Math.abs(centerY - elCenter) < triggerRange) {
+          currentActive = index;
+        }
+      });
+
+      setActiveProcessStep(currentActive);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Smooth auto-scroll for Core Services
   React.useEffect(() => {
@@ -29,7 +80,7 @@ const Home = () => {
     const speed = 0.5;
 
     const animate = (currentTime) => {
-      if (!isHoveringServices && !expandedService) {
+      if (!isInteracting && !isManualScroll) {
         const deltaTime = currentTime - lastTime;
         scrollContainer.scrollLeft += speed * (deltaTime / 16);
 
@@ -44,9 +95,51 @@ const Home = () => {
 
     animationId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationId);
-  }, [isHoveringServices, expandedService]);
+  }, [isInteracting, isManualScroll]);
+
+  // Auto-scroll for Testimonials on mobile
+  React.useEffect(() => {
+    const isMobile = window.innerWidth < 1024;
+    if (!isMobile) return;
+
+    const scrollContainer = testimonialScrollRef.current;
+    if (!scrollContainer) return;
+
+    let animationId;
+    let lastTime = performance.now();
+    const speed = 0.4; // Slightly slower than services
+
+    const animate = (currentTime) => {
+      if (!isTestimonialInteracting) {
+        const deltaTime = currentTime - lastTime;
+        scrollContainer.scrollLeft += speed * (deltaTime / 16);
+
+        const halfWidth = scrollContainer.scrollWidth / 2;
+        if (scrollContainer.scrollLeft >= halfWidth) {
+          scrollContainer.scrollLeft = 0;
+        }
+      }
+      lastTime = currentTime;
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationId);
+  }, [isTestimonialInteracting]);
+
+  const handleManualScroll = (direction) => {
+    setIsManualScroll(true);
+    if (scrollRef.current) {
+      const scrollAmount = window.innerWidth * 0.4;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   const infiniteServices = [...services.slice(0, 8), ...services.slice(0, 8)];
+  const infiniteTestimonials = [...testimonials, ...testimonials];
   
   return (
     <div>
@@ -57,7 +150,7 @@ const Home = () => {
             alt="Dandu Interior Banner" 
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-[#F8F5F2]/20 backdrop-blur-[1px]"></div>
+
           
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <h2 className="text-[#37302F]/60 text-xs font-bold tracking-[0.4em] uppercase mb-8 block lg:mb-12">
@@ -70,17 +163,12 @@ const Home = () => {
             <p className="text-[#37302F]/70 text-base md:text-lg max-w-2xl font-light mb-12 tracking-wide uppercase">
               The Finest Interior Designers and Construction Experts in the Region.
             </p>
-            <div className="flex gap-4">
-              <Link to="/projects" className="bg-[#37302F] text-[#F8F5F2] px-10 py-4 rounded-full font-bold tracking-[0.2em] uppercase text-[10px] hover:bg-[#37302F]/90 transition-all shadow-xl">
-                View Projects
-              </Link>
-              <button 
-                onClick={openQuoteModal} 
-                className="bg-transparent text-[#37302F] border border-[#37302F]/30 backdrop-blur-md px-10 py-4 rounded-full font-bold tracking-[0.2em] uppercase text-[10px] hover:bg-[#37302F] hover:text-[#F8F5F2] transition-all"
-              >
-                Get a Quote
-              </button>
-            </div>
+            <button 
+              onClick={openQuoteModal} 
+              className="bg-transparent text-[#37302F] border border-[#37302F]/30 backdrop-blur-md px-10 py-4 rounded-full font-bold tracking-[0.2em] uppercase text-[10px] hover:bg-[#37302F] hover:text-[#F8F5F2] transition-all"
+            >
+              Get a Quote
+            </button>
           </div>
         </section>
 
@@ -89,11 +177,20 @@ const Home = () => {
           bgClass="bg-[#F8F5F2]" 
           id="services-preview"
           paddingClass="pt-24 pb-32"
+          onMouseLeave={() => {
+            setIsManualScroll(false);
+            setIsInteracting(false);
+          }}
+          onTouchEnd={() => {
+            // Delay resume on mobile to allow momentum scroll to finish
+            setTimeout(() => {
+              setIsManualScroll(false);
+              setIsInteracting(false);
+            }, 1000);
+          }}
         >
           <div 
             className="text-center mb-20 px-4"
-            onMouseEnter={() => setIsHoveringServices(true)}
-            onMouseLeave={() => setIsHoveringServices(false)}
           >
             <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] mb-4 leading-none">
               Core <span className="font-serif italic text-black/30">Services</span>
@@ -107,25 +204,47 @@ const Home = () => {
           {/* Scrollable Area with flush blur overlays dentro do container original */}
           <div 
             className="relative group/scroll -mx-4 md:-mx-8"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
           >
-            {/* Left Corner Blur Overlay (Perfectly flush com a borda do container) */}
-            <div className="absolute left-0 inset-y-0 w-8 md:w-24 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-l-2xl"></div>
+            {/* Manual Scroll Controls - Positioned over side blurs */}
+            <div className="absolute inset-y-0 left-0 right-0 flex justify-between items-center z-[60] pointer-events-none px-0 md:px-4">
+              <button 
+                onClick={() => handleManualScroll('left')}
+                className="pointer-events-auto p-4 text-[#1A1A1A]/40 hover:text-[#1A1A1A] transition-all hover:-translate-x-1"
+                aria-label="Scroll Left"
+              >
+                <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
+              </button>
+              <button 
+                onClick={() => handleManualScroll('right')}
+                className="pointer-events-auto p-4 text-[#1A1A1A]/40 hover:text-[#1A1A1A] transition-all hover:translate-x-1"
+                aria-label="Scroll Right"
+              >
+                <ChevronRight className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
+              </button>
+            </div>
+
+            {/* Side Blur Overlays (Perfectly flush com a borda do container) */}
+            <div className="absolute left-0 inset-y-0 w-12 md:w-32 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-l-2xl"></div>
+            <div className="absolute right-0 inset-y-0 w-12 md:w-32 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-r-2xl"></div>
             
             <div 
               ref={scrollRef}
               className="flex overflow-x-auto gap-6 pb-8 px-4 md:px-8 relative hide-scrollbar"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              onMouseEnter={() => setIsInteracting(true)}
+              onMouseLeave={() => setIsInteracting(false)}
+              onTouchStart={() => setIsInteracting(true)}
+              onTouchEnd={() => {
+                setTimeout(() => setIsInteracting(false), 1000);
+              }}
             >
             <style>{`
               .hide-scrollbar::-webkit-scrollbar { display: none !important; }
-              #services-preview .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+              .hide-scrollbar { -ms-overflow-style: none !important; scrollbar-width: none !important; }
             `}</style>
   
             {infiniteServices.map((service, idx) => {
               const uniqueId = `${service.id}-${idx}`;
-              const isServiceExpanded = expandedService === uniqueId;
   
               return (
                 <div 
@@ -149,8 +268,8 @@ const Home = () => {
                   {/* Main Body with tightly packed content and more matter */}
                   <div className="bg-white flex-grow w-full rounded-2xl p-2 pt-14 flex flex-col relative z-20 border border-black/5 overflow-hidden">
                     
-                    {/* Text Content Area - Now part of flow for better spacing, but absolute on expansion */}
-                    <div className={`transition-all duration-300 flex flex-col px-3 ${isServiceExpanded ? 'opacity-0 pointer-events-none absolute inset-0 pt-14' : 'opacity-100 relative pt-2'}`}>
+                    {/* Text Content Area */}
+                    <div className="transition-all duration-300 flex flex-col px-3 relative pt-2">
                       <p className="text-[#1A1A1A]/70 font-medium leading-[1.5] text-[12px] line-clamp-[12]">
                         {service.description || "Providing professional and premium services tailored to your needs. We blend modern functional utility with timeless premium elegance to make your space completely uniquely yours. Our expert team ensures every detail is handled with precision and care."}
                       </p>
@@ -163,21 +282,13 @@ const Home = () => {
                       </div>
                     </div>
   
-                    {/* Expandable Image Container (Reduced height and very tight space) */}
-                    <div 
-                      onClick={() => setExpandedService(isServiceExpanded ? null : uniqueId)}
-                      className={`cursor-pointer overflow-hidden border border-black/5 shadow-sm group transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] z-30 ${isServiceExpanded ? 'absolute inset-0 rounded-2xl h-full w-full' : 'h-[140px] w-full rounded-xl mt-auto relative'}`}
-                    >
+                    {/* Image Container */}
+                    <div className="overflow-hidden border border-black/5 shadow-sm group h-[140px] w-full rounded-xl mt-auto relative">
                       <img 
                         src={service.image || service.subServices?.[0]?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800"} 
                         alt={service.title} 
-                        className={`w-full h-full object-cover transition-transform duration-700 ${isServiceExpanded ? 'scale-100' : 'scale-110 group-hover:scale-100'}`} 
+                        className="w-full h-full object-cover transition-transform duration-700 scale-110 group-hover:scale-100" 
                       />
-                      
-                      {/* Hover Icons */}
-                      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-sm p-3 rounded-full text-white transition-all duration-300 pointer-events-none shadow-xl ${isServiceExpanded ? 'opacity-0' : 'opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100'}`}>
-                        <Maximize2 size={18} />
-                      </div>
                     </div>
   
                   </div>
@@ -210,7 +321,7 @@ const Home = () => {
                 { icon: Users, title: 'Client Centric', desc: 'Transparent and continuous communication.' }
               ].map((item, idx) => (
                 <div key={idx} className="flex gap-4">
-                  <div className="text-[#1A1A1A] mt-1 shrink-0"><item.icon size={24} /></div>
+                  <div className="text-white/50 mt-1 shrink-0"><item.icon size={24} strokeWidth={1.5} /></div>
                   <div>
                     <h4 className="font-bold text-white mb-1">{item.title}</h4>
                     <p className="text-sm text-gray-400">{item.desc}</p>
@@ -265,38 +376,62 @@ const Home = () => {
         </div>
       </SectionWrapper>
 
-      {/* How It Works */}
-      <SectionWrapper bgClass="bg-[#F8F5F2]">
-        <div className="text-center mb-24">
-          <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] mb-4 leading-none">
-            How It <span className="font-serif italic text-black/30">Works</span>
-          </h2>
-          <div className="w-20 h-[1px] bg-black/10 mx-auto mb-8"></div>
-          <p className="text-black/50 text-[13px] tracking-wide font-light max-w-2xl mx-auto uppercase">A seamless, transparent process designed to bring your vision to reality.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-          <div className="hidden md:block absolute top-[50px] left-1/8 right-1/8 h-0.5 bg-gray-300 z-0"></div>
-          {[
-            { step: '01', title: 'Consultation', desc: 'We discuss your needs, budget, and vision.' },
-            { step: '02', title: 'Design & Planning', desc: 'Creating 3D models and detailed project plans.' },
-            { step: '03', title: 'Execution', desc: 'Our expert team builds everything to specification.' },
-            { step: '04', title: 'Handover', desc: 'Final walkthrough and handing over your new space.' }
-          ].map((item, idx) => (
-            <div key={idx} className="relative z-10 flex flex-col items-center text-center">
-              <div className="w-24 h-24 rounded-full bg-white border-[6px] border-[#F8F5F2] shadow-xl flex items-center justify-center mb-6 text-3xl font-bold text-[#1A1A1A]">
-                {item.step}
-              </div>
-              <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-              <p className="text-gray-500">{item.desc}</p>
-            </div>
-          ))}
+      {/* How It Works - Compact Minimalist Redesign */}
+      <SectionWrapper bgClass="bg-[#F8F5F2]" paddingClass="py-24">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-[#37302F]/40 text-[10px] font-bold tracking-[0.4em] uppercase mb-4">
+              Our Process
+            </h2>
+            <h2 className="text-4xl md:text-5xl font-light tracking-tighter text-[#1A1A1A] leading-none mb-8">
+              How It <span className="font-serif italic text-black/20">Works</span>
+            </h2>
+          </div>
+
+          <div 
+            className="grid grid-cols-1 md:grid-cols-4 border border-black/5 rounded-2xl overflow-hidden bg-white/50 backdrop-blur-sm shadow-sm transition-all duration-700"
+            onMouseEnter={() => setIsHoveringProcess(true)}
+            onMouseLeave={() => setIsHoveringProcess(false)}
+          >
+            {[
+              { step: '01', title: 'Consultation', desc: 'Understanding your aspirations, lifestyle, and project parameters.' },
+              { step: '02', title: 'Design & Planning', desc: 'Development of detailed 3D models and structural blueprints.' },
+              { step: '03', title: 'Execution', desc: 'Master craftsmanship and project oversight with a focus on quality.' },
+              { step: '04', title: 'Handover', desc: 'A final meticulous walkthrough and successful transition of your space.' }
+            ].map((item, idx) => {
+              const isActive = activeProcessStep === idx;
+              return (
+                <div 
+                  key={idx} 
+                  data-step-index={idx}
+                  className={`process-step-card p-8 md:p-10 relative flex flex-col items-start transition-all duration-700 ${isActive ? 'bg-white shadow-2xl scale-[1.02] z-20' : 'bg-transparent filter grayscale-[0.5] opacity-60'} ${idx !== 3 ? 'md:border-r border-b md:border-b-0 border-black/5' : ''}`}
+                >
+                  {/* Step Marker */}
+                  <div className={`text-[32px] font-serif italic mb-6 transition-all duration-700 ${isActive ? 'text-[#37302F] scale-110' : 'text-black/10'}`}>
+                    {item.step}
+                  </div>
+                  
+                  <h3 className={`text-[11px] font-bold tracking-[0.3em] uppercase transition-all duration-700 mb-4 ${isActive ? 'text-[#37302F] translate-x-1' : 'text-[#1A1A1A]'}`}>
+                    {item.title}
+                  </h3>
+                  
+                  <p className={`text-[13px] leading-relaxed font-light transition-all duration-700 ${isActive ? 'text-[#1A1A1A]' : 'text-[#1A1A1A]/60'}`}>
+                    {item.desc}
+                  </p>
+  
+                  {/* Accent Detail */}
+                  <div className={`absolute bottom-6 left-8 md:left-10 h-[1px] transition-all duration-1000 ${isActive ? 'w-24 bg-[#37302F]' : 'w-4 bg-black/5'}`}></div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </SectionWrapper>
 
       {/* Design Ideas Section */}
       <HomeDesignIdeas />
 
-      {/* Client Testimonials - Traditional Design Requested */}
+      {/* Client Testimonials - Enhanced Scroll for Mobile */}
       <SectionWrapper bgClass="bg-[#F8F5F2]">
         <div className="text-center mb-16 px-4">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#1A1A1A]">Client Testimonials</h2>
@@ -304,10 +439,27 @@ const Home = () => {
           <p className="text-black/50 text-[13px] tracking-wide font-light max-w-2xl mx-auto uppercase">Real stories of trust, excellence, and transformed environments.</p>
         </div>
         
-        <div className="container-custom px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {testimonials.slice(0, 4).map((testimonial) => (
-              <div key={testimonial.id} className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] relative mt-8 flex flex-col h-full group transition-all duration-300 hover:shadow-2xl">
+        <div className="relative group/testimonials -mx-4 md:-mx-8">
+          {/* Side Blur Overlays (Only visible on mobile scroll) */}
+          <div className="absolute left-0 inset-y-0 w-8 md:w-20 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-l-2xl md:hidden"></div>
+          <div className="absolute right-0 inset-y-0 w-8 md:w-20 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-r-2xl md:hidden"></div>
+
+          <div 
+            ref={testimonialScrollRef}
+            className="flex md:grid md:grid-cols-2 lg:grid-cols-4 overflow-x-auto md:overflow-hidden gap-6 md:gap-8 pb-12 px-4 md:px-8 relative hide-scrollbar"
+            onMouseEnter={() => setIsTestimonialInteracting(true)}
+            onMouseLeave={() => setIsTestimonialInteracting(false)}
+            onTouchStart={() => setIsTestimonialInteracting(true)}
+            onTouchEnd={() => {
+              setTimeout(() => setIsTestimonialInteracting(false), 1000);
+            }}
+          >
+            {/* On Desktop we use original sliced array, on Mobile we use infinite array */}
+            {(window.innerWidth >= 1024 ? testimonials.slice(0, 4) : infiniteTestimonials).map((testimonial, idx) => (
+              <div 
+                key={`${testimonial.id}-${idx}`} 
+                className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] relative mt-8 flex flex-col h-full min-w-[85vw] md:min-w-0 group transition-all duration-300 hover:shadow-2xl"
+              >
                 <div className="absolute -top-6 left-8 w-12 h-12 bg-[#1A1A1A] text-white flex items-center justify-center rounded-full text-3xl font-serif">"</div>
                 
                 <div className="flex gap-1 mb-4 text-[#1A1A1A] mt-4">

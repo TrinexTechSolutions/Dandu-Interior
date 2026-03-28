@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from './layouts/Layout';
 import { ModalProvider } from './context/ModalContext';
@@ -12,6 +12,7 @@ import ProjectDetail from './pages/ProjectDetail';
 import DesignIdeas from './pages/DesignIdeas';
 import DesignIdeaDetail from './pages/DesignIdeaDetail';
 import Contact from './pages/Contact';
+import LoadingScreen from './components/LoadingScreen';
 
 import SmoothScroll from './components/SmoothScroll';
 import CustomCursor from './components/CustomCursor';
@@ -27,8 +28,18 @@ const ScrollToTop = () => {
 };
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 4000); // 4 seconds allows for full animation + curtain exit transition
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <BrowserRouter>
+      {isLoading && <LoadingScreen />}
       <SmoothScroll>
         <ModalProvider>
           <CustomCursor />
