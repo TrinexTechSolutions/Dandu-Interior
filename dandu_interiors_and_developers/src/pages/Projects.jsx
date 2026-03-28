@@ -3,14 +3,11 @@ import SectionWrapper from '../components/SectionWrapper';
 import { projects } from '../data/projects';
 import { useNavigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import ProjectDetailsDrawer from '../components/ProjectDetailsDrawer';
+import { useModal } from '../context/ModalContext';
 
 const Projects = () => {
   const navigate = useNavigate();
   const [heroOffset, setHeroOffset] = useState(0);
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
   const contentRef = useRef(null);
   const heroTitleRef = useRef(null);
   const gridRef = useRef(null);
@@ -32,8 +29,11 @@ const Projects = () => {
   useEffect(() => {
     const measureHero = () => {
       if (heroTitleRef.current) {
-        const rect = heroTitleRef.current.getBoundingClientRect();
-        setHeroOffset(rect.bottom + 24); 
+        const titleTop = heroTitleRef.current.offsetTop;
+        const titleHeight = heroTitleRef.current.offsetHeight;
+        // Responsive gap: 100px for mobile, 140px for desktop
+        const baseGap = windowWidth < 768 ? 100 : 140;
+        setHeroOffset(titleTop + titleHeight + baseGap); 
       }
     };
 
@@ -46,10 +46,10 @@ const Projects = () => {
       ro.disconnect();
       window.removeEventListener('resize', measureHero);
     };
-  }, []);
+  }, [windowWidth]);
 
   const { scrollY } = useScroll();
-  const yRange = useTransform(scrollY, [0, 500], [0, -320]);
+  const yRange = useTransform(scrollY, [0, 500], [0, -350]);
   const heroTranslateY = useSpring(yRange, { stiffness: 160, damping: 15 });
   
   // Ensure the body background matches the page to prevent "white leaks" during parallax
@@ -117,14 +117,20 @@ const Projects = () => {
     restSpeed: 0.001
   });
 
+  const { 
+    openProjectDrawer, 
+    isDetailDrawerOpen, 
+    closeProjectDrawer, 
+    selectedProject: globalSelectedProject 
+  } = useModal();
+
   const handleProjectClick = useCallback((project) => {
     if (windowWidth < 768) {
-      setSelectedProject(project);
-      setIsDrawerOpen(true);
+      openProjectDrawer(project);
     } else {
       navigate(`/projects/${project.id}`);
     }
-  }, [windowWidth, navigate]);
+  }, [windowWidth, navigate, openProjectDrawer]);
 
   const renderItem = useCallback((item, globalIdx) => {
     if (item.type === 'quote') {
@@ -275,11 +281,6 @@ const Projects = () => {
         </SectionWrapper>
       </div>
 
-      <ProjectDetailsDrawer 
-        isOpen={isDrawerOpen} 
-        onClose={() => setIsDrawerOpen(false)} 
-        project={selectedProject} 
-      />
     </div>
   );
 };

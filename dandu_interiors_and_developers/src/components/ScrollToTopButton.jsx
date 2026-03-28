@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
 
-const ScrollToTopButton = () => {
+const ScrollToTopButton = ({ containerRef }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress } = useScroll({
+    container: containerRef,
+    layoutEffect: false // Prevents some issues with dynamic containers
+  });
 
   // Smooth scroll progress for the SVG ring
   const pathLength = useSpring(scrollYProgress, {
@@ -14,7 +17,7 @@ const ScrollToTopButton = () => {
     restDelta: 0.001
   });
 
-  // Toggle visibility after 20% scroll
+  // Toggle visibility after 15% scroll
   useEffect(() => {
     const unsub = scrollYProgress.on('change', (v) => {
       setIsVisible(v > 0.15);
@@ -23,10 +26,17 @@ const ScrollToTopButton = () => {
   }, [scrollYProgress]);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    if (containerRef && containerRef.current) {
+      containerRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
   };
 
   return (
@@ -38,7 +48,7 @@ const ScrollToTopButton = () => {
           exit={{ opacity: 0, y: 10 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
-          className="fixed bottom-10 right-6 md:bottom-auto md:top-1/2 md:right-8 md:-translate-y-1/2 z-[100] cursor-pointer group"
+          className={`hidden md:flex fixed bottom-10 right-6 md:bottom-auto md:top-1/2 md:right-8 md:-translate-y-1/2 z-[120] cursor-pointer group ${containerRef ? 'absolute !bottom-12 !right-8 !top-auto !translate-y-0' : ''}`}
           onClick={scrollToTop}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}

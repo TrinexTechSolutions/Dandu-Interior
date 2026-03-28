@@ -4,12 +4,52 @@ const ModalContext = createContext();
 
 export const ModalProvider = ({ children }) => {
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [isDetailDrawerOpen, setIsDetailDrawerOpen] = useState(false);
+  
+  // Storage for global drawer content
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedIdea, setSelectedIdea] = useState(null);
 
   const openQuoteModal = () => setIsQuoteModalOpen(true);
   const closeQuoteModal = () => setIsQuoteModalOpen(false);
 
+  const setDetailDrawerOpen = (isOpen) => setIsDetailDrawerOpen(isOpen);
+
+  const openProjectDrawer = (project) => {
+    setSelectedProject(project);
+    setIsDetailDrawerOpen(true);
+  };
+
+  const closeProjectDrawer = () => {
+    setIsDetailDrawerOpen(false);
+    // Delay clearing data to allow exit animations to finish
+    setTimeout(() => setSelectedProject(null), 500);
+  };
+
+  const openIdeaDrawer = (ideaId) => {
+    setSelectedIdea(ideaId);
+    setIsDetailDrawerOpen(true);
+  };
+
+  const closeIdeaDrawer = () => {
+    setIsDetailDrawerOpen(false);
+    setTimeout(() => setSelectedIdea(null), 500);
+  };
+
   return (
-    <ModalContext.Provider value={{ isQuoteModalOpen, openQuoteModal, closeQuoteModal }}>
+    <ModalContext.Provider value={{ 
+      isQuoteModalOpen, 
+      openQuoteModal, 
+      closeQuoteModal,
+      isDetailDrawerOpen,
+      setDetailDrawerOpen,
+      selectedProject,
+      openProjectDrawer,
+      closeProjectDrawer,
+      selectedIdea,
+      openIdeaDrawer,
+      closeIdeaDrawer
+    }}>
       {children}
     </ModalContext.Provider>
   );

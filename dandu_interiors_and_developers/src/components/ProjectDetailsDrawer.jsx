@@ -1,9 +1,13 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MapPin, Tag, Maximize2, DollarSign } from 'lucide-react';
 import CallToAction from './CallToAction';
+import ScrollToTopButton from './ScrollToTopButton';
+import { useModal } from '../context/ModalContext';
 
 const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
+  const scrollContainerRef = useRef(null);
+
   // Prevent body scroll when drawer is open
   useEffect(() => {
     const html = document.documentElement;
@@ -34,22 +38,21 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
     ];
   }, [project]);
 
-  if (!project) return null;
-
-  const area = project.category === 'Commercial' ? '4500' : '3200';
-  const val = project.category === 'Commercial' ? '1.2 Cr' : '75 Lakhs';
-
   return (
     <AnimatePresence>
-      {isOpen && (
-        <>
-          {/* Backdrop */}
+      {isOpen && project && (() => {
+        const area = project.category === 'Commercial' ? '4500' : '3200';
+        const val = project.category === 'Commercial' ? '1.2 Cr' : '75 Lakhs';
+        
+        return (
+          <>
+            {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 z-[100] backdrop-blur-sm"
+            className="fixed inset-0 bg-black/60 z-[998] backdrop-blur-sm"
           />
 
           {/* Drawer */}
@@ -58,7 +61,7 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed bottom-0 left-0 right-0 z-[101] bg-[#F8F5F2] rounded-t-[32px] overflow-hidden max-h-[92vh] flex flex-col shadow-2xl"
+            className="fixed bottom-0 left-0 right-0 z-[999] bg-[#F8F5F2] rounded-t-[32px] overflow-hidden max-h-[92vh] flex flex-col shadow-2xl"
           >
             {/* Handle Bar */}
             <div className="w-full flex justify-center pt-4 pb-2 cursor-grab active:cursor-grabbing">
@@ -78,7 +81,10 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
             </div>
 
             {/* Content Area */}
-            <div className="overflow-y-auto flex-1 custom-scrollbar" data-lenis-prevent>
+            <div 
+              className="overflow-y-auto flex-1 custom-scrollbar" 
+              data-lenis-prevent
+            >
               <div className="px-4 md:px-8 py-6 max-w-5xl mx-auto space-y-12">
                 
                 {/* Hero section */}
@@ -184,7 +190,8 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
             </div>
           </motion.div>
         </>
-      )}
+        );
+      })()}
     </AnimatePresence>
   );
 };

@@ -22,7 +22,7 @@ const Navbar = () => {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [navbarOffset, setNavbarOffset] = useState(0);
   const location = useLocation();
-  const { openQuoteModal } = useModal();
+  const { openQuoteModal, isDetailDrawerOpen } = useModal();
   const navRef = React.useRef(null);
   const dropdownTimeoutRef = React.useRef(null);
 
@@ -84,8 +84,10 @@ const Navbar = () => {
     <nav 
       ref={navRef}
       style={{ transform: `translateY(-${navbarOffset}px)` }}
-      className={`fixed top-0 left-0 w-full z-[100] py-3 transition-colors duration-300 border-b ${
-        location.pathname === '/' && !scrolled
+      className={`fixed top-0 left-0 w-full z-[50] py-3 transition-all duration-500 border-b ${
+        isDetailDrawerOpen ? 'backdrop-blur-xl bg-[#F8F5F2]/40 opacity-50 pointer-events-none' : ''
+      } ${
+        !isDetailDrawerOpen && location.pathname === '/' && !scrolled
           ? 'bg-transparent border-[#37302F]/15'
           : 'bg-[#F8F5F2] border-[#37302F]/5'
       }`}

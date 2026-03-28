@@ -1,24 +1,50 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SectionWrapper from '../components/SectionWrapper';
 import { designIdeas } from '../data/designIdeas';
 import { MoveRight } from 'lucide-react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { useModal } from '../context/ModalContext';
 
 const DesignIdeas = () => {
+  const navigate = useNavigate();
+  const { 
+    setDetailDrawerOpen, 
+    openIdeaDrawer, 
+    closeIdeaDrawer, 
+    isDetailDrawerOpen: isGlobalDrawerOpen,
+    selectedIdea: globalSelectedIdea
+  } = useModal();
+
   const [isCardMode, setIsCardMode] = useState(true);
   const [heroOffset, setHeroOffset] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const contentRef = useRef(null);
   const heroTitleRef = useRef(null);
+
+  const handleIdeaClick = useCallback((idea) => {
+    if (windowWidth < 768) {
+      const id = idea.title.toLowerCase().replace(/\s+/g, '-');
+      openIdeaDrawer(id);
+    } else {
+      navigate(`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`);
+    }
+  }, [windowWidth, navigate, openIdeaDrawer]);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const measureHero = () => {
       if (heroTitleRef.current) {
-        // Measure initial height/bottom relative to fixed container
-        const rect = heroTitleRef.current.getBoundingClientRect();
-        
-        // IMPORTANT: We do NOT add window.scrollY here.
-        setHeroOffset(rect.bottom + 24); 
+        const titleTop = heroTitleRef.current.offsetTop;
+        const titleHeight = heroTitleRef.current.offsetHeight;
+        // Responsive gap: 100px for mobile, 140px for desktop
+        const baseGap = windowWidth < 768 ? 100 : 140;
+        setHeroOffset(titleTop + titleHeight + baseGap); 
       }
     };
 
@@ -31,10 +57,10 @@ const DesignIdeas = () => {
       ro.disconnect();
       window.removeEventListener('resize', measureHero);
     };
-  }, []);
+  }, [windowWidth]);
 
   const { scrollY } = useScroll();
-  const yRange = useTransform(scrollY, [0, 500], [0, -320]);
+  const yRange = useTransform(scrollY, [0, 500], [0, -350]);
   const heroTranslateY = useSpring(yRange, { stiffness: 160, damping: 15 });
 
   // Ensure the body background matches the page to prevent "white leaks" during parallax
@@ -113,7 +139,11 @@ const DesignIdeas = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-16">
             {designIdeas.map((idea, idx) => (
-              <Link to={`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`} key={idx} className="block group relative rounded-2xl overflow-hidden cursor-pointer aspect-square bg-[#F8F5F2]">
+              <div 
+                key={idx} 
+                onClick={() => handleIdeaClick(idea)}
+                className="block group relative rounded-2xl overflow-hidden cursor-pointer aspect-square bg-[#F8F5F2] z-10 pointer-events-auto"
+              >
                 <img
                   src={idea.image}
                   alt={idea.title}
@@ -155,7 +185,7 @@ const DesignIdeas = () => {
                     <MoveRight size={16} className="w-0 opacity-0 group-hover:w-4 group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 -translate-x-2 group-hover:translate-x-0" />
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </SectionWrapper>
@@ -186,6 +216,7 @@ const DesignIdeas = () => {
           </div>
         </section>
       </div>
+
     </div>
   );
 };
