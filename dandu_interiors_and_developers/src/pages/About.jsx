@@ -117,10 +117,13 @@ const About = () => {
 
               <div className="py-10">
                 <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#37302F]/40 block mb-6">Expertise Focus</span>
-                {/* Desktop: pill tags */}
-                <div className="hidden md:flex flex-wrap gap-3 text-xs md:text-sm uppercase tracking-widest font-bold text-[#37302F]">
+                {/* Desktop: clean editorial list in two lines */}
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 lg:gap-x-10 gap-y-10 text-sm uppercase tracking-widest font-bold text-[#37302F]">
                   {['Civil Engineering', 'Structural Integrity', 'Luxury Interiors', 'Full-Scale Renovations', 'Turnkey Solutions'].map(tag => (
-                    <span key={tag} className="px-5 py-3 border border-[#37302F]/20 rounded-full hover:bg-[#37302F] hover:text-[#F8F5F2] transition-colors cursor-default">{tag}</span>
+                    <div key={tag} className="flex items-center gap-4 group cursor-default transition-all duration-500">
+                      <span className="w-2 h-[1px] bg-[#37302F]/20 group-hover:w-8 group-hover:bg-[#37302F] transition-all duration-700 shrink-0"></span>
+                      <span className="group-hover:text-[#37302F]/60 transition-colors whitespace-nowrap">{tag}</span>
+                    </div>
                   ))}
                 </div>
                 {/* Mobile: clean stacked divider list */}

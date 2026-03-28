@@ -99,20 +99,29 @@ const Home = () => {
     if (!scrollContainer) return;
 
     let animationId;
-    let lastTime = performance.now();
-    const speed = 0.5;
+    let lastTime = 0;
+    const speed = 0.5; // Constant base speed
 
-    const animate = (currentTime) => {
+    const animate = (time) => {
+      if (!lastTime) lastTime = time;
+      const deltaTime = time - lastTime;
+      lastTime = time;
+
       if (!isInteracting && !isManualScroll) {
-        const deltaTime = currentTime - lastTime;
-        scrollContainer.scrollLeft += speed * (deltaTime / 16);
+        // Normalize speed based on frame time (targets 60fps)
+        const frameAdjust = deltaTime / (1000 / 60);
+        
+        // Prevent huge jumps if tab was suspended/resumed
+        if (!isNaN(frameAdjust) && frameAdjust < 10) {
+          scrollContainer.scrollLeft += speed * frameAdjust;
+        }
 
+        // Loop detection: reset to 0 once we've scrolled half the total (duplicated) content
         const halfWidth = scrollContainer.scrollWidth / 2;
-        if (scrollContainer.scrollLeft >= halfWidth) {
+        if (halfWidth > 0 && scrollContainer.scrollLeft >= halfWidth - 1) {
           scrollContainer.scrollLeft = 0;
         }
       }
-      lastTime = currentTime;
       animationId = requestAnimationFrame(animate);
     };
 
@@ -120,7 +129,7 @@ const Home = () => {
     return () => cancelAnimationFrame(animationId);
   }, [isInteracting, isManualScroll]);
 
-  // Auto-scroll for Testimonials on mobile
+  // Auto-scroll for Testimonials (Now mobile-only to maintain static desktop grid)
   React.useEffect(() => {
     const isMobile = window.innerWidth < 1024;
     if (!isMobile) return;
@@ -129,20 +138,26 @@ const Home = () => {
     if (!scrollContainer) return;
 
     let animationId;
-    let lastTime = performance.now();
-    const speed = 0.4; // Slightly slower than services
+    let lastTime = 0;
+    const speed = 0.45;
 
-    const animate = (currentTime) => {
+    const animate = (time) => {
+      if (!lastTime) lastTime = time;
+      const deltaTime = time - lastTime;
+      lastTime = time;
+
       if (!isTestimonialInteracting) {
-        const deltaTime = currentTime - lastTime;
-        scrollContainer.scrollLeft += speed * (deltaTime / 16);
+        const frameAdjust = deltaTime / (1000 / 60);
+        
+        if (!isNaN(frameAdjust) && frameAdjust < 10) {
+          scrollContainer.scrollLeft += speed * frameAdjust;
+        }
 
         const halfWidth = scrollContainer.scrollWidth / 2;
-        if (scrollContainer.scrollLeft >= halfWidth) {
+        if (halfWidth > 0 && scrollContainer.scrollLeft >= halfWidth - 1) {
           scrollContainer.scrollLeft = 0;
         }
       }
-      lastTime = currentTime;
       animationId = requestAnimationFrame(animate);
     };
 
@@ -202,15 +217,10 @@ const Home = () => {
         id="services-preview"
         paddingClass="pt-24 pb-32"
         onMouseLeave={() => {
-          setIsManualScroll(false);
-          setIsInteracting(false);
+          // No immediate reset here, let the 4s timer handle it for better control
         }}
         onTouchEnd={() => {
-          // Delay resume on mobile to allow momentum scroll to finish
-          setTimeout(() => {
-            setIsManualScroll(false);
-            setIsInteracting(false);
-          }, 1000);
+          // No immediate reset here, let the 4s timer handle it for better control
         }}
       >
         <div
@@ -483,7 +493,11 @@ const Home = () => {
       <HomeDesignIdeas />
 
       {/* Client Testimonials - Enhanced Scroll for Mobile */}
-      <SectionWrapper bgClass="bg-[#F8F5F2]">
+      <SectionWrapper 
+        bgClass="bg-[#F8F5F2]"
+        onMouseLeave={() => resetTestimonialInteraction()}
+        onTouchEnd={() => resetTestimonialInteraction()}
+      >
         <div className="text-center mb-16 px-4">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#1A1A1A]">Client Testimonials</h2>
           <div className="w-24 h-1 bg-[#1A1A1A] mx-auto rounded-full mb-6"></div>
@@ -497,7 +511,7 @@ const Home = () => {
 
           <div
             ref={testimonialScrollRef}
-            className="flex md:grid md:grid-cols-2 lg:grid-cols-4 overflow-x-auto md:overflow-hidden gap-6 md:gap-8 pb-12 px-4 md:px-8 relative hide-scrollbar"
+            className="flex lg:grid lg:grid-cols-4 overflow-x-auto lg:overflow-hidden gap-6 md:gap-8 pb-12 px-4 md:px-8 relative hide-scrollbar"
             onMouseEnter={() => {
               setIsTestimonialInteracting(true);
               if (testimonialResumeTimer.current) clearTimeout(testimonialResumeTimer.current);
@@ -509,8 +523,8 @@ const Home = () => {
             }}
             onTouchEnd={() => resetTestimonialInteraction()}
           >
-            {/* On Desktop we use original sliced array, on Mobile we use infinite array */}
-            {(window.innerWidth >= 1024 ? testimonials.slice(0, 4) : infiniteTestimonials).map((testimonial, idx) => (
+            {/* Desktop: Static 4-column grid | Mobile: Infinite flex scroll */}
+            {(typeof window !== 'undefined' && window.innerWidth >= 1024 ? testimonials.slice(0, 4) : infiniteTestimonials).map((testimonial, idx) => (
               <div
                 key={`${testimonial.id}-${idx}`}
                 className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] relative mt-8 flex flex-col h-[400px] lg:h-full min-w-[85vw] md:min-w-0 lg:min-w-0 group transition-all duration-300 hover:shadow-2xl justify-between"
