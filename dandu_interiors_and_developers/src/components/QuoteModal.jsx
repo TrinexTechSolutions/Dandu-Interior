@@ -25,6 +25,46 @@ const QuoteModal = () => {
     };
   }, [isQuoteModalOpen]);
 
+  const [formData, setFormData] = React.useState({
+    name: '',
+    phone: '',
+    email: '',
+    location: '',
+    serviceType: '',
+    budget: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'modal_budget') {
+      setFormData(prev => ({ ...prev, budget: value }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleServiceChange = (e) => {
+    setFormData(prev => ({ ...prev, serviceType: e.target.value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const message = `*New Quote Request from Dandu Interior Website*%0A%0A` +
+      `*Name:* ${formData.name}%0A` +
+      `*Phone:* ${formData.phone}%0A` +
+      `*Email:* ${formData.email || 'Not provided'}%0A` +
+      `*Location:* ${formData.location || 'Not provided'}%0A` +
+      `*Service:* ${formData.serviceType || 'Not provided'}%0A` +
+      `*Budget:* ${formData.budget || 'Not provided'}`;
+
+    const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "8919004890";
+    const whatsappUrl = `https://wa.me/91${whatsappNumber}?text=${message}`;
+
+    window.open(whatsappUrl, '_blank');
+    closeQuoteModal();
+  };
+
   return (
     <AnimatePresence>
       {isQuoteModalOpen && (
@@ -94,7 +134,7 @@ const QuoteModal = () => {
                 </h2>
               </div>
 
-              <form onSubmit={(e) => { e.preventDefault(); closeQuoteModal(); alert('Quote Request Sent!'); }} className="space-y-4 md:space-y-7">
+              <form onSubmit={handleSubmit} className="space-y-4 md:space-y-7">
 
                 {/* Form Section: Personal Details */}
                 <div className="space-y-2.5 md:space-y-4">
@@ -102,11 +142,11 @@ const QuoteModal = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-6">
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                       <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Full Name</label>
-                      <input type="text" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="John Doe" required />
+                      <input name="name" value={formData.name} onChange={handleChange} type="text" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="John Doe" required />
                     </div>
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                       <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Phone Number</label>
-                      <input type="tel" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="+91 00000 00000" required />
+                      <input name="phone" value={formData.phone} onChange={handleChange} type="tel" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="+91 00000 00000" required />
                     </div>
                   </div>
                 </div>
@@ -117,23 +157,23 @@ const QuoteModal = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-6">
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                       <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Email Address</label>
-                      <input type="email" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="hello@example.com" />
+                      <input name="email" value={formData.email} onChange={handleChange} type="email" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="hello@example.com" />
                     </div>
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                       <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Location</label>
-                      <input type="text" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="City or Landmark" />
+                      <input name="location" value={formData.location} onChange={handleChange} type="text" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="City or Landmark" />
                     </div>
                   </div>
 
                   <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                     <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Service Type</label>
                     <div className="relative">
-                      <select className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] appearance-none focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all cursor-pointer" required defaultValue="">
+                      <select name="serviceType" value={formData.serviceType} onChange={handleServiceChange} className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] appearance-none focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all cursor-pointer" required>
                         <option value="" disabled>Select a theme or service</option>
                         {services.map(s => (
-                          <option key={s.id} value={s.id}>{s.title}</option>
+                          <option key={s.id} value={s.title}>{s.title}</option>
                         ))}
-                        <option value="multiple">Full Project Development</option>
+                        <option value="Full Project Development">Full Project Development</option>
                       </select>
                       <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-black/20">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -148,7 +188,7 @@ const QuoteModal = () => {
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 md:gap-3">
                     {['Under 1L', '1L - 5L', '5L - 25L', '25L+'].map((range, idx) => (
                       <label key={idx} className="relative group cursor-pointer">
-                        <input type="radio" name="modal_budget" value={range} className="peer absolute opacity-0" />
+                        <input type="radio" name="modal_budget" value={range} checked={formData.budget === range} onChange={handleChange} className="peer absolute opacity-0" />
                         <div className="bg-transparent border border-[#37302F]/40 peer-checked:border-[#1A1A1A] peer-checked:bg-[#1A1A1A] peer-checked:text-white text-[#37302F] rounded-lg md:rounded-xl p-2.5 md:p-3 text-center transition-all duration-300 group-hover:shadow-lg">
                           <span className="text-[8.5px] font-bold tracking-widest uppercase">{range}</span>
                         </div>

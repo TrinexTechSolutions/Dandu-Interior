@@ -52,7 +52,7 @@ const Contact = () => {
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', updateHeight);
     window.addEventListener('load', updateHeight);
-    
+
     // Refresh after a short delay to catch final layout
     const timer = setTimeout(updateHeight, 100);
 
@@ -74,42 +74,139 @@ const Contact = () => {
     setStatus({ submitting: true, submitted: false, error: false, message: "" });
     setToast({ show: false, message: "" });
 
-    // Simulate form submission
-    setTimeout(() => {
-      setStatus({ submitting: false, submitted: false, error: false, message: "" });
+    try {
+      const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "api-key": import.meta.env.VITE_BREVO_API_KEY,
+        },
+        body: JSON.stringify({
+          sender: {
+            name: "Dandu Interior Website",
+            email: import.meta.env.VITE_SENDER_EMAIL || "pradeepvarmaalluri7@gmail.com"
+          },
+          to: [{ email: import.meta.env.VITE_ADMIN_EMAIL || "syampanga2003@gmail.com", name: "Dandu Interior Admin" }],
+          subject: `New Luxury Inquiry: ${formData.name}`,
+          htmlContent: `
+            <!DOCTYPE html>
+            <html>
+            <body style="margin: 0; padding: 0; background-color: #F8F5F2; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #F8F5F2; padding: 40px 20px;">
+                <tr>
+                  <td align="center">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border: 1px solid #37302F; border-radius: 4px; box-shadow: 10px 10px 0px rgba(55, 48, 47, 0.05);">
+                      <!-- Header -->
+                      <tr>
+                        <td style="padding: 40px 40px 20px 40px; text-align: left;">
+                          <h1 style="margin: 0; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: #37302F; opacity: 0.5;">New Inquiry</h1>
+                          <div style="margin-top: 20px; font-family: Georgia, serif; font-style: italic; font-size: 32px; color: #1A1A1A;">Dandu Interior</div>
+                        </td>
+                      </tr>
+                      
+                      <!-- Divider -->
+                      <tr>
+                        <td style="padding: 0 40px;">
+                          <hr style="border: 0; border-top: 1px solid #37302F; opacity: 0.1; margin: 0;">
+                        </td>
+                      </tr>
 
-      if (formData.propertyLocation === 'Hyderabad' || formData.propertyLocation === 'Bapatla') {
-        setToast({ 
-          show: true, 
-          message: "Your request has been received. Our team will contact you shortly." 
-        });
-      } else {
-        setToast({ 
-          show: true, 
-          message: "Currently, we don't provide services in that location. We have noted your request." 
-        });
-      }
+                      <!-- Content -->
+                      <tr>
+                        <td style="padding: 40px;">
+                          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                              <td style="padding-bottom: 24px;">
+                                <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #37302F; opacity: 0.4; margin-bottom: 8px;">Client Details</div>
+                                <div style="font-size: 18px; color: #1A1A1A; font-weight: 400;">${formData.name}</div>
+                                <div style="font-size: 14px; color: #37302F; opacity: 0.7; margin-top: 4px;">${formData.phone}</div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding-bottom: 24px;">
+                                <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #37302F; opacity: 0.4; margin-bottom: 8px;">Project Scope</div>
+                                <div style="font-size: 16px; color: #1A1A1A;"><span style="font-family: Georgia, serif; font-style: italic;">Requirement:</span> ${formData.requirement}</div>
+                                <div style="font-size: 16px; color: #1A1A1A; margin-top: 4px;"><span style="font-family: Georgia, serif; font-style: italic;">Property:</span> ${formData.propertyType}</div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding-bottom: 1px;">
+                                <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #37302F; opacity: 0.4; margin-bottom: 8px;">Location</div>
+                                <div style="font-size: 16px; color: #1A1A1A;">${formData.propertyLocation}${formData.propertyLocation === 'Other' ? ` (${formData.customLocation})` : ''}</div>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
 
-      setFormData({
-        name: "", phone: "", propertyLocation: "", propertyType: "", requirement: "", customLocation: ""
+                      <!-- Footer -->
+                      <tr>
+                        <td style="padding: 0 40px 40px 40px;">
+                          <div style="background-color: #1A1A1A; color: #F8F5F2; padding: 20px; text-align: center; border-radius: 2px;">
+                            <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Ready to Respond?</div>
+                            <div style="font-size: 12px; margin-top: 8px; opacity: 0.7;">This inquiry was received via the Dandu Interior website.</div>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                    
+                    <p style="margin-top: 30px; font-size: 11px; color: #37302F; opacity: 0.3; text-transform: uppercase; letter-spacing: 2px;">Automated Notification System</p>
+                  </td>
+                </tr>
+              </table>
+            </body>
+            </html>
+          `,
+          replyTo: { email: import.meta.env.VITE_ADMIN_EMAIL || "syampanga2003@gmail.com", name: formData.name }
+        }),
       });
 
+      if (response.ok) {
+        setStatus({ submitting: false, submitted: true, error: false, message: "" });
+
+        if (formData.propertyLocation === 'Hyderabad' || formData.propertyLocation === 'Bapatla') {
+          setToast({
+            show: true,
+            message: "Your request has been received. Our team will contact you shortly."
+          });
+        } else {
+          setToast({
+            show: true,
+            message: "Currently, we don't provide services in that location. We have noted your request."
+          });
+        }
+
+        setFormData({
+          name: "", phone: "", propertyLocation: "", propertyType: "", requirement: "", customLocation: ""
+        });
+      } else {
+        const errorData = await response.json();
+        console.error("Brevo API Error:", errorData);
+        setStatus({ submitting: false, submitted: false, error: true, message: "Authentication failed. Please check your Brevo API key and restart your server." });
+        setToast({ show: true, message: "Oops! Authentication failed. Check your API key." });
+      }
+    } catch (error) {
+      console.error("Submission Error:", error);
+      setStatus({ submitting: false, submitted: false, error: true, message: "An error occurred." });
+      setToast({ show: true, message: "Network error. Please check your connection and try again." });
+    } finally {
       setTimeout(() => setToast({ show: false, message: "" }), 6000);
-    }, 1500);
+    }
   };
 
   const marqueeText = "Let's Build Your Dream Space. ";
 
   return (
     <div className="bg-[#F8F5F2] min-h-screen relative font-sans overflow-x-hidden">
-      
+
       {/* Monumental Marquee Hero Section - FIXED */}
-      <section 
+      <section
         className={`fixed top-0 left-0 w-full flex items-center bg-[#F8F5F2] select-none pt-2 md:pt-4 z-0 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         style={{ height: heroOffset ? `${heroOffset}px` : '50vh' }}
       >
-        <motion.div 
-          ref={heroRef} 
+        <motion.div
+          ref={heroRef}
           style={{ y: bouncyY, scale: bouncyScale }}
           className="w-full overflow-hidden whitespace-nowrap flex py-4"
         >
@@ -130,18 +227,18 @@ const Contact = () => {
       </section>
 
       {/* Main Content Sections - Sliding OVER the fixed header */}
-      <div 
+      <div
         id="contact-content"
         ref={contentRef}
         className="relative z-10 transition-all duration-300 ease-out"
         style={{ marginTop: heroOffset ? `${heroOffset}px` : '50vh' }}
       >
-        
+
         {/* Section 1: Minimalist Contact Form */}
         <section className="bg-[#F8F5F2] py-10 lg:py-16">
           <div className="container-custom">
             <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-20">
-              
+
               {/* Left Side: Contact Info & Intent */}
               <div className="flex flex-col justify-start space-y-12">
                 <div>
