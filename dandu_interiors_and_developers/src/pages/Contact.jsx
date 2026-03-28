@@ -75,90 +75,14 @@ const Contact = () => {
     setToast({ show: false, message: "" });
 
     try {
-      const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      const response = await fetch("/api/send-email", {
         method: "POST",
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json",
-          "api-key": import.meta.env.VITE_BREVO_API_KEY,
         },
         body: JSON.stringify({
-          sender: {
-            name: "Dandu Interior Website",
-            email: import.meta.env.VITE_SENDER_EMAIL || "pradeepvarmaalluri7@gmail.com"
-          },
-          to: [{ email: import.meta.env.VITE_ADMIN_EMAIL || "syampanga2003@gmail.com", name: "Dandu Interior Admin" }],
-          subject: `New Luxury Inquiry: ${formData.name}`,
-          htmlContent: `
-            <!DOCTYPE html>
-            <html>
-            <body style="margin: 0; padding: 0; background-color: #F8F5F2; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #F8F5F2; padding: 40px 20px;">
-                <tr>
-                  <td align="center">
-                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border: 1px solid #37302F; border-radius: 4px; box-shadow: 10px 10px 0px rgba(55, 48, 47, 0.05);">
-                      <!-- Header -->
-                      <tr>
-                        <td style="padding: 40px 40px 20px 40px; text-align: left;">
-                          <h1 style="margin: 0; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 4px; color: #37302F; opacity: 0.5;">New Inquiry</h1>
-                          <div style="margin-top: 20px; font-family: Georgia, serif; font-style: italic; font-size: 32px; color: #1A1A1A;">Dandu Interior</div>
-                        </td>
-                      </tr>
-                      
-                      <!-- Divider -->
-                      <tr>
-                        <td style="padding: 0 40px;">
-                          <hr style="border: 0; border-top: 1px solid #37302F; opacity: 0.1; margin: 0;">
-                        </td>
-                      </tr>
-
-                      <!-- Content -->
-                      <tr>
-                        <td style="padding: 40px;">
-                          <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                            <tr>
-                              <td style="padding-bottom: 24px;">
-                                <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #37302F; opacity: 0.4; margin-bottom: 8px;">Client Details</div>
-                                <div style="font-size: 18px; color: #1A1A1A; font-weight: 400;">${formData.name}</div>
-                                <div style="font-size: 14px; color: #37302F; opacity: 0.7; margin-top: 4px;">${formData.phone}</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style="padding-bottom: 24px;">
-                                <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #37302F; opacity: 0.4; margin-bottom: 8px;">Project Scope</div>
-                                <div style="font-size: 16px; color: #1A1A1A;"><span style="font-family: Georgia, serif; font-style: italic;">Requirement:</span> ${formData.requirement}</div>
-                                <div style="font-size: 16px; color: #1A1A1A; margin-top: 4px;"><span style="font-family: Georgia, serif; font-style: italic;">Property:</span> ${formData.propertyType}</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style="padding-bottom: 1px;">
-                                <div style="font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #37302F; opacity: 0.4; margin-bottom: 8px;">Location</div>
-                                <div style="font-size: 16px; color: #1A1A1A;">${formData.propertyLocation}${formData.propertyLocation === 'Other' ? ` (${formData.customLocation})` : ''}</div>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-
-                      <!-- Footer -->
-                      <tr>
-                        <td style="padding: 0 40px 40px 40px;">
-                          <div style="background-color: #1A1A1A; color: #F8F5F2; padding: 20px; text-align: center; border-radius: 2px;">
-                            <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;">Ready to Respond?</div>
-                            <div style="font-size: 12px; margin-top: 8px; opacity: 0.7;">This inquiry was received via the Dandu Interior website.</div>
-                          </div>
-                        </td>
-                      </tr>
-                    </table>
-                    
-                    <p style="margin-top: 30px; font-size: 11px; color: #37302F; opacity: 0.3; text-transform: uppercase; letter-spacing: 2px;">Automated Notification System</p>
-                  </td>
-                </tr>
-              </table>
-            </body>
-            </html>
-          `,
-          replyTo: { email: import.meta.env.VITE_ADMIN_EMAIL || "syampanga2003@gmail.com", name: formData.name }
+          ...formData,
         }),
       });
 
@@ -183,8 +107,16 @@ const Contact = () => {
       } else {
         const errorData = await response.json();
         console.error("Brevo API Error:", errorData);
-        setStatus({ submitting: false, submitted: false, error: true, message: "Authentication failed. Please check your Brevo API key and restart your server." });
-        setToast({ show: true, message: "Oops! Authentication failed. Check your API key." });
+        setStatus({
+          submitting: false,
+          submitted: false,
+          error: true,
+          message: errorData.message || "Unable to send your message right now."
+        });
+        setToast({
+          show: true,
+          message: errorData.message || "Oops! Something went wrong while sending your request."
+        });
       }
     } catch (error) {
       console.error("Submission Error:", error);

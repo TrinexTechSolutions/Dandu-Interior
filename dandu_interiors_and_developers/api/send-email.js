@@ -4,21 +4,28 @@ export default async function handler(req, res) {
   }
 
   const { name, phone, propertyLocation, propertyType, requirement, customLocation } = req.body;
+  const brevoApiKey = process.env.BREVO_API_KEY || process.env.VITE_BREVO_API_KEY;
+  const senderEmail = process.env.SENDER_EMAIL || process.env.VITE_SENDER_EMAIL || "pradeepvarmaalluri7@gmail.com";
+  const adminEmail = process.env.ADMIN_EMAIL || process.env.VITE_ADMIN_EMAIL || "syampanga2003@gmail.com";
+
+  if (!brevoApiKey) {
+    return res.status(500).json({ message: 'BREVO_API_KEY is not configured on the server.' });
+  }
 
   try {
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
         "accept": "application/json",
-        "api-key": process.env.VITE_BREVO_API_KEY,
+        "api-key": brevoApiKey,
         "content-type": "application/json",
       },
       body: JSON.stringify({
         sender: { 
           name: "Dandu Interior Website", 
-          email: process.env.VITE_SENDER_EMAIL || "pradeepvarmaalluri7@gmail.com"
+          email: senderEmail
         },
-        to: [{ email: process.env.VITE_ADMIN_EMAIL || "syampanga2003@gmail.com", name: "Syampanga Admin" }],
+        to: [{ email: adminEmail, name: "Syampanga Admin" }],
         subject: `New Inquiry from ${name}`,
         htmlContent: `
           <html>
@@ -37,7 +44,7 @@ export default async function handler(req, res) {
             </body>
           </html>
         `,
-        replyTo: { email: process.env.VITE_ADMIN_EMAIL || "syampanga2003@gmail.com", name: name }
+        replyTo: { email: adminEmail, name: name }
       }),
     });
 
