@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MapPin, Tag, Maximize2, DollarSign } from 'lucide-react';
 import CallToAction from './CallToAction';
@@ -26,23 +26,12 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
     };
   }, [isOpen]);
 
-  const galleryImages = useMemo(() => {
-    if (!project) return [];
-    return [
-      project.image,
-      "https://images.unsplash.com/photo-1600210491369-e753d80a41f3?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800"
-    ];
-  }, [project]);
-
   return (
     <AnimatePresence>
       {isOpen && project && (() => {
         const area = project.category === 'Commercial' ? '4500' : '3200';
         const val = project.category === 'Commercial' ? '1.2 Cr' : '75 Lakhs';
+        const galleryImages = [project.image, ...(project.galleryImages || [])];
         
         return (
           <>
@@ -142,28 +131,16 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[250px] md:auto-rows-[300px]">
-                    <div className="group relative overflow-hidden rounded-[2rem] md:col-span-8 row-span-2 shadow-sm">
+                    <div className="group relative overflow-hidden rounded-[2rem] md:col-span-7 row-span-2 shadow-sm">
                       <img src={galleryImages[0]} alt="Gallery 1" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     </div>
                     
-                    <div className="group relative overflow-hidden rounded-t-[10rem] rounded-b-[2rem] md:col-span-4 row-span-2 hidden md:block shadow-sm">
+                    <div className="group relative overflow-hidden rounded-t-[10rem] rounded-b-[2rem] md:col-span-5 row-span-1 shadow-sm">
                       <img src={galleryImages[1]} alt="Gallery 2" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     </div>
 
-                    <div className="group relative overflow-hidden rounded-[2rem] md:col-span-4 row-span-1 block md:hidden shadow-sm">
-                      <img src={galleryImages[1]} alt="Gallery 2" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    </div>
-
-                    <div className="group relative overflow-hidden rounded-[3rem] md:col-span-5 row-span-1 shadow-sm">
+                    <div className="group relative overflow-hidden rounded-[2rem] md:col-span-5 row-span-1 shadow-sm">
                       <img src={galleryImages[2]} alt="Gallery 3" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    </div>
-
-                    <div className="group relative overflow-hidden rounded-tr-[4rem] rounded-bl-[4rem] rounded-tl-xl rounded-br-xl md:col-span-3 row-span-1 shadow-sm">
-                      <img src={galleryImages[3]} alt="Gallery 4" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    </div>
-
-                    <div className="group relative overflow-hidden rounded-[2rem] md:col-span-4 row-span-1 border border-black/5 shadow-sm">
-                      <img src={galleryImages[4]} alt="Gallery 5" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     </div>
                   </div>
                 </div>
