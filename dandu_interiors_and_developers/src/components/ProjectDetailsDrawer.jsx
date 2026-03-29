@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MapPin, Tag, Maximize2, DollarSign } from 'lucide-react';
-import CallToAction from './CallToAction';
+import { X, MapPin, Tag } from 'lucide-react';
 import ScrollToTopButton from './ScrollToTopButton';
 import { useModal } from '../context/ModalContext';
 
@@ -29,8 +28,6 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
   return (
     <AnimatePresence>
       {isOpen && project && (() => {
-        const area = project.category === 'Commercial' ? '4500' : '3200';
-        const val = project.category === 'Commercial' ? '1.2 Cr' : '75 Lakhs';
         const galleryImages = [project.image, ...(project.galleryImages || [])];
         
         return (
@@ -93,7 +90,7 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-10 border-t border-b border-black/10 relative overflow-hidden">
+                <div className="grid grid-cols-2 gap-6 py-10 border-t border-b border-black/10 relative overflow-hidden">
                   <div className="flex flex-col items-center justify-center text-center space-y-2 relative z-10">
                     <Tag size={20} />
                     <span className="text-xl font-bold text-[#1A1A1A]">{project.category || 'Villa'}</span>
@@ -101,27 +98,10 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
                   </div>
                   
                   <div className="flex flex-col items-center justify-center text-center space-y-2 relative z-10">
-                    <Maximize2 size={20} />
-                    <span className="text-xl font-bold text-[#1A1A1A]">{area} sq.ft</span>
-                    <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Plan Area</span>
-                  </div>
-
-                  <div className="flex flex-col items-center justify-center text-center space-y-2 relative z-10">
                     <MapPin size={20} />
                     <span className="text-xl font-bold text-[#1A1A1A]">{project.location}</span>
                     <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Location</span>
                   </div>
-
-                  <div className="flex flex-col items-center justify-center text-center space-y-2 relative z-10">
-                    <DollarSign size={20} />
-                    <span className="text-xl font-bold text-[#1A1A1A]">{val}</span>
-                    <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Valuation</span>
-                  </div>
-
-                  {/* Slanted lines behind text - absolute positioned across grid */}
-                  <div className="hidden md:block absolute top-[15%] bottom-[15%] left-1/4 w-[1px] bg-black/5 -skew-x-[20deg]"></div>
-                  <div className="hidden md:block absolute top-[15%] bottom-[15%] left-2/4 w-[1px] bg-black/5 -skew-x-[20deg]"></div>
-                  <div className="hidden md:block absolute top-[15%] bottom-[15%] left-3/4 w-[1px] bg-black/5 -skew-x-[20deg]"></div>
                 </div>
 
                 {/* Photo Gallery Grid */}
@@ -130,25 +110,23 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
                     <h2 className="text-2xl md:text-3xl font-light tracking-tighter text-[#1A1A1A]">Project <span className="font-serif italic opacity-30">Gallery</span></h2>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 auto-rows-[250px] md:auto-rows-[300px]">
-                    <div className="group relative overflow-hidden rounded-[2rem] md:col-span-7 row-span-2 shadow-sm">
-                      <img src={galleryImages[0]} alt="Gallery 1" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    </div>
-                    
-                    <div className="group relative overflow-hidden rounded-t-[10rem] rounded-b-[2rem] md:col-span-5 row-span-1 shadow-sm">
-                      <img src={galleryImages[1]} alt="Gallery 2" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    </div>
-
-                    <div className="group relative overflow-hidden rounded-[2rem] md:col-span-5 row-span-1 shadow-sm">
-                      <img src={galleryImages[2]} alt="Gallery 3" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {galleryImages.slice(0, 3).map((img, idx) => (
+                      <div 
+                        key={idx}
+                        className={`group relative overflow-hidden rounded-2xl shadow-sm ${idx === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-square'}`}
+                      >
+                        <img 
+                          src={img} 
+                          alt={`Gallery ${idx + 1}`} 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                        />
+                        <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors duration-500" />
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* Footer CTA */}
-                <div className="pt-10 pb-20">
-                  <CallToAction />
-                </div>
               </div>
             </div>
 

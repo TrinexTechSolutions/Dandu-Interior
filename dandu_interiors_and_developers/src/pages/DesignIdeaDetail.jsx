@@ -5,7 +5,6 @@ import { X, ArrowRight } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import { designIdeas } from '../data/designIdeas';
 import { useModal } from '../context/ModalContext';
-import CallToAction from '../components/CallToAction';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import Footer from '../components/Footer';
 
@@ -190,26 +189,23 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
                           Image <span className="font-bold">Gallery</span>
                         </h2>
                         
-                        <div className="grid grid-cols-1 gap-4 auto-rows-[250px]">
-                          <div className="group relative overflow-hidden rounded-[2rem] row-span-2 shadow-md">
-                            <img src={galleryImages[0]} alt="Gallery 1" className="w-full h-full object-cover" />
-                          </div>
-                          <div className="group relative overflow-hidden rounded-t-[5rem] rounded-b-[2rem] row-span-1 shadow-md">
-                            <img src={galleryImages[1]} alt="Gallery 2" className="w-full h-full object-cover" />
-                          </div>
-                          <div className="group relative overflow-hidden rounded-[3rem] row-span-1 shadow-md">
-                            <img src={galleryImages[2]} alt="Gallery 3" className="w-full h-full object-cover" />
-                          </div>
-                          <div className="group relative overflow-hidden rounded-tr-[4rem] rounded-bl-[4rem] rounded-tl-xl rounded-br-xl row-span-1 shadow-md">
-                            <img src={galleryImages[3]} alt="Gallery 4" className="w-full h-full object-cover" />
-                          </div>
-                          <div className="group relative overflow-hidden rounded-[2rem] row-span-1 shadow-md">
-                            <img src={galleryImages[4]} alt="Gallery 5" className="w-full h-full object-cover" />
-                          </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          {galleryImages.slice(0, 4).map((img, idx) => (
+                            <div 
+                              key={idx}
+                              className={`group relative overflow-hidden rounded-2xl shadow-sm aspect-square md:aspect-[4/3]`}
+                            >
+                              <img 
+                                src={img} 
+                                alt={`Gallery ${idx + 1}`} 
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                              />
+                              <div className="absolute inset-0 bg-black/[0.03] group-hover:bg-transparent transition-colors duration-500" />
+                            </div>
+                          ))}
                         </div>
                       </div>
 
-                      <CallToAction />
                     </div>
 
                     {/* Sticky Mobile Quote Button */}
