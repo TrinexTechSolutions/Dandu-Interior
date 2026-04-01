@@ -1,6 +1,152 @@
 import { Paintbrush, Hammer, Wrench, Zap, SplitSquareHorizontal, Ruler, Grid, Home } from 'lucide-react';
+import allPaintingWorkImage from '../assets/Services/All Painting Work.webp';
+import additionOfFloorImage from '../assets/Services/Addition of Floor.webp';
+import aluminumPartitionsImage from '../assets/Services/Aluminum Partitions.webp';
+import apartmentPaintingImage from '../assets/Services/Apartment Painting.webp';
+import bathTubInstallationImage from '../assets/Services/Bath Tub Installation.webp';
+import bathroomRenovationImage from '../assets/Services/Bathroom Renovation.webp';
+import blindsInstallationImage from '../assets/Services/Blinds Installation.webp';
+import blockedPipesAndDrainsRemovingAndInstallationImage from '../assets/Services/Blocked Pipes and Drains removing and installation.webp';
+import boundaryWallsImage from '../assets/Services/Boundary Walls.webp';
+import brickworkImage from '../assets/Services/Brickwork.webp';
+import chandelierHangingImage from '../assets/Services/Chandelier Hanging.webp';
+import commercialDesignImage from '../assets/Services/Commercial Design.webp';
+import commercialRenovationImage from '../assets/Services/Commercial Renovation.webp';
+import completeNewElectricSystemsInstallationImage from '../assets/Services/Complete New Electric Systems Installation.webp';
+import completeNewPlumbingSystemInstallationImage from '../assets/Services/Complete New Plumbing System Installation.webp';
+import curtainBracketFixingImage from '../assets/Services/Curtain Bracket Fixing.webp';
+import curtainHangingImage from '../assets/Services/Curtain Hanging.webp';
+import curtainReelingInstallationImage from '../assets/Services/Curtain Reeling Installation.webp';
+import curtainRodsAndBlindFixingImage from '../assets/Services/Curtain Rods & Blind Fixing.webp';
+import curtainRodsInstallationImage from '../assets/Services/Curtain Rods Installation.webp';
+import demountablePartitionsImage from '../assets/Services/Demountable partitions.webp';
+import dishwasherConnectionMakingImage from '../assets/Services/Dishwasher Connection Making.webp';
+import dPBoxBreakerTripFixingImage from '../assets/Services/DP Box Breaker Trip Fixing.webp';
+import drillingAndHangingWorkImage from '../assets/Services/Drilling & Hanging Work.webp';
+import electricShortCircuitFixingImage from '../assets/Services/Electric Short Circuit Fixing.webp';
+import extensionOfAreasImage from '../assets/Services/Extension of Areas.webp';
+import extendWaterConnectionImage from '../assets/Services/Extend Water Connection.webp';
+import exteriorPaintingImage from '../assets/Services/Exterior Painting.webp';
+import flooringImage from '../assets/Services/Flooring.webp';
+import framelessGlassPartitionsImage from '../assets/Services/Frameless Glass Partitions.webp';
+import fullHomeRenovationImage from '../assets/Services/Full Home Renovation.webp';
+import handWashBasinRepairAndInstallationImage from '../assets/Services/Hand Wash Basin Repair and Installation.webp';
+import hideCablesOrganizerDuctingImage from '../assets/Services/Hide Cables Organizer Ducting.webp';
+import homeAppliancesFixingImage from '../assets/Services/Home Appliances Fixing.webp';
+import housePaintingImage from '../assets/Services/House Painting.webp';
+import industrialPaintingImage from '../assets/Services/Industrial Painting.webp';
+import industrialSuspendedCeilingsImage from '../assets/Services/Industrial Suspended Ceilings.webp';
+import interiorPaintingImage from '../assets/Services/Interior Painting.webp';
+import kitchenSinkRepairAndInstallationImage from '../assets/Services/Kitchen Sink Repair and Installation.webp';
+import kitchenRenovationImage from '../assets/Services/Kitchen Renovation.webp';
+import levelingImage from '../assets/Services/Leveling.webp';
+import lightAndLampFixingImage from '../assets/Services/Light & Lamp Fixing.webp';
+import lightDimmerInstallationImage from '../assets/Services/Light Dimmer Installation.webp';
+import livingRoomRenovationImage from '../assets/Services/Living Room Renovation.webp';
+import marbleFixingImage from '../assets/Services/Marble Fixing.webp';
+import metalStudPartitionsImage from '../assets/Services/Metal Stud Partitions.webp';
+import mirrorInstallationImage from '../assets/Services/Mirror Installation.webp';
+import mountBracketsOnWallImage from '../assets/Services/Mount Brackets on Wall.webp';
+import officeDesignImage from '../assets/Services/Office Design.webp';
+import officePaintingImage from '../assets/Services/Office Painting.webp';
+import pictureFrameHangingImage from '../assets/Services/Picture Frame Hanging.webp';
+import plasteringImage from '../assets/Services/Plastering.webp';
+import plumbingSystemDiagnosisAndInspectionsImage from '../assets/Services/Plumbing System Diagnosis and Inspections.webp';
+import residentialDesignImage from '../assets/Services/Residential Design.webp';
+import shelvesFixingImage from '../assets/Services/Shelves Fixing.webp';
+import solidPartitionImage from '../assets/Services/Solid Partition.webp';
+import switchAndSocketInstallationImage from '../assets/Services/Switch & Socket Installation.webp';
+import tapRepairsAndInstallationsImage from '../assets/Services/Tap Repairs and Installations.webp';
+import tileFixingImage from '../assets/Services/Tile Fixing.webp';
+import tileGroutingImage from '../assets/Services/Tile Grouting.webp';
+import toiletRepairsAndInstallationsImage from '../assets/Services/Toilet Repairs and Installations.webp';
+import tVBracketMountingImage from '../assets/Services/TV Bracket Mounting.webp';
+import villaPaintingImage from '../assets/Services/Villa Painting.webp';
+import wallPartitionMakingImage from '../assets/Services/Wall Partition Making.webp';
+import wallpaperFixingImage from '../assets/Services/Wallpaper Fixing.webp';
+import washingMachineInstallationImage from '../assets/Services/Washing Machine Installation.webp';
+import waterLeakRepairImage from '../assets/Services/Water Leak Repair.webp';
 
-export const services = [
+const serviceImageByName = {
+  'All Painting Work': allPaintingWorkImage,
+  'Addition of Floor': additionOfFloorImage,
+  'Aluminum Partitions': aluminumPartitionsImage,
+  'Apartment Painting': apartmentPaintingImage,
+  'Bath Tub Installation': bathTubInstallationImage,
+  'Bathroom Renovation': bathroomRenovationImage,
+  'Blinds Installation': blindsInstallationImage,
+  'Blocked Pipes and Drains removing and installation': blockedPipesAndDrainsRemovingAndInstallationImage,
+  'Boundary Walls': boundaryWallsImage,
+  Brickwork: brickworkImage,
+  'Chandelier Hanging': chandelierHangingImage,
+  'Commercial Design': commercialDesignImage,
+  'Commercial Renovation': commercialRenovationImage,
+  'Complete New Electric Systems Installation': completeNewElectricSystemsInstallationImage,
+  'Complete New Plumbing System Installation': completeNewPlumbingSystemInstallationImage,
+  'Curtain Bracket Fixing': curtainBracketFixingImage,
+  'Curtain Hanging': curtainHangingImage,
+  'Curtain Reeling Installation': curtainReelingInstallationImage,
+  'Curtain Rods & Blind Fixing': curtainRodsAndBlindFixingImage,
+  'Curtain Rods Installation': curtainRodsInstallationImage,
+  'Demountable partitions': demountablePartitionsImage,
+  'Dishwasher Connection Making': dishwasherConnectionMakingImage,
+  'DP Box Breaker Trip Fixing': dPBoxBreakerTripFixingImage,
+  'Drilling & Hanging Work': drillingAndHangingWorkImage,
+  'Electric Short Circuit Fixing': electricShortCircuitFixingImage,
+  'Extension of Areas': extensionOfAreasImage,
+  'Extend Water Connection': extendWaterConnectionImage,
+  'Exterior Painting': exteriorPaintingImage,
+  Flooring: flooringImage,
+  'Frameless Glass Partitions': framelessGlassPartitionsImage,
+  'Full Home Renovation': fullHomeRenovationImage,
+  'Hand Wash Basin Repair and Installation': handWashBasinRepairAndInstallationImage,
+  'Hide Cables Organizer Ducting': hideCablesOrganizerDuctingImage,
+  'Home Appliances Fixing': homeAppliancesFixingImage,
+  'House Painting': housePaintingImage,
+  'Industrial Painting': industrialPaintingImage,
+  'Industrial Suspended Ceilings': industrialSuspendedCeilingsImage,
+  'Interior Painting': interiorPaintingImage,
+  'Kitchen Sink Repair and Installation': kitchenSinkRepairAndInstallationImage,
+  'Kitchen Renovation': kitchenRenovationImage,
+  Leveling: levelingImage,
+  'Light & Lamp Fixing': lightAndLampFixingImage,
+  'Light Dimmer Installation': lightDimmerInstallationImage,
+  'Living Room Renovation': livingRoomRenovationImage,
+  'Marble Fixing': marbleFixingImage,
+  'Metal Stud Partitions': metalStudPartitionsImage,
+  'Mirror Installation': mirrorInstallationImage,
+  'Mount Brackets on Wall': mountBracketsOnWallImage,
+  'Office Design': officeDesignImage,
+  'Office Painting': officePaintingImage,
+  'Picture Frame Hanging': pictureFrameHangingImage,
+  Plastering: plasteringImage,
+  'Plumbing System Diagnosis and Inspections': plumbingSystemDiagnosisAndInspectionsImage,
+  'Residential Design': residentialDesignImage,
+  'Shelves Fixing': shelvesFixingImage,
+  'Solid Partition': solidPartitionImage,
+  'Switch & Socket Installation': switchAndSocketInstallationImage,
+  'Tap Repairs and Installations': tapRepairsAndInstallationsImage,
+  'Tile Fixing': tileFixingImage,
+  'Tile Grouting': tileGroutingImage,
+  'Toilet Repairs and Installations': toiletRepairsAndInstallationsImage,
+  'TV Bracket Mounting': tVBracketMountingImage,
+  'Villa Painting': villaPaintingImage,
+  'Wall Partition Making': wallPartitionMakingImage,
+  'Wallpaper Fixing': wallpaperFixingImage,
+  'Washing Machine Installation': washingMachineInstallationImage,
+  'Water Leak Repair': waterLeakRepairImage
+};
+
+const serviceImageAliases = {
+  'Bath Tub Install': 'Bath Tub Installation',
+};
+
+const getServiceImage = (name, fallback) =>
+  serviceImageByName[name] ||
+  serviceImageByName[serviceImageAliases[name]] ||
+  fallback;
+
+const rawServices = [
   {
     id: 'interior-design',
     title: 'Interior Design',
@@ -36,16 +182,16 @@ export const services = [
     fullDesc: 'Our masonry division provides the structural and aesthetic backbone of your property. We employ seasoned masons who take pride in precision and structural integrity. From flawless marble flooring that elevates a lobby\'s grandeur to heavy duty brickwork, our masonry works are executed with rigorous quality control, ensuring longevity and impeccable finishes.',
     benefits: ['High Durability', 'Premium Materials', 'Flawless Finish', 'Timely Execution'],
     subServices: [
-      { name: 'Tile Fixing', desc: 'Expert installation of ceramic, porcelain, and vitrified tiles for walls and floors. We ensure perfect leveling, symmetrical patterns, and zero-hollow sounding tiles for a flawless, long-lasting surface.', image: 'https://images.unsplash.com/photo-1523413363574-c30aa1c2a516?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Tile Grouting', desc: 'Precision grouting to seal tile joints, preventing moisture penetration and dirt accumulation. We use high-quality, mold-resistant epoxy and cementitious grouts color-matched to your aesthetic.', image: 'https://images.unsplash.com/photo-1588854337221-4cfb8ce2878b?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Marble Fixing', desc: 'Premium marble processing and installation. Handling heavy stone requires mastery; our team ensures rigorous substrate preparation and seamless joint matching for luxurious, mirror-polished floors and walls.', image: 'https://images.unsplash.com/photo-1600566753086-00f18efc2065?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Bath Tub Install', desc: 'Secure and watertight bathtub masonry encasements. We build rigorous support structures essential for heavy tubs, ensuring perfect drainage gradients and seamless integration with surrounding tiles.', image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Wall Partition Making', desc: 'Solid blockwork and brick partitioning to redefine your interior spaces. Providing excellent sound insulation and structural strength compared to standard drywall.', image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Brickwork', desc: 'Structural brick laying for exterior facades, retaining walls, and internal exposed-brick aesthetic walls. Done with precise mortar jointing for structural integrity.', image: 'https://images.unsplash.com/photo-1517581177682-a085bb7ffb15?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Boundary Walls', desc: 'Construction of robust boundary and perimeter walls. We ensure deep foundation laying and strong blockwork to secure your property effectively.', image: 'https://images.unsplash.com/photo-1533604100516-77823e590740?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Plastering', desc: 'Smooth and flawless plastering for interior and exterior walls. Creating the perfect canvas for painting or wallpapering by eliminating surface undulations.', image: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Leveling', desc: 'Floor substrate leveling using self-leveling compounds and sand-cement screeds. A critical preparatory step before the installation of premium flooring materials.', image: 'https://images.unsplash.com/photo-1523413631200-fac606558156?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Flooring', desc: 'Comprehensive flooring solutions including stone, interlocking pavers, and polished concrete for patios, driveways, and industrial spaces.', image: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&q=75&w=800' }
+      { name: 'Tile Fixing', desc: 'Expert installation of ceramic, porcelain, and vitrified tiles for walls and floors. We ensure perfect leveling, symmetrical patterns, and zero-hollow sounding tiles for a flawless, long-lasting surface.', image: tileFixingImage },
+      { name: 'Tile Grouting', desc: 'Precision grouting to seal tile joints, preventing moisture penetration and dirt accumulation. We use high-quality, mold-resistant epoxy and cementitious grouts color-matched to your aesthetic.', image: tileGroutingImage },
+      { name: 'Marble Fixing', desc: 'Premium marble processing and installation. Handling heavy stone requires mastery; our team ensures rigorous substrate preparation and seamless joint matching for luxurious, mirror-polished floors and walls.', image: marbleFixingImage },
+      { name: 'Bath Tub Install', desc: 'Secure and watertight bathtub masonry encasements. We build rigorous support structures essential for heavy tubs, ensuring perfect drainage gradients and seamless integration with surrounding tiles.', image: bathTubInstallationImage },
+      { name: 'Wall Partition Making', desc: 'Solid blockwork and brick partitioning to redefine your interior spaces. Providing excellent sound insulation and structural strength compared to standard drywall.', image: wallPartitionMakingImage },
+      { name: 'Brickwork', desc: 'Structural brick laying for exterior facades, retaining walls, and internal exposed-brick aesthetic walls. Done with precise mortar jointing for structural integrity.', image: brickworkImage },
+      { name: 'Boundary Walls', desc: 'Construction of robust boundary and perimeter walls. We ensure deep foundation laying and strong blockwork to secure your property effectively.', image: boundaryWallsImage },
+      { name: 'Plastering', desc: 'Smooth and flawless plastering for interior and exterior walls. Creating the perfect canvas for painting or wallpapering by eliminating surface undulations.', image: plasteringImage },
+      { name: 'Leveling', desc: 'Floor substrate leveling using self-leveling compounds and sand-cement screeds. A critical preparatory step before the installation of premium flooring materials.', image: levelingImage },
+      { name: 'Flooring', desc: 'Comprehensive flooring solutions including stone, interlocking pavers, and polished concrete for patios, driveways, and industrial spaces.', image: flooringImage }
     ]
   },
   {
@@ -57,13 +203,13 @@ export const services = [
     fullDesc: 'Revitalize your aging property with our comprehensive renovation services. We manage the entire lifecycle from tearing down the old structure to upgrading the plumbing/electrical lines, and applying the final modern finishes. Our renovations dramatically improve the utility, aesthetic, and market value of your property.',
     benefits: ['Increased Home Value', 'Modernized Systems', 'Better Space Utilization', 'Energy Efficiency'],
     subServices: [
-      { name: 'Full Home Renovation', desc: 'A complete transformation of your entire house. We handle civil modifications, flooring, ceiling, painting, and complete utility upgrades to turn an old house into a modern masterpiece.', image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Commercial Renovation', desc: 'Upgrading retail outlets, offices, and warehouses. We minimize downtime and execute rapid refurbishments to keep your business running smoothly while delivering a fresh new look.', image: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Bathroom Renovation', desc: 'Tearing out old, leaky bathrooms and installing waterproofed, modern sanctuaries. Includes new tiling, vanity installations, concealed cisterns, and premium shower enclosures.', image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Kitchen Renovation', desc: 'Transforming cramped cuisines into spacious modular kitchens. We optimize the work triangle, upgrade plumbing and gas lines, and install custom cabinetry and elegant countertops.', image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4f?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Extension of Areas', desc: 'Expanding your living space horizontally. Whether it\'s pushing out a living room, adding a sunroom, or enlarging a garage, we ensure seamless integration with the existing structure.', image: 'https://images.unsplash.com/photo-1513694203232-719a2807022f?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Addition of Floor', desc: 'Vertical expansion to add entirely new living levels. We conduct rigorous structural load testing and manage the complex engineering required to safely add a new floor to your property.', image: 'https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Living Room Renovation', desc: 'Redesigning the heart of your home. Incorporating false ceilings, ambient lighting, custom TV units, and premium wall finishes to create a welcoming, luxurious space.', image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=75&w=800' }
+      { name: 'Full Home Renovation', desc: 'A complete transformation of your entire house. We handle civil modifications, flooring, ceiling, painting, and complete utility upgrades to turn an old house into a modern masterpiece.', image: fullHomeRenovationImage },
+      { name: 'Commercial Renovation', desc: 'Upgrading retail outlets, offices, and warehouses. We minimize downtime and execute rapid refurbishments to keep your business running smoothly while delivering a fresh new look.', image: commercialRenovationImage },
+      { name: 'Bathroom Renovation', desc: 'Tearing out old, leaky bathrooms and installing waterproofed, modern sanctuaries. Includes new tiling, vanity installations, concealed cisterns, and premium shower enclosures.', image: bathroomRenovationImage },
+      { name: 'Kitchen Renovation', desc: 'Transforming cramped cuisines into spacious modular kitchens. We optimize the work triangle, upgrade plumbing and gas lines, and install custom cabinetry and elegant countertops.', image: kitchenRenovationImage },
+      { name: 'Extension of Areas', desc: 'Expanding your living space horizontally. Whether it\'s pushing out a living room, adding a sunroom, or enlarging a garage, we ensure seamless integration with the existing structure.', image: extensionOfAreasImage },
+      { name: 'Addition of Floor', desc: 'Vertical expansion to add entirely new living levels. We conduct rigorous structural load testing and manage the complex engineering required to safely add a new floor to your property.', image: additionOfFloorImage },
+      { name: 'Living Room Renovation', desc: 'Redesigning the heart of your home. Incorporating false ceilings, ambient lighting, custom TV units, and premium wall finishes to create a welcoming, luxurious space.', image: livingRoomRenovationImage }
     ]
   },
   {
@@ -171,3 +317,11 @@ export const services = [
     ]
   }
 ];
+
+export const services = rawServices.map((service) => ({
+  ...service,
+  subServices: service.subServices.map((subService) => ({
+    ...subService,
+    image: getServiceImage(subService.name, subService.image)
+  }))
+}));

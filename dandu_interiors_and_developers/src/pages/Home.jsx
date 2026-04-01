@@ -411,14 +411,13 @@ const Home = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 md:gap-4 lg:gap-8 auto-rows-[220px] md:auto-rows-[240px] lg:auto-rows-[220px]">
-          {projects.slice(0, 3).map((project, idx) => {
-            const isFeature = idx === 0;
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-1 auto-rows-[240px] md:auto-rows-[320px]">
+          {projects.slice(0, 6).map((project) => {
             return (
               <Link
                 key={project.id}
                 to={`/projects`}
-                className={`group relative rounded-2xl overflow-hidden shadow-sm block transition-all duration-700 hover:shadow-2xl h-full ${isFeature ? 'col-span-2 row-span-2' : 'col-span-1 row-span-1'}`}
+                className="group relative rounded-2xl overflow-hidden shadow-sm block transition-all duration-700 hover:shadow-2xl h-full"
                 data-cursor-text="VIEW"
               >
                 <img
@@ -432,18 +431,18 @@ const Home = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                 {/* Content Overlay - Precision Glassmorphism */}
-                <div className={`absolute bottom-0 left-0 w-full lg:p-10 ${isFeature ? 'p-5 sm:p-6' : 'p-3 sm:p-4'}`}>
+                <div className="absolute bottom-0 left-0 w-full p-3 sm:p-4 lg:p-5">
                   <div className="flex flex-col items-start gap-2 lg:gap-3">
 
                     <div className="overflow-hidden">
-                      <h3 className={`text-white font-light tracking-tighter leading-none transition-all duration-700 group-hover:tracking-normal group-hover:scale-[1.02] origin-left drop-shadow-lg ${isFeature ? 'text-2xl sm:text-3xl lg:text-4xl' : 'text-sm sm:text-lg lg:text-2xl'}`}>
+                      <h3 className="text-white font-light tracking-tighter leading-none transition-all duration-700 group-hover:tracking-normal group-hover:scale-[1.02] origin-left drop-shadow-lg text-sm sm:text-lg lg:text-xl">
                         {project.title.split(' ')[0]} <br />
                         <span className="font-serif italic text-white/40 group-hover:text-white/60 transition-colors duration-500">{project.title.split(' ').slice(1).join(' ')}</span>
                       </h3>
                     </div>
 
-                    <div className={`flex items-center gap-3 mt-2 lg:mt-4 opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700 delay-100 ${isFeature ? 'flex' : 'hidden sm:flex'}`}>
-                      <p className={`text-white/60 font-light tracking-[0.1em] uppercase border-l border-white/30 pl-3 ${isFeature ? 'text-[9px] lg:text-[10px]' : 'text-[7px] lg:text-[9px]'}`}>
+                    <div className="hidden sm:flex items-center gap-3 mt-2 lg:mt-4 opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700 delay-100">
+                      <p className="text-white/60 font-light tracking-[0.1em] uppercase border-l border-white/30 pl-3 text-[7px] lg:text-[9px]">
                         {project.location}
                       </p>
                       <div className="w-8 lg:w-12 h-[1px] bg-white/30"></div>
