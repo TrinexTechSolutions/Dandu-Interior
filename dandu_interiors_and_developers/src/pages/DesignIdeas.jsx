@@ -5,6 +5,7 @@ import { designIdeas } from '../data/designIdeas';
 import { MoveRight } from 'lucide-react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { useModal } from '../context/ModalContext';
+import commercialDesignImage from '../assets/Services/Commercial Design.webp';
 
 const DesignIdeas = () => {
   const navigate = useNavigate();
@@ -195,7 +196,7 @@ const DesignIdeas = () => {
           {/* Background Overlay - Full Width */}
           <div className="absolute inset-0 z-0">
             <img
-              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=2000"
+              src={commercialDesignImage}
               alt="Interior Background"
               loading="lazy"
               className="w-full h-full object-cover"

@@ -48,14 +48,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
     );
   }
 
-  // Placeholder images for the gallery since we only have 1 image in data
-  const galleryImages = [
-    "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1510629681534-11029c9df37c?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1604578762246-41134e37f9cc?auto=format&fit=crop&q=80&w=800",
-  ];
+  const galleryImages = idea.gallery?.length ? idea.gallery : [idea.image];
 
   const content = (
     <div className={`${isDrawer ? '' : 'bg-white min-h-screen'} text-gray-900 relative`}>

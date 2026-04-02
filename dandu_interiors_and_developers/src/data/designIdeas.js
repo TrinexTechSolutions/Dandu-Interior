@@ -1,62 +1,185 @@
+import residentialDesignImage from '../assets/Services/Residential Design.webp';
+import officeDesignImage from '../assets/Services/Office Design.webp';
+import commercialDesignImage from '../assets/Services/Commercial Design.webp';
+import kitchenRenovationImage from '../assets/Services/Kitchen Renovation.webp';
+import livingRoomRenovationImage from '../assets/Services/Living Room Renovation.webp';
+import bathroomRenovationImage from '../assets/Services/Bathroom Renovation.webp';
+import bathTubInstallationImage from '../assets/Services/Bath Tub Installation.webp';
+import interiorPaintingImage from '../assets/Services/Interior Painting.webp';
+import wallpaperFixingImage from '../assets/Services/Wallpaper Fixing.webp';
+import poojaroomImage from '../assets/Projects/project-gallery-28.webp';
+import shelvesFixingImage from '../assets/Services/Shelves Fixing.webp';
+import officePaintingImage from '../assets/Services/Office Painting.webp';
+import fullHomeRenovationImage from '../assets/Services/Full Home Renovation.webp';
+import extensionOfAreasImage from '../assets/Services/Extension of Areas.webp';
+import spaceSavingIdeaImage from '../assets/DesignIdeas/Space saving.webp';
+import flooringImage from '../assets/Services/Flooring.webp';
+import kitchenSinkRepairAndInstallationImage from '../assets/Services/Kitchen Sink Repair and Installation.webp';
+import mirrorInstallationImage from '../assets/Services/Mirror Installation.webp';
+import curtainRodsAndBlindFixingImage from '../assets/Services/Curtain Rods & Blind Fixing.webp';
+import handWashBasinRepairAndInstallationImage from '../assets/Services/Hand Wash Basin Repair and Installation.webp';
+import homeAppliancesFixingImage from '../assets/Services/Home Appliances Fixing.webp';
+import solidPartitionImage from '../assets/Services/Solid Partition.webp';
+import lightAndLampFixingImage from '../assets/Services/Light & Lamp Fixing.webp';
+import wallPartitionMakingImage from '../assets/Services/Wall Partition Making.webp';
+import exteriorPaintingImage from '../assets/Services/Exterior Painting.webp';
+import tileFixingImage from '../assets/Services/Tile Fixing.webp';
+import tileGroutingImage from '../assets/Services/Tile Grouting.webp';
+import diningRoomIdeaImage from '../assets/DesignIdeas/Dining Room.webp';
+import kidsBedroomIdeaImage from '../assets/DesignIdeas/Kids Bedroom.webp';
+import wardrobeIdeaImage from '../assets/DesignIdeas/Wardrobe.webp';
+
+const projectImageMap = Object.fromEntries(
+  Object.entries(import.meta.glob('../assets/Projects/*.webp', { eager: true, import: 'default' })).map(
+    ([path, image]) => [path.split('/').pop(), image]
+  )
+);
+
+const getProjectImage = (fileName) => projectImageMap[fileName];
+
 export const designIdeas = [
   {
     title: 'Modular Kitchen',
-    image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=75&w=800',
-    count: '24 Designs'
+    image: kitchenRenovationImage,
+    count: '24 Designs',
+    gallery: [
+      kitchenSinkRepairAndInstallationImage,
+      homeAppliancesFixingImage,
+      getProjectImage('project-gallery-36.webp'),
+      getProjectImage('project-gallery-37.webp'),
+      getProjectImage('project-gallery-38.webp')
+    ]
   },
   {
     title: 'Living Room',
-    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=75&w=800',
-    count: '45 Designs'
+    image: livingRoomRenovationImage,
+    count: '45 Designs',
+    gallery: [
+      fullHomeRenovationImage,
+      interiorPaintingImage,
+      lightAndLampFixingImage,
+      mirrorInstallationImage,
+      getProjectImage('project-gallery-54.webp')
+    ]
   },
   {
     title: 'Bedroom',
-    image: 'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&q=75&w=800',
-    count: '38 Designs'
+    image: residentialDesignImage,
+    count: '38 Designs',
+    gallery: [
+      wallpaperFixingImage,
+      mirrorInstallationImage,
+      curtainRodsAndBlindFixingImage,
+      interiorPaintingImage,
+      getProjectImage('project-gallery-41.webp')
+    ]
   },
   {
     title: 'Kids Bedroom',
-    image: 'https://images.unsplash.com/photo-1544457070-4cd773b4d71e?auto=format&fit=crop&q=75&w=800',
-    count: '15 Designs'
+    image: kidsBedroomIdeaImage,
+    count: '15 Designs',
+    gallery: [
+      residentialDesignImage,
+      shelvesFixingImage,
+      curtainRodsAndBlindFixingImage,
+      interiorPaintingImage,
+      getProjectImage('project-gallery-42.webp')
+    ]
   },
   {
     title: 'Wardrobe',
-    image: 'https://images.unsplash.com/photo-1558904541-efa843a96f0a?auto=format&fit=crop&q=75&w=800',
-    count: '31 Designs'
+    image: wardrobeIdeaImage,
+    count: '31 Designs',
+    gallery: [
+      mirrorInstallationImage,
+      shelvesFixingImage,
+      interiorPaintingImage,
+      wallpaperFixingImage,
+      getProjectImage('project-gallery-44.webp')
+    ]
   },
   {
     title: 'Dining Room',
-    image: 'https://images.unsplash.com/photo-1600494603989-9650cf6ddd3d?auto=format&fit=crop&q=75&w=800',
-    count: '22 Designs'
+    image: diningRoomIdeaImage,
+    count: '22 Designs',
+    gallery: [
+      commercialDesignImage,
+      livingRoomRenovationImage,
+      lightAndLampFixingImage,
+      flooringImage,
+      getProjectImage('project-gallery-45.webp')
+    ]
   },
   {
     title: 'Pooja Room',
-    image: 'https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&q=75&w=800',
-    count: '12 Designs'
+    image: poojaroomImage,
+    count: '12 Designs',
+    gallery: [
+      residentialDesignImage,
+      interiorPaintingImage,
+      lightAndLampFixingImage,
+      flooringImage,
+      getProjectImage('project-gallery-46.webp')
+    ]
   },
   {
     title: 'Space Saving',
-    image: 'https://images.unsplash.com/photo-1513694203232-719a2807022f?auto=format&fit=crop&q=75&w=800',
-    count: '28 Designs'
+    image: spaceSavingIdeaImage,
+    count: '28 Designs',
+    gallery: [
+      wallPartitionMakingImage,
+      solidPartitionImage,
+      shelvesFixingImage,
+      curtainRodsAndBlindFixingImage,
+      mirrorInstallationImage
+    ]
   },
   {
     title: 'Home Office',
-    image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=75&w=800',
-    count: '19 Designs'
+    image: officeDesignImage,
+    count: '19 Designs',
+    gallery: [
+      officePaintingImage,
+      solidPartitionImage,
+      wallPartitionMakingImage,
+      lightAndLampFixingImage,
+      getProjectImage('project-gallery-63.webp')
+    ]
   },
   {
     title: 'Bathroom',
-    image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=75&w=800',
-    count: '34 Designs'
+    image: bathroomRenovationImage,
+    count: '34 Designs',
+    gallery: [
+      handWashBasinRepairAndInstallationImage,
+      bathTubInstallationImage,
+      tileFixingImage,
+      tileGroutingImage,
+      getProjectImage('project-gallery-58.webp')
+    ]
   },
   {
     title: 'Balcony',
-    image: 'https://images.unsplash.com/photo-1527685652565-d4508bd6e293?auto=format&fit=crop&q=75&w=800',
-    count: '14 Designs'
+    image: extensionOfAreasImage,
+    count: '14 Designs',
+    gallery: [
+      flooringImage,
+      exteriorPaintingImage,
+      curtainRodsAndBlindFixingImage,
+      lightAndLampFixingImage,
+      getProjectImage('project-gallery-59.webp')
+    ]
   },
   {
     title: '1, 2, 3 BHK Plans',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=75&w=800',
-    count: '40 Designs'
+    image: fullHomeRenovationImage,
+    count: '40 Designs',
+    gallery: [
+      residentialDesignImage,
+      livingRoomRenovationImage,
+      kitchenRenovationImage,
+      bathroomRenovationImage,
+      getProjectImage('project-gallery-60.webp')
+    ]
   }
 ];
