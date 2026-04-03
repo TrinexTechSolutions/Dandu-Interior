@@ -348,43 +348,53 @@ const Contact = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-              {/* Hyderabad */}
-              <div className="space-y-6">
-                <div className="rounded-[32px] overflow-hidden transition-all duration-700 h-[400px] border border-black/5 shadow-xl relative group">
-                  <iframe
-                    title="Hyderabad Office Map"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.2750371465227!2d78.38466631487779!3d17.50269998801121!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91f56fa6da1d%3A0xc3dc8f5eb23db71a!2sVertex%20Pristine!5e0!3m2!1sen!2sin!4v1683446400000!5m2!1sen!2sin"
-                    width="100%"
-                    height="100%"
-                    className="border-0"
-                    allowFullScreen
-                    loading="lazy"
-                  ></iframe>
+              {[
+                {
+                  city: "Hyderabad",
+                  address: "D-603, Vertex Pristine, Nizampet Road, Hyderabad, Telangana",
+                  mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.2750371465227!2d78.38466631487779!3d17.50269998801121!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91f56fa6da1d%3A0xc3dc8f5eb23db71a!2sVertex%20Pristine!5e0!3m2!1sen!2sin!4v1683446400000!5m2!1sen!2sin",
+                  directLink: "https://maps.google.com/?q=Vertex+Pristine"
+                },
+                {
+                  city: "Bapatla",
+                  address: "Dr No: 9-4-12/B, Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101",
+                  mapUrl: `https://maps.google.com/maps?q=${encodeURIComponent("Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101")}&t=&z=15&ie=UTF8&iwloc=&output=embed`,
+                  directLink: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101")}`
+                }
+              ].map((loc, idx) => (
+                <div key={idx} className="space-y-6">
+                  <div className="rounded-[32px] overflow-hidden transition-all duration-700 h-[400px] border border-black/5 shadow-xl relative group bg-[#1A1A1A]/5">
+                    {/* Fallback Display (Behind the iframe) */}
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
+                      <MapPin size={40} className="text-[#37302F]/20 mb-4" />
+                      <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#37302F]/40 mb-4">Map Blocked by Browser</p>
+                      <a 
+                        href={loc.directLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-xs font-bold text-[#37302F] underline underline-offset-4 hover:opacity-70 transition-opacity"
+                      >
+                        View on Google Maps
+                      </a>
+                    </div>
+                    
+                    {/* The Iframe */}
+                    <iframe
+                      title={`${loc.city} Office Map`}
+                      src={loc.mapUrl}
+                      width="100%"
+                      height="100%"
+                      className="border-0 relative z-10"
+                      allowFullScreen
+                      loading="lazy"
+                    ></iframe>
+                  </div>
+                  <div className="px-2">
+                    <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">{loc.city}</h3>
+                    <p className="text-gray-500 leading-relaxed">{loc.address}</p>
+                  </div>
                 </div>
-                <div className="px-2">
-                  <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">Hyderabad</h3>
-                  <p className="text-gray-500 leading-relaxed">D-603, Vertex Pristine, Nizampet Road, Hyderabad, Telangana</p>
-                </div>
-              </div>
-
-              {/* Bapatla */}
-              <div className="space-y-6">
-                <div className="rounded-[32px] overflow-hidden transition-all duration-700 h-[400px] border border-black/5 shadow-xl relative group">
-                  <iframe
-                    title="Bapatla Office Map"
-                    src={`https://maps.google.com/maps?q=${encodeURIComponent("Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101")}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
-                    width="100%"
-                    height="100%"
-                    className="border-0"
-                    allowFullScreen
-                    loading="lazy"
-                  ></iframe>
-                </div>
-                <div className="px-2">
-                  <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">Bapatla</h3>
-                  <p className="text-gray-500 leading-relaxed">Dr No: 9-4-12/B, Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>

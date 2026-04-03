@@ -13,6 +13,8 @@ import ProjectDetail from './pages/ProjectDetail';
 import DesignIdeas from './pages/DesignIdeas';
 import DesignIdeaDetail from './pages/DesignIdeaDetail';
 import Contact from './pages/Contact';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
 import LoadingScreen from './components/LoadingScreen';
 
 import SmoothScroll from './components/SmoothScroll';
@@ -32,6 +34,8 @@ const AnimatedRoutes = () => {
           <Route path="projects" element={<Projects />} />
           <Route path="design-ideas" element={<DesignIdeas />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="terms-and-conditions" element={<TermsAndConditions />} />
         </Route>
         <Route path="/projects/:id" element={<ProjectDetail />} />
         <Route path="/design-ideas/:id" element={<DesignIdeaDetail />} />
@@ -41,6 +45,8 @@ const AnimatedRoutes = () => {
 };
 
 import ScrollToTopButton from './components/ScrollToTopButton';
+import ErrorBoundary from './components/ErrorBoundary';
+import GoogleAnalytics from './components/GoogleAnalytics';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -55,13 +61,16 @@ function App() {
   return (
     <BrowserRouter>
       {isLoading && <LoadingScreen />}
+      <GoogleAnalytics />
       <SmoothScroll>
-        <ModalProvider>
-          <CustomCursor />
-          <AnimatedRoutes />
-          <QuoteModal />
-          <ScrollToTopButton />
-        </ModalProvider>
+        <ErrorBoundary>
+          <ModalProvider>
+            <CustomCursor />
+            <AnimatedRoutes />
+            <QuoteModal />
+            <ScrollToTopButton />
+          </ModalProvider>
+        </ErrorBoundary>
       </SmoothScroll>
     </BrowserRouter>
   );
