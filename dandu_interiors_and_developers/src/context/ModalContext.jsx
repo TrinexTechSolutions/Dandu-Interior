@@ -36,6 +36,14 @@ export const ModalProvider = ({ children }) => {
     setTimeout(() => setSelectedIdea(null), 500);
   };
 
+  const openQuoteFromDrawer = () => {
+    setIsDetailDrawerOpen(false);
+    // Wait for the drawer exit animation to finish before opening the quote modal
+    setTimeout(() => {
+      setIsQuoteModalOpen(true);
+    }, 400); 
+  };
+
   return (
     <ModalContext.Provider value={{ 
       isQuoteModalOpen, 
@@ -48,7 +56,8 @@ export const ModalProvider = ({ children }) => {
       closeProjectDrawer,
       selectedIdea,
       openIdeaDrawer,
-      closeIdeaDrawer
+      closeIdeaDrawer,
+      openQuoteFromDrawer
     }}>
       {children}
     </ModalContext.Provider>

@@ -168,7 +168,7 @@ const Services = () => {
       </div>
 
       {/* Horizontal Bottom Navigation for All Services */}
-      <section className="relative py-20 lg:py-24 overflow-hidden border-t-2 border-[#1A1A1A]/20">
+      <section className="relative py-8 lg:py-12 overflow-hidden border-t-2 border-[#1A1A1A]/20">
         {/* Background Overlay - No Filter, Full Width */}
         <div className="absolute inset-0 z-0">
           <img
@@ -180,33 +180,49 @@ const Services = () => {
         </div>
 
         <div className="container-custom relative z-10">
-          <div className="bg-[#1A1A1A] p-8 md:p-14 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row items-center gap-12 lg:gap-16 border border-white/5 max-w-7xl mx-auto">
+          <div className="bg-[#1A1A1A] p-6 md:p-8 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row items-center gap-6 lg:gap-10 border border-white/5 max-w-7xl mx-auto">
 
             {/* Left Side: Content & Button */}
             <div className="w-full lg:w-1/2 text-left">
-              <h3 className="text-3xl md:text-5xl font-bold text-white mb-4">Explore Our Services</h3>
-              <div className="w-16 h-1 bg-[#1A1A1A] rounded-full mb-6 relative"></div>
-              <p className="text-white/70 text-base md:text-lg tracking-wide font-light leading-relaxed mb-10 max-w-xl">
+              <h3 className="text-2xl md:text-4xl font-bold text-white mb-3">Explore Our Services</h3>
+              <div className="w-12 h-1 bg-[#1A1A1A] rounded-full mb-4 relative"></div>
+              <p className="text-white/70 text-sm md:text-base tracking-wide font-light leading-relaxed mb-6 max-w-xl">
                 From visionary interior design to robust structural masonry, our multi-disciplinary approach ensures every phase of your project is handled with precision.
               </p>
-              <button onClick={openQuoteModal} className="bg-white text-[#1A1A1A] hover:bg-gray-100 px-8 py-4 rounded-md font-bold inline-flex items-center justify-center transition-transform hover:-translate-y-1 shadow-2xl text-sm md:text-base">
-                Get a Free Quote
-              </button>
+              <div className="w-full max-w-xl flex justify-end">
+                <button onClick={openQuoteModal} className="bg-white text-[#1A1A1A] hover:bg-gray-100 px-6 py-3 rounded-md font-bold inline-flex items-center justify-center transition-transform hover:-translate-y-1 shadow-2xl text-xs md:text-sm">
+                  Get a Free Quote
+                </button>
+              </div>
             </div>
 
             {/* Right Side: Links */}
             <div className="w-full lg:w-1/2">
-              <div className="flex flex-wrap justify-start lg:justify-end gap-3 max-w-2xl">
-                {services.map(service => (
-                  <Link
-                    key={service.id}
-                    to={`/services/${service.id}`}
-                    className={`flex items-center gap-2 px-4 py-3 rounded-full transition-all border text-xs md:text-sm ${activeService.id === service.id ? 'bg-white border-white text-[#1A1A1A] shadow-xl shadow-black/30 scale-105' : 'bg-white/5 border-white/10 text-white/80 hover:bg-white/10 hover:text-white hover:border-white/20 hover:shadow-md'}`}
-                  >
-                    <service.icon size={16} strokeWidth={2} />
-                    <span className="font-semibold tracking-wide whitespace-nowrap">{service.title}</span>
-                  </Link>
-                ))}
+              <div className="flex flex-col w-full divide-y divide-white/10 border border-white/10 rounded-2xl overflow-hidden">
+                {services.map(service => {
+                  const isActive = activeService.id === service.id;
+                  return (
+                    <Link
+                      key={service.id}
+                      to={`/services/${service.id}`}
+                      className={`
+                        flex items-center justify-between gap-x-3 transition-all 
+                        p-4 md:px-6 md:py-4 
+                        text-sm md:text-base
+                        ${isActive 
+                           ? 'bg-white text-[#1A1A1A] font-bold shadow-[inset_0_4px_10px_rgba(0,0,0,0.1)]' 
+                           : 'bg-transparent text-white/70 hover:bg-white/5 hover:text-white'
+                        }
+                      `}
+                    >
+                      <div className="flex items-center gap-4">
+                        <service.icon size={20} strokeWidth={isActive ? 2.5 : 2} className="flex-shrink-0" />
+                        <span className="tracking-wide whitespace-nowrap">{service.title}</span>
+                      </div>
+                      <ArrowRight size={18} className={`flex-shrink-0 transition-transform ${isActive ? 'text-[#1A1A1A] translate-x-1' : 'text-white/30'}`} />
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>

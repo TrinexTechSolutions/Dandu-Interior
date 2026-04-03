@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useDragControls } from 'framer-motion';
 import { X, ClipboardList, UploadCloud, ArrowRight } from 'lucide-react';
 import { services } from '../data/services';
 import { useModal } from '../context/ModalContext';
 
 const QuoteModal = () => {
   const { isQuoteModalOpen, closeQuoteModal } = useModal();
+  const dragControls = useDragControls();
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
@@ -84,10 +85,23 @@ const QuoteModal = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0.5 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="relative w-full max-w-4xl h-[92vh] md:h-auto md:max-h-[85vh] bg-[#F8F5F2] rounded-t-[32px] md:rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col md:flex-row m-0 md:m-4"
+            className="relative w-full max-w-4xl h-[92dvh] md:h-auto md:max-h-[85vh] bg-[#F8F5F2] rounded-t-[32px] md:rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col md:flex-row m-0 md:m-4"
+            drag="y"
+            dragControls={dragControls}
+            dragListener={false}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.5 }}
+            onDragEnd={(e, info) => {
+              if (info.offset.y > 100 || info.velocity.y > 500) {
+                closeQuoteModal();
+              }
+            }}
           >
             {/* Mobile Handle Bar */}
-            <div className="w-full flex md:hidden justify-center pt-4 pb-2">
+            <div 
+              className="w-full flex md:hidden justify-center pt-4 pb-2 cursor-grab active:cursor-grabbing touch-none"
+              onPointerDown={(e) => dragControls.start(e)}
+            >
               <div className="w-12 h-1 bg-gray-200 rounded-full" />
             </div>
 

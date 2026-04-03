@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { projects } from '../data/projects';
 import { X } from 'lucide-react';
 import Footer from '../components/Footer';
+import CallToAction from '../components/CallToAction';
 import PageTransition from '../components/PageTransition';
 
 const ProjectDetail = () => {
@@ -27,7 +28,7 @@ const ProjectDetail = () => {
 
   return (
     <PageTransition>
-      <div className="bg-white min-h-screen text-gray-900 relative">
+      <div className="bg-[#F8F5F2] min-h-screen text-gray-900 relative">
         
         {/* Top Right Close Button */}
         <button 
@@ -87,7 +88,9 @@ const ProjectDetail = () => {
           </div>
         </div>
 
+        {/* Desktop CTA & Footer */}
         <div className="hidden md:block">
+          <CallToAction />
           <Footer />
         </div>
       </div>

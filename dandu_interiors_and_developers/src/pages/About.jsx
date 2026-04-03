@@ -80,7 +80,7 @@ const About = () => {
 
           <div className="lg:col-span-7 xl:col-span-8 z-10">
             <span className="text-[#37302F]/60 text-xs font-bold tracking-[0.3em] uppercase mb-4 md:mb-8 block">Dandu Interiors & Developers</span>
-            <h1 className="text-[3.5rem] sm:text-6xl md:text-8xl lg:text-[7rem] xl:text-[9rem] font-medium leading-[0.9] tracking-tighter mb-6 md:mb-8">
+            <h1 className="text-[3.5rem] sm:text-6xl md:text-7xl lg:text-[7rem] xl:text-[9rem] font-medium leading-[0.9] tracking-tighter mb-6 md:mb-8">
               Our <br /> <span className="font-serif italic text-[#37302F]/70 pr-4 block lg:inline">Practice.</span>
             </h1>
             <p className="text-base md:text-2xl lg:text-4xl font-light text-[#37302F] max-w-4xl leading-relaxed">
@@ -150,8 +150,8 @@ const About = () => {
 
               <div className="py-10">
                 <span className="text-xs font-bold tracking-[0.2em] uppercase text-[#37302F]/40 block mb-6">Expertise Focus</span>
-                {/* Desktop: clean editorial list in two lines */}
-                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 lg:gap-x-10 gap-y-10 text-sm uppercase tracking-widest font-bold text-[#37302F]">
+                {/* Tablet/Desktop: clean editorial list in three columns only on desktop */}
+                <div className="hidden lg:grid lg:grid-cols-3 gap-x-10 gap-y-10 text-sm uppercase tracking-widest font-bold text-[#37302F]">
                   {['Civil Engineering', 'Structural Integrity', 'Luxury Interiors', 'Full-Scale Renovations', 'Turnkey Solutions'].map(tag => (
                     <div key={tag} className="flex items-center gap-4 group cursor-default transition-all duration-500">
                       <span className="w-2 h-[1px] bg-[#37302F]/20 group-hover:w-8 group-hover:bg-[#37302F] transition-all duration-700 shrink-0"></span>
@@ -159,8 +159,8 @@ const About = () => {
                     </div>
                   ))}
                 </div>
-                {/* Mobile: clean stacked divider list */}
-                <div className="flex flex-col md:hidden divide-y divide-[#37302F]/10">
+                {/* Mobile/Tablet: clean stacked divider list */}
+                <div className="flex flex-col lg:hidden divide-y divide-[#37302F]/10">
                   {['Civil Engineering', 'Structural Integrity', 'Luxury Interiors', 'Full-Scale Renovations', 'Turnkey Solutions'].map(tag => (
                     <span key={tag} className="py-3 text-sm font-bold uppercase tracking-[0.2em] text-[#37302F]">{tag}</span>
                   ))}
@@ -204,7 +204,7 @@ const About = () => {
                 <div
                   key={value.id}
                   data-id={value.id}
-                  className={`foundation-step-card group flex flex-col lg:flex-row lg:items-center justify-between py-12 lg:py-20 transition-all duration-700 cursor-crosshair px-6 lg:px-12 -mx-6 lg:-mx-12 ${isActive ? 'bg-[#F8F5F2] text-[#1A1A1A]' : 'hover:bg-[#F8F5F2] hover:text-[#1A1A1A]'}`}
+                  className={`foundation-step-card group flex flex-col lg:flex-row lg:items-center justify-between py-12 lg:py-20 transition-all duration-700 lg:cursor-crosshair cursor-default px-6 lg:px-12 -mx-6 lg:-mx-12 ${isActive ? 'bg-[#F8F5F2] text-[#1A1A1A]' : 'lg:hover:bg-[#F8F5F2] lg:hover:text-[#1A1A1A]'}`}
                   onMouseEnter={() => {
                     if (window.innerWidth >= 1024) setHoveredValue(value.id);
                   }}
@@ -213,15 +213,15 @@ const About = () => {
                   }}
                 >
                   <div className="flex items-start lg:items-center gap-8 lg:gap-16 mb-8 lg:mb-0">
-                    <span className={`text-xl md:text-3xl font-bold tracking-widest transition-colors ${isActive ? 'text-[#37302F]/60' : 'text-[#37302F]/40 group-hover:text-[#37302F]/60'}`}>
+                    <span className={`text-xl md:text-3xl font-bold tracking-widest transition-colors ${isActive ? 'text-[#37302F]/60' : 'text-[#37302F]/40 lg:group-hover:text-[#37302F]/60'}`}>
                       {value.id}
                     </span>
-                    <h4 className={`text-4xl md:text-6xl lg:text-[5rem] font-medium tracking-tighter transition-transform duration-700 ease-out ${isActive ? 'translate-x-8' : 'group-hover:translate-x-8'}`}>
+                    <h4 className={`text-4xl md:text-5xl lg:text-[5rem] font-medium tracking-tighter transition-transform duration-700 ease-out ${isActive ? 'translate-x-8' : 'lg:group-hover:translate-x-8'}`}>
                       {value.title}
                     </h4>
                   </div>
                   <div className="lg:w-1/3 xl:w-1/4">
-                    <p className={`text-lg lg:text-xl font-light transition-colors duration-700 leading-relaxed ${isActive ? 'text-[#1A1A1A]' : 'text-white/50 group-hover:text-[#1A1A1A]'}`}>
+                    <p className={`text-lg lg:text-xl font-light transition-colors duration-700 leading-relaxed ${isActive ? 'text-[#1A1A1A]' : 'text-white/50 lg:group-hover:text-[#1A1A1A]'}`}>
                       {value.desc}
                     </p>
                   </div>

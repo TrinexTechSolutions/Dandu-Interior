@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useDragControls } from 'framer-motion';
 import { X, MapPin, Tag } from 'lucide-react';
 import ScrollToTopButton from './ScrollToTopButton';
 import { useModal } from '../context/ModalContext';
 
 const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
   const scrollContainerRef = useRef(null);
+  const dragControls = useDragControls();
+  const { openQuoteFromDrawer } = useModal();
 
   // Prevent body scroll when drawer is open
   useEffect(() => {
@@ -47,10 +49,23 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed bottom-0 left-0 right-0 z-[999] bg-[#F8F5F2] rounded-t-[32px] overflow-hidden max-h-[92vh] flex flex-col shadow-2xl"
+            className="fixed bottom-0 left-0 right-0 z-[999] bg-[#F8F5F2] rounded-t-[32px] overflow-hidden max-h-[92dvh] flex flex-col shadow-2xl"
+            drag="y"
+            dragControls={dragControls}
+            dragListener={false}
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.5 }}
+            onDragEnd={(e, info) => {
+              if (info.offset.y > 100 || info.velocity.y > 500) {
+                onClose();
+              }
+            }}
           >
             {/* Handle Bar */}
-            <div className="w-full flex justify-center pt-4 pb-2 cursor-grab active:cursor-grabbing">
+            <div 
+              className="w-full flex justify-center pt-4 pb-2 cursor-grab active:cursor-grabbing touch-none"
+              onPointerDown={(e) => dragControls.start(e)}
+            >
               <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
             </div>
 
@@ -131,16 +146,16 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
             </div>
 
             {/* Sticky Floating CTA */}
-            <div className="p-4 md:p-6 bg-white border-t border-black/5 flex items-center justify-between gap-4">
+            <div className="p-4 md:p-6 bg-[#F8F5F2] border-t border-black/5 flex items-center justify-between gap-4">
               <div className="hidden sm:block">
                 <p className="text-xs text-gray-400 uppercase tracking-widest font-bold">Ready to start?</p>
                 <p className="text-lg font-bold text-[#1A1A1A]">Get a free quote today</p>
               </div>
               <button 
-                onClick={onClose}
+                onClick={openQuoteFromDrawer}
                 className="flex-1 sm:flex-none py-4 px-8 bg-[#1A1A1A] text-white rounded-2xl font-bold hover:bg-black/90 transition-all duration-300 shadow-xl"
               >
-                Inquire About This Project
+                Get free quote
               </button>
             </div>
           </motion.div>

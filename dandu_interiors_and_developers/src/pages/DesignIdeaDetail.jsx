@@ -1,19 +1,21 @@
 import React, { useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion, useIsPresent, AnimatePresence } from 'framer-motion';
+import { motion, useIsPresent, AnimatePresence, useDragControls } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import { designIdeas } from '../data/designIdeas';
 import { useModal } from '../context/ModalContext';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import Footer from '../components/Footer';
+import CallToAction from '../components/CallToAction';
 
 const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, isOpen = false }) => {
   const { id: routeId } = useParams();
   const id = isDrawer ? drawerId : routeId;
-  const { openQuoteModal, setDetailDrawerOpen } = useModal();
+  const { openQuoteFromDrawer, setDetailDrawerOpen } = useModal();
   const scrollContainerRef = useRef(null);
-  
+  const dragControls = useDragControls();
+
   const idea = designIdeas.find(i => i.title.toLowerCase().replace(/\s+/g, '-') === id);
 
   // Handle body scroll for mobile drawer
@@ -23,7 +25,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
     } else if (isDrawer && !isOpen) {
       document.body.style.overflow = 'unset';
     }
-    
+
     return () => {
       if (isDrawer) {
         document.body.style.overflow = 'unset';
@@ -33,7 +35,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
 
   if (!idea) {
     if (isDrawer) return null; // Safe return for root-level global drawer when no idea is selected
-    
+
     return (
       <PageTransition>
         <div className="min-h-screen flex items-center justify-center bg-[#F8F5F2]">
@@ -51,173 +53,184 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
   const galleryImages = idea.gallery?.length ? idea.gallery : [idea.image];
 
   const content = (
-    <div className={`${isDrawer ? '' : 'bg-white min-h-screen'} text-gray-900 relative`}>
-        <div className="hidden md:block">
-          {/* Transparent Sticky Header (Desktop) */}
-          <div className="fixed top-6 lg:top-8 left-0 w-full z-[70] pointer-events-none">
-            <div className="w-full bg-transparent h-28 flex items-center justify-between px-16 pointer-events-auto transition-transform duration-300 relative">
-              <div className="text-white drop-shadow-md font-extrabold tracking-widest text-base uppercase flex items-center gap-3">
-                <span className="w-2 h-2 rounded-full bg-[#1A1A1A] shadow-sm"></span>
-                {idea.title}
-              </div>
-              <Link 
-                to="/design-ideas" 
-                className="w-12 h-12 bg-white/20 backdrop-blur-md border border-white/50 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-[#1A1A1A] transition-all duration-300 shadow-xl group"
-              >
-                <X size={24} strokeWidth={2.5} className="group-hover:rotate-90 transition-transform duration-300" />
-              </Link>
+    <div className={`${isDrawer ? '' : 'bg-[#F8F5F2] min-h-screen'} text-gray-900 relative`}>
+      <div className="hidden md:block">
+        {/* Transparent Header (Desktop) */}
+        <div className="absolute top-6 lg:top-8 left-0 w-full z-[70] pointer-events-none">
+          <div className="w-full bg-transparent h-28 flex items-center justify-between px-16 pointer-events-auto transition-transform duration-300 relative">
+            <div className="text-white drop-shadow-md font-extrabold tracking-widest text-base uppercase flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-[#1A1A1A] shadow-sm"></span>
+              {idea.title}
             </div>
-          </div>
-
-          {/* Desktop Hero Section */}
-          <div className="relative h-[70vh] w-full overflow-hidden">
-            <div className="absolute inset-0 bg-black/40 z-10"></div>
-            <img 
-              src={idea.image} 
-              alt={idea.title} 
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 z-20 flex flex-col justify-end p-16 lg:p-24 max-w-7xl mx-auto w-full">
-              <div className="inline-block px-4 py-1 bg-[#1A1A1A] text-white text-sm font-bold uppercase tracking-widest mb-4 w-fit rounded">
-                {idea.count}
-              </div>
-              <h1 className="text-8xl lg:text-9xl font-light text-white leading-[0.9] tracking-tighter">
-                {idea.title}
-              </h1>
-            </div>
-          </div>
-
-          {/* Desktop Intro Text */}
-          <div className="max-w-4xl mx-auto px-8 py-20 text-center flex-col">
-            <h2 className="text-4xl text-[#1A1A1A] font-light leading-relaxed mb-8">
-              Incredible <span className="font-bold">design concepts</span> tailored to elevate your {idea.title.toLowerCase()} aesthetics.
-            </h2>
-            <p className="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto">
-              Explore our handpicked curation of {idea.count.toLowerCase()} specifically crafted for your {idea.title.toLowerCase()}. We blend modern functional utility with timeless premium elegance to make your space completely uniquely yours.
-            </p>
-          </div>
-
-          {/* Desktop Image Gallery */}
-          <div className="max-w-7xl mx-auto px-8 mb-32">
-            <h3 className="text-3xl font-bold mb-10 text-[#1A1A1A]">Curated Inspiration Gallery</h3>
-            <div className="grid grid-cols-12 auto-rows-[300px] gap-6">
-              <div className="group relative overflow-hidden rounded-3xl col-span-8 row-span-2 shadow-lg">
-                <img src={galleryImages[0]} alt="Gallery 1" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              </div>
-              <div className="group relative overflow-hidden rounded-3xl col-span-4 row-span-1 shadow-lg">
-                <img src={galleryImages[1]} alt="Gallery 2" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              </div>
-              <div className="group relative overflow-hidden rounded-3xl col-span-4 row-span-1 shadow-lg">
-                <img src={galleryImages[2]} alt="Gallery 3" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              </div>
-              <div className="group relative overflow-hidden rounded-3xl col-span-6 row-span-1 shadow-lg">
-                <img src={galleryImages[3]} alt="Gallery 4" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              </div>
-              <div className="group relative overflow-hidden rounded-3xl col-span-6 row-span-1 shadow-lg">
-                <img src={galleryImages[4]} alt="Gallery 5" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              </div>
-            </div>
+            <Link
+              to="/design-ideas"
+              className="w-12 h-12 bg-white/20 backdrop-blur-md border border-white/50 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-[#1A1A1A] transition-all duration-300 shadow-xl group"
+            >
+              <X size={24} strokeWidth={2.5} className="group-hover:rotate-90 transition-transform duration-300" />
+            </Link>
           </div>
         </div>
 
-        <div className="md:hidden">
-          <AnimatePresence>
-            {isOpen && idea && (
-              <>
-                {/* Drawer Backdrop with animation to fix the closing glitch */}
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="fixed inset-0 bg-black/40 z-[998] backdrop-blur-sm" 
-                  onClick={onClose}
-                />
-                
-                <motion.div 
-                  initial={{ y: '100%' }}
-                  animate={{ y: 0 }}
-                  exit={{ y: '100%' }}
-                  transition={{ type: 'spring', damping: 30, stiffness: 220 }}
-                  className="fixed bottom-0 left-0 right-0 z-[999] bg-[#F8F5F2] rounded-t-[32px] max-h-[92vh] flex flex-col shadow-2xl overflow-hidden"
+        {/* Desktop Hero Section */}
+        <div className="relative h-[70vh] w-full overflow-hidden">
+          <div className="absolute inset-0 bg-black/40 z-10"></div>
+          <img
+            src={idea.image}
+            alt={idea.title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 z-20 flex flex-col justify-end p-16 lg:p-24 max-w-7xl mx-auto w-full">
+
+            <h1 className="text-8xl lg:text-9xl font-light text-white leading-[0.9] tracking-tighter">
+              {idea.title}
+            </h1>
+          </div>
+        </div>
+
+        {/* Desktop Intro Text */}
+        <div className="max-w-4xl mx-auto px-8 py-20 text-center flex-col">
+          <h2 className="text-4xl text-[#1A1A1A] font-light leading-relaxed mb-8">
+            Incredible <span className="font-bold">design concepts</span> tailored to elevate your {idea.title.toLowerCase()} aesthetics.
+          </h2>
+          <p className="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto">
+            Explore our handpicked curation of {idea.count.toLowerCase()} specifically crafted for your {idea.title.toLowerCase()}. We blend modern functional utility with timeless premium elegance to make your space completely uniquely yours.
+          </p>
+        </div>
+
+        {/* Desktop Image Gallery */}
+        <div className="max-w-7xl mx-auto px-8 mb-32">
+          <h3 className="text-3xl font-bold mb-10 text-[#1A1A1A]">Curated Inspiration Gallery</h3>
+          <div className="grid grid-cols-12 auto-rows-[300px] gap-6">
+            <div className="group relative overflow-hidden rounded-3xl col-span-8 row-span-2 shadow-lg">
+              <img src={galleryImages[0]} alt="Gallery 1" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            </div>
+            <div className="group relative overflow-hidden rounded-3xl col-span-4 row-span-1 shadow-lg">
+              <img src={galleryImages[1]} alt="Gallery 2" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            </div>
+            <div className="group relative overflow-hidden rounded-3xl col-span-4 row-span-1 shadow-lg">
+              <img src={galleryImages[2]} alt="Gallery 3" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            </div>
+            <div className="group relative overflow-hidden rounded-3xl col-span-6 row-span-1 shadow-lg">
+              <img src={galleryImages[3]} alt="Gallery 4" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            </div>
+            <div className="group relative overflow-hidden rounded-3xl col-span-6 row-span-1 shadow-lg">
+              <img src={galleryImages[4]} alt="Gallery 5" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            </div>
+          </div>
+        </div>
+        <CallToAction />
+        <Footer />
+      </div>
+
+      <div className="md:hidden">
+        <AnimatePresence>
+          {isOpen && idea && (
+            <>
+              {/* Drawer Backdrop with animation to fix the closing glitch */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/40 z-[998] backdrop-blur-sm"
+                onClick={onClose}
+              />
+
+              <motion.div
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '100%' }}
+                transition={{ type: 'spring', damping: 30, stiffness: 220 }}
+                className="fixed bottom-0 left-0 right-0 z-[999] bg-[#F8F5F2] rounded-t-[32px] max-h-[92dvh] flex flex-col shadow-2xl overflow-hidden"
+                drag="y"
+                dragControls={dragControls}
+                dragListener={false}
+                dragConstraints={{ top: 0, bottom: 0 }}
+                dragElastic={{ top: 0, bottom: 0.5 }}
+                onDragEnd={(e, info) => {
+                  if (info.offset.y > 100 || info.velocity.y > 500) {
+                    onClose();
+                  }
+                }}
+              >
+                {/* Handle Bar */}
+                <div 
+                  className="w-full flex justify-center pt-4 pb-2 cursor-grab active:cursor-grabbing touch-none"
+                  onPointerDown={(e) => dragControls.start(e)}
                 >
-                  {/* Handle Bar */}
-                  <div className="w-full flex justify-center pt-4 pb-2">
-                    <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
+                  <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
+                </div>
+
+                {/* Header */}
+                <div className="flex items-center justify-between px-6 pb-4 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-10">
+                  <h2 className="text-xs font-bold text-[#1A1A1A] tracking-[0.2em] uppercase">{idea.title} Ideas</h2>
+                  <button
+                    onClick={onClose}
+                    className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
+                    aria-label="Close"
+                  >
+                    <X size={24} />
+                  </button>
+                </div>
+
+                {/* Content Area */}
+                <div
+                  className="overflow-y-auto flex-grow flex flex-col custom-scrollbar scroll-smooth"
+                  data-lenis-prevent
+                >
+                  <div className="pt-8 pb-4 px-4 max-w-7xl mx-auto flex-grow">
+
+                    <h1 className="text-5xl font-light tracking-tighter text-[#1A1A1A] mb-8 leading-[0.85]">{idea.title}</h1>
+                    <p className="text-gray-600 text-lg leading-relaxed font-light mb-8">
+                      Explore our handpicked curation of designs specifically crafted for your {idea.title.toLowerCase()}. We blend modern functional utility with timeless premium elegance to make your space completely uniquely yours.
+                    </p>
+
+                    {/* Main Image */}
+                    <div className="w-full h-[40vh] rounded-[2rem] overflow-hidden shadow-lg mt-8 mb-12">
+                      <img src={idea.image} alt={idea.title} className="w-full h-full object-cover" />
+                    </div>
+
+                    {/* Mobile Image Gallery Grid */}
+                    <div className="mb-12">
+                      <h2 className="text-3xl text-gray-900 mb-12 font-light">
+                        Image <span className="font-bold">Gallery</span>
+                      </h2>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {galleryImages.slice(0, 4).map((img, idx) => (
+                          <div
+                            key={idx}
+                            className={`group relative overflow-hidden rounded-2xl shadow-sm aspect-square md:aspect-[4/3]`}
+                          >
+                            <img
+                              src={img}
+                              alt={`Gallery ${idx + 1}`}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-black/[0.03] group-hover:bg-transparent transition-colors duration-500" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
                   </div>
 
-                  {/* Header */}
-                  <div className="flex items-center justify-between px-6 pb-4 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-10">
-                    <h2 className="text-xs font-bold text-[#1A1A1A] tracking-[0.2em] uppercase">{idea.title}</h2>
-                    <button 
-                      onClick={onClose}
-                      className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
-                      aria-label="Close"
+                  {/* Sticky Mobile Quote Button */}
+                  <div className="p-4 sticky bottom-0 z-20 bg-[#F8F5F2] border-t border-black/5 flex-shrink-0">
+                    <button
+                      onClick={openQuoteFromDrawer}
+                      className="w-full py-4 bg-[#1A1A1A] text-white rounded-2xl font-bold text-sm hover:bg-black/90 transition-all duration-300 shadow-2xl"
                     >
-                      <X size={24} />
+                      Get Free Quote
                     </button>
                   </div>
-
-                  {/* Content Area */}
-                  <div 
-                    className="overflow-y-auto flex-grow flex flex-col custom-scrollbar scroll-smooth" 
-                    data-lenis-prevent
-                  >
-                    <div className="pt-8 pb-4 px-4 max-w-7xl mx-auto flex-grow">
-                      <div className="inline-block px-4 py-1 bg-[#1A1A1A] text-white text-[10px] font-bold uppercase tracking-widest mb-6 w-fit rounded">
-                        {idea.count}
-                      </div>
-                      <h1 className="text-5xl font-light tracking-tighter text-[#1A1A1A] mb-8 leading-[0.85]">{idea.title}</h1>
-                      <p className="text-gray-600 text-lg leading-relaxed font-light mb-8">
-                        Explore our handpicked curation of {idea.count.toLowerCase()} specifically crafted for your {idea.title.toLowerCase()}. We blend modern functional utility with timeless premium elegance to make your space completely uniquely yours.
-                      </p>
-                      
-                      {/* Main Image */}
-                      <div className="w-full h-[40vh] rounded-[2rem] overflow-hidden shadow-lg mt-8 mb-12">
-                        <img src={idea.image} alt={idea.title} className="w-full h-full object-cover" />
-                      </div>
-
-                      {/* Mobile Image Gallery Grid */}
-                      <div className="mb-12">
-                        <h2 className="text-3xl text-gray-900 mb-12 font-light">
-                          Image <span className="font-bold">Gallery</span>
-                        </h2>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          {galleryImages.slice(0, 4).map((img, idx) => (
-                            <div 
-                              key={idx}
-                              className={`group relative overflow-hidden rounded-2xl shadow-sm aspect-square md:aspect-[4/3]`}
-                            >
-                              <img 
-                                src={img} 
-                                alt={`Gallery ${idx + 1}`} 
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                              />
-                              <div className="absolute inset-0 bg-black/[0.03] group-hover:bg-transparent transition-colors duration-500" />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                    </div>
-
-                    {/* Sticky Mobile Quote Button */}
-                    <div className="px-4 pb-12 pt-4 sticky bottom-0 z-20 pointer-events-none">
-                      <button 
-                        onClick={openQuoteModal}
-                        className="w-full py-4 bg-[#1A1A1A] text-white rounded-2xl font-bold text-sm hover:bg-black/90 transition-all duration-300 shadow-2xl pointer-events-auto"
-                      >
-                        Get Free Quote
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              </>
-            )}
-          </AnimatePresence>
-        </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
-    );
+    </div>
+  );
 
   if (isDrawer) return content;
 
