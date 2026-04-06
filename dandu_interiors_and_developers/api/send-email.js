@@ -5,8 +5,8 @@ export default async function handler(req, res) {
 
   const { name, phone, propertyLocation, propertyType, requirement, customLocation } = req.body;
   const brevoApiKey = process.env.BREVO_API_KEY?.trim();
-  const senderEmail = process.env.SENDER_EMAIL?.trim() || "pradeepvarmaalluri7@gmail.com";
-  const adminEmail = process.env.ADMIN_EMAIL?.trim() || "syampanga2003@gmail.com";
+  const senderEmail = process.env.SENDER_EMAIL?.trim();
+  const adminEmail = process.env.ADMIN_EMAIL?.trim();
   const escapeHtml = (value = "") =>
     String(value)
       .replace(/&/g, "&amp;")
@@ -23,6 +23,18 @@ export default async function handler(req, res) {
     return res.status(500).json({ message: 'BREVO_API_KEY is not configured on the server.' });
   }
 
+  if (!senderEmail) {
+    return res.status(500).json({ message: 'SENDER_EMAIL is not configured on the server.' });
+  }
+
+  if (!adminEmail) {
+    return res.status(500).json({ message: 'ADMIN_EMAIL is not configured on the server.' });
+  }
+
+  if (!name || !phone || !propertyLocation || !propertyType || !requirement) {
+    return res.status(400).json({ message: 'Missing required contact form fields.' });
+  }
+
   try {
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
@@ -37,7 +49,7 @@ export default async function handler(req, res) {
           email: senderEmail
         },
         to: [{ email: adminEmail, name: "Syampanga Admin" }],
-        subject: `New Inquiry from ${name}`,
+        subject: `New Contact Form Lead: ${name}`,
         htmlContent: `
           <!DOCTYPE html>
           <html lang="en">
@@ -61,12 +73,12 @@ export default async function handler(req, res) {
                           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                             <tr>
                               <td style="padding: 36px 36px 24px; border-bottom: 1px solid #e6ddd4;">
-                                <div style="font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 18px;">New Website Inquiry</div>
+                                <div style="font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 18px;">New Contact Form Submission</div>
                                 <div style="font-size: 54px; line-height: 0.95; color: #37302F; font-weight: 300;">
-                                  Let's <span style="font-family: Georgia, 'Times New Roman', serif; font-style: italic; color: rgba(55, 48, 47, 0.68);">Connect</span>
+                                  New <span style="font-family: Georgia, 'Times New Roman', serif; font-style: italic; color: rgba(55, 48, 47, 0.68);">Project Lead</span>
                                 </div>
                                 <div style="margin-top: 18px; max-width: 520px; font-size: 18px; line-height: 1.7; color: #5d5650;">
-                                  A new client inquiry has arrived through the Dandu Interiors contact form. The details below follow the same refined, minimal tone as the website experience.
+                                  A visitor has submitted the Dandu Interiors contact form. Review the enquiry details below and follow up with the client on call or WhatsApp.
                                 </div>
                               </td>
                             </tr>
@@ -148,7 +160,7 @@ export default async function handler(req, res) {
                                           <td style="padding: 22px 24px; text-align: center;">
                                             <div style="font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(248, 245, 242, 0.62); font-weight: 700; margin-bottom: 8px;">Dandu Interior Website</div>
                                             <div style="font-size: 18px; line-height: 1.6; color: #F8F5F2;">
-                                              A fresh conversation is ready for follow-up.
+                                              A new lead is waiting for your response.
                                             </div>
                                           </td>
                                         </tr>
@@ -167,15 +179,22 @@ export default async function handler(req, res) {
               </table>
             </body>
           </html>
-        `,
-        replyTo: { email: adminEmail, name: name }
+        `
       }),
     });
 
     if (response.ok) {
       return res.status(200).json({ message: 'Email sent successfully' });
     } else {
-      const errorData = await response.json();
+      const rawError = await response.text();
+      let errorData = {};
+
+      try {
+        errorData = rawError ? JSON.parse(rawError) : {};
+      } catch {
+        errorData = { message: rawError || "Brevo request failed" };
+      }
+
       console.error("Brevo API Error:", errorData);
       return res.status(response.status).json({
         message: errorData.message || "Brevo request failed",

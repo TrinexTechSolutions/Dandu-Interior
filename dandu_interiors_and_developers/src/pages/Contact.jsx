@@ -206,7 +206,7 @@ const Contact = () => {
               </div>
 
               {/* Right Side: Re-styled Form */}
-              <div className="bg-[#F8F5F2] p-8 md:p-14 rounded-[32px] border border-[#37302F]/40 shadow-xl">
+              <div className="bg-[#F8F5F2] p-8 md:p-14 rounded-[20px] border border-[#37302F]/40">
                 <h2 className="text-4xl font-medium text-[#37302F] tracking-tighter mb-12 leading-none">
                   Start a <span className="font-serif italic text-[#37302F]/70">Conversation</span>
                 </h2>
@@ -363,7 +363,7 @@ const Contact = () => {
                 }
               ].map((loc, idx) => (
                 <div key={idx} className="space-y-6">
-                  <div className="rounded-[32px] overflow-hidden transition-all duration-700 h-[400px] border border-black/5 shadow-xl relative group bg-[#1A1A1A]/5">
+                  <div className="rounded-[20px] overflow-hidden h-[400px] border border-black/5 relative bg-[#1A1A1A]/5 cursor-default">
                     {/* Fallback Display (Behind the iframe) */}
                     <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
                       <MapPin size={40} className="text-[#37302F]/20 mb-4" />
@@ -384,7 +384,7 @@ const Contact = () => {
                       src={loc.mapUrl}
                       width="100%"
                       height="100%"
-                      className="border-0 relative z-10"
+                      className="border-0 relative z-10 cursor-default"
                       allowFullScreen
                       loading="lazy"
                     ></iframe>
