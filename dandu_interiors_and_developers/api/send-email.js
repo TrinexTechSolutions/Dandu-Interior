@@ -86,31 +86,31 @@ export default async function handler(req, res) {
                               <td style="padding: 32px 36px;">
                                 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                                   <tr>
-                                    <td style="padding: 0 0 12px; border-bottom: 1px solid #e8dfd7;">
+                                    <td style="padding: 0 0 16px;">
                                       <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Client Name</div>
                                       <div style="font-size: 26px; line-height: 1.3; color: #1A1A1A; font-weight: 600;">${escapeHtml(name)}</div>
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td style="padding: 14px 0 12px; border-bottom: 1px solid #e8dfd7;">
+                                    <td style="padding: 8px 0 16px;">
                                       <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">WhatsApp Number</div>
                                       <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(phone)}</div>
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td style="padding: 14px 0 12px; border-bottom: 1px solid #e8dfd7;">
+                                    <td style="padding: 8px 0 16px;">
                                       <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Project Location</div>
                                       <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(locationLabel)}</div>
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td style="padding: 14px 0 12px; border-bottom: 1px solid #e8dfd7;">
+                                    <td style="padding: 8px 0 16px;">
                                       <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Property Type</div>
                                       <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(propertyType)}</div>
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td style="padding: 14px 0 0;">
+                                    <td style="padding: 8px 0 0;">
                                       <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Requirement</div>
                                       <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(requirement)}</div>
                                     </td>

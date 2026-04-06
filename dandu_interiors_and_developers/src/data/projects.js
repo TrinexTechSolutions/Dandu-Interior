@@ -1,3 +1,5 @@
+import bathroomRenovationImage from '../assets/Services/Bathroom Renovation.webp';
+
 const projectImageMap = Object.fromEntries(
   Object.entries(import.meta.glob('../assets/Projects/*.webp', { eager: true, import: 'default' })).map(
     ([path, image]) => [path.split('/').pop(), image]
@@ -246,7 +248,7 @@ export const projects = [
     title: 'Mid-Century Modern Bedroom',
     location: 'Nallagandla, Hyderabad',
     category: 'Interior Design',
-    image: getProjectImage('project-gallery-49.webp'),
+    image: bathroomRenovationImage,
     galleryImages: [
       getProjectImage('project-gallery-47.webp'),
       getProjectImage('project-gallery-46.webp')
