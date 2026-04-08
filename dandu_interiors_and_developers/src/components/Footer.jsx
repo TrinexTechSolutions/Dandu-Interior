@@ -134,7 +134,16 @@ const Footer = () => {
         {/* Bottom: Legal & Credits */}
         <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[10px] font-bold tracking-widest uppercase text-white/20 text-center md:text-left">
-            Developed by Trinex Tech Solutions <span className="mx-2 opacity-50">|</span> &copy; {new Date().getFullYear()} Dandu Interiors <span className="mx-2 opacity-50">/</span> Built with Precision
+            Developed by{' '}
+            <a
+              href="https://www.trinextechsolutions.site/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white/50 transition-colors"
+            >
+              Trinex Tech Solutions
+            </a>
+            <span className="mx-2 opacity-50">|</span> &copy; {new Date().getFullYear()} Dandu Interiors <span className="mx-2 opacity-50">/</span> Built with Precision
           </p>
           <div className="flex gap-10">
             <Link to="/privacy-policy" className="text-[10px] font-bold tracking-widest uppercase text-white/20 hover:text-white/50 transition-colors">Privacy Policy</Link>
