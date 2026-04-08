@@ -4,6 +4,26 @@ import { MapPin, Phone, Mail, Facebook, Instagram, Twitter, Linkedin } from 'luc
 import brandLogo from '../assets/logos_and_bg_images/dandu_logo.svg';
 
 const Footer = () => {
+  const trackWhatsAppClick = () => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'whatsapp_click', {
+        'event_category': 'contact',
+        'event_label': 'Footer WhatsApp'
+      });
+      console.log('GA4 Tracked: WhatsApp Click (Footer)');
+    }
+  };
+
+  const trackPhoneClick = () => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'phone_call_click', {
+        'event_category': 'contact',
+        'event_label': 'Footer Phone'
+      });
+      console.log('GA4 Tracked: Phone Click (Footer)');
+    }
+  };
+
   return (
     <footer className="bg-[#1A1A1A] text-[#F8F5F2] pt-10 pb-6 relative z-[20]">
       <div className="container-custom px-6 lg:px-12">
@@ -45,6 +65,9 @@ const Footer = () => {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => {
+                  if (social.name === 'WhatsApp') trackWhatsAppClick();
+                }}
                 className="text-white/40 hover:text-white transition-colors duration-300 flex items-center justify-center w-8 h-8"
                 aria-label={social.name}
               >
@@ -118,7 +141,11 @@ const Footer = () => {
               <div className="flex flex-col gap-4 lg:min-w-[280px]">
                 <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/30">Direct Contact</span>
                 <div className="flex flex-col gap-3">
-                  <a href="tel:+919866166612" className="text-[14px] font-medium tracking-[0.1em] text-white/70 hover:text-white transition-colors leading-none">
+                  <a 
+                    href="tel:+919866166612" 
+                    onClick={trackPhoneClick}
+                    className="text-[14px] font-medium tracking-[0.1em] text-white/70 hover:text-white transition-colors leading-none"
+                  >
                     +91 98661 66612
                   </a>
                   <a href="mailto:danduinteriordesigns@gmail.com" className="text-[14px] font-medium tracking-[0.1em] text-white/70 hover:text-white transition-colors leading-none">

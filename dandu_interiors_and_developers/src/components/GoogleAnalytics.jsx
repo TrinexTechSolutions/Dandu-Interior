@@ -11,7 +11,7 @@ const GoogleAnalytics = () => {
     useEffect(() => {
         // Only run if gtag is available (won't be available if ad-blockers like Brave block it)
         if (typeof window.gtag === 'function') {
-            window.gtag('config', 'G-C6YK9LHMS2', {
+            window.gtag('config', 'G-7MG8T3FDDQ', {
                 page_path: location.pathname + location.search,
             });
             console.log(`GA4 Tracked: ${location.pathname + location.search}`);

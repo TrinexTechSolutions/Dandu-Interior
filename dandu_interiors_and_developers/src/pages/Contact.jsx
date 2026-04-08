@@ -94,11 +94,16 @@ const Contact = () => {
             show: true,
             message: "Your request has been received. Our team will contact you shortly."
           });
-        } else {
-          setToast({
-            show: true,
-            message: "Currently, we don't provide services in that location. We have noted your request."
+        }
+
+        // Send Lead event to GA4
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'generate_lead', {
+            'event_category': 'form',
+            'event_label': 'Contact Form',
+            'value': 1
           });
+          console.log('GA4 Tracked: Lead Generation (Contact Form)');
         }
 
         setFormData({
@@ -189,7 +194,21 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mb-2">Call Us</p>
-                      <p className="text-2xl md:text-3xl font-light text-[#1A1A1A] tracking-tighter">+91 98661 66612</p>
+                      <a 
+                        href="tel:+919866166612" 
+                        onClick={() => {
+                          if (typeof window.gtag === 'function') {
+                            window.gtag('event', 'phone_call_click', {
+                              'event_category': 'contact',
+                              'event_label': 'Contact Page Phone'
+                            });
+                            console.log('GA4 Tracked: Phone Click (Contact Page)');
+                          }
+                        }}
+                        className="text-2xl md:text-3xl font-light text-[#1A1A1A] tracking-tighter hover:opacity-70 transition-opacity"
+                      >
+                        +91 98661 66612
+                      </a>
                     </div>
                   </div>
 

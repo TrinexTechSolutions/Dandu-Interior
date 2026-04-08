@@ -62,6 +62,16 @@ const QuoteModal = () => {
     const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "8919004890";
     const whatsappUrl = `https://wa.me/91${whatsappNumber}?text=${message}`;
 
+    // Send Lead event to GA4
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'generate_lead', {
+        'event_category': 'form',
+        'event_label': 'Quote Modal',
+        'value': 1
+      });
+      console.log('GA4 Tracked: Lead Generation (Quote Modal)');
+    }
+
     window.open(whatsappUrl, '_blank');
     closeQuoteModal();
   };
@@ -134,7 +144,19 @@ const QuoteModal = () => {
 
               <div className="relative z-10 border-t border-white/5 pt-8">
                 <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-white/30 block mb-3">Direct Inquiry</span>
-                <a href="tel:+919866166612" className="text-xl font-light tracking-tighter text-white hover:text-white/70 transition-colors">
+                <a 
+                  href="tel:+919866166612" 
+                  onClick={() => {
+                    if (typeof window.gtag === 'function') {
+                      window.gtag('event', 'phone_call_click', {
+                        'event_category': 'contact',
+                        'event_label': 'Quote Modal Phone'
+                      });
+                      console.log('GA4 Tracked: Phone Click (Quote Modal)');
+                    }
+                  }}
+                  className="text-xl font-light tracking-tighter text-white hover:text-white/70 transition-colors"
+                >
                   +91 98661 66612
                 </a>
               </div>
