@@ -1,17 +1,26 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import SectionWrapper from '../components/SectionWrapper';
-import { projects } from '../data/projects';
-import { useNavigate } from 'react-router-dom';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { useModal } from '../context/ModalContext';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
+
+// Dynamically import all images from the Projects folder using Vite's eager glob
+const projectModules = import.meta.glob('../assets/Projects/*.{webp,png,jpg,jpeg}', { eager: true, import: 'default' });
+const galleryImages = Object.values(projectModules).map((src, index) => ({
+  id: `gallery-img-${index}`,
+  image: src,
+  title: `Project ${index + 1}`
+}));
 
 const Projects = () => {
-  const navigate = useNavigate();
   const [heroOffset, setHeroOffset] = useState(0);
   const contentRef = useRef(null);
   const heroTitleRef = useRef(null);
   const gridRef = useRef(null);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  // State for image popup
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -73,23 +82,28 @@ const Projects = () => {
     { text: "Every brick laid and every color chosen reflects our commitment to your unique lifestyle.", bg: "bg-[#3A4D39]", text_col: "text-white", h: 1.6 },
     { text: "Innovative solutions that blend breathtaking aesthetics with uncompromising architectural integrity.", bg: "bg-[#722F37]", text_col: "text-white", h: 1.0 },
     { text: "We listen intently, act transparently, and deliver beyond your expectations every single time.", bg: "bg-[#A0522D]", text_col: "text-white", h: 1.4 },
-    { text: "Where your imagination sets the blueprint, our seasoned expertise builds the rock-solid foundation.", bg: "bg-[#E1AD01]", text_col: "text-white", h: 1.0 }
+    { text: "Where your imagination sets the blueprint, our seasoned expertise builds the rock-solid foundation.", bg: "bg-[#E1AD01]", text_col: "text-white", h: 1.0 },
+    { text: "Your space, your sanctuary. We bring harmony and comfort into every corner of your home.", bg: "bg-[#4A5D23]", text_col: "text-white", h: 1.0 },
+    { text: "Excellence in masonry and structural design, ensuring your investment stands the test of time.", bg: "bg-[#5C4033]", text_col: "text-white", h: 1.4 },
+    { text: "From conceptual sketches to the final coat of paint, we are pioneers of holistic renovation.", bg: "bg-[#2F4F4F]", text_col: "text-white", h: 1.3 },
+    { text: "Every tile placed, every partition perfectly aligned—precision is our default working standard.", bg: "bg-[#36454F]", text_col: "text-white", h: 1.6 }
   ];
 
   const gridData = useMemo(() => {
     const flatItems = [];
-    const quoteIndices = [1, 5, 10, 13, 14, 19, 22, 25];
+    // Spread quotes throughout the dynamically loaded images
+    const quoteIndices = [1, 5, 10, 15, 22, 28, 35, 42, 48, 52, 57, 60];
     let pIdx = 0, qIdx = 0;
 
-    for (let i = 0; i < projects.length + quotes.length; i++) {
+    for (let i = 0; i < galleryImages.length + quotes.length; i++) {
       if (quoteIndices.includes(i) && qIdx < quotes.length) {
         const q = quotes[qIdx++];
         flatItems.push({
           type: 'quote', ...q, itemId: `q-${qIdx}`,
           aspect: q.h === 1.0 ? 'aspect-square' : q.h >= 1.5 ? 'aspect-[2/3]' : q.h >= 1.3 ? 'aspect-[3/4]' : 'aspect-[4/5]'
         });
-      } else if (pIdx < projects.length) {
-        const p = projects[pIdx++];
+      } else if (pIdx < galleryImages.length) {
+        const p = galleryImages[pIdx++];
         const aspectClasses = ['aspect-[4/5]', 'aspect-[2/3]', 'aspect-[3/4]', 'aspect-square', 'aspect-[3/5]'];
         flatItems.push({
           type: 'project', ...p, itemId: `p-${p.id}`,
@@ -117,20 +131,9 @@ const Projects = () => {
     restSpeed: 0.001
   });
 
-  const { 
-    openProjectDrawer, 
-    isDetailDrawerOpen, 
-    closeProjectDrawer, 
-    selectedProject: globalSelectedProject 
-  } = useModal();
-
-  const handleProjectClick = useCallback((project) => {
-    if (windowWidth < 768) {
-      openProjectDrawer(project);
-    } else {
-      navigate(`/projects/${project.id}`);
-    }
-  }, [windowWidth, navigate, openProjectDrawer]);
+  const handleProjectClick = useCallback((item) => {
+    setSelectedImage(item.image);
+  }, []);
 
   const renderItem = useCallback((item, globalIdx) => {
     if (item.type === 'quote') {
@@ -150,7 +153,6 @@ const Projects = () => {
         key={item.itemId}
         whileHover={{ y: -5 }}
         className="group relative overflow-hidden rounded-xl cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-300 bg-white"
-        data-cursor-text="VIEW"
         onClick={() => handleProjectClick(item)}
       >
         <img
@@ -159,14 +161,6 @@ const Projects = () => {
           loading={globalIdx < 8 ? 'eager' : 'lazy'}
           className={`w-full ${item.aspect} object-cover transition-transform duration-700 group-hover:scale-110`}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        <div className="absolute bottom-0 left-0 w-full p-6 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-          <span className="text-gray-300 text-xs font-bold uppercase tracking-wider mb-2 block">{item.category}</span>
-          <h3 className="text-white text-lg md:text-xl font-bold leading-tight mb-1">{item.title}</h3>
-          <div className="flex items-center gap-1.5 text-gray-300 text-xs md:text-sm">
-            <span>📍</span> {item.location}
-          </div>
-        </div>
       </motion.div>
     );
   }, [handleProjectClick]);
@@ -250,7 +244,7 @@ const Projects = () => {
       >
         <div className="w-full relative px-4 md:px-8">
           <h1 ref={heroTitleRef} className="projects-hero-title select-none whitespace-nowrap leading-[0.85]">
-            Our <span className="font-serif italic text-[#37302F]/70">Projects</span>
+            Our <span className="font-serif italic text-[#37302F]/70">Gallery</span>
           </h1>
         </div>
       </motion.div>
@@ -280,6 +274,44 @@ const Projects = () => {
           </div>
         </SectionWrapper>
       </div>
+
+      {/* Full-Screen Image Popup Modal */}
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>
+          {selectedImage && (
+            <motion.div
+              key="image-modal"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 p-4 sm:p-8"
+              onClick={() => setSelectedImage(null)}
+            >
+              <button
+                type="button"
+                className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-[10000]"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedImage(null);
+                }}
+              >
+                <X size={32} />
+              </button>
+              <motion.img
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                src={selectedImage}
+                alt="Gallery Preview"
+                className="max-w-full max-h-[90vh] object-contain select-none shadow-2xl rounded-sm"
+                onClick={(e) => e.stopPropagation()} // Prevent close when clicking image itself
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
     </div>
   );

@@ -4,6 +4,8 @@ const ModalContext = createContext();
 
 export const ModalProvider = ({ children }) => {
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+  const [isCallModalOpen, setIsCallModalOpen] = useState(false);
+  const [callService, setCallService] = useState('');
   const [isDetailDrawerOpen, setIsDetailDrawerOpen] = useState(false);
   
   // Storage for global drawer content
@@ -12,6 +14,14 @@ export const ModalProvider = ({ children }) => {
 
   const openQuoteModal = () => setIsQuoteModalOpen(true);
   const closeQuoteModal = () => setIsQuoteModalOpen(false);
+  const openCallModal = (service = '') => {
+    setCallService(service);
+    setIsCallModalOpen(true);
+  };
+  const closeCallModal = () => {
+    setIsCallModalOpen(false);
+    setCallService('');
+  };
 
   const setDetailDrawerOpen = (isOpen) => setIsDetailDrawerOpen(isOpen);
 
@@ -49,6 +59,10 @@ export const ModalProvider = ({ children }) => {
       isQuoteModalOpen, 
       openQuoteModal, 
       closeQuoteModal,
+      isCallModalOpen,
+      openCallModal,
+      closeCallModal,
+      callService,
       isDetailDrawerOpen,
       setDetailDrawerOpen,
       selectedProject,

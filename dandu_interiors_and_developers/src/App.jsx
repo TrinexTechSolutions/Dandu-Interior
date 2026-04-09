@@ -20,6 +20,7 @@ import LoadingScreen from './components/LoadingScreen';
 import SmoothScroll from './components/SmoothScroll';
 import CustomCursor from './components/CustomCursor';
 import QuoteModal from './components/QuoteModal';
+import CallBookingModal from './components/CallBookingModal';
 
 // Animated Routes wrapper to handle AnimatePresence keying
 const AnimatedRoutes = () => {
@@ -68,6 +69,7 @@ function App() {
             <CustomCursor />
             <AnimatedRoutes />
             <QuoteModal />
+            <CallBookingModal />
             <ScrollToTopButton />
           </ModalProvider>
         </ErrorBoundary>

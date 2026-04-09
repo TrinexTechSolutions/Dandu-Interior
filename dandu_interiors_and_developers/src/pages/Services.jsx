@@ -3,14 +3,16 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { services } from '../data/services';
-import SectionWrapper from '../components/SectionWrapper';
 import { useModal } from '../context/ModalContext';
+
+const civilWorksRelatedServiceIds = ['office-partitions', 'painting', 'electrical', 'plumbing'];
 
 const Services = () => {
   const { id } = useParams();
   const [activeService, setActiveService] = useState(null);
   const [isCardMode, setIsCardMode] = useState(true);
-  const { openQuoteModal } = useModal();
+  const [expandedSubServices, setExpandedSubServices] = useState({});
+  const { openQuoteModal, openCallModal } = useModal();
   const contentRef = React.useRef(null);
   const heroRef = React.useRef(null);
   const [heroOffset, setHeroOffset] = useState(0);
@@ -26,6 +28,7 @@ const Services = () => {
     } else {
       setActiveService(services[0]);
     }
+    setExpandedSubServices({});
 
     const updateHeight = () => {
       if (heroRef.current) {
@@ -59,6 +62,16 @@ const Services = () => {
 
   if (!activeService) return null;
 
+  const civilWorksRelatedServices = services.filter(service => civilWorksRelatedServiceIds.includes(service.id));
+  const showCivilWorksExtensions = activeService.id === 'masonry';
+
+  const toggleSubService = (name) => {
+    setExpandedSubServices((prev) => ({
+      ...prev,
+      [name]: !prev[name]
+    }));
+  };
+
   return (
     <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
 
@@ -91,13 +104,13 @@ const Services = () => {
             {/* animated Button Group */}
             <div className="flex items-center gap-2 group cursor-pointer transition-all duration-500 ease-in-out hover:gap-0 h-12 md:h-14">
               <button
-                onClick={openQuoteModal}
+                onClick={() => openCallModal(activeService.title)}
                 className="bg-[#1A1A1A] text-white h-full px-8 rounded-l-full rounded-r-md group-hover:rounded-r-none transition-all duration-500 font-bold text-sm md:text-base whitespace-nowrap shadow-xl flex items-center"
               >
                 Book a call
               </button>
               <button
-                onClick={openQuoteModal}
+                onClick={() => openCallModal(activeService.title)}
                 className="bg-[#1A1A1A] text-white h-full px-4 rounded-r-full rounded-l-md group-hover:rounded-l-none transition-all duration-500 flex items-center justify-center shadow-xl border-l border-white/10 group-hover:border-transparent"
               >
                 <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
@@ -137,12 +150,45 @@ const Services = () => {
                   <p className="text-gray-600 text-lg leading-relaxed mb-6">
                     {sub.desc}
                   </p>
-                  <button
-                    onClick={openQuoteModal}
-                    className="inline-flex items-center gap-3 font-bold text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-8 py-4 rounded-xl border border-black/5 transition-all group"
-                  >
-                    Request Service <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  {sub.linkId ? (
+                    <Link
+                      to={`/services/${sub.linkId}`}
+                      className="inline-flex items-center gap-3 font-bold text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-8 py-4 rounded-xl border border-black/5 transition-all group"
+                    >
+                      View More <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  ) : sub.nestedServices ? (
+                    <>
+                      <button
+                        onClick={() => toggleSubService(sub.name)}
+                        className="inline-flex items-center gap-3 font-bold text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-8 py-4 rounded-xl border border-black/5 transition-all group"
+                      >
+                        {expandedSubServices[sub.name] ? 'View Less' : 'View More'} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      </button>
+
+                      {expandedSubServices[sub.name] && (
+                        <div className="mt-8 space-y-4">
+                          {sub.nestedServices.map((nestedService) => (
+                            <div key={nestedService.name} className="border border-black/5 rounded-2xl bg-[#F8F5F2] p-5">
+                              <h3 className="text-xl md:text-2xl font-medium tracking-tight text-[#37302F] mb-2">
+                                {nestedService.name}
+                              </h3>
+                              <p className="text-gray-600 leading-relaxed">
+                                {nestedService.desc}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <button
+                      onClick={openQuoteModal}
+                      className="inline-flex items-center gap-3 font-bold text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-8 py-4 rounded-xl border border-black/5 transition-all group"
+                    >
+                      Request Service <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  )}
                 </div>
 
                 {/* Image */}
@@ -165,6 +211,59 @@ const Services = () => {
             </div>
           </section>
         ))}
+
+        {showCivilWorksExtensions && civilWorksRelatedServices.map((service, index) => {
+          const previewImage = service.subServices?.[0]?.image;
+          const displayIndex = activeService.subServices.length + index;
+
+          return (
+            <section
+              key={service.id}
+              className={`py-8 md:py-16 relative ${displayIndex % 2 === 0 ? 'bg-white' : 'bg-[#F8F5F2]'}`}
+            >
+              <div className="container-custom">
+                <div className={`flex flex-col gap-8 lg:gap-12 items-center ${displayIndex % 2 === 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
+                  <div className="w-full lg:w-1/2">
+                    <div className="relative mb-8 mt-12 lg:mt-20 pl-6 flex items-end">
+                      <span className="text-7xl md:text-[10rem] font-extrabold text-[#1A1A1A]/15 absolute bottom-0 -left-2 z-0 pointer-events-none select-none leading-[0.75]">
+                        {String(displayIndex + 1).padStart(2, '0')}
+                      </span>
+                      <h2 className="text-4xl md:text-6xl font-medium tracking-tighter text-[#37302F] relative z-10 leading-none pb-1 whitespace-nowrap lg:whitespace-normal">
+                        {service.title.split(' ')[0]}{' '}
+                        <span className="font-serif italic text-[#37302F]/70">{service.title.split(' ').slice(1).join(' ')}</span>
+                      </h2>
+                    </div>
+                    <div className="w-20 h-[1px] bg-black/10 mb-8"></div>
+                    <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                      {service.description}
+                    </p>
+                    <Link
+                      to={`/services/${service.id}`}
+                      className="inline-flex items-center gap-3 font-bold text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-8 py-4 rounded-xl border border-black/5 transition-all group"
+                    >
+                      View More <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
+
+                  <div className="w-full lg:w-1/2 lg:drop-shadow-2xl">
+                    <div className={`relative shadow-2xl lg:shadow-none overflow-hidden aspect-[4/3] group w-full h-full ${displayIndex % 2 === 0 ? 'rounded-2xl lg:rounded-r-none lg:rounded-l-3xl lg:[clip-path:polygon(0%_0%,_75%_0%,_100%_100%,_0%_100%)]' : 'rounded-2xl lg:rounded-l-none lg:rounded-r-3xl lg:[clip-path:polygon(25%_0%,_100%_0%,_100%_100%,_0%_100%)]'}`}>
+                      <img
+                        src={previewImage}
+                        alt={service.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        onError={(e) => {
+                          e.target.src = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=75&w=800";
+                        }}
+                      />
+                      <div className="absolute inset-0 border-4 border-[#1A1A1A]/20 rounded-2xl pointer-events-none lg:hidden"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          );
+        })}
       </div>
 
       {/* Horizontal Bottom Navigation for All Services */}

@@ -1,28 +1,20 @@
-import { Paintbrush, Hammer, Wrench, Zap, SplitSquareHorizontal, Ruler, Grid, Home } from 'lucide-react';
+import { Paintbrush, Hammer, Wrench, Zap, SplitSquareHorizontal, Grid, Home } from 'lucide-react';
 import allPaintingWorkImage from '../assets/Services/All Painting Work.webp';
 import additionOfFloorImage from '../assets/Services/Addition of Floor.webp';
 import aluminumPartitionsImage from '../assets/Services/Aluminum Partitions.webp';
 import apartmentPaintingImage from '../assets/Services/Apartment Painting.webp';
 import bathTubInstallationImage from '../assets/Services/Bath Tub Installation.webp';
 import bathroomRenovationImage from '../assets/Services/Bathroom Renovation.webp';
-import blindsInstallationImage from '../assets/Services/Blinds Installation.webp';
 import blockedPipesAndDrainsRemovingAndInstallationImage from '../assets/Services/Blocked Pipes and Drains removing and installation.webp';
-import boundaryWallsImage from '../assets/Services/Boundary Walls.webp';
 import brickworkImage from '../assets/Services/Brickwork.webp';
 import chandelierHangingImage from '../assets/Services/Chandelier Hanging.webp';
 import commercialDesignImage from '../assets/Services/Commercial Design.webp';
 import commercialRenovationImage from '../assets/Services/Commercial Renovation.webp';
 import completeNewElectricSystemsInstallationImage from '../assets/Services/Complete New Electric Systems Installation.webp';
 import completeNewPlumbingSystemInstallationImage from '../assets/Services/Complete New Plumbing System Installation.webp';
-import curtainBracketFixingImage from '../assets/Services/Curtain Bracket Fixing.webp';
-import curtainHangingImage from '../assets/Services/Curtain Hanging.webp';
-import curtainReelingInstallationImage from '../assets/Services/Curtain Reeling Installation.webp';
-import curtainRodsAndBlindFixingImage from '../assets/Services/Curtain Rods & Blind Fixing.webp';
-import curtainRodsInstallationImage from '../assets/Services/Curtain Rods Installation.webp';
 import demountablePartitionsImage from '../assets/Services/Demountable partitions.webp';
 import dishwasherConnectionMakingImage from '../assets/Services/Dishwasher Connection Making.webp';
 import dPBoxBreakerTripFixingImage from '../assets/Services/DP Box Breaker Trip Fixing.webp';
-import drillingAndHangingWorkImage from '../assets/Services/Drilling & Hanging Work.webp';
 import electricShortCircuitFixingImage from '../assets/Services/Electric Short Circuit Fixing.webp';
 import extensionOfAreasImage from '../assets/Services/Extension of Areas.webp';
 import extendWaterConnectionImage from '../assets/Services/Extend Water Connection.webp';
@@ -39,21 +31,16 @@ import industrialSuspendedCeilingsImage from '../assets/Services/Industrial Susp
 import interiorPaintingImage from '../assets/Services/Interior Painting.webp';
 import kitchenSinkRepairAndInstallationImage from '../assets/Services/Kitchen Sink Repair and Installation.webp';
 import kitchenRenovationImage from '../assets/Services/Kitchen Renovation.webp';
-import levelingImage from '../assets/Services/Leveling.webp';
 import lightAndLampFixingImage from '../assets/Services/Light & Lamp Fixing.webp';
 import lightDimmerInstallationImage from '../assets/Services/Light Dimmer Installation.webp';
 import livingRoomRenovationImage from '../assets/Services/Living Room Renovation.webp';
 import marbleFixingImage from '../assets/Services/Marble Fixing.webp';
 import metalStudPartitionsImage from '../assets/Services/Metal Stud Partitions.webp';
-import mirrorInstallationImage from '../assets/Services/Mirror Installation.webp';
-import mountBracketsOnWallImage from '../assets/Services/Mount Brackets on Wall.webp';
 import officeDesignImage from '../assets/Services/Office Design.webp';
 import officePaintingImage from '../assets/Services/Office Painting.webp';
-import pictureFrameHangingImage from '../assets/Services/Picture Frame Hanging.webp';
 import plasteringImage from '../assets/Services/Plastering.webp';
 import plumbingSystemDiagnosisAndInspectionsImage from '../assets/Services/Plumbing System Diagnosis and Inspections.webp';
 import residentialDesignImage from '../assets/Services/Residential Design.webp';
-import shelvesFixingImage from '../assets/Services/Shelves Fixing.webp';
 import solidPartitionImage from '../assets/Services/Solid Partition.webp';
 import switchAndSocketInstallationImage from '../assets/Services/Switch & Socket Installation.webp';
 import tapRepairsAndInstallationsImage from '../assets/Services/Tap Repairs and Installations.webp';
@@ -63,7 +50,6 @@ import toiletRepairsAndInstallationsImage from '../assets/Services/Toilet Repair
 import tVBracketMountingImage from '../assets/Services/TV Bracket Mounting.webp';
 import villaPaintingImage from '../assets/Services/Villa Painting.webp';
 import wallPartitionMakingImage from '../assets/Services/Wall Partition Making.webp';
-import wallpaperFixingImage from '../assets/Services/Wallpaper Fixing.webp';
 import washingMachineInstallationImage from '../assets/Services/Washing Machine Installation.webp';
 import waterLeakRepairImage from '../assets/Services/Water Leak Repair.webp';
 
@@ -74,24 +60,16 @@ const serviceImageByName = {
   'Apartment Painting': apartmentPaintingImage,
   'Bath Tub Installation': bathTubInstallationImage,
   'Bathroom Renovation': bathroomRenovationImage,
-  'Blinds Installation': blindsInstallationImage,
   'Blocked Pipes and Drains removing and installation': blockedPipesAndDrainsRemovingAndInstallationImage,
-  'Boundary Walls': boundaryWallsImage,
   Brickwork: brickworkImage,
   'Chandelier Hanging': chandelierHangingImage,
   'Commercial Design': commercialDesignImage,
   'Commercial Renovation': commercialRenovationImage,
   'Complete New Electric Systems Installation': completeNewElectricSystemsInstallationImage,
   'Complete New Plumbing System Installation': completeNewPlumbingSystemInstallationImage,
-  'Curtain Bracket Fixing': curtainBracketFixingImage,
-  'Curtain Hanging': curtainHangingImage,
-  'Curtain Reeling Installation': curtainReelingInstallationImage,
-  'Curtain Rods & Blind Fixing': curtainRodsAndBlindFixingImage,
-  'Curtain Rods Installation': curtainRodsInstallationImage,
   'Demountable partitions': demountablePartitionsImage,
   'Dishwasher Connection Making': dishwasherConnectionMakingImage,
   'DP Box Breaker Trip Fixing': dPBoxBreakerTripFixingImage,
-  'Drilling & Hanging Work': drillingAndHangingWorkImage,
   'Electric Short Circuit Fixing': electricShortCircuitFixingImage,
   'Extension of Areas': extensionOfAreasImage,
   'Extend Water Connection': extendWaterConnectionImage,
@@ -108,21 +86,16 @@ const serviceImageByName = {
   'Interior Painting': interiorPaintingImage,
   'Kitchen Sink Repair and Installation': kitchenSinkRepairAndInstallationImage,
   'Kitchen Renovation': kitchenRenovationImage,
-  Leveling: levelingImage,
   'Light & Lamp Fixing': lightAndLampFixingImage,
   'Light Dimmer Installation': lightDimmerInstallationImage,
   'Living Room Renovation': livingRoomRenovationImage,
   'Marble Fixing': marbleFixingImage,
   'Metal Stud Partitions': metalStudPartitionsImage,
-  'Mirror Installation': mirrorInstallationImage,
-  'Mount Brackets on Wall': mountBracketsOnWallImage,
   'Office Design': officeDesignImage,
   'Office Painting': officePaintingImage,
-  'Picture Frame Hanging': pictureFrameHangingImage,
   Plastering: plasteringImage,
   'Plumbing System Diagnosis and Inspections': plumbingSystemDiagnosisAndInspectionsImage,
   'Residential Design': residentialDesignImage,
-  'Shelves Fixing': shelvesFixingImage,
   'Solid Partition': solidPartitionImage,
   'Switch & Socket Installation': switchAndSocketInstallationImage,
   'Tap Repairs and Installations': tapRepairsAndInstallationsImage,
@@ -132,7 +105,6 @@ const serviceImageByName = {
   'TV Bracket Mounting': tVBracketMountingImage,
   'Villa Painting': villaPaintingImage,
   'Wall Partition Making': wallPartitionMakingImage,
-  'Wallpaper Fixing': wallpaperFixingImage,
   'Washing Machine Installation': washingMachineInstallationImage,
   'Water Leak Repair': waterLeakRepairImage
 };
@@ -149,7 +121,7 @@ const getServiceImage = (name, fallback) =>
 const rawServices = [
   {
     id: 'interior-design',
-    title: 'Interior Design',
+    title: 'Interior Works',
     icon: Home,
     shortDesc: 'Transform your space into a stunning, functional environment with our expert interior design solutions.',
     description: 'From luxurious residential sanctuaries to dynamic corporate offices, we blend high-end aesthetics with functional utility. Our expert designers use premium materials and innovative layouts to transform your vision into a stunning reality.',
@@ -175,23 +147,67 @@ const rawServices = [
   },
   {
     id: 'masonry',
-    title: 'Masonry Works',
+    title: 'Civil Works',
     icon: Grid,
     shortDesc: 'Precision tile fixing, grouting, and marble installation for durable and aesthetic finishes.',
     description: 'Precision structural and aesthetic masonry, specializing in flawless marble flooring, expert tile fixing, and robust brickwork. We ensure every surface is perfectly leveled and built to last with professional-grade finishing.',
     fullDesc: 'Our masonry division provides the structural and aesthetic backbone of your property. We employ seasoned masons who take pride in precision and structural integrity. From flawless marble flooring that elevates a lobby\'s grandeur to heavy duty brickwork, our masonry works are executed with rigorous quality control, ensuring longevity and impeccable finishes.',
     benefits: ['High Durability', 'Premium Materials', 'Flawless Finish', 'Timely Execution'],
     subServices: [
+      {
+        name: 'Tiles Work',
+        desc: 'Complete tile and stone surface solutions for floors, walls, kitchens, bathrooms, and premium finish zones. From layout planning to joint finishing, we handle the full tiling workflow with precision and durability.',
+        image: tileFixingImage,
+        linkId: 'tiles-work'
+      },
+      { name: 'Brickwork', desc: 'Structural brick laying for exterior facades, retaining walls, and internal exposed-brick aesthetic walls. Done with precise mortar jointing for structural integrity.', image: brickworkImage },
+      { name: 'Plastering', desc: 'Smooth and flawless plastering for interior and exterior walls. Creating the perfect canvas for painting or wallpapering by eliminating surface undulations.', image: plasteringImage, linkId: 'plastering' },
+      { name: 'Flooring', desc: 'Comprehensive flooring solutions including stone, interlocking pavers, and polished concrete for patios, driveways, and industrial spaces.', image: flooringImage, linkId: 'flooring' }
+    ]
+  },
+  {
+    id: 'tiles-work',
+    title: 'Tiles Work',
+    icon: Grid,
+    shortDesc: 'Specialized tile and marble installation, grouting, repair, and finish work for durable premium surfaces.',
+    description: 'Dedicated tile and stone finishing solutions for walls, floors, kitchens, bathrooms, and feature surfaces. We handle installation, alignment, grouting, marble fixing, and repair work with precision craftsmanship.',
+    fullDesc: 'Our tile and stone specialists deliver clean layouts, durable bonding, and refined finishing for every surface. From fresh tile installation to marble fixing and repair work, we focus on precision alignment, long-lasting adhesion, and a polished final look that elevates your space.',
+    benefits: ['Precise Alignment', 'Durable Bonding', 'Premium Finish', 'Repair Expertise'],
+    subServices: [
       { name: 'Tile Fixing', desc: 'Expert installation of ceramic, porcelain, and vitrified tiles for walls and floors. We ensure perfect leveling, symmetrical patterns, and zero-hollow sounding tiles for a flawless, long-lasting surface.', image: tileFixingImage },
       { name: 'Tile Grouting', desc: 'Precision grouting to seal tile joints, preventing moisture penetration and dirt accumulation. We use high-quality, mold-resistant epoxy and cementitious grouts color-matched to your aesthetic.', image: tileGroutingImage },
       { name: 'Marble Fixing', desc: 'Premium marble processing and installation. Handling heavy stone requires mastery; our team ensures rigorous substrate preparation and seamless joint matching for luxurious, mirror-polished floors and walls.', image: marbleFixingImage },
-      { name: 'Bath Tub Install', desc: 'Secure and watertight bathtub masonry encasements. We build rigorous support structures essential for heavy tubs, ensuring perfect drainage gradients and seamless integration with surrounding tiles.', image: bathTubInstallationImage },
-      { name: 'Wall Partition Making', desc: 'Solid blockwork and brick partitioning to redefine your interior spaces. Providing excellent sound insulation and structural strength compared to standard drywall.', image: wallPartitionMakingImage },
-      { name: 'Brickwork', desc: 'Structural brick laying for exterior facades, retaining walls, and internal exposed-brick aesthetic walls. Done with precise mortar jointing for structural integrity.', image: brickworkImage },
-      { name: 'Boundary Walls', desc: 'Construction of robust boundary and perimeter walls. We ensure deep foundation laying and strong blockwork to secure your property effectively.', image: boundaryWallsImage },
-      { name: 'Plastering', desc: 'Smooth and flawless plastering for interior and exterior walls. Creating the perfect canvas for painting or wallpapering by eliminating surface undulations.', image: plasteringImage },
-      { name: 'Leveling', desc: 'Floor substrate leveling using self-leveling compounds and sand-cement screeds. A critical preparatory step before the installation of premium flooring materials.', image: levelingImage },
-      { name: 'Flooring', desc: 'Comprehensive flooring solutions including stone, interlocking pavers, and polished concrete for patios, driveways, and industrial spaces.', image: flooringImage }
+      { name: 'Tile Replacement & Repair', desc: 'Careful removal and replacement of cracked, hollow, or damaged tiles while preserving surrounding finishes as much as possible for a clean repaired surface.', image: tileFixingImage }
+    ]
+  },
+  {
+    id: 'plastering',
+    title: 'Plastering Services',
+    icon: Grid,
+    shortDesc: 'Expert plastering solutions for flawless walls and ceilings, preparing surfaces for premium finishes.',
+    description: 'We deliver perfectly smooth, durable plastering for both interior setups and exterior facades. Our work ensures surface undulations are eliminated, preparing your property for high-end paint or wallpaper.',
+    fullDesc: 'Quality plastering is the critical foundation for any premium interior. Our specialists provide comprehensive plastering solutions, from repairing damaged historical walls to applying fresh gypsum plaster on new blockwork. We focus on laser-straight edges, seamless joints, and zero cracking.',
+    benefits: ['Flawless Surfaces', 'Crack Resistance', 'Laser-Straight Edges', 'Durable Base'],
+    subServices: [
+      { name: 'Internal Gypsum Plastering', desc: 'Applying high-quality gypsum plaster over blockwork or bare concrete to create perfectly smooth, ready-to-paint interior walls with rapid setting times.', image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=75&w=800' },
+      { name: 'Exterior Cement Plastering', desc: 'Heavy-duty sand and cement plastering formulated to withstand harsh weather conditions, protecting the structural brickwork from moisture and thermal expansion.', image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=75&w=800' },
+      { name: 'Plaster Repair and Patching', desc: 'Careful removal and patching of blown, cracked, or water-damaged plaster. We blend new repairs seamlessly into existing historical or standard walls.', image: 'https://images.unsplash.com/photo-1513694203232-719a2807022f?auto=format&fit=crop&q=75&w=800' },
+      { name: 'Skimming Services', desc: 'Applying a final, ultra-thin coat of finishing plaster over plasterboard or uneven walls to achieve a glass-like finish ideal for premium silk paints.', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=75&w=800' }
+    ]
+  },
+  {
+    id: 'flooring',
+    title: 'Flooring Solutions',
+    icon: Grid,
+    shortDesc: 'Premium flooring installations including hardwood, polished concrete, and durable interlocking pavers.',
+    description: 'Specialized flooring services for residential, commercial, and industrial spaces. We handle everything from elegant wooden floors to heavy-duty concrete finishes, ensuring longevity and stunning aesthetics.',
+    fullDesc: 'A floor sets the tone for an entire space. We offer comprehensive, high-quality flooring installations, focusing on precision substrate leveling, premium material sourcing, and expert layout execution. Whether you need an acoustic wooden floor for an office or load-bearing concrete for a warehouse, our teams deliver immaculate results.',
+    benefits: ['Precision Leveling', 'Premium Materials', 'Acoustic Insulation', 'High Durability'],
+    subServices: [
+      { name: 'Hardwood & Laminate Flooring', desc: 'Installation of high-end engineered wood, solid oak, and durable laminates. Includes moisture barrier laying and acoustic underlayment for a silent step.', image: 'https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&q=75&w=800' },
+      { name: 'Polished Concrete', desc: 'Industrial-chic polished and sealed concrete floors. Extremely durable, easy to maintain, and perfect for modern retail spaces, lofts, or high-traffic zones.', image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=75&w=800' },
+      { name: 'Interlocking Pavers', desc: 'Heavy-duty exterior paving for driveways, patios, and walkways. Designed to withstand vehicular loads while maintaining excellent water drainage.', image: 'https://images.unsplash.com/photo-1584433144859-1e185aece048?auto=format&fit=crop&q=75&w=800' },
+      { name: 'Epoxy Resin Flooring', desc: 'Seamless, chemical-resistant flooring solutions ideal for garages, laboratories, and commercial kitchens, available in various colors and metallic finishes.', image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=75&w=800' }
     ]
   },
   {
@@ -214,7 +230,7 @@ const rawServices = [
   },
   {
     id: 'office-partitions',
-    title: 'Office Partitions',
+    title: 'Partitions',
     icon: SplitSquareHorizontal,
     shortDesc: 'Intelligent spatial division using glass, aluminum, and demountable systems for modern workspaces.',
     description: 'Intelligent spatial division for modern workspaces using premium frameless glass, durable aluminum, and demountable systems. Achieve superior acoustic insulation while maintaining natural light flow and corporate elegance.',
@@ -226,7 +242,8 @@ const rawServices = [
       { name: 'Frameless Glass Partitions', desc: 'The pinnacle of modern office design. Seamless floor-to-ceiling glass providing maximum acoustic privacy while allowing natural light to penetrate the entire floorplate.', image: 'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?auto=format&fit=crop&q=75&w=800' },
       { name: 'Industrial Suspended Ceilings', desc: 'Integrating office partitions with robust suspended grid ceilings. Hides complex HVAC and electrical networks while improving overall room acoustics.', image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=75&w=800' },
       { name: 'Metal Stud Partitions', desc: 'Fast-track drywall construction using galvanized steel framing. Provides a solid-wall feel, excellent fire resistance, and high acoustic ratings when packed with proper insulation.', image: 'https://images.unsplash.com/photo-1574360743950-c23c1bf329c2?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Solid Partition', desc: 'Opaque partitions using wood veneers or laminated panels for absolute privacy. Ideal for HR departments, server rooms, and executive boardrooms.', image: 'https://images.unsplash.com/photo-1556761175-5973b0f612d7?auto=format&fit=crop&q=75&w=800' }
+      { name: 'Solid Partition', desc: 'Opaque partitions using wood veneers or laminated panels for absolute privacy. Ideal for HR departments, server rooms, and executive boardrooms.', image: 'https://images.unsplash.com/photo-1556761175-5973b0f612d7?auto=format&fit=crop&q=75&w=800' },
+      { name: 'Wall Partition Making', desc: 'Solid blockwork and brick partitioning to redefine your interior spaces. Providing excellent sound insulation and structural strength compared to standard drywall.', image: wallPartitionMakingImage }
     ]
   },
   {
@@ -291,31 +308,6 @@ const rawServices = [
       { name: 'Blocked Pipes and Drains removing and installation', desc: 'Using powerful drain snakes and high-pressure jetting to clear stubborn hair, grease, and blockages from floor traps and main sewer lines.', image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=75&w=800' }
     ]
   },
-  {
-    id: 'handyman',
-    title: 'Handyman Services',
-    icon: Ruler,
-    shortDesc: 'Quick, reliable fixes for mounting, drilling, furniture assembly, and general home maintenance.',
-    description: 'Professional mounting, drilling, and furniture assembly services. Whether it\'s heavy TV bracket mounting, secure curtain rod installation, or perfect wallpaper fixing, we handle your to-do list with surgical precision.',
-    fullDesc: 'Don\'t stress over the small stuff. Our professional handyman division is here to tackle your to-do list with speed and precision. Equipped with the right tools and fixings for every wall type, we handle everything from safely mounting massive TVs to assembling complex flat-pack furniture, leaving your home perfectly organized and clean.',
-    benefits: ['Multi-skilled Workers', 'Quick Turnaround', 'Fully Equipped Toolkits', 'Neat Workmanship'],
-    subServices: [
-      { name: 'Drilling & Hanging Work', desc: 'Precision drilling into concrete, tile, and drywall. We use the exact rawlplugs and screws ensuring whatever is hung stays secure without damaging your walls.', image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Mount Brackets on Wall', desc: 'Heavy-duty anchoring for heavy shelves, bicycle racks, and microwave brackets using heavy-duty anchor bolts.', image: 'https://images.unsplash.com/photo-1622372736453-652f1ffeb1cd?auto=format&fit=crop&q=75&w=800' },
-      { name: 'TV Bracket Mounting', desc: 'Perfectly leveled installation of fixed, tilted, or full-motion swivel TV brackets. We ensure your expensive screens are safely mounted on strong studs.', image: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Picture Frame Hanging', desc: 'Creating beautiful gallery walls with perfectly aligned arrays of photo frames. Say goodbye to crooked pictures and unnecessary wall holes.', image: 'https://images.unsplash.com/photo-1513694203232-719a2807022f?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Mirror Installation', desc: 'Safe handling and mounting of heavy, frameless, or decorative mirrors using robust clips or high-strength adhesive mounting tapes.', image: 'https://images.unsplash.com/photo-1618220179428-2b79b180d423?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Shelves Fixing', desc: 'Installation of floating shelves and heavy-duty storage racks. We make sure they are laser-level and capable of bearing the intended load.', image: 'https://images.unsplash.com/photo-1532372320572-cda25653a26d?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Curtain Rods & Blind Fixing', desc: 'Professional installation of window treatments. We measure accurately and drill cleanly to ensure your curtains hang beautifully.', image: 'https://images.unsplash.com/photo-1513694203232-719a2807022f?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Curtain Reeling Installation', desc: 'Installing smooth-gliding aluminum curtain tracks securely into the ceiling slab or wall lintels.', image: 'https://images.unsplash.com/photo-1599809275671-b5942cabc7a2?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Curtain Rods Installation', desc: 'Fitting wooden or metallic curtain poles securely, ensuring the end finials sit perfectly symmetrical over your windows.', image: 'https://images.unsplash.com/photo-1513694203232-719a2807022f?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Curtain Bracket Fixing', desc: 'Replacing loose or broken curtain brackets with stronger, longer wall plugs for enhanced stability.', image: 'https://images.unsplash.com/photo-1513694203232-719a2807022f?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Curtain Hanging', desc: 'Hooking and eyeleting heavy blackout drapes or delicate sheer curtains onto the tracks or rods beautifully.', image: 'https://images.unsplash.com/photo-1513694203232-719a2807022f?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Blinds Installation', desc: 'Precision mounting of roller, roman, vertical, or venetian blinds within the window recess or on the wall face.', image: 'https://images.unsplash.com/photo-1513694203232-719a2807022f?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Light & Lamp Fixing', desc: 'Assembling complex light fittings and securely mounting sconces and pendant lights (Non-wiring handyman jobs).', image: 'https://images.unsplash.com/photo-1507676184212-d0330a15673c?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Wallpaper Fixing', desc: 'Flawless application of wallpaper rolls. We match the patterns perfectly and ensure seamless, bubble-free adhesion to your walls.', image: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=75&w=800' }
-    ]
-  }
 ];
 
 export const services = rawServices.map((service) => ({

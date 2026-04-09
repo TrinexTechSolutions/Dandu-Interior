@@ -11,6 +11,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    email: "",
     propertyLocation: "",
     propertyType: "",
     requirement: "",
@@ -94,6 +95,11 @@ const Contact = () => {
             show: true,
             message: "Your request has been received. Our team will contact you shortly."
           });
+        } else {
+          setToast({
+            show: true,
+            message: "Currently, we don't provide services in that location. We have noted your request."
+          });
         }
 
         // Send Lead event to GA4
@@ -107,7 +113,7 @@ const Contact = () => {
         }
 
         setFormData({
-          name: "", phone: "", propertyLocation: "", propertyType: "", requirement: "", customLocation: ""
+          name: "", phone: "", email: "", propertyLocation: "", propertyType: "", requirement: "", customLocation: ""
         });
       } else {
         const errorData = await response.json();
@@ -255,6 +261,19 @@ const Contact = () => {
                         className="w-full bg-transparent border border-[#37302F]/40 rounded-xl py-4 px-5 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all text-sm font-medium placeholder:text-black/30 text-[#37302F]"
                       />
                     </div>
+                  </div>
+
+                  <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
+                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Email Address</label>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="hello@example.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full bg-transparent border border-[#37302F]/40 rounded-xl py-4 px-5 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all text-sm font-medium placeholder:text-black/30 text-[#37302F]"
+                    />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -439,4 +458,3 @@ const Contact = () => {
 };
 
 export default Contact;
-

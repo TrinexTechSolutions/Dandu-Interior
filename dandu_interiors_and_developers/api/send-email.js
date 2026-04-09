@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { name, phone, propertyLocation, propertyType, requirement, customLocation } = req.body;
+  const { name, phone, email, propertyLocation, propertyType, requirement, customLocation } = req.body;
   const brevoApiKey = process.env.BREVO_API_KEY?.trim();
   const senderEmail = process.env.SENDER_EMAIL?.trim();
   const adminEmail = process.env.ADMIN_EMAIL?.trim();
@@ -36,100 +36,167 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        "accept": "application/json",
-        "api-key": brevoApiKey,
-        "content-type": "application/json",
+    const adminEmailPayload = {
+      sender: { 
+        name: "Dandu Interior Website", 
+        email: senderEmail
       },
-      body: JSON.stringify({
+      to: [{ email: adminEmail, name: "Syampanga Admin" }],
+      subject: `New Contact Form Lead: ${name}`,
+      htmlContent: `
+        <!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>Dandu Interior Inquiry</title>
+          </head>
+          <body style="margin: 0; padding: 0; background-color: #f3eee7; font-family: Arial, Helvetica, sans-serif; color: #1A1A1A;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f3eee7; margin: 0; padding: 32px 16px;">
+              <tr>
+                <td align="center">
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 720px;">
+                    <tr>
+                      <td style="padding-bottom: 16px; text-align: left;">
+                        <div style="font-size: 11px; letter-spacing: 0.38em; text-transform: uppercase; color: #7d746e; font-weight: 700;">Dandu Interiors & Developers</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="background-color: #f8f5f2; border: 1px solid #d8cfc6; border-radius: 30px; overflow: hidden; box-shadow: 0 18px 50px rgba(26, 26, 26, 0.08);">
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                          <tr>
+                            <td style="padding: 36px 36px 24px; border-bottom: 1px solid #e6ddd4;">
+                              <div style="font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 18px;">New Contact Form Submission</div>
+                              <div style="font-size: 54px; line-height: 0.95; color: #37302F; font-weight: 300;">
+                                New <span style="font-family: Georgia, 'Times New Roman', serif; font-style: italic; color: rgba(55, 48, 47, 0.68);">Project Lead</span>
+                              </div>
+                              <div style="margin-top: 18px; max-width: 520px; font-size: 18px; line-height: 1.7; color: #5d5650;">
+                                A visitor has submitted the Dandu Interiors contact form. Review the enquiry details below and follow up with the client on call or WhatsApp.
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 32px 36px;">
+                              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                  <td style="padding: 0 0 16px;">
+                                    <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Client Name</div>
+                                    <div style="font-size: 26px; line-height: 1.3; color: #1A1A1A; font-weight: 600;">${escapeHtml(name)}</div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 8px 0 16px;">
+                                    <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">WhatsApp Number</div>
+                                    <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(phone)}</div>
+                                  </td>
+                                </tr>
+                                ${email ? `<tr>
+                                  <td style="padding: 8px 0 16px;">
+                                    <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Email Address</div>
+                                    <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(email)}</div>
+                                  </td>
+                                </tr>` : ''}
+                                <tr>
+                                  <td style="padding: 8px 0 16px;">
+                                    <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Project Location</div>
+                                    <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(locationLabel)}</div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 8px 0 16px;">
+                                    <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Property Type</div>
+                                    <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(propertyType)}</div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 8px 0 0;">
+                                    <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Requirement</div>
+                                    <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(requirement)}</div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding-top: 8px;">
+                                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #1A1A1A; border-radius: 24px;">
+                                      <tr>
+                                        <td style="padding: 22px 24px; text-align: center;">
+                                          <div style="font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(248, 245, 242, 0.62); font-weight: 700; margin-bottom: 8px;">Dandu Interior Website</div>
+                                          <div style="font-size: 18px; line-height: 1.6; color: #F8F5F2;">
+                                            A new lead is waiting for your response.
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </body>
+        </html>
+      `
+    };
+
+    const promises = [
+      fetch("https://api.brevo.com/v3/smtp/email", {
+        method: "POST",
+        headers: {
+          "accept": "application/json",
+          "api-key": brevoApiKey,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(adminEmailPayload),
+      })
+    ];
+
+    if (email) {
+      const userReplyPayload = {
         sender: { 
-          name: "Dandu Interior Website", 
+          name: "Dandu Interiors", 
           email: senderEmail
         },
-        to: [{ email: adminEmail, name: "Syampanga Admin" }],
-        subject: `New Contact Form Lead: ${name}`,
+        to: [{ email: email, name: name }],
+        subject: `Thank you for contacting Dandu Interiors, ${name}!`,
         htmlContent: `
           <!DOCTYPE html>
           <html lang="en">
             <head>
               <meta charset="UTF-8" />
               <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <title>Dandu Interior Inquiry</title>
+              <title>Thank You from Dandu Interiors</title>
             </head>
-            <body style="margin: 0; padding: 0; background-color: #f3eee7; font-family: Arial, Helvetica, sans-serif; color: #1A1A1A;">
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #f3eee7; margin: 0; padding: 32px 16px;">
+            <body style="margin: 0; padding: 0; background-color: #FAFAF8; font-family: Arial, Helvetica, sans-serif; color: #1A1A1A;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 0; padding: 40px 16px;">
                 <tr>
                   <td align="center">
-                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 720px;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="max-width: 600px;">
                       <tr>
-                        <td style="padding-bottom: 16px; text-align: left;">
-                          <div style="font-size: 11px; letter-spacing: 0.38em; text-transform: uppercase; color: #7d746e; font-weight: 700;">Dandu Interiors & Developers</div>
+                        <td style="padding-bottom: 24px; text-align: center;">
+                          <div style="font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: #1A1A1A; font-weight: 700;">Dandu Interiors & Developers</div>
                         </td>
                       </tr>
                       <tr>
-                        <td style="background-color: #f8f5f2; border: 1px solid #d8cfc6; border-radius: 30px; overflow: hidden; box-shadow: 0 18px 50px rgba(26, 26, 26, 0.08);">
+                        <td style="background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 16px; padding: 48px 40px;">
+                          <div style="font-family: Georgia, 'Times New Roman', serif; font-size: 32px; color: #1A1A1A; margin-bottom: 24px; font-weight: normal;">
+                            Hello ${escapeHtml(name)},
+                          </div>
+                          <div style="font-size: 16px; line-height: 1.8; color: #555555; margin-bottom: 32px;">
+                            Thank you for reaching out to us. We have received your inquiry regarding <strong>${escapeHtml(requirement)}</strong> in <strong>${escapeHtml(locationLabel)}</strong>.<br /><br />
+                            Our team is currently reviewing your details. One of our design specialists will reach out to you on your provided WhatsApp number (<strong>${escapeHtml(phone)}</strong>) shortly to discuss your vision and next steps.<br /><br />
+                            We look forward to creating something extraordinary together.
+                          </div>
                           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                             <tr>
-                              <td style="padding: 36px 36px 24px; border-bottom: 1px solid #e6ddd4;">
-                                <div style="font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 18px;">New Contact Form Submission</div>
-                                <div style="font-size: 54px; line-height: 0.95; color: #37302F; font-weight: 300;">
-                                  New <span style="font-family: Georgia, 'Times New Roman', serif; font-style: italic; color: rgba(55, 48, 47, 0.68);">Project Lead</span>
-                                </div>
-                                <div style="margin-top: 18px; max-width: 520px; font-size: 18px; line-height: 1.7; color: #5d5650;">
-                                  A visitor has submitted the Dandu Interiors contact form. Review the enquiry details below and follow up with the client on call or WhatsApp.
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style="padding: 32px 36px;">
-                                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                                  <tr>
-                                    <td style="padding: 0 0 16px;">
-                                      <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Client Name</div>
-                                      <div style="font-size: 26px; line-height: 1.3; color: #1A1A1A; font-weight: 600;">${escapeHtml(name)}</div>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td style="padding: 8px 0 16px;">
-                                      <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">WhatsApp Number</div>
-                                      <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(phone)}</div>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td style="padding: 8px 0 16px;">
-                                      <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Project Location</div>
-                                      <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(locationLabel)}</div>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td style="padding: 8px 0 16px;">
-                                      <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Property Type</div>
-                                      <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(propertyType)}</div>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td style="padding: 8px 0 0;">
-                                      <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #8b8179; font-weight: 700; margin-bottom: 8px;">Requirement</div>
-                                      <div style="font-size: 17px; line-height: 1.6; color: #37302F; font-weight: 500;">${escapeHtml(requirement)}</div>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td style="padding-top: 8px;">
-                                      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #1A1A1A; border-radius: 24px;">
-                                        <tr>
-                                          <td style="padding: 22px 24px; text-align: center;">
-                                            <div style="font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(248, 245, 242, 0.62); font-weight: 700; margin-bottom: 8px;">Dandu Interior Website</div>
-                                            <div style="font-size: 18px; line-height: 1.6; color: #F8F5F2;">
-                                              A new lead is waiting for your response.
-                                            </div>
-                                          </td>
-                                        </tr>
-                                      </table>
-                                    </td>
-                                  </tr>
-                                </table>
+                              <td style="padding-top: 32px; border-top: 1px solid #eaeaea;">
+                                <div style="font-size: 14px; font-weight: 600; color: #1A1A1A;">Warm Regards,</div>
+                                <div style="font-size: 14px; color: #777777; margin-top: 4px;">The Dandu Interiors Team</div>
+                                <div style="font-size: 12px; color: #999999; margin-top: 12px;">+91 98661 66612 | danduinteriordesigns@gmail.com</div>
                               </td>
                             </tr>
                           </table>
@@ -142,13 +209,28 @@ export default async function handler(req, res) {
             </body>
           </html>
         `
-      }),
-    });
+      };
 
-    if (response.ok) {
+      promises.push(
+        fetch("https://api.brevo.com/v3/smtp/email", {
+          method: "POST",
+          headers: {
+            "accept": "application/json",
+            "api-key": brevoApiKey,
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userReplyPayload),
+        })
+      );
+    }
+
+    const responses = await Promise.all(promises);
+    const adminResponse = responses[0];
+
+    if (adminResponse.ok) {
       return res.status(200).json({ message: 'Email sent successfully' });
     } else {
-      const rawError = await response.text();
+      const rawError = await adminResponse.text();
       let errorData = {};
 
       try {
@@ -158,7 +240,7 @@ export default async function handler(req, res) {
       }
 
       console.error("Brevo API Error:", errorData);
-      return res.status(response.status).json({
+      return res.status(adminResponse.status).json({
         message: errorData.message || "Brevo request failed",
         code: errorData.code || "brevo_error",
       });
