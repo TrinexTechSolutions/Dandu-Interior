@@ -5,8 +5,8 @@ import brandLogo from '../assets/logos_and_bg_images/dandu_logo.svg';
 import { useModal } from '../context/ModalContext';
 
 const SERVICES = [
-  { name: 'Interior Works', path: '/services/interior-design' },
-  { name: 'Civil Works', path: '/services/masonry' },
+  { name: 'Interior Works', path: '/services/interior-works' },
+  { name: 'Civil Works', path: '/services/civil-works' },
   { name: 'Renovation', path: '/services/renovation' }
 ];
 
@@ -49,7 +49,7 @@ const Navbar = () => {
     }, 250); // Increased grace period to 250ms
   };
 
-  const parallaxPaths = ['/about', '/contact', '/design-ideas', '/projects'];
+  const parallaxPaths = ['/about', '/contact', '/design-ideas', '/gallery'];
   const isParallaxPage = parallaxPaths.some(path => location.pathname.startsWith(path));
 
   return (
@@ -99,16 +99,16 @@ const Navbar = () => {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <button 
-                onClick={() => setServicesOpen(!servicesOpen)}
-                className={`flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase px-4 py-2 transition-all duration-300 text-[#37302F] ${
-                  location.pathname.startsWith('/services')
+              <NavLink 
+                to="/services"
+                className={({ isActive }) => `flex items-center gap-2 text-[10px] font-bold tracking-[0.25em] uppercase px-4 py-2 transition-all duration-300 text-[#37302F] ${
+                  isActive || location.pathname.startsWith('/services')
                   ? 'border-b border-[#37302F]'
                   : 'border-b border-transparent hover:border-[#37302F]/30'
                 }`}
               >
                 Services <ChevronDown size={10} className={`transition-transform duration-300 ${servicesOpen ? 'rotate-180' : ''}`} />
-              </button>
+              </NavLink>
               
               {/* Dropdown Container with "Bridge" - using 80% top to ensure a thick overlap zone */}
               <div className={`absolute top-[80%] left-1/2 -translate-x-1/2 pt-8 transition-all duration-300 origin-top z-[110] ${servicesOpen ? 'opacity-100 scale-100 visible' : 'opacity-0 scale-95 invisible'}`}>
@@ -136,7 +136,7 @@ const Navbar = () => {
             </div>
 
             {[
-              { name: 'Gallery', path: '/projects' },
+              { name: 'Gallery', path: '/gallery' },
               { name: 'Design Ideas', path: '/design-ideas' },
               { name: 'Contact', path: '/contact' }
             ].map((item) => (
@@ -206,17 +206,24 @@ const Navbar = () => {
           ))}
           
           <div className="flex flex-col">
-            <button 
-              onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+            <div 
               className={`flex justify-between items-center w-full text-[10px] font-bold tracking-[0.3em] uppercase p-2 text-left transition-colors text-[#37302F] ${
                 location.pathname.startsWith('/services')
                 ? 'border-b border-[#37302F]'
                 : 'border-b border-transparent'
               }`}
             >
-              Services
-              <ChevronDown size={14} className={`transition-transform duration-300 ${mobileServicesOpen ? 'rotate-180' : ''}`} />
-            </button>
+              <NavLink to="/services" onClick={() => setIsOpen(false)} className="flex-1">Services</NavLink>
+              <button 
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMobileServicesOpen(!mobileServicesOpen);
+                }} 
+                className="p-1 px-2 -mr-2"
+              >
+                <ChevronDown size={14} className={`transition-transform duration-300 ${mobileServicesOpen ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
             
             <div className={`flex flex-col overflow-hidden transition-all duration-300 ${mobileServicesOpen ? 'max-h-[600px] mt-4' : 'max-h-0'}`}>
               <div className="pl-4 border-l border-[#37302F]/10 ml-2 py-2 flex flex-col gap-2">
@@ -239,7 +246,7 @@ const Navbar = () => {
           </div>
 
           {[
-            { name: 'Gallery', path: '/projects' },
+            { name: 'Gallery', path: '/gallery' },
             { name: 'Design Ideas', path: '/design-ideas' },
             { name: 'Contact', path: '/contact' }
           ].map((item) => (

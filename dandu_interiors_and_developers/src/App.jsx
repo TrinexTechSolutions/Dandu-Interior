@@ -32,13 +32,13 @@ const AnimatedRoutes = () => {
           <Route path="about" element={<About />} />
           <Route path="services" element={<Services />} />
           <Route path="services/:id" element={<Services />} />
-          <Route path="projects" element={<Projects />} />
+          <Route path="gallery" element={<Projects />} />
           <Route path="design-ideas" element={<DesignIdeas />} />
           <Route path="contact" element={<Contact />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="terms-and-conditions" element={<TermsAndConditions />} />
         </Route>
-        <Route path="/projects/:id" element={<ProjectDetail />} />
+        <Route path="/gallery/:id" element={<ProjectDetail />} />
         <Route path="/design-ideas/:id" element={<DesignIdeaDetail />} />
       </Routes>
     </div>

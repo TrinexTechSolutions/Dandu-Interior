@@ -120,7 +120,7 @@ const getServiceImage = (name, fallback) =>
 
 const rawServices = [
   {
-    id: 'interior-design',
+    id: 'interior-works',
     title: 'Interior Works',
     icon: Home,
     shortDesc: 'Transform your space into a stunning, functional environment with our expert interior design solutions.',
@@ -146,7 +146,7 @@ const rawServices = [
     ]
   },
   {
-    id: 'masonry',
+    id: 'civil-works',
     title: 'Civil Works',
     icon: Grid,
     shortDesc: 'Precision tile fixing, grouting, and marble installation for durable and aesthetic finishes.',

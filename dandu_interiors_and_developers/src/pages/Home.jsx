@@ -403,10 +403,10 @@ const Home = () => {
       <SectionWrapper>
         <div className="relative mb-20 flex flex-col items-center justify-center">
           <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] text-center mb-4 leading-none">
-            Our <span className="font-serif italic text-black/30">Projects</span>
+            Our <span className="font-serif italic text-black/30">Gallery</span>
           </h2>
           <div className="w-20 h-[1px] bg-black/10"></div>
-          <Link to="/projects" className="mt-8 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-6 py-2 rounded-full border border-black/5 transition-all">
+          <Link to="/gallery" className="mt-8 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-6 py-2 rounded-full border border-black/5 transition-all">
             View All Work <ChevronRight size={14} />
           </Link>
         </div>
@@ -416,7 +416,7 @@ const Home = () => {
             return (
               <Link
                 key={project.id}
-                to={`/projects`}
+                to={`/gallery`}
                 className="group relative rounded-2xl overflow-hidden shadow-sm block transition-all duration-700 hover:shadow-2xl h-full"
                 data-cursor-text="VIEW"
               >
