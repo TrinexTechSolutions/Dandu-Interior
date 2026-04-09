@@ -1,5 +1,6 @@
 import React from 'react';
 import heroBg from '../assets/herosection_banners/hero1.jpeg';
+import whyChooseUsImage from '../assets/Home/why_choose_us.webp';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, Clock, Award, Users, ChevronRight, ChevronLeft, Star } from 'lucide-react';
 import { services } from '../data/services';
@@ -389,7 +390,7 @@ const Home = () => {
           </div>
           <div className="relative">
             <img
-              src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&q=75&w=800"
+              src={whyChooseUsImage}
               alt="Craftsmanship"
               loading="lazy"
               className="rounded-2xl shadow-2xl relative z-10"
@@ -430,25 +431,6 @@ const Home = () => {
                 {/* Immersive Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                {/* Content Overlay - Precision Glassmorphism */}
-                <div className="absolute bottom-0 left-0 w-full p-3 sm:p-4 lg:p-5">
-                  <div className="flex flex-col items-start gap-2 lg:gap-3">
-
-                    <div className="overflow-hidden">
-                      <h3 className="text-white font-light tracking-tighter leading-none transition-all duration-700 group-hover:tracking-normal group-hover:scale-[1.02] origin-left drop-shadow-lg text-sm sm:text-lg lg:text-xl">
-                        {project.title.split(' ')[0]} <br />
-                        <span className="font-serif italic text-white/40 group-hover:text-white/60 transition-colors duration-500">{project.title.split(' ').slice(1).join(' ')}</span>
-                      </h3>
-                    </div>
-
-                    <div className="hidden sm:flex items-center gap-3 mt-2 lg:mt-4 opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700 delay-100">
-                      <p className="text-white/60 font-light tracking-[0.1em] uppercase border-l border-white/30 pl-3 text-[7px] lg:text-[9px]">
-                        {project.location}
-                      </p>
-                      <div className="w-8 lg:w-12 h-[1px] bg-white/30"></div>
-                    </div>
-                  </div>
-                </div>
               </Link>
             );
           })}

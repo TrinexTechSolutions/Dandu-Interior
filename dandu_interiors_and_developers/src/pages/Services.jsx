@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { services } from '../data/services';
 import { useModal } from '../context/ModalContext';
 
-const civilWorksRelatedServiceIds = ['office-partitions', 'painting', 'electrical', 'plumbing'];
+
 
 const Services = () => {
   const { id } = useParams();
@@ -62,8 +62,7 @@ const Services = () => {
 
   if (!activeService) return null;
 
-  const civilWorksRelatedServices = services.filter(service => civilWorksRelatedServiceIds.includes(service.id));
-  const showCivilWorksExtensions = activeService.id === 'masonry';
+
 
   const toggleSubService = (name) => {
     setExpandedSubServices((prev) => ({
@@ -212,58 +211,6 @@ const Services = () => {
           </section>
         ))}
 
-        {showCivilWorksExtensions && civilWorksRelatedServices.map((service, index) => {
-          const previewImage = service.subServices?.[0]?.image;
-          const displayIndex = activeService.subServices.length + index;
-
-          return (
-            <section
-              key={service.id}
-              className={`py-8 md:py-16 relative ${displayIndex % 2 === 0 ? 'bg-white' : 'bg-[#F8F5F2]'}`}
-            >
-              <div className="container-custom">
-                <div className={`flex flex-col gap-8 lg:gap-12 items-center ${displayIndex % 2 === 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
-                  <div className="w-full lg:w-1/2">
-                    <div className="relative mb-8 mt-12 lg:mt-20 pl-6 flex items-end">
-                      <span className="text-7xl md:text-[10rem] font-extrabold text-[#1A1A1A]/15 absolute bottom-0 -left-2 z-0 pointer-events-none select-none leading-[0.75]">
-                        {String(displayIndex + 1).padStart(2, '0')}
-                      </span>
-                      <h2 className="text-4xl md:text-6xl font-medium tracking-tighter text-[#37302F] relative z-10 leading-none pb-1 whitespace-nowrap lg:whitespace-normal">
-                        {service.title.split(' ')[0]}{' '}
-                        <span className="font-serif italic text-[#37302F]/70">{service.title.split(' ').slice(1).join(' ')}</span>
-                      </h2>
-                    </div>
-                    <div className="w-20 h-[1px] bg-black/10 mb-8"></div>
-                    <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                      {service.description}
-                    </p>
-                    <Link
-                      to={`/services/${service.id}`}
-                      className="inline-flex items-center gap-3 font-bold text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-8 py-4 rounded-xl border border-black/5 transition-all group"
-                    >
-                      View More <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </div>
-
-                  <div className="w-full lg:w-1/2 lg:drop-shadow-2xl">
-                    <div className={`relative shadow-2xl lg:shadow-none overflow-hidden aspect-[4/3] group w-full h-full ${displayIndex % 2 === 0 ? 'rounded-2xl lg:rounded-r-none lg:rounded-l-3xl lg:[clip-path:polygon(0%_0%,_75%_0%,_100%_100%,_0%_100%)]' : 'rounded-2xl lg:rounded-l-none lg:rounded-r-3xl lg:[clip-path:polygon(25%_0%,_100%_0%,_100%_100%,_0%_100%)]'}`}>
-                      <img
-                        src={previewImage}
-                        alt={service.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        onError={(e) => {
-                          e.target.src = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=75&w=800";
-                        }}
-                      />
-                      <div className="absolute inset-0 border-4 border-[#1A1A1A]/20 rounded-2xl pointer-events-none lg:hidden"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          );
-        })}
       </div>
 
       {/* Horizontal Bottom Navigation for All Services */}

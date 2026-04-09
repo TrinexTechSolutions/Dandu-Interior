@@ -1,4 +1,5 @@
 import { Paintbrush, Hammer, Wrench, Zap, SplitSquareHorizontal, Grid, Home } from 'lucide-react';
+import civilWorksRootImage from '../assets/Home/civil_works.webp';
 import allPaintingWorkImage from '../assets/Services/All Painting Work.webp';
 import additionOfFloorImage from '../assets/Services/Addition of Floor.webp';
 import aluminumPartitionsImage from '../assets/Services/Aluminum Partitions.webp';
@@ -52,6 +53,16 @@ import villaPaintingImage from '../assets/Services/Villa Painting.webp';
 import wallPartitionMakingImage from '../assets/Services/Wall Partition Making.webp';
 import washingMachineInstallationImage from '../assets/Services/Washing Machine Installation.webp';
 import waterLeakRepairImage from '../assets/Services/Water Leak Repair.webp';
+
+import plumbingBasinImage from '../assets/Services/plumbing_basin.webp';
+import plumbingDiagnosisImage from '../assets/Services/plumbing_diagnosis.webp';
+import plumbingLeakImage from '../assets/Services/plumbing_leak.webp';
+import plumbingTapImage from '../assets/Services/plumbing_tap.webp';
+import plumbingPipesImage from '../assets/Services/plumbing_pipes.webp';
+import plumbingWashingMachineImage from '../assets/Services/plumbing_washing_machine.webp';
+import plumbingKitchenSinkImage from '../assets/Services/plumbing_kitchen_sink.webp';
+import plumbingBathTubImage from '../assets/Services/plumbing_bath_tub.webp';
+import plumbingToiletImage from '../assets/Services/plumbing_toilet.webp';
 
 const serviceImageByName = {
   'All Painting Work': allPaintingWorkImage,
@@ -128,18 +139,18 @@ const rawServices = [
     fullDesc: 'Our interior design service covers everything from concept to completion. We listen to your vision and bring it to life, creating spaces that are both beautiful and practical. Whether it is a cozy residential home or a modern corporate office, we use premium materials and innovative layouts to maximize the potential of your property.',
     benefits: ['Space Optimization', 'Custom Furniture Design', 'Color Psychology', 'Lighting Consultation'],
     subServices: [
-      { 
-        name: 'Residential Design', 
+      {
+        name: 'Residential Design',
         desc: 'Your home should be a reflection of your personality and a sanctuary for relaxation. Our residential interior design services focus on creating spaces that are aesthetically pleasing, highly functional, and comfortable. From conceptualizing the layout to selecting the perfect furniture, fabrics, and lighting, we handle everything. We blend modern trends with timeless elegance to ensure your living room, bedrooms, and dining areas feel uniquely yours. Our team pays meticulous attention to every detail, ensuring the final result exceeds your expectations while staying within your budget.',
         image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=75&w=800'
       },
-      { 
-        name: 'Office Design', 
+      {
+        name: 'Office Design',
         desc: 'A well-designed office does more than just look good; it boosts productivity, enhances employee morale, and leaves a lasting impression on clients. We specialize in creating dynamic, ergonomic, and inspiring workspaces. Whether you need a collaborative open-plan layout or private, focused zones, our designs incorporate the latest in office ergonomics, smart lighting, and acoustic management. We understand the importance of your brand identity and weave your corporate colors and ethos into the physical fabric of the workspace.',
         image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=75&w=800'
       },
-      { 
-        name: 'Commercial Design', 
+      {
+        name: 'Commercial Design',
         desc: 'In the commercial sector, the design of your space directly impacts customer experience and your bottom line. We provide comprehensive interior design solutions for restaurants, retail stores, boutiques, and hospitality venues. Our approach focuses on customer flow, spatial psychology, and striking visual elements that draw people in. We source durable, high-traffic materials that maintain their premium look over time. Let us help you create an inviting commercial environment that accurately represents your brand\'s narrative and engages your target audience.',
         image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=75&w=800'
       }
@@ -149,6 +160,7 @@ const rawServices = [
     id: 'civil-works',
     title: 'Civil Works',
     icon: Grid,
+    image: civilWorksRootImage,
     shortDesc: 'Precision tile fixing, grouting, and marble installation for durable and aesthetic finishes.',
     description: 'Precision structural and aesthetic masonry, specializing in flawless marble flooring, expert tile fixing, and robust brickwork. We ensure every surface is perfectly leveled and built to last with professional-grade finishing.',
     fullDesc: 'Our masonry division provides the structural and aesthetic backbone of your property. We employ seasoned masons who take pride in precision and structural integrity. From flawless marble flooring that elevates a lobby\'s grandeur to heavy duty brickwork, our masonry works are executed with rigorous quality control, ensuring longevity and impeccable finishes.',
@@ -162,7 +174,11 @@ const rawServices = [
       },
       { name: 'Brickwork', desc: 'Structural brick laying for exterior facades, retaining walls, and internal exposed-brick aesthetic walls. Done with precise mortar jointing for structural integrity.', image: brickworkImage },
       { name: 'Plastering', desc: 'Smooth and flawless plastering for interior and exterior walls. Creating the perfect canvas for painting or wallpapering by eliminating surface undulations.', image: plasteringImage, linkId: 'plastering' },
-      { name: 'Flooring', desc: 'Comprehensive flooring solutions including stone, interlocking pavers, and polished concrete for patios, driveways, and industrial spaces.', image: flooringImage, linkId: 'flooring' }
+      { name: 'Flooring', desc: 'Comprehensive flooring solutions including stone, interlocking pavers, and polished concrete for patios, driveways, and industrial spaces.', image: flooringImage, linkId: 'flooring' },
+      { name: 'Partitions', desc: 'Expert installation of drywall, glass, and aluminum partitions for optimal space utilization and soundproofing.', image: aluminumPartitionsImage, linkId: 'office-partitions' },
+      { name: 'Painting', desc: 'Premium interior and exterior painting services with high-quality finishes and weather-resistant coatings.', image: interiorPaintingImage, linkId: 'painting' },
+      { name: 'Electrical Works', desc: 'Comprehensive electrical installations, rewiring, and smart home lighting integrations by certified electricians.', image: completeNewElectricSystemsInstallationImage, linkId: 'electrical' },
+      { name: 'Plumbing Works', desc: 'Professional plumbing solutions from new pipe installations to leak repairs and complete bathroom fittings.', image: completeNewPlumbingSystemInstallationImage, linkId: 'plumbing' }
     ]
   },
   {
@@ -294,18 +310,18 @@ const rawServices = [
     fullDesc: 'Water damage is a property\'s worst enemy. Our expert plumbers deliver robust piping solutions that guarantee high pressure, leak-free operation, and efficient drainage. Whether dealing with a midnight pipe burst or designing a complex bathroom plumbing layout from scratch, our team executes with absolute precision and premium materials.',
     benefits: ['24/7 Support Available', 'Leak Detection', 'High-Quality Fittings', 'Water Pressure Optimization'],
     subServices: [
-      { name: 'Complete New Plumbing System Installation', desc: 'Designing and laying out the entire water supply and drainage network for new buildings. Utilizing high-grade UPVC and CPVC pipes for corrosion-free longevity.', image: 'https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Plumbing System Diagnosis and Inspections', desc: 'Using advanced pressure testing and thermal imaging to locate hidden leaks within walls or underground without unnecessary digging or tile breaking.', image: 'https://images.unsplash.com/photo-1607472586893-edb57cb313ce?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Water Leak Repair', desc: 'Immediate sealing of leaking pipes, seeping ceilings, and damp walls. We fix the root cause and ensure the surrounding area is waterproofed.', image: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Extend Water Connection', desc: 'Running new water lines to garden hose bibs, new kitchen islands, or outdoor sinks securely and safely.', image: 'https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Dishwasher Connection Making', desc: 'Tapping into existing under-sink water lines and drainage pipes to securely hook up new dishwashers seamlessly.', image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Washing Machine Installation', desc: 'Setting up dedicated water inlet valves, safe drainage standpipes, and ensuring the machine is perfectly leveled to prevent vibration.', image: 'https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Hand Wash Basin Repair and Installation', desc: 'Fixing wobbly basins, replacing cracked ceramic sinks, and installing modern vanity units with pristine silicone sealing.', image: 'https://images.unsplash.com/photo-1584622781564-1d987f7333c1?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Kitchen Sink Repair and Installation', desc: 'Mounting heavy stainless steel or granite sinks, fixing leaky traps, and installing modern pull-down mixer faucets.', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Bath Tub Installation', desc: 'Setting up luxurious bathtubs, connecting complex overflow and pop-up waste drains, and ensuring zero-leak integration with floor traps.', image: 'https://images.unsplash.com/photo-1507652313519-d4e9174296fc?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Toilet Repairs and Installations', desc: 'Fixing constantly running flushes, replacing broken seats, resolving weak flushes, and installing modern wall-hung commodes with concealed cisterns.', image: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Tap Repairs and Installations', desc: 'Fixing dripping faucets by replacing worn-out ceramic cartridges. Upgrading old taps to modern, aerated, water-saving mixers.', image: 'https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&fit=crop&q=75&w=800' },
-      { name: 'Blocked Pipes and Drains removing and installation', desc: 'Using powerful drain snakes and high-pressure jetting to clear stubborn hair, grease, and blockages from floor traps and main sewer lines.', image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=75&w=800' }
+      { name: 'Complete New Plumbing System Installation', desc: 'Designing and laying out the entire water supply and drainage network for new buildings. Utilizing high-grade UPVC and CPVC pipes for corrosion-free longevity.', image: plumbingBasinImage },
+      { name: 'Plumbing System Diagnosis and Inspections', desc: 'Using advanced pressure testing and thermal imaging to locate hidden leaks within walls or underground without unnecessary digging or tile breaking.', image: plumbingDiagnosisImage },
+      { name: 'Water Leak Repair', desc: 'Immediate sealing of leaking pipes, seeping ceilings, and damp walls. We fix the root cause and ensure the surrounding area is waterproofed.', image: plumbingLeakImage },
+      { name: 'Extend Water Connection', desc: 'Running new water lines to garden hose bibs, new kitchen islands, or outdoor sinks securely and safely.', image: plumbingTapImage },
+      { name: 'Dishwasher Connection Making', desc: 'Tapping into existing under-sink water lines and drainage pipes to securely hook up new dishwashers seamlessly.', image: plumbingPipesImage },
+      { name: 'Washing Machine Installation', desc: 'Setting up dedicated water inlet valves, safe drainage standpipes, and ensuring the machine is perfectly leveled to prevent vibration.', image: plumbingWashingMachineImage },
+      { name: 'Hand Wash Basin Repair and Installation', desc: 'Fixing wobbly basins, replacing cracked ceramic sinks, and installing modern vanity units with pristine silicone sealing.', image: plumbingBasinImage },
+      { name: 'Kitchen Sink Repair and Installation', desc: 'Mounting heavy stainless steel or granite sinks, fixing leaky traps, and installing modern pull-down mixer faucets.', image: plumbingKitchenSinkImage },
+      { name: 'Bath Tub Installation', desc: 'Setting up luxurious bathtubs, connecting complex overflow and pop-up waste drains, and ensuring zero-leak integration with floor traps.', image: plumbingBathTubImage },
+      { name: 'Toilet Repairs and Installations', desc: 'Fixing constantly running flushes, replacing broken seats, resolving weak flushes, and installing modern wall-hung commodes with concealed cisterns.', image: plumbingToiletImage },
+      { name: 'Tap Repairs and Installations', desc: 'Fixing dripping faucets by replacing worn-out ceramic cartridges. Upgrading old taps to modern, aerated, water-saving mixers.', image: plumbingTapImage },
+      { name: 'Blocked Pipes and Drains removing and installation', desc: 'Using powerful drain snakes and high-pressure jetting to clear stubborn hair, grease, and blockages from floor traps and main sewer lines.', image: plumbingPipesImage }
     ]
   },
 ];

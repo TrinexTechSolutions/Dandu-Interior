@@ -3,6 +3,11 @@ import CallToAction from '../components/CallToAction';
 import { ArrowRight } from 'lucide-react';
 import { useScroll, useTransform, motion } from 'framer-motion';
 import FounderImg from '../assets/about_page_images/Founder_img_3.jpeg';
+import heroArchitectureImg from '../assets/About/hero_architecture.webp';
+import structuralIntegrityImg from '../assets/About/structural_integrity.webp';
+import obsessiveDetailImg from '../assets/About/obsessive_detail.webp';
+import engineeringMasteryImg from '../assets/About/engineering_mastery.webp';
+import visionaryReachImg from '../assets/About/visionary_reach.webp';
 
 const About = () => {
   const [hoveredValue, setHoveredValue] = useState(null);
@@ -49,25 +54,25 @@ const About = () => {
       id: '01',
       title: 'Structural Integrity',
       desc: 'Transparent budgets and honest engineering. We stand by our word from the first slab to the final handover.',
-      img: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=800'
+      img: structuralIntegrityImg
     },
     {
       id: '02',
       title: 'Obsessive Detail',
       desc: 'Our passion is reflected in the meticulous, microscopic details of every joint, tile, and light fixture.',
-      img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800'
+      img: obsessiveDetailImg
     },
     {
       id: '03',
       title: 'Engineering Mastery',
       desc: 'Settling for "good enough" is never in our vocabulary. Technical perfection is our absolute baseline.',
-      img: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=800'
+      img: engineeringMasteryImg
     },
     {
       id: '04',
       title: 'Visionary Reach',
       desc: 'Your aspirations, engineered. We exist to translate your dreams into technically sound, beautifully realized realities.',
-      img: 'https://images.unsplash.com/photo-1510629681534-11029c9df37c?auto=format&fit=crop&q=80&w=800'
+      img: visionaryReachImg
     }
   ];
 
@@ -93,7 +98,7 @@ const About = () => {
 
           <div className="lg:col-span-5 xl:col-span-4 relative h-[45vw] max-h-[400px] lg:h-[75vh] lg:max-h-none w-full overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl">
             <img
-              src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=1200"
+              src={heroArchitectureImg}
               alt="Hero Architecture"
               className="w-full h-full object-cover object-center absolute inset-0 transform hover:scale-105 transition-transform duration-1000"
             />
