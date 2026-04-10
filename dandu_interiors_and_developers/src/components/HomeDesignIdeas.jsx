@@ -1,10 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import SectionWrapper from './SectionWrapper';
 import { designIdeas } from '../data/designIdeas';
+import { useModal } from '../context/ModalContext';
 
 const HomeDesignIdeas = () => {
+  const navigate = useNavigate();
+  const { openIdeaDrawer } = useModal();
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const handleIdeaClick = (e, idea) => {
+    const isMobile = windowWidth < 1024; // Matching Home.jsx mobile breakpoint
+    if (isMobile) {
+      e.preventDefault();
+      const id = idea.title.toLowerCase().replace(/\s+/g, '-');
+      openIdeaDrawer(id);
+    }
+  };
+
   // We take exactly 6 items for our special masonry grid
   const displayIdeas = designIdeas.slice(0, 6);
 
@@ -46,6 +66,7 @@ const HomeDesignIdeas = () => {
             <Link 
               to={`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`} 
               key={idx} 
+              onClick={(e) => handleIdeaClick(e, idea)}
               className={`
                 group relative overflow-hidden block rounded-xl transition-all duration-700 hover:shadow-2xl
                 ${mobileGridClasses[idx]}
@@ -81,3 +102,4 @@ const HomeDesignIdeas = () => {
 };
 
 export default HomeDesignIdeas;
+

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, useIsPresent, AnimatePresence, useDragControls } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
@@ -11,12 +11,16 @@ import CallToAction from '../components/CallToAction';
 
 const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, isOpen = false }) => {
   const { id: routeId } = useParams();
+  const navigate = useNavigate();
   const id = isDrawer ? drawerId : routeId;
   const { openQuoteFromDrawer, setDetailDrawerOpen } = useModal();
   const scrollContainerRef = useRef(null);
   const dragControls = useDragControls();
 
   const idea = designIdeas.find(i => i.title.toLowerCase().replace(/\s+/g, '-') === id);
+
+  // If we're on a standalone page, we're effectively "open"
+  const isActuallyOpen = isDrawer ? isOpen : true;
 
   // Handle body scroll for mobile drawer
   useEffect(() => {
@@ -124,47 +128,51 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
 
       <div className="md:hidden">
         <AnimatePresence>
-          {isOpen && idea && (
+          {isActuallyOpen && idea && (
             <>
               {/* Drawer Backdrop with animation to fix the closing glitch */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 bg-black/40 z-[998] backdrop-blur-sm"
-                onClick={onClose}
-              />
+              {isDrawer && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 bg-black/40 z-[998] backdrop-blur-sm"
+                  onClick={onClose}
+                />
+              )}
 
               <motion.div
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                exit={{ y: '100%' }}
+                initial={isDrawer ? { y: '100%' } : { opacity: 0 }}
+                animate={isDrawer ? { y: 0 } : { opacity: 1 }}
+                exit={isDrawer ? { y: '100%' } : { opacity: 0 }}
                 transition={{ type: 'spring', damping: 30, stiffness: 220 }}
-                className="fixed bottom-0 left-0 right-0 z-[999] bg-[#F8F5F2] rounded-t-[32px] max-h-[92dvh] flex flex-col shadow-2xl overflow-hidden"
-                drag="y"
+                className={`${isDrawer ? 'fixed bottom-0 left-0 right-0 z-[999] rounded-t-[32px] max-h-[92dvh] shadow-2xl' : 'min-h-screen relative'} bg-[#F8F5F2] flex flex-col overflow-hidden`}
+                drag={isDrawer ? "y" : false}
                 dragControls={dragControls}
                 dragListener={false}
                 dragConstraints={{ top: 0, bottom: 0 }}
                 dragElastic={{ top: 0, bottom: 0.5 }}
                 onDragEnd={(e, info) => {
-                  if (info.offset.y > 100 || info.velocity.y > 500) {
+                  if (isDrawer && (info.offset.y > 100 || info.velocity.y > 500)) {
                     onClose();
                   }
                 }}
               >
-                {/* Handle Bar */}
-                <div 
-                  className="w-full flex justify-center pt-4 pb-2 cursor-grab active:cursor-grabbing touch-none"
-                  onPointerDown={(e) => dragControls.start(e)}
-                >
-                  <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
-                </div>
+                {/* Handle Bar (Only in drawer mode) */}
+                {isDrawer && (
+                  <div 
+                    className="w-full flex justify-center pt-4 pb-2 cursor-grab active:cursor-grabbing touch-none"
+                    onPointerDown={(e) => dragControls.start(e)}
+                  >
+                    <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
+                  </div>
+                )}
 
                 {/* Header */}
-                <div className="flex items-center justify-between px-6 pb-4 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-10">
+                <div className={`flex items-center justify-between px-6 pb-4 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-10 ${!isDrawer ? 'pt-6' : ''}`}>
                   <h2 className="text-xs font-bold text-[#1A1A1A] tracking-[0.2em] uppercase">{idea.title} Ideas</h2>
                   <button
-                    onClick={onClose}
+                    onClick={isDrawer ? onClose : () => navigate('/design-ideas')}
                     className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
                     aria-label="Close"
                   >
@@ -242,3 +250,4 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
 };
 
 export default DesignIdeaDetail;
+
