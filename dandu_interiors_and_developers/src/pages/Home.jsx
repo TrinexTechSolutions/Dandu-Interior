@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import heroBg from '../assets/herosection_banners/hero1.jpeg';
 import whyChooseUsImage from '../assets/Home/why_choose_us.webp';
 import { Link } from 'react-router-dom';
@@ -15,21 +15,30 @@ const heroImage = heroBg;
 
 const Home = () => {
   const { openQuoteModal } = useModal();
-  const [expandedTestimonial, setExpandedTestimonial] = React.useState(null);
-  const scrollRef = React.useRef(null);
-  const [isInteracting, setIsInteracting] = React.useState(false);
-  const [isManualScroll, setIsManualScroll] = React.useState(false);
-  const testimonialScrollRef = React.useRef(null);
-  const [isTestimonialInteracting, setIsTestimonialInteracting] = React.useState(false);
-  const [activeProcessStep, setActiveProcessStep] = React.useState(() => {
+  const [expandedTestimonial, setExpandedTestimonial] = useState(null);
+  const scrollRef = useRef(null);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const [isManualScroll, setIsManualScroll] = useState(false);
+  const testimonialScrollRef = useRef(null);
+  const [isTestimonialInteracting, setIsTestimonialInteracting] = useState(false);
+  const [activeProcessStep, setActiveProcessStep] = useState(() => {
     // Start with 0 on desktop for auto-loop, -1 on mobile for scroll-driven
     return typeof window !== 'undefined' && window.innerWidth < 1024 ? -1 : 0;
   });
-  const [isHoveringProcess, setIsHoveringProcess] = React.useState(false);
+  const [isHoveringProcess, setIsHoveringProcess] = useState(false);
+
+  // Optimization: Visibility tracking to pause animations when off-screen
+  const [isServicesVisible, setIsServicesVisible] = useState(false);
+  const [isTestimonialsVisible, setIsTestimonialsVisible] = useState(false);
+  const servicesSectionRef = useRef(null);
+  const testimonialsSectionRef = useRef(null);
+  
+  // Optimization: Cache step elements to avoid repeated DOM queries
+  const processStepsRef = useRef([]);
 
   // Timer refs for resuming auto-scroll
-  const serviceResumeTimer = React.useRef(null);
-  const testimonialResumeTimer = React.useRef(null);
+  const serviceResumeTimer = useRef(null);
+  const testimonialResumeTimer = useRef(null);
 
   const resetServiceInteraction = () => {
     if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
@@ -46,8 +55,29 @@ const Home = () => {
     }, 4000);
   };
 
+  // Intersection Observers for performance
+  useEffect(() => {
+    const observerOptions = { threshold: 0.1 };
+    
+    const servicesObserver = new IntersectionObserver(([entry]) => {
+      setIsServicesVisible(entry.isIntersecting);
+    }, observerOptions);
+
+    const testimonialsObserver = new IntersectionObserver(([entry]) => {
+      setIsTestimonialsVisible(entry.isIntersecting);
+    }, observerOptions);
+
+    if (servicesSectionRef.current) servicesObserver.observe(servicesSectionRef.current);
+    if (testimonialsSectionRef.current) testimonialsObserver.observe(testimonialsSectionRef.current);
+
+    return () => {
+      servicesObserver.disconnect();
+      testimonialsObserver.disconnect();
+    };
+  }, []);
+
   // Auto-loop for process steps on desktop
-  React.useEffect(() => {
+  useEffect(() => {
     // Only auto-loop on desktop (>= 1024px). For mobile, expansion is scroll-driven.
     const interval = setInterval(() => {
       const isMobile = window.innerWidth < 1024;
@@ -63,29 +93,37 @@ const Home = () => {
     };
   }, [isHoveringProcess]);
 
-  // Mobile scroll tracking with precise center detection
-  React.useEffect(() => {
+  // Mobile scroll tracking with precise center detection and throttling
+  useEffect(() => {
     const isMobile = window.innerWidth < 1024;
     if (!isMobile) return;
 
+    // Cache the elements once
+    processStepsRef.current = Array.from(document.querySelectorAll('.process-step-card'));
+
+    let isScrolling = false;
     const handleScroll = () => {
-      const stepElements = document.querySelectorAll('.process-step-card');
-      const centerY = window.innerHeight / 2;
-      const triggerRange = window.innerHeight * 0.15; // 15% of screen height as trigger zone
+      if (isScrolling) return;
+      isScrolling = true;
 
-      let currentActive = -1;
+      requestAnimationFrame(() => {
+        const centerY = window.innerHeight / 2;
+        const triggerRange = window.innerHeight * 0.15; // 15% of screen height as trigger zone
+        let currentActive = -1;
 
-      stepElements.forEach((el, index) => {
-        const rect = el.getBoundingClientRect();
-        const elCenter = rect.top + rect.height / 2;
+        processStepsRef.current.forEach((el, index) => {
+          const rect = el.getBoundingClientRect();
+          const elCenter = rect.top + rect.height / 2;
 
-        // Only activate if the card is literally in the center zone
-        if (Math.abs(centerY - elCenter) < triggerRange) {
-          currentActive = index;
-        }
+          // Only activate if the card is literally in the center zone
+          if (Math.abs(centerY - elCenter) < triggerRange) {
+            currentActive = index;
+          }
+        });
+
+        setActiveProcessStep(currentActive);
+        isScrolling = false;
       });
-
-      setActiveProcessStep(currentActive);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -95,7 +133,7 @@ const Home = () => {
   }, []);
 
   // Smooth auto-scroll for Core Services
-  React.useEffect(() => {
+  useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
@@ -104,26 +142,28 @@ const Home = () => {
 
     let animationId;
     let lastTime = 0;
-    const speed = 0.5; // Constant base speed
+    const speed = 0.85; // Increased speed for better engagement
 
     const animate = (time) => {
       if (!lastTime) lastTime = time;
       const deltaTime = time - lastTime;
       lastTime = time;
 
-      if (!isInteracting && !isManualScroll) {
+      // Only run if interaction is off AND section is visible
+      if (!isInteracting && !isManualScroll && isServicesVisible) {
         // Normalize speed based on frame time (targets 60fps)
         const frameAdjust = deltaTime / (1000 / 60);
-
+        
         // Prevent huge jumps if tab was suspended/resumed
         if (!isNaN(frameAdjust) && frameAdjust < 10) {
           scrollContainer.scrollLeft += speed * frameAdjust;
         }
 
         // Loop detection: reset to 0 once we've scrolled half the total (duplicated) content
-        // iOS Safari uses fractional scrollLeft - we use a larger 2px buffer for robustness
         const halfWidth = scrollContainer.scrollWidth / 2;
-        if (halfWidth > 0 && scrollContainer.scrollLeft >= halfWidth - 2) {
+        
+        // iOS Fix: Use a larger tolerance for rounding issues and bounce effects
+        if (halfWidth > 0 && Math.ceil(scrollContainer.scrollLeft) >= Math.floor(halfWidth) - 5) {
           scrollContainer.scrollLeft = 0;
         }
       }
@@ -132,37 +172,37 @@ const Home = () => {
 
     animationId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationId);
-  }, [isInteracting, isManualScroll]);
+  }, [isInteracting, isManualScroll, isServicesVisible]);
 
   // Auto-scroll for Testimonials (Now mobile-only to maintain static desktop grid)
-  React.useEffect(() => {
+  useEffect(() => {
     const isMobile = window.innerWidth < 1024;
-    if (!isMobile) return;
-
     const scrollContainer = testimonialScrollRef.current;
-    if (!scrollContainer) return;
+    if (!isMobile || !scrollContainer) return;
 
     // Force initial scroll position to 0
     scrollContainer.scrollLeft = 0;
 
     let animationId;
     let lastTime = 0;
-    const speed = 0.45;
+    const speed = 0.75; // Increased speed
 
     const animate = (time) => {
       if (!lastTime) lastTime = time;
       const deltaTime = time - lastTime;
       lastTime = time;
 
-      if (!isTestimonialInteracting) {
+      // Only run if interaction is off AND section is visible
+      if (!isTestimonialInteracting && isTestimonialsVisible) {
         const frameAdjust = deltaTime / (1000 / 60);
-
+        
         if (!isNaN(frameAdjust) && frameAdjust < 10) {
           scrollContainer.scrollLeft += speed * frameAdjust;
         }
 
         const halfWidth = scrollContainer.scrollWidth / 2;
-        if (halfWidth > 0 && scrollContainer.scrollLeft >= halfWidth - 2) {
+        // iOS Fix: Use ceil/floor for robust looping
+        if (halfWidth > 0 && Math.ceil(scrollContainer.scrollLeft) >= Math.floor(halfWidth) - 5) {
           scrollContainer.scrollLeft = 0;
         }
       }
@@ -171,7 +211,7 @@ const Home = () => {
 
     animationId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationId);
-  }, [isTestimonialInteracting]);
+  }, [isTestimonialInteracting, isTestimonialsVisible]);
 
   const handleManualScroll = (direction) => {
     setIsManualScroll(true);
@@ -220,145 +260,152 @@ const Home = () => {
       </section>
 
       {/* Services Preview */}
-      <SectionWrapper
-        bgClass="bg-[#F8F5F2]"
-        id="services-preview"
-        paddingClass="pt-24 pb-32"
-        onMouseLeave={() => {
-          // No immediate reset here, let the 4s timer handle it for better control
-        }}
-        onTouchEnd={() => {
-          // No immediate reset here, let the 4s timer handle it for better control
-        }}
-      >
-        <div
-          className="text-center mb-20 px-4"
+      <div ref={servicesSectionRef}>
+        <SectionWrapper
+          bgClass="bg-[#F8F5F2]"
+          id="services-preview"
+          paddingClass="pt-24 pb-32"
+          onMouseLeave={() => {
+            // No immediate reset here, let the 4s timer handle it for better control
+          }}
+          onTouchEnd={() => {
+            // No immediate reset here, let the 4s timer handle it for better control
+          }}
         >
-          <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] mb-4 leading-none">
-            Core <span className="font-serif italic text-black/30">Services</span>
-          </h2>
-          <div className="w-20 h-[1px] bg-black/10 mx-auto mb-8"></div>
-          <p className="text-black/60 text-base md:text-lg font-light max-w-4xl mx-auto leading-relaxed">
-            At Dandu Interior & Developers, we don't just build spaces; we craft life-enhancing environments. Our team of certified professionals and visionary designers bring together years of multidisciplinary expertise in structural engineering, premium interior aesthetics, and seamless project management. We treat every project as a landmark of trust, ensuring your investment results in a space that is as durable as it is beautiful.
-          </p>
-        </div>
-
-        {/* Scrollable Area with flush blur overlays dentro do container original */}
-        <div
-          className="relative group/scroll -mx-4 md:-mx-8"
-        >
-          {/* Manual Scroll Controls - Positioned over side blurs */}
-          <div className="absolute inset-y-0 left-0 right-0 flex justify-between items-center z-[60] pointer-events-none px-0 md:px-4">
-            <button
-              onClick={() => handleManualScroll('left')}
-              className="pointer-events-auto p-4 text-[#1A1A1A]/40 hover:text-[#1A1A1A] transition-all hover:-translate-x-1"
-              aria-label="Scroll Left"
-            >
-              <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
-            </button>
-            <button
-              onClick={() => handleManualScroll('right')}
-              className="pointer-events-auto p-4 text-[#1A1A1A]/40 hover:text-[#1A1A1A] transition-all hover:translate-x-1"
-              aria-label="Scroll Right"
-            >
-              <ChevronRight className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
-            </button>
+          <div
+            className="text-center mb-20 px-4"
+          >
+            <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] mb-4 leading-none">
+              Core <span className="font-serif italic text-black/30">Services</span>
+            </h2>
+            <div className="w-20 h-[1px] bg-black/10 mx-auto mb-8"></div>
+            <p className="text-black/60 text-base md:text-lg font-light max-w-4xl mx-auto leading-relaxed">
+              At Dandu Interior & Developers, we don't just build spaces; we craft life-enhancing environments. Our team of certified professionals and visionary designers bring together years of multidisciplinary expertise in structural engineering, premium interior aesthetics, and seamless project management. We treat every project as a landmark of trust, ensuring your investment results in a space that is as durable as it is beautiful.
+            </p>
           </div>
 
-          {/* Side Blur Overlays (Perfectly flush com a borda do container) */}
-          <div className="absolute left-0 inset-y-0 w-12 md:w-32 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-l-2xl"></div>
-          <div className="absolute right-0 inset-y-0 w-12 md:w-32 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-r-2xl"></div>
-
+          {/* Scrollable Area with flush blur overlays dentro do container original */}
           <div
-            ref={scrollRef}
-            className="flex overflow-x-auto gap-6 pb-8 px-4 md:px-8 relative hide-scrollbar"
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              scrollBehavior: 'auto !important'  // Disable smooth-scroll conflict with JS loop
-            }}
-            onMouseEnter={() => {
-              setIsInteracting(true);
-              if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
-            }}
-            onMouseLeave={() => resetServiceInteraction()}
-            onTouchStart={() => {
-              if (window.innerWidth >= 1024) {
-                setIsInteracting(true);
-                if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
-              }
-            }}
-            onTouchEnd={() => {
-              if (window.innerWidth >= 1024) resetServiceInteraction();
-            }}
+            className="relative group/scroll -mx-4 md:-mx-8"
           >
-            <style>{`
-              .hide-scrollbar::-webkit-scrollbar { display: none !important; }
-              .hide-scrollbar { 
-                -ms-overflow-style: none !important; 
-                scrollbar-width: none !important;
-                -webkit-overflow-scrolling: auto !important; /* Disable OS momentum logic during JS loop */
-              }
-            `}</style>
+            {/* Manual Scroll Controls - Positioned over side blurs */}
+            <div className="absolute inset-y-0 left-0 right-0 flex justify-between items-center z-[60] pointer-events-none px-0 md:px-4">
+              <button
+                onClick={() => handleManualScroll('left')}
+                className="pointer-events-auto p-4 text-[#1A1A1A]/40 hover:text-[#1A1A1A] transition-all hover:-translate-x-1"
+                aria-label="Scroll Left"
+              >
+                <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
+              </button>
+              <button
+                onClick={() => handleManualScroll('right')}
+                className="pointer-events-auto p-4 text-[#1A1A1A]/40 hover:text-[#1A1A1A] transition-all hover:translate-x-1"
+                aria-label="Scroll Right"
+              >
+                <ChevronRight className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
+              </button>
+            </div>
 
-            {infiniteServices.map((service, idx) => {
-              const uniqueId = `${service.id}-${idx}`;
+            {/* Side Blur Overlays (Perfectly flush com a borda do container) */}
+            <div className="absolute left-0 inset-y-0 w-12 md:w-32 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-l-2xl"></div>
+            <div className="absolute right-0 inset-y-0 w-12 md:w-32 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-r-2xl"></div>
 
-              return (
-                <div
-                  key={uniqueId}
-                  className="relative w-[85vw] md:w-[45vw] lg:w-[calc(25%-1.5rem)] shrink-0 h-[370px] flex flex-col items-start group/card"
-                >
-                  {/* Top-Left Cutout Layer (Design matching DesignIdeas) */}
-                  <div className="absolute top-0 left-0 bg-[#F8F5F2] max-w-[85%] pb-3 pr-5 rounded-tl-2xl rounded-br-[32px] z-30 pointer-events-none">
-                    <svg className="absolute top-0 w-6 h-6 text-[#F8F5F2] fill-current pointer-events-none" style={{ left: 'calc(100% - 1px)' }} viewBox="0 0 24 24">
-                      <path d="M 0 0 L 24 0 C 10.745 0 0 10.745 0 24 Z" />
-                    </svg>
-                    <svg className="absolute left-0 w-6 h-6 text-[#F8F5F2] fill-current pointer-events-none" style={{ top: 'calc(100% - 1px)' }} viewBox="0 0 24 24">
-                      <path d="M 0 0 L 24 0 C 10.745 0 0 10.745 0 24 Z" />
-                    </svg>
+            <div
+              ref={scrollRef}
+              className="flex overflow-x-auto gap-6 pb-8 px-4 md:px-8 relative hide-scrollbar will-change-scroll"
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                scrollBehavior: 'auto !important'  // Disable smooth-scroll conflict with JS loop
+              }}
+              onMouseDown={() => {
+                // Only on desktop: Stop auto-scroll when user clicks to interact
+                if (window.innerWidth >= 1024) {
+                  setIsInteracting(true);
+                  resetServiceInteraction(); // This will resume after 4 seconds
+                }
+              }}
+              onTouchStart={() => {
+                // Mobile behavior remains: stop on touch
+                if (window.innerWidth < 1024) {
+                  setIsInteracting(true);
+                }
+              }}
+              onTouchEnd={() => {
+                if (window.innerWidth < 1024) {
+                  resetServiceInteraction();
+                }
+              }}
+            >
+              <style>{`
+                .hide-scrollbar::-webkit-scrollbar { display: none !important; }
+                .hide-scrollbar { 
+                  -ms-overflow-style: none !important; 
+                  scrollbar-width: none !important;
+                  -webkit-overflow-scrolling: auto !important; /* Disable OS momentum logic during JS loop */
+                }
+                .will-change-scroll { will-change: scroll-position; }
+              `}</style>
 
-                    <div className="px-5 pt-5 text-[10px] font-extrabold text-[#1A1A1A] tracking-widest uppercase whitespace-nowrap truncate relative z-10">
-                      {service.title}
-                    </div>
-                  </div>
+              {infiniteServices.map((service, idx) => {
+                const uniqueId = `${service.id}-${idx}`;
 
-                  {/* Main Body with tightly packed content and more matter */}
-                  <div className="bg-white flex-grow w-full rounded-2xl p-2 pt-14 flex flex-col relative z-20 border border-black/5 overflow-hidden">
+                return (
+                  <div
+                    key={uniqueId}
+                    className="relative w-[85vw] md:w-[45vw] lg:w-[calc(25%-1.5rem)] shrink-0 h-[370px] flex flex-col items-start group/card"
+                  >
+                    {/* Top-Left Cutout Layer (Design matching DesignIdeas) */}
+                    <div className="absolute top-0 left-0 bg-[#F8F5F2] max-w-[85%] pb-3 pr-5 rounded-tl-2xl rounded-br-[32px] z-30 pointer-events-none">
+                      <svg className="absolute top-0 w-6 h-6 text-[#F8F5F2] fill-current pointer-events-none" style={{ left: 'calc(100% - 1px)' }} viewBox="0 0 24 24">
+                        <path d="M 0 0 L 24 0 C 10.745 0 0 10.745 0 24 Z" />
+                      </svg>
+                      <svg className="absolute left-0 w-6 h-6 text-[#F8F5F2] fill-current pointer-events-none" style={{ top: 'calc(100% - 1px)' }} viewBox="0 0 24 24">
+                        <path d="M 0 0 L 24 0 C 10.745 0 0 10.745 0 24 Z" />
+                      </svg>
 
-                    {/* Text Content Area */}
-                    <div className="transition-all duration-300 flex flex-col px-3 relative pt-2">
-                      <p className="text-[#1A1A1A]/70 font-medium leading-[1.5] text-[12px] line-clamp-[12]">
-                        {service.description || "Providing professional and premium services tailored to your needs. We blend modern functional utility with timeless premium elegance to make your space completely uniquely yours. Our expert team ensures every detail is handled with precision and care."}
-                      </p>
-
-                      {/* Explore Button - Now tightly following the text */}
-                      <div className="mt-2 mb-4">
-                        <Link to={`/services/${service.id}`} className="inline-flex items-center gap-2 text-[8px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-3 py-1.5 rounded-full border border-black/10 transition-all">
-                          Explore <ChevronRight size={12} />
-                        </Link>
+                      <div className="px-5 pt-5 text-[10px] font-extrabold text-[#1A1A1A] tracking-widest uppercase whitespace-nowrap truncate relative z-10">
+                        {service.title}
                       </div>
                     </div>
 
-                    {/* Image Container */}
-                    <div className="overflow-hidden border border-black/5 shadow-sm group h-[140px] w-full rounded-xl mt-auto relative">
-                      <img
-                        src={service.image || service.subServices?.[0]?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800"}
-                        alt={service.title}
-                        className="w-full h-full object-cover transition-transform duration-700 scale-110 group-hover:scale-100"
-                      />
+                    {/* Main Body with tightly packed content and more matter */}
+                    <div className="bg-white flex-grow w-full rounded-2xl p-2 pt-14 flex flex-col relative z-20 border border-black/5 overflow-hidden">
+
+                      {/* Text Content Area */}
+                      <div className="transition-all duration-300 flex flex-col px-3 relative pt-2">
+                        <p className="text-[#1A1A1A]/70 font-medium leading-[1.5] text-[12px] line-clamp-[12]">
+                          {service.description || "Providing professional and premium services tailored to your needs. We blend modern functional utility with timeless premium elegance to make your space completely uniquely yours. Our expert team ensures every detail is handled with precision and care."}
+                        </p>
+
+                        {/* Explore Button - Now tightly following the text */}
+                        <div className="mt-2 mb-4">
+                          <Link to={`/services/${service.id}`} className="inline-flex items-center gap-2 text-[8px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-3 py-1.5 rounded-full border border-black/10 transition-all">
+                            Explore <ChevronRight size={12} />
+                          </Link>
+                        </div>
+                      </div>
+
+                      {/* Image Container */}
+                      <div className="overflow-hidden border border-black/5 shadow-sm group h-[140px] w-full rounded-xl mt-auto relative">
+                        <img
+                          src={service.image || service.subServices?.[0]?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800"}
+                          alt={service.title}
+                          className="w-full h-full object-cover transition-transform duration-700 scale-110 group-hover:scale-100"
+                        />
+                      </div>
+
                     </div>
-
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
 
-          {/* Right Corner Blur Overlay (Perfectly flush com a borda do container) */}
-          <div className="absolute right-0 inset-y-0 w-8 md:w-24 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-r-2xl"></div>
-        </div>
-      </SectionWrapper>
+            {/* Right Corner Blur Overlay (Perfectly flush com a borda do container) */}
+            <div className="absolute right-0 inset-y-0 w-8 md:w-24 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-r-2xl"></div>
+          </div>
+        </SectionWrapper>
+      </div>
 
       {/* Why Choose Us */}
       <SectionWrapper bgClass="bg-[#1A1A1A] text-white" paddingClass="py-24">
@@ -493,65 +540,73 @@ const Home = () => {
       <HomeDesignIdeas />
 
       {/* Client Testimonials - Enhanced Scroll for Mobile */}
-      <SectionWrapper
-        bgClass="bg-[#F8F5F2]"
-        onMouseLeave={() => resetTestimonialInteraction()}
-        onTouchEnd={() => resetTestimonialInteraction()}
-      >
-        <div className="text-center mb-16 px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#1A1A1A]">Client Testimonials</h2>
-          <div className="w-24 h-1 bg-[#1A1A1A] mx-auto rounded-full mb-6"></div>
-          <p className="text-black/50 text-[13px] tracking-wide font-light max-w-2xl mx-auto uppercase">Real stories of trust, excellence, and transformed environments.</p>
-        </div>
-
-        <div className="relative group/testimonials -mx-4 md:-mx-8">
-          {/* Side Blur Overlays (Only visible on mobile scroll) */}
-          <div className="absolute left-0 inset-y-0 w-8 md:w-20 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-l-2xl md:hidden"></div>
-          <div className="absolute right-0 inset-y-0 w-8 md:w-20 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-r-2xl md:hidden"></div>
-
-          <div
-            ref={testimonialScrollRef}
-            className="flex lg:grid lg:grid-cols-4 overflow-x-auto lg:overflow-hidden gap-6 md:gap-8 pb-12 px-4 md:px-8 relative hide-scrollbar"
-            onMouseEnter={() => {
-              setIsTestimonialInteracting(true);
-              if (testimonialResumeTimer.current) clearTimeout(testimonialResumeTimer.current);
-            }}
-            onMouseLeave={() => resetTestimonialInteraction()}
-            onTouchStart={() => {
-              if (window.innerWidth >= 1024) {
-                setIsTestimonialInteracting(true);
-                if (testimonialResumeTimer.current) clearTimeout(testimonialResumeTimer.current);
-              }
-            }}
-            onTouchEnd={() => {
-              if (window.innerWidth >= 1024) resetTestimonialInteraction();
-            }}
-          >
-            {/* Desktop: Static 4-column grid | Mobile: Infinite flex scroll */}
-            {(typeof window !== 'undefined' && window.innerWidth >= 1024 ? testimonials.slice(0, 4) : infiniteTestimonials).map((testimonial, idx) => (
-              <div
-                key={`${testimonial.id}-${idx}`}
-                className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] relative mt-8 flex flex-col h-[400px] lg:h-full min-w-[85vw] md:min-w-0 lg:min-w-0 group transition-all duration-300 hover:shadow-2xl justify-between"
-              >
-                <div className="absolute -top-6 left-8 w-12 h-12 bg-[#1A1A1A] text-white flex items-center justify-center rounded-full text-3xl font-serif">"</div>
-
-                <div className="flex gap-1 mb-4 text-[#1A1A1A] mt-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} size={16} fill="currentColor" stroke="none" />
-                  ))}
-                </div>
-
-                <p className="text-gray-600 italic mb-6 text-sm leading-relaxed flex-grow">"{testimonial.content}"</p>
-
-                <div className="pt-4 border-t border-gray-50">
-                  <h4 className="font-bold text-[#1A1A1A]">{testimonial.name}</h4>
-                  <p className="text-xs text-gray-500">{testimonial.role}</p>
-                </div>
-              </div>
-            ))}
+      <div ref={testimonialsSectionRef}>
+        <SectionWrapper
+          bgClass="bg-[#F8F5F2]"
+          onMouseLeave={() => resetTestimonialInteraction()}
+          onTouchEnd={() => resetTestimonialInteraction()}
+        >
+          <div className="text-center mb-16 px-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#1A1A1A]">Client Testimonials</h2>
+            <div className="w-24 h-1 bg-[#1A1A1A] mx-auto rounded-full mb-6"></div>
+            <p className="text-black/50 text-[13px] tracking-wide font-light max-w-2xl mx-auto uppercase">Real stories of trust, excellence, and transformed environments.</p>
           </div>
-        </div>
-      </SectionWrapper>
+
+          <div className="relative group/testimonials -mx-4 md:-mx-8">
+            {/* Side Blur Overlays (Only visible on mobile scroll) */}
+            <div className="absolute left-0 inset-y-0 w-8 md:w-20 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-l-2xl md:hidden"></div>
+            <div className="absolute right-0 inset-y-0 w-8 md:w-20 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-r-2xl md:hidden"></div>
+
+            <div
+              ref={testimonialScrollRef}
+              className="flex lg:grid lg:grid-cols-4 overflow-x-auto lg:overflow-hidden gap-6 md:gap-8 pb-12 px-4 md:px-8 relative hide-scrollbar will-change-scroll"
+              onMouseDown={() => {
+                if (window.innerWidth >= 1024) {
+                  setIsTestimonialInteracting(true);
+                  resetTestimonialInteraction();
+                }
+              }}
+              onTouchStart={() => {
+                if (window.innerWidth < 1024) {
+                  setIsTestimonialInteracting(true);
+                }
+              }}
+              onTouchEnd={() => {
+                if (window.innerWidth < 1024) {
+                  resetTestimonialInteraction();
+                }
+              }}
+            >
+              <style>{`
+                .will-change-scroll { will-change: scroll-position; }
+              `}</style>
+
+              {/* Desktop: Static 4-column grid | Mobile: Infinite flex scroll */}
+              {(typeof window !== 'undefined' && window.innerWidth >= 1024 ? testimonials.slice(0, 4) : infiniteTestimonials).map((testimonial, idx) => (
+                <div
+                  key={`${testimonial.id}-${idx}`}
+                  className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] relative mt-8 flex flex-col h-[400px] lg:h-full min-w-[85vw] md:min-w-0 lg:min-w-0 group transition-all duration-300 hover:shadow-2xl justify-between"
+                >
+                  <div className="absolute -top-6 left-8 w-12 h-12 bg-[#1A1A1A] text-white flex items-center justify-center rounded-full text-3xl font-serif">"</div>
+
+                  <div className="flex gap-1 mb-4 text-[#1A1A1A] mt-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} size={16} fill="currentColor" stroke="none" />
+                    ))}
+                  </div>
+
+                  <p className="text-gray-600 italic mb-6 text-sm leading-relaxed flex-grow">"{testimonial.content}"</p>
+
+                  <div className="pt-4 border-t border-gray-50">
+                    <h4 className="font-bold text-[#1A1A1A]">{testimonial.name}</h4>
+                    <p className="text-xs text-gray-500">{testimonial.role}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </SectionWrapper>
+      </div>
 
       <CallToAction />
 
@@ -560,3 +615,5 @@ const Home = () => {
 };
 
 export default Home;
+
+
