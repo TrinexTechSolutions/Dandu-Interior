@@ -114,7 +114,7 @@ const Home = () => {
       if (!isInteracting && !isManualScroll) {
         // Normalize speed based on frame time (targets 60fps)
         const frameAdjust = deltaTime / (1000 / 60);
-        
+
         // Prevent huge jumps if tab was suspended/resumed
         if (!isNaN(frameAdjust) && frameAdjust < 10) {
           scrollContainer.scrollLeft += speed * frameAdjust;
@@ -156,7 +156,7 @@ const Home = () => {
 
       if (!isTestimonialInteracting) {
         const frameAdjust = deltaTime / (1000 / 60);
-        
+
         if (!isNaN(frameAdjust) && frameAdjust < 10) {
           scrollContainer.scrollLeft += speed * frameAdjust;
         }
@@ -214,7 +214,7 @@ const Home = () => {
             onClick={openQuoteModal}
             className="bg-transparent text-[#37302F] border border-[#37302F]/30 backdrop-blur-md px-10 py-4 rounded-full font-bold tracking-[0.2em] uppercase text-[10px] hover:bg-[#37302F] hover:text-[#F8F5F2] transition-all"
           >
-            Get a Quote
+            Get Free Quote
           </button>
         </div>
       </section>
@@ -272,8 +272,8 @@ const Home = () => {
           <div
             ref={scrollRef}
             className="flex overflow-x-auto gap-6 pb-8 px-4 md:px-8 relative hide-scrollbar"
-            style={{ 
-              scrollbarWidth: 'none', 
+            style={{
+              scrollbarWidth: 'none',
               msOverflowStyle: 'none',
               scrollBehavior: 'auto !important'  // Disable smooth-scroll conflict with JS loop
             }}
@@ -493,7 +493,7 @@ const Home = () => {
       <HomeDesignIdeas />
 
       {/* Client Testimonials - Enhanced Scroll for Mobile */}
-      <SectionWrapper 
+      <SectionWrapper
         bgClass="bg-[#F8F5F2]"
         onMouseLeave={() => resetTestimonialInteraction()}
         onTouchEnd={() => resetTestimonialInteraction()}

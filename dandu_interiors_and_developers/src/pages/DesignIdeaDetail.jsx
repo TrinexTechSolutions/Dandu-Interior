@@ -221,16 +221,16 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
                     </div>
 
                   </div>
+                </div>
 
-                  {/* Sticky Mobile Quote Button */}
-                  <div className="p-4 sticky bottom-0 z-20 bg-[#F8F5F2] border-t border-black/5 flex-shrink-0">
-                    <button
-                      onClick={openQuoteFromDrawer}
-                      className="w-full py-4 bg-[#1A1A1A] text-white rounded-2xl font-bold text-sm hover:bg-black/90 transition-all duration-300 shadow-2xl"
-                    >
-                      Get Free Quote
-                    </button>
-                  </div>
+                {/* Sticky Mobile Quote Button - Moved outside scroll container for fixed positioning */}
+                <div className="p-4 sticky bottom-0 z-20 bg-[#F8F5F2] border-t border-black/5 flex-shrink-0">
+                  <button
+                    onClick={openQuoteFromDrawer}
+                    className="w-full py-4 bg-[#1A1A1A] text-white rounded-2xl font-bold text-sm hover:bg-black/90 transition-all duration-300 shadow-2xl"
+                  >
+                    Get Free Quote
+                  </button>
                 </div>
               </motion.div>
             </>

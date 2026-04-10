@@ -7,21 +7,14 @@ const PageTransition = ({ children }) => {
   const [isAnimating, setIsAnimating] = useState(true);
   const containerRef = useRef(null);
   
-  // Use a ref to store the current scroll position so we can use it synchronously on exit
-  const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      lastScrollY.current = window.scrollY;
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // No longer need high-frequency scroll tracking state
+  // We will capture it only when transition starts
 
   useEffect(() => {
     if (!isPresent) {
-      // Use the last known scroll position for the exit animation
-      setScrollY(lastScrollY.current);
+      // CAPTURE scroll position ONLY at the exact moment exit starts
+      // This avoids constant re-renders during normal browsing
+      setScrollY(window.scrollY);
       setIsAnimating(true);
     } else {
       // When entering, scroll to top of the NEW page
@@ -73,3 +66,4 @@ const PageTransition = ({ children }) => {
 };
 
 export default PageTransition;
+

@@ -5,6 +5,7 @@ const CustomCursor = () => {
   const [cursorType, setCursorType] = useState('default');
   const [cursorText, setCursorText] = useState('');
   const [isVisible, setIsVisible] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -15,6 +16,13 @@ const CustomCursor = () => {
   const trailY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    // Check for touch device - standard way to detect mobile/tablets
+    const touchCheck = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+    setIsTouchDevice(touchCheck);
+    
+    // If it's a touch device, we don't want any of these listeners consuming CPU
+    if (touchCheck) return;
+
     const handleMouseMove = (e) => {
       const x = e.clientX;
       const y = e.clientY;
@@ -87,6 +95,9 @@ const CustomCursor = () => {
       document.removeEventListener('mouseenter', handleMouseEnter);
     };
   }, [isVisible, mouseX, mouseY]);
+
+  // Completely return null if on mobile to clear the DOM and prevent any motion processing
+  if (isTouchDevice) return null;
 
   // Cursor Variants
   const variants = {
@@ -193,3 +204,4 @@ const CustomCursor = () => {
 };
 
 export default CustomCursor;
+
