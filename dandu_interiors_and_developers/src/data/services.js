@@ -1,6 +1,13 @@
 import { Paintbrush, Hammer, Wrench, Zap, SplitSquareHorizontal, Grid, Home } from 'lucide-react';
 import civilWorksRootImage from '../assets/Home/civil_works.webp';
 
+// Premium Branded Assets for Designs
+import engineeringMasteryImage from '../assets/About/engineering_mastery.webp';
+import heroArchitectureImage from '../assets/About/hero_architecture.webp';
+import obsessiveDetailImage from '../assets/About/obsessive_detail.webp';
+import structuralIntegrityImage from '../assets/About/structural_integrity.webp';
+import visionaryReachImage from '../assets/About/visionary_reach.webp';
+
 // --- Assets Imports ---
 import allPaintingWorkImage from '../assets/Services/All Painting Work.webp';
 import additionOfFloorImage from '../assets/Services/Addition of Floor.webp';
@@ -110,7 +117,9 @@ const serviceImageByName = {
   'Bath Tub Installation': bathTubInstallationImage,
   'Bathroom Renovation': bathroomRenovationImage,
   'Blocked Pipes and Drains removing and installation': blockedPipesAndDrainsRemovingAndInstallationImage,
-  Brickwork: brickworkImage,
+  'Brickwork': brickworkImage,
+  'Civil Brick Work': brickworkImage,
+  'Building Maintenance': plumbingSystemDiagnosisAndInspectionsImage,
   'Chandelier Hanging': chandelierHangingImage,
   'Commercial Design': commercialDesignImage,
   'Commercial Renovation': commercialRenovationImage,
@@ -140,12 +149,15 @@ const serviceImageByName = {
   'Living Room Renovation': livingRoomRenovationImage,
   'Marble Fixing': marbleFixingImage,
   'Civil Works': civilWorksRootImage,
+  'Interior Works': interiorImage,
+  'Designs': residentialDesignImage,
   'Metal Stud Partitions': metalStudPartitionsImage,
   'Office Design': officeDesignImage,
   'Office Painting': officePaintingImage,
   Plastering: plasteringImage,
   'Plumbing System Diagnosis and Inspections': plumbingSystemDiagnosisAndInspectionsImage,
   'Residential Design': residentialDesignImage,
+  'Renovation Works': fullHomeRenovationImage,
   'Solid Partition': solidPartitionImage,
   'Switch & Socket Installation': switchAndSocketInstallationImage,
   'Tap Repairs and Installations': tapRepairsAndInstallationsImage,
@@ -191,10 +203,10 @@ const serviceImageByName = {
   'Exterior': exteriorPaintingImage,
   'SS (Stainless Steel)': ssSteelImage,
   'Partition': solidPartitionImage,
-  'Floor Plan': floorPlanImage,
-  'Light Layout': lightLayoutImage,
-  '2D Drawing': floorPlanImage,
-  'Render': renderImage,
+  'Floor Plan': additionOfFloorImage,
+  'Light Layout': lightAndLampFixingImage,
+  '2D Drawing': image2D3D,
+  'Render': commercialDesignImage,
   'Quartz': quartzImage,
   'Waterproofing Works': terraceWaterproofingImage,
   'Residential Buildings': exteriorDesignImage_New,
@@ -203,7 +215,14 @@ const serviceImageByName = {
   'Plumbing Works': completeNewPlumbingSystemInstallationImage,
   'Flooring Works': flooringImage,
   'Painting Works': interiorPaintingImage,
-  'Railing Work': msSteelImage
+  'Toilet Grouting Replacement': tileGroutingImage,
+  'Paint Work': allPaintingWorkImage,
+  'Damaged Tile & Grout Replacement': tileFixingImage,
+  'Flooring & Tile Replacement': tileFixingImage,
+  'All Room Remodeling': livingRoomRenovationImage,
+  'Exterior Renewal': exteriorPaintingImage,
+  'Kitchen Countertop': marbleFixingImage,
+  'Interior Design': residentialDesignImage
 };
 
 const serviceImageAliases = {
