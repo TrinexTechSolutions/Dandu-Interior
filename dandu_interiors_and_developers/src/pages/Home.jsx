@@ -137,8 +137,8 @@ const Home = () => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    // Force initial scroll position to 0 to prevent "sticky" start on iOS
-    scrollContainer.scrollLeft = 0;
+    // Force initial scroll position to 0 only on first load if needed
+    // scrollContainer.scrollLeft = 0; // Removed to prevent reset on interaction toggle
 
     let animationId;
     let lastTime = 0;
@@ -180,8 +180,8 @@ const Home = () => {
     const scrollContainer = testimonialScrollRef.current;
     if (!isMobile || !scrollContainer) return;
 
-    // Force initial scroll position to 0
-    scrollContainer.scrollLeft = 0;
+    // Force initial scroll position to 0 only on first load if needed
+    // scrollContainer.scrollLeft = 0; // Removed to prevent reset on interaction toggle
 
     let animationId;
     let lastTime = 0;
@@ -216,9 +216,19 @@ const Home = () => {
   const handleManualScroll = (direction) => {
     setIsManualScroll(true);
     resetServiceInteraction(); // Start the resume timer
-    if (scrollRef.current) {
+    const scrollContainer = scrollRef.current;
+    if (scrollContainer) {
+      const halfWidth = scrollContainer.scrollWidth / 2;
       const scrollAmount = window.innerWidth * 0.4;
-      scrollRef.current.scrollBy({
+      
+      // Infinite Loop Logic: Jump instantly before smooth scrolling if at boundaries
+      if (direction === 'left' && scrollContainer.scrollLeft <= 5) {
+        scrollContainer.scrollLeft = halfWidth;
+      } else if (direction === 'right' && scrollContainer.scrollLeft >= halfWidth - 5) {
+        scrollContainer.scrollLeft = 0;
+      }
+      
+      scrollContainer.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth'
       });
