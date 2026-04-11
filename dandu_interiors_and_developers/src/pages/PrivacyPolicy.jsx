@@ -103,7 +103,7 @@ const PrivacyPolicy = () => {
             <p className="font-medium text-[#1A1A1A]">
               Dandu Interior and Developers<br />
               Email: danduinteriordesigns@gmail.com<br />
-              Phone: +91 98661 66612
+              Phone: +{import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612'}
             </p>
           </section>
         </motion.div>

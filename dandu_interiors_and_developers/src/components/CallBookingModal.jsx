@@ -51,15 +51,17 @@ const CallBookingModal = () => {
       source: 'call'
     };
 
-    // Trigger Lead capture in background
+    // Trigger Lead capture (Wait for completion)
     try {
-      fetch('/api/send-email', {
+      const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
-      }).catch(err => console.error('Background Call Lead Error:', err));
+      });
+      const data = await response.json();
+      console.log('Call CRM Sync Result:', data);
     } catch (err) {
-      console.error('Call Lead Error:', err);
+      console.error('Call Lead Capture Error:', err);
     }
 
     // Build WhatsApp Message
@@ -140,8 +142,8 @@ const CallBookingModal = () => {
 
               <div className="relative z-10 border-t border-white/5 pt-8">
                 <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-white/30 block mb-3">Direct Contact</span>
-                <a href="tel:+919866166612" className="text-xl font-light tracking-tighter text-white hover:text-white/70 transition-colors">
-                  +91 98661 66612
+                <a href={`tel:+${import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612'}`} className="text-xl font-light tracking-tighter text-white hover:text-white/70 transition-colors">
+                  +{import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612'}
                 </a>
               </div>
             </div>

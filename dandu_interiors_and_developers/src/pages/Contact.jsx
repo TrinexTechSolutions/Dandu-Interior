@@ -201,7 +201,7 @@ const Contact = () => {
                     <div>
                       <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mb-2">Call Us</p>
                       <a 
-                        href="tel:+919866166612" 
+                        href={`tel:+${import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612'}`} 
                         onClick={() => {
                           if (typeof window.gtag === 'function') {
                             window.gtag('event', 'phone_call_click', {
@@ -213,7 +213,7 @@ const Contact = () => {
                         }}
                         className="text-2xl md:text-3xl font-light text-[#1A1A1A] tracking-tighter hover:opacity-70 transition-opacity"
                       >
-                        +91 98661 66612
+                        +{import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612'}
                       </a>
                     </div>
                   </div>
