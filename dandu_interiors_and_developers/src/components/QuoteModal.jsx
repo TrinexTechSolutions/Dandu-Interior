@@ -48,9 +48,27 @@ const QuoteModal = () => {
     setFormData(prev => ({ ...prev, serviceType: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Prepare API Payload
+    const payload = {
+      ...formData,
+      source: 'quote'
+    };
+
+    // Trigger Lead capture in background
+    try {
+      fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(err => console.error('Background Lead Capture Error:', err));
+    } catch (err) {
+      console.error('Lead Capture Error:', err);
+    }
+
+    // Build WhatsApp Message
     const message = `*New Quote Request from Dandu Interior Website*%0A%0A` +
       `*Name:* ${formData.name}%0A` +
       `*Phone:* ${formData.phone}%0A` +
@@ -59,8 +77,8 @@ const QuoteModal = () => {
       `*Service:* ${formData.serviceType || 'Not provided'}%0A` +
       `*Budget:* ${formData.budget || 'Not provided'}`;
 
-    const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "8919004890";
-    const whatsappUrl = `https://wa.me/91${whatsappNumber}?text=${message}`;
+    const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "919866166612";
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
     // Send Lead event to GA4
     if (typeof window.gtag === 'function') {
@@ -69,9 +87,9 @@ const QuoteModal = () => {
         'event_label': 'Quote Modal',
         'value': 1
       });
-      console.log('GA4 Tracked: Lead Generation (Quote Modal)');
     }
 
+    // Redirect to WhatsApp
     window.open(whatsappUrl, '_blank');
     closeQuoteModal();
   };

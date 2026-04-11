@@ -42,18 +42,37 @@ const CallBookingModal = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Prepare API Payload
+    const payload = {
+      ...formData,
+      source: 'call'
+    };
+
+    // Trigger Lead capture in background
+    try {
+      fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(err => console.error('Background Call Lead Error:', err));
+    } catch (err) {
+      console.error('Call Lead Error:', err);
+    }
+
+    // Build WhatsApp Message
     const message = `*New Call Request from Dandu Interior Website*%0A%0A` +
       `*Name:* ${formData.name}%0A` +
       `*Phone:* ${formData.phone}%0A` +
       `*Service Needed:* ${formData.serviceType || 'Not provided'}%0A%0A` +
       `I would like to book a call. Please contact me.`;
 
-    const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '8919004890';
-    const whatsappUrl = `https://wa.me/91${whatsappNumber}?text=${message}`;
+    const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612';
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
+    // Redirect to WhatsApp
     window.open(whatsappUrl, '_blank');
     closeCallModal();
   };
