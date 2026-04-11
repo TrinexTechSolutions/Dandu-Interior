@@ -5,9 +5,11 @@ import brandLogo from '../assets/logos_and_bg_images/dandu_logo.svg';
 import { useModal } from '../context/ModalContext';
 
 const SERVICES = [
+  { name: 'Designs', path: '/services/designs' },
   { name: 'Interior Works', path: '/services/interior-works' },
-  { name: 'Civil Works', path: '/services/civil-works' },
-  { name: 'Renovation', path: '/services/renovation' }
+  { name: 'Renovation Works', path: '/services/renovation-works' },
+  { name: 'Building Maintenance', path: '/services/building-maintenance' },
+  { name: 'Civil Works', path: '/services/civil-works' }
 ];
 
 const Navbar = () => {

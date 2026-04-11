@@ -5,11 +5,10 @@ import { ArrowRight } from 'lucide-react';
 import { services } from '../data/services';
 import { useModal } from '../context/ModalContext';
 
-
-
 const Services = () => {
-  const { id } = useParams();
-  const [activeService, setActiveService] = useState(null);
+  const { id, subId } = useParams();
+  const [rootService, setRootService] = useState(null);
+  const [activeDisplayService, setActiveDisplayService] = useState(null);
   const [isCardMode, setIsCardMode] = useState(true);
   const [expandedSubServices, setExpandedSubServices] = useState({});
   const { openQuoteModal, openCallModal } = useModal();
@@ -22,20 +21,27 @@ const Services = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (id) {
-      const found = services.find(s => s.id === id);
-      setActiveService(found || services[0]);
+    
+    // Find Root Service
+    const root = services.find(s => s.id === (id || services[0].id));
+    setRootService(root);
+
+    // Find Active Service to display
+    if (subId && root) {
+      const sub = root.subServices.find(s => s.id === subId);
+      setActiveDisplayService(sub || root);
     } else {
-      setActiveService(services[0]);
+      setActiveDisplayService(root);
     }
+
     setExpandedSubServices({});
 
     const updateHeight = () => {
       if (heroRef.current) {
-        // Measure height + top padding/navbar space
-        const rect = heroRef.current.getBoundingClientRect();
+        const heroHeight = heroRef.current.scrollHeight;
         const navHeight = document.querySelector('nav')?.offsetHeight || 80;
-        setHeroOffset(rect.height + navHeight + 80); // 80px base buffer
+        const bottomBuffer = window.innerWidth < 640 ? 120 : 140;
+        setHeroOffset(heroHeight + navHeight + bottomBuffer);
       }
     };
 
@@ -54,82 +60,94 @@ const Services = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', updateHeight);
     };
-  }, [id, activeService]);
+  }, [id, subId]);
 
   if (id && !services.find(s => s.id === id)) {
     return <Navigate to="/services" replace />;
   }
 
-  if (!activeService) return null;
+  if (!activeDisplayService) return null;
 
-
-
-  const toggleSubService = (name) => {
-    setExpandedSubServices((prev) => ({
-      ...prev,
-      [name]: !prev[name]
-    }));
-  };
+  const displayTitle = activeDisplayService.title || activeDisplayService.name;
+  const displayDesc = activeDisplayService.description || activeDisplayService.shortDesc || activeDisplayService.desc;
+  const itemsToRender = activeDisplayService.subServices || activeDisplayService.nestedServices || [];
 
   return (
     <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
 
-      {/* Static Fixed Header Section - Content slides OVER this */}
+      {/* Static Fixed Header Section */}
       <motion.div
-        className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-hidden z-0 bg-[#F8F5F2] pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-visible z-0 bg-[#F8F5F2] pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         style={{ height: heroOffset ? `${heroOffset}px` : '50vh', y: heroTranslateY }}
       >
-        <div ref={heroRef} className="w-full relative px-4 md:px-8">
+        <div ref={heroRef} className="w-full relative px-4 md:px-8 pb-10 md:pb-14">
+          
+          {/* Breadcrumb / Back Navigation */}
+          {subId && rootService && (
+            <Link 
+              to={`/services/${rootService.id}`}
+              className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#37302F]/50 hover:text-[#37302F] mb-4 transition-colors group"
+            >
+              <ArrowRight size={12} className="rotate-180 group-hover:-translate-x-1 transition-transform" />
+              Back to {rootService.title}
+            </Link>
+          )}
 
           {/* Static Header Title */}
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[8rem] xl:text-[9.5rem] font-medium tracking-tighter text-[#37302F] leading-[0.85] ml-[-0.04em] select-none max-w-[95%]">
-            {activeService.title.split(' ').length > 1 ? (
+            {displayTitle.split(' ').length > 1 ? (
               <>
-                {activeService.title.split(' ').slice(0, -1).join(' ')} <span className="font-serif italic text-[#37302F]/70">{activeService.title.split(' ').slice(-1)}</span>
+                {displayTitle.split(' ').slice(0, -1).join(' ')} <span className="font-serif italic text-[#37302F]/70">{displayTitle.split(' ').slice(-1)}</span>
               </>
             ) : (
-              activeService.title
+              displayTitle
             )}
           </h1>
 
-          {/* Static Description - Positioned directly under and to the right */}
+          {/* Static Description */}
           <div className="w-full flex flex-col items-end mt-2 md:mt-4">
             <div className="max-w-[260px] md:max-w-sm text-right mb-6 md:mb-8">
-              <p className="text-gray-500 text-sm md:text-lg leading-relaxed font-semibold tracking-wide">
-                {activeService.fullDesc.split('.')[0]}.
+              <p
+                className="text-gray-500 text-sm md:text-lg leading-relaxed font-semibold tracking-wide"
+                style={{
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden'
+                }}
+              >
+                {displayDesc}
               </p>
             </div>
 
             {/* animated Button Group */}
             <div className="flex items-center gap-2 group cursor-pointer transition-all duration-500 ease-in-out hover:gap-0 h-12 md:h-14">
               <button
-                onClick={() => openCallModal(activeService.title)}
+                onClick={() => openCallModal(displayTitle)}
                 className="bg-[#1A1A1A] text-white h-full px-8 rounded-l-full rounded-r-md group-hover:rounded-r-none transition-all duration-500 font-bold text-sm md:text-base whitespace-nowrap shadow-xl flex items-center"
               >
                 Book a call
               </button>
               <button
-                onClick={() => openCallModal(activeService.title)}
+                onClick={() => openCallModal(displayTitle)}
                 className="bg-[#1A1A1A] text-white h-full px-4 rounded-r-full rounded-l-md group-hover:rounded-l-none transition-all duration-500 flex items-center justify-center shadow-xl border-l border-white/10 group-hover:border-transparent"
               >
                 <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
           </div>
-
         </div>
       </motion.div>
 
-      {/* Main Content Sections - Seamlessly sliding OVER the fixed header */}
+      {/* Main Content Sections */}
       <div
         id="services-content"
         ref={contentRef}
         className={`relative z-10 bg-white will-change-transform transition-all duration-500 ease-out ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'}`}
         style={{ marginTop: heroOffset ? `${heroOffset}px` : '50vh' }}
       >
-        {/* Minimal reveal margin */}
-        <div className="h-[2vh] md:h-[4vh] bg-white rounded-t-2xl md:rounded-t-[32px]"></div>
-        {activeService.subServices.map((sub, index) => (
+        <div className="h-[3vh] md:h-[6vh] bg-white rounded-t-2xl md:rounded-t-[32px]"></div>
+        {itemsToRender.map((sub, index) => (
           <section key={index} className={`py-8 md:py-16 relative ${index % 2 === 0 ? 'bg-white' : 'bg-[#F8F5F2]'}`}>
             <div className="container-custom">
               <div className={`flex flex-col gap-8 lg:gap-12 items-center ${index % 2 === 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
@@ -146,43 +164,28 @@ const Services = () => {
                     </h2>
                   </div>
                   <div className="w-20 h-[1px] bg-black/10 mb-8"></div>
-                  <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                  <p
+                    className="text-gray-600 text-lg leading-relaxed mb-6"
+                    style={{
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden'
+                    }}
+                  >
                     {sub.desc}
                   </p>
-                  {sub.linkId ? (
+                  
+                  {sub.id && sub.nestedServices ? (
                     <Link
-                      to={`/services/${sub.linkId}`}
+                      to={`/services/${rootService.id}/${sub.id}`}
                       className="inline-flex items-center gap-3 font-bold text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-8 py-4 rounded-xl border border-black/5 transition-all group"
                     >
                       View More <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
-                  ) : sub.nestedServices ? (
-                    <>
-                      <button
-                        onClick={() => toggleSubService(sub.name)}
-                        className="inline-flex items-center gap-3 font-bold text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-8 py-4 rounded-xl border border-black/5 transition-all group"
-                      >
-                        {expandedSubServices[sub.name] ? 'View Less' : 'View More'} <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                      </button>
-
-                      {expandedSubServices[sub.name] && (
-                        <div className="mt-8 space-y-4">
-                          {sub.nestedServices.map((nestedService) => (
-                            <div key={nestedService.name} className="border border-black/5 rounded-2xl bg-[#F8F5F2] p-5">
-                              <h3 className="text-xl md:text-2xl font-medium tracking-tight text-[#37302F] mb-2">
-                                {nestedService.name}
-                              </h3>
-                              <p className="text-gray-600 leading-relaxed">
-                                {nestedService.desc}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </>
                   ) : (
                     <button
-                      onClick={openQuoteModal}
+                      onClick={() => openQuoteModal(sub.name)}
                       className="inline-flex items-center gap-3 font-bold text-[10px] tracking-[0.3em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-8 py-4 rounded-xl border border-black/5 transition-all group"
                     >
                       Request Service <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
@@ -193,15 +196,21 @@ const Services = () => {
                 {/* Image */}
                 <div className="w-full lg:w-1/2 lg:drop-shadow-2xl">
                   <div className={`relative shadow-2xl lg:shadow-none overflow-hidden aspect-[4/3] group w-full h-full ${index % 2 === 0 ? 'rounded-2xl lg:rounded-r-none lg:rounded-l-3xl lg:[clip-path:polygon(0%_0%,_75%_0%,_100%_100%,_0%_100%)]' : 'rounded-2xl lg:rounded-l-none lg:rounded-r-3xl lg:[clip-path:polygon(25%_0%,_100%_0%,_100%_100%,_0%_100%)]'}`}>
-                    <img
-                      src={sub.image}
-                      alt={sub.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      onError={(e) => {
-                        e.target.src = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=75&w=800";
-                      }}
-                    />
+                    {sub.image ? (
+                      <img
+                        src={sub.image}
+                        alt={sub.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        onError={(e) => {
+                          e.target.src = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=75&w=800";
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#1A1A1A]/10 flex items-center justify-center font-serif italic text-[#1A1A1A]/30">
+                        Image Pending
+                      </div>
+                    )}
                     <div className="absolute inset-0 border-4 border-[#1A1A1A]/20 rounded-2xl pointer-events-none lg:hidden"></div>
                   </div>
                 </div>
@@ -210,7 +219,6 @@ const Services = () => {
             </div>
           </section>
         ))}
-
       </div>
 
       {/* Horizontal Bottom Navigation for All Services */}
@@ -246,7 +254,7 @@ const Services = () => {
             <div className="w-full lg:w-1/2">
               <div className="flex flex-col w-full divide-y divide-white/10 border border-white/10 rounded-2xl overflow-hidden">
                 {services.map(service => {
-                  const isActive = activeService.id === service.id;
+                  const isActive = rootService && rootService.id === service.id;
                   return (
                     <Link
                       key={service.id}
