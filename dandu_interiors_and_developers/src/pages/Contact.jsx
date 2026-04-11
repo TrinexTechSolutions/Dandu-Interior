@@ -379,8 +379,8 @@ const Contact = () => {
         {/* Section 2: Precise Locations */}
         <section className="bg-[#F8F5F2] py-20 lg:py-32">
           <div className="container-custom">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-              <h2 className="text-5xl md:text-8xl font-medium text-[#37302F] tracking-tighter leading-none">
+            <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-6 text-center md:text-left">
+              <h2 className="text-5xl md:text-8xl font-medium text-[#37302F] tracking-tighter leading-none w-full md:w-auto">
                 Our <span className="font-serif italic text-[#37302F]/70">Offices</span>
               </h2>
             </div>
@@ -389,9 +389,9 @@ const Contact = () => {
               {[
                 {
                   city: "Hyderabad",
-                  address: "D-603, Vertex Pristine, Nizampet Road, Hyderabad, Telangana",
-                  mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.2750371465227!2d78.38466631487779!3d17.50269998801121!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91f56fa6da1d%3A0xc3dc8f5eb23db71a!2sVertex%20Pristine!5e0!3m2!1sen!2sin!4v1683446400000!5m2!1sen!2sin",
-                  directLink: "https://maps.google.com/?q=Vertex+Pristine"
+                  address: "D-603, Vertex Pristine, Nizampet Rd, Jai Bharat Nagar, Nizampet, Hyderabad, Telangana 500090",
+                  mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3804.941160351336!2d78.38548457519106!3d17.51030748339832!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91168997ec41%3A0x8046221dc9eac15e!2sDandu%20Interiors%20And%20Developers!5e0!3m2!1sen!2sin!4v1712815152000!5m2!1sen!2sin",
+                  directLink: "https://www.google.com/maps/search/?api=1&query=Dandu+Interiors+And+Developers+Hyderabad"
                 },
                 {
                   city: "Bapatla",
@@ -401,31 +401,44 @@ const Contact = () => {
                 }
               ].map((loc, idx) => (
                 <div key={idx} className="space-y-6">
-                  <div className="rounded-[20px] overflow-hidden h-[400px] border border-black/5 relative bg-[#1A1A1A]/5 cursor-default">
-                    {/* Fallback Display (Behind the iframe) */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-                      <MapPin size={40} className="text-[#37302F]/20 mb-4" />
-                      <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#37302F]/40 mb-4">Map Blocked by Browser</p>
-                      <a 
-                        href={loc.directLink} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-xs font-bold text-[#37302F] underline underline-offset-4 hover:opacity-70 transition-opacity"
-                      >
-                        View on Google Maps
-                      </a>
-                    </div>
-                    
-                    {/* The Iframe */}
+                  <div className="rounded-[20px] overflow-hidden h-[400px] border border-black/5 relative bg-[#1A1A1A]/5 group/map">
+                    {/* The Iframe (Non-interactive) */}
                     <iframe
                       title={`${loc.city} Office Map`}
                       src={loc.mapUrl}
                       width="100%"
                       height="100%"
-                      className="border-0 relative z-10 cursor-default"
+                      className="border-0 relative z-10 pointer-events-none"
                       allowFullScreen
                       loading="lazy"
                     ></iframe>
+
+                    {/* Interactive Overlay with "Open in Maps" Button */}
+                    <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/5 opacity-0 group-hover/map:opacity-100 transition-opacity duration-300 pointer-events-none">
+                      <div className="bg-white/90 backdrop-blur-md px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 pointer-events-auto transform translate-y-4 group-hover/map:translate-y-0 transition-transform duration-500">
+                        <MapPin size={16} className="text-[#1A1A1A]" />
+                        <a 
+                          href={loc.directLink} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A]"
+                        >
+                          Open in Maps
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Mobile/Static Persistent Button */}
+                    <div className="absolute bottom-6 right-6 z-30 lg:hidden">
+                      <a 
+                        href={loc.directLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="bg-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2 text-[8px] font-bold tracking-[0.1em] uppercase text-[#1A1A1A] border border-black/5"
+                      >
+                        <MapPin size={12} /> Open
+                      </a>
+                    </div>
                   </div>
                   <div className="px-2">
                     <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">{loc.city}</h3>
