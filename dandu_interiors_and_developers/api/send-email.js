@@ -292,7 +292,13 @@ export default async function handler(req, res) {
     const adminResponse = await callBrevo("smtp/email", adminEmailPayload);
 
     if (adminResponse.ok) {
-      return res.status(200).json({ message: 'Lead captured successfully' });
+      return res.status(200).json({ 
+        message: 'Lead captured successfully',
+        crm: {
+          success: crmResult.ok,
+          details: crmResult.data
+        }
+      });
     } else {
       console.error("Brevo Admin Email Failure:", adminResponse.data);
       return res.status(adminResponse.status).json({
