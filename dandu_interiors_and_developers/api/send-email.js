@@ -82,11 +82,16 @@ export default async function handler(req, res) {
     // // CRM INTEGRATION (BREVO CONTACTS) // //
     const contactEmail = normalize(email) || `${cleanPhone}@noemail.com`;
     
+    // Standardize Phone for Brevo (Requires E.164 format like +91...)
+    let formattedSms = cleanPhone;
+    if (formattedSms.length === 10) formattedSms = "91" + formattedSms;
+    if (!formattedSms.startsWith("+")) formattedSms = "+" + formattedSms;
+
     const contactPayload = {
       email: contactEmail,
       attributes: {
         FIRSTNAME: normalize(name),
-        SMS: cleanPhone, // Standardized numeric format
+        SMS: formattedSms, 
         LOCATION: locationLabel || "Not specified",
         PROPERTY_TYPE: normalize(propertyType || serviceType) || "Interior Design",
         REQUIREMENT: normalize(requirement || `Lead via ${websiteSource}`),
