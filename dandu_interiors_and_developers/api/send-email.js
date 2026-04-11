@@ -90,14 +90,21 @@ export default async function handler(req, res) {
         LOCATION: locationLabel,
         PROPERTY_TYPE: normalize(propertyType || serviceType),
         REQUIREMENT: normalize(requirement || "Lead from " + websiteSource),
-        SOURCE: websiteSource.toUpperCase()
+        SOURCE: websiteSource.toUpperCase(),
+        BUDGET: normalize(budget)
       },
       listIds: [brevoListId],
       updateEnabled: true
     };
 
     // Create/Update contact in CRM (Await to ensure completion in serverless context)
-    await callBrevo("contacts", contactPayload).catch(err => console.error("CRM integration error:", err));
+    const crmResult = await callBrevo("contacts", contactPayload).catch(err => ({ ok: false, data: { message: err.message } }));
+    
+    if (!crmResult.ok) {
+      console.error("❌ BREVO CRM SYNC FAILURE:", crmResult.data);
+    } else {
+      console.log("✅ BREVO CRM SYNC SUCCESS");
+    }
 
     // 4. PREPARE ADMIN NOTIFICATION
     const adminEmailPayload = {
