@@ -86,22 +86,25 @@ export default async function handler(req, res) {
       email: contactEmail,
       attributes: {
         FIRSTNAME: normalize(name),
-        SMS: normalize(phone),
-        LOCATION: locationLabel,
-        PROPERTY_TYPE: normalize(propertyType || serviceType),
-        REQUIREMENT: normalize(requirement || "Lead from " + websiteSource),
+        SMS: cleanPhone, // Standardized numeric format
+        LOCATION: locationLabel || "Not specified",
+        PROPERTY_TYPE: normalize(propertyType || serviceType) || "Interior Design",
+        REQUIREMENT: normalize(requirement || `Lead via ${websiteSource}`),
         SOURCE: websiteSource.toUpperCase(),
-        BUDGET: normalize(budget)
+        BUDGET: normalize(budget) || "Not specified"
       },
       listIds: [brevoListId],
       updateEnabled: true
     };
 
+    // Diagnostic: Log exactly what we are sending to Brevo
+    console.log("📡 SYNCING TO BREVO CRM:", JSON.stringify(contactPayload, null, 2));
+
     // Create/Update contact in CRM (Await to ensure completion in serverless context)
     const crmResult = await callBrevo("contacts", contactPayload).catch(err => ({ ok: false, data: { message: err.message } }));
     
     if (!crmResult.ok) {
-      console.error("❌ BREVO CRM SYNC FAILURE:", crmResult.data);
+      console.error("❌ BREVO CRM SYNC FAILURE DETAILS:", JSON.stringify(crmResult.data, null, 2));
     } else {
       console.log("✅ BREVO CRM SYNC SUCCESS");
     }
