@@ -96,8 +96,8 @@ export default async function handler(req, res) {
       updateEnabled: true
     };
 
-    // Create/Update contact asynchronously
-    callBrevo("contacts", contactPayload).catch(err => console.error("Async CRM integration error:", err));
+    // Create/Update contact in CRM (Await to ensure completion in serverless context)
+    await callBrevo("contacts", contactPayload).catch(err => console.error("CRM integration error:", err));
 
     // 4. PREPARE ADMIN NOTIFICATION
     const adminEmailPayload = {
@@ -274,8 +274,8 @@ export default async function handler(req, res) {
           </html>
         `
       };
-      // Send user confirmation asynchronously
-      callBrevo("smtp/email", userReplyPayload);
+      // Send user confirmation (Await to ensure completion)
+      await callBrevo("smtp/email", userReplyPayload).catch(err => console.error("User email error:", err));
     }
 
     // 6. EXECUTE ADMIN EMAIL & RETURN
