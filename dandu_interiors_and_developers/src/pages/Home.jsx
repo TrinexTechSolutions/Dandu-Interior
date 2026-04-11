@@ -32,6 +32,13 @@ const Home = () => {
   const [isTestimonialsVisible, setIsTestimonialsVisible] = useState(false);
   const servicesSectionRef = useRef(null);
   const testimonialsSectionRef = useRef(null);
+
+  // Optimization: Detect Apple devices (iOS/Safari) for specialized rendering
+  const [isAppleDevice, setIsAppleDevice] = useState(false);
+  useEffect(() => {
+    const isApple = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent) && !window.MSStream;
+    setIsAppleDevice(isApple);
+  }, []);
   
   // Optimization: Cache step elements to avoid repeated DOM queries
   const processStepsRef = useRef([]);
@@ -142,7 +149,7 @@ const Home = () => {
 
     let animationId;
     let lastTime = 0;
-    const speed = 0.85; // Increased speed for better engagement
+    const speed = 1.15; // Increased speed for better engagement
 
     const animate = (time) => {
       if (!lastTime) lastTime = time;
@@ -159,12 +166,18 @@ const Home = () => {
           scrollContainer.scrollLeft += speed * frameAdjust;
         }
 
-        // Loop detection: reset to 0 once we've scrolled half the total (duplicated) content
+        // Bi-directional Loop detection: maintain infinite illusion
         const halfWidth = scrollContainer.scrollWidth / 2;
         
-        // iOS Fix: Use a larger tolerance for rounding issues and bounce effects
-        if (halfWidth > 0 && Math.ceil(scrollContainer.scrollLeft) >= Math.floor(halfWidth) - 5) {
-          scrollContainer.scrollLeft = 0;
+        if (halfWidth > 0) {
+          // If we reach the end of the first half, reset to 0
+          if (Math.ceil(scrollContainer.scrollLeft) >= Math.floor(halfWidth)) {
+            scrollContainer.scrollLeft = 1; // Small offset to prevent bounce
+          } 
+          // If we reach the absolute start (scrolling back), jump to the halfWidth
+          else if (scrollContainer.scrollLeft <= 0) {
+            scrollContainer.scrollLeft = halfWidth - 1;
+          }
         }
       }
       animationId = requestAnimationFrame(animate);
@@ -185,7 +198,7 @@ const Home = () => {
 
     let animationId;
     let lastTime = 0;
-    const speed = 0.75; // Increased speed
+    const speed = 1.0; // Increased speed
 
     const animate = (time) => {
       if (!lastTime) lastTime = time;
@@ -201,9 +214,12 @@ const Home = () => {
         }
 
         const halfWidth = scrollContainer.scrollWidth / 2;
-        // iOS Fix: Use ceil/floor for robust looping
-        if (halfWidth > 0 && Math.ceil(scrollContainer.scrollLeft) >= Math.floor(halfWidth) - 5) {
-          scrollContainer.scrollLeft = 0;
+        if (halfWidth > 0) {
+          if (Math.ceil(scrollContainer.scrollLeft) >= Math.floor(halfWidth)) {
+            scrollContainer.scrollLeft = 1;
+          } else if (scrollContainer.scrollLeft <= 0) {
+            scrollContainer.scrollLeft = halfWidth - 1;
+          }
         }
       }
       animationId = requestAnimationFrame(animate);
@@ -219,12 +235,13 @@ const Home = () => {
     const scrollContainer = scrollRef.current;
     if (scrollContainer) {
       const halfWidth = scrollContainer.scrollWidth / 2;
-      const scrollAmount = window.innerWidth * 0.4;
+      const scrollAmount = window.innerWidth * 0.45;
       
       // Infinite Loop Logic: Jump instantly before smooth scrolling if at boundaries
-      if (direction === 'left' && scrollContainer.scrollLeft <= 5) {
+      // More generous tolerance for manual scroll
+      if (direction === 'left' && scrollContainer.scrollLeft <= 20) {
         scrollContainer.scrollLeft = halfWidth;
-      } else if (direction === 'right' && scrollContainer.scrollLeft >= halfWidth - 5) {
+      } else if (direction === 'right' && scrollContainer.scrollLeft >= halfWidth - 20) {
         scrollContainer.scrollLeft = 0;
       }
       
@@ -235,7 +252,7 @@ const Home = () => {
     }
   };
 
-  const infiniteServices = [...services.slice(0, 8), ...services.slice(0, 8)];
+  const infiniteServices = [...services, ...services];
   const infiniteTestimonials = [...testimonials, ...testimonials];
 
   return (
@@ -317,8 +334,8 @@ const Home = () => {
             </div>
 
             {/* Side Blur Overlays (Perfectly flush com a borda do container) */}
-            <div className="absolute left-0 inset-y-0 w-12 md:w-32 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-l-2xl"></div>
-            <div className="absolute right-0 inset-y-0 w-12 md:w-32 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-r-2xl"></div>
+            <div className={`absolute left-0 inset-y-0 w-12 md:w-32 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent z-40 pointer-events-none rounded-l-2xl ${!isAppleDevice ? 'backdrop-blur-[2px]' : ''}`}></div>
+            <div className={`absolute right-0 inset-y-0 w-12 md:w-32 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent z-40 pointer-events-none rounded-r-2xl ${!isAppleDevice ? 'backdrop-blur-[2px]' : ''}`}></div>
 
             <div
               ref={scrollRef}
@@ -363,7 +380,8 @@ const Home = () => {
                 return (
                   <div
                     key={uniqueId}
-                    className="relative w-[85vw] md:w-[45vw] lg:w-[calc(25%-1.5rem)] shrink-0 h-[370px] flex flex-col items-start group/card"
+                    className="relative w-[85vw] md:w-[45vw] lg:w-[calc(25%-1.5rem)] shrink-0 h-[370px] flex flex-col items-start group/card will-change-transform"
+                    style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                   >
                     {/* Top-Left Cutout Layer (Design matching DesignIdeas) */}
                     <div className="absolute top-0 left-0 bg-[#F8F5F2] max-w-[85%] pb-3 pr-5 rounded-tl-2xl rounded-br-[32px] z-30 pointer-events-none">
@@ -412,7 +430,7 @@ const Home = () => {
             </div>
 
             {/* Right Corner Blur Overlay (Perfectly flush com a borda do container) */}
-            <div className="absolute right-0 inset-y-0 w-8 md:w-24 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-r-2xl"></div>
+            <div className={`absolute right-0 inset-y-0 w-8 md:w-24 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent z-40 pointer-events-none rounded-r-2xl ${!isAppleDevice ? 'backdrop-blur-[2px]' : ''}`}></div>
           </div>
         </SectionWrapper>
       </div>
@@ -564,8 +582,8 @@ const Home = () => {
 
           <div className="relative group/testimonials -mx-4 md:-mx-8">
             {/* Side Blur Overlays (Only visible on mobile scroll) */}
-            <div className="absolute left-0 inset-y-0 w-8 md:w-20 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-l-2xl md:hidden"></div>
-            <div className="absolute right-0 inset-y-0 w-8 md:w-20 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent backdrop-blur-[2px] z-40 pointer-events-none rounded-r-2xl md:hidden"></div>
+            <div className={`absolute left-0 inset-y-0 w-8 md:w-20 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent z-40 pointer-events-none rounded-l-2xl md:hidden ${!isAppleDevice ? 'backdrop-blur-[2px]' : ''}`}></div>
+            <div className={`absolute right-0 inset-y-0 w-8 md:w-20 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent z-40 pointer-events-none rounded-r-2xl md:hidden ${!isAppleDevice ? 'backdrop-blur-[2px]' : ''}`}></div>
 
             <div
               ref={testimonialScrollRef}
@@ -595,7 +613,8 @@ const Home = () => {
               {(typeof window !== 'undefined' && window.innerWidth >= 1024 ? testimonials.slice(0, 4) : infiniteTestimonials).map((testimonial, idx) => (
                 <div
                   key={`${testimonial.id}-${idx}`}
-                  className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] relative mt-8 flex flex-col h-[400px] lg:h-full min-w-[85vw] md:min-w-0 lg:min-w-0 group transition-all duration-300 hover:shadow-2xl justify-between"
+                  className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] relative mt-8 flex flex-col h-[400px] lg:h-full min-w-[85vw] md:min-w-0 lg:min-w-0 group transition-all duration-300 hover:shadow-2xl justify-between will-change-transform"
+                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                 >
                   <div className="absolute -top-6 left-8 w-12 h-12 bg-[#1A1A1A] text-white flex items-center justify-center rounded-full text-3xl font-serif">"</div>
 
