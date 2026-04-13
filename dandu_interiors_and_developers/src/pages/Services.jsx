@@ -14,7 +14,7 @@ const Services = () => {
   const { openQuoteModal, openCallModal } = useModal();
   const contentRef = React.useRef(null);
   const heroRef = React.useRef(null);
-  const [heroOffset, setHeroOffset] = useState(600); // Safer initial default to prevent early overlap
+  const buttonRef = React.useRef(null);
 
   const { scrollY } = useScroll();
   const heroTranslateY = useTransform(scrollY, [0, 500], [0, -125]);
@@ -36,45 +36,15 @@ const Services = () => {
 
     setExpandedSubServices({});
 
-    const updateHeight = () => {
-      if (heroRef.current) {
-        // Use getBoundingClientRect for the most accurate visual height including tight line-heights
-        const rect = heroRef.current.getBoundingClientRect();
-        const heroHeight = rect.height;
-        
-        // Measure parent padding top accurately
-        const parentStyle = window.getComputedStyle(heroRef.current.parentElement);
-        const pt = parseFloat(parentStyle.paddingTop) || 112;
-        
-        // Strict 2-line gap (3rem / 48px) as requested by the user
-        const bottomBuffer = 48; 
-        
-        setHeroOffset(heroHeight + pt + bottomBuffer);
-      }
-    };
-
-    // Use ResizeObserver for perfect tracking across all screen sizes and text wrapping
-    const resizeObserver = new ResizeObserver(() => {
-      // Use requestAnimationFrame to avoid "ResizeObserver loop limit exceeded" warning
-      requestAnimationFrame(updateHeight);
-    });
-
-    if (heroRef.current) {
-      resizeObserver.observe(heroRef.current);
-    }
-
     const handleScroll = () => {
       if (contentRef.current) {
         const top = contentRef.current.getBoundingClientRect().top;
-        const navHeight = 80; // Fixed nav height for simpler threshold
+        const navHeight = 84; 
         setIsCardMode(top > navHeight);
       }
     };
-
-    updateHeight();
     window.addEventListener('scroll', handleScroll);
     return () => {
-      resizeObserver.disconnect();
       window.removeEventListener('scroll', handleScroll);
     };
   }, [id, subId]);
@@ -89,80 +59,87 @@ const Services = () => {
   const displayDesc = activeDisplayService.description || activeDisplayService.shortDesc || activeDisplayService.desc;
   const itemsToRender = activeDisplayService.subServices || activeDisplayService.nestedServices || [];
 
+  // Unified Hero Content for visual and layout consistency
+  const HeroContent = ({ isGhost = false }) => (
+    <div 
+      className={`w-full relative px-4 md:px-8 ${isGhost ? 'opacity-0 pointer-events-none select-none' : ''}`}
+      aria-hidden={isGhost}
+    >
+      {/* Breadcrumb / Back Navigation */}
+      {subId && rootService && (
+        <Link 
+          to={`/services/${rootService.id}`}
+          className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#37302F]/50 hover:text-[#37302F] mb-4 transition-colors group"
+        >
+          <ArrowRight size={12} className="rotate-180 group-hover:-translate-x-1 transition-transform" />
+          Back to {rootService.title}
+        </Link>
+      )}
+
+      {/* Static Header Title */}
+      <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[8rem] xl:text-[9.5rem] font-medium tracking-tighter text-[#37302F] leading-[0.85] ml-[-0.04em] select-none max-w-[95%]">
+        {displayTitle.split(' ').length > 1 ? (
+          <>
+            {displayTitle.split(' ').slice(0, -1).join(' ')} <span className="font-serif italic text-[#37302F]/70">{displayTitle.split(' ').slice(-1)}</span>
+          </>
+        ) : (
+          displayTitle
+        )}
+      </h1>
+
+      {/* Static Description */}
+      <div className="w-full flex flex-col items-start md:items-end mt-4 md:mt-4">
+        <div className="max-w-xs md:max-w-sm text-left md:text-right mb-6 md:mb-8">
+          <p
+            className="text-gray-500 text-sm md:text-lg leading-relaxed font-semibold tracking-wide"
+            style={{
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden'
+            }}
+          >
+            {displayDesc}
+          </p>
+        </div>
+
+        {/* animated Button Group */}
+        <div className="flex items-center gap-2 group cursor-pointer transition-all duration-500 ease-in-out hover:gap-0 h-12 md:h-14 mb-6">
+          <button
+            onClick={() => !isGhost && openCallModal(displayTitle)}
+            className="bg-[#1A1A1A] text-white h-full px-8 rounded-l-full rounded-r-md group-hover:rounded-r-none transition-all duration-500 font-bold text-sm md:text-base whitespace-nowrap shadow-xl flex items-center"
+          >
+            Book a call
+          </button>
+          <button
+            onClick={() => !isGhost && openCallModal(displayTitle)}
+            className="bg-[#1A1A1A] text-white h-full px-4 rounded-r-full rounded-l-md group-hover:rounded-l-none transition-all duration-500 flex items-center justify-center shadow-xl border-l border-white/10 group-hover:border-transparent"
+          >
+            <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="bg-[#F8F5F2] min-h-screen pb-0 relative text-[#1A1A1A]">
 
-      {/* Static Fixed Header Section */}
+      {/* 1. VISIBLE FIXED HEADER (Parallax) */}
       <motion.div
         className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-visible z-0 bg-[#F8F5F2] pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-        style={{ height: heroOffset ? `${heroOffset}px` : '50vh', y: heroTranslateY }}
+        style={{ y: heroTranslateY }}
       >
-        <div ref={heroRef} className="w-full relative px-4 md:px-8">
-          
-          {/* Breadcrumb / Back Navigation */}
-          {subId && rootService && (
-            <Link 
-              to={`/services/${rootService.id}`}
-              className="inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#37302F]/50 hover:text-[#37302F] mb-4 transition-colors group"
-            >
-              <ArrowRight size={12} className="rotate-180 group-hover:-translate-x-1 transition-transform" />
-              Back to {rootService.title}
-            </Link>
-          )}
-
-          {/* Static Header Title */}
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[8rem] xl:text-[9.5rem] font-medium tracking-tighter text-[#37302F] leading-[0.85] ml-[-0.04em] select-none max-w-[95%]">
-            {displayTitle.split(' ').length > 1 ? (
-              <>
-                {displayTitle.split(' ').slice(0, -1).join(' ')} <span className="font-serif italic text-[#37302F]/70">{displayTitle.split(' ').slice(-1)}</span>
-              </>
-            ) : (
-              displayTitle
-            )}
-          </h1>
-
-          {/* Static Description */}
-          <div className="w-full flex flex-col items-end mt-2 md:mt-4">
-            <div className="max-w-[260px] md:max-w-sm text-right mb-6 md:mb-8">
-              <p
-                className="text-gray-500 text-sm md:text-lg leading-relaxed font-semibold tracking-wide"
-                style={{
-                  display: '-webkit-box',
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden'
-                }}
-              >
-                {displayDesc}
-              </p>
-            </div>
-
-            {/* animated Button Group */}
-            <div className="flex items-center gap-2 group cursor-pointer transition-all duration-500 ease-in-out hover:gap-0 h-12 md:h-14">
-              <button
-                onClick={() => openCallModal(displayTitle)}
-                className="bg-[#1A1A1A] text-white h-full px-8 rounded-l-full rounded-r-md group-hover:rounded-r-none transition-all duration-500 font-bold text-sm md:text-base whitespace-nowrap shadow-xl flex items-center"
-              >
-                Book a call
-              </button>
-              <button
-                onClick={() => openCallModal(displayTitle)}
-                className="bg-[#1A1A1A] text-white h-full px-4 rounded-r-full rounded-l-md group-hover:rounded-l-none transition-all duration-500 flex items-center justify-center shadow-xl border-l border-white/10 group-hover:border-transparent"
-              >
-                <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </div>
-        </div>
+        <HeroContent />
       </motion.div>
 
-      {/* Spacer to push content down from fixed header */}
-      <div 
-        style={{ height: heroOffset ? `${heroOffset}px` : '60vh' }} 
-        className="pointer-events-none"
-      />
+      {/* 2. GHOST LAYOUT SPACER (Document Flow) */}
+      {/* This invisible div naturally pushes the content down exactly the right amount on any resolution */}
+      <div className="pt-24 md:pt-28 select-none">
+        <HeroContent isGhost />
+      </div>
 
-      {/* Main Content Sections */}
+      {/* 3. MAIN CONTENT */}
       <div
         id="services-content"
         ref={contentRef}
