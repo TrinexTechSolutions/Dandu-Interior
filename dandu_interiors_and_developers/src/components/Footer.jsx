@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
 import brandLogo from '../assets/logos_and_bg_images/dandu_logo.svg';
+import { useModal } from '../context/ModalContext';
 
 const Footer = () => {
+  const { openQuoteModal } = useModal();
   const trackWhatsAppClick = () => {
     if (typeof window.gtag === 'function') {
       window.gtag('event', 'whatsapp_click', {
@@ -86,19 +88,29 @@ const Footer = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {[
                 { name: 'About', path: '/about' },
-                { name: 'Projects', path: '/gallery' },
+                { name: 'Gallery', path: '/gallery' },
                 { name: 'Design Ideas', path: '/design-ideas' },
                 { name: 'Contact', path: '/contact' },
                 { name: 'Services', path: '/services' },
-                { name: 'Get Quote', path: '/get-quote' }
+                { name: 'Get Quote', onClick: openQuoteModal }
               ].map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.path}
-                  className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/50 hover:text-white transition-colors"
-                >
-                  {link.name}
-                </Link>
+                link.onClick ? (
+                  <button
+                    key={link.name}
+                    onClick={link.onClick}
+                    className="text-[10px] text-left font-medium tracking-[0.2em] uppercase text-white/50 hover:text-white transition-colors"
+                  >
+                    {link.name}
+                  </button>
+                ) : (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/50 hover:text-white transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                )
               ))}
             </div>
           </div>
@@ -108,14 +120,18 @@ const Footer = () => {
             <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/30">Primary Services</span>
             <div className="grid grid-cols-2 gap-4">
               {[
-                'Interior Design',
-                'Home Renovation',
-                'Masonry Works',
-                'Structural Planning'
+                { name: 'Interior Works', path: '/services/interior-works' },
+                { name: 'Civil Works', path: '/services/civil-works' },
+                { name: 'Renovation works', path: '/services/renovation-works' },
+                { name: 'Building Maintenance', path: '/services/building-maintenance' }
               ].map((service) => (
-                <span key={service} className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/50">
-                  {service}
-                </span>
+                <Link 
+                  key={service.name} 
+                  to={service.path}
+                  className="text-[10px] font-medium tracking-[0.2em] uppercase text-white/50 hover:text-white transition-colors"
+                >
+                  {service.name}
+                </Link>
               ))}
             </div>
           </div>

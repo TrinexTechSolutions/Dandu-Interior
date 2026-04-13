@@ -63,16 +63,6 @@ import wallPartitionMakingImage from '../assets/Services/Wall Partition Making.w
 import washingMachineInstallationImage from '../assets/Services/Washing Machine Installation.webp';
 import waterLeakRepairImage from '../assets/Services/Water Leak Repair.webp';
 
-import plumbingBasinImage from '../assets/Services/plumbing_basin.webp';
-import plumbingDiagnosisImage from '../assets/Services/plumbing_diagnosis.webp';
-import plumbingLeakImage from '../assets/Services/plumbing_leak.webp';
-import plumbingTapImage from '../assets/Services/plumbing_tap.webp';
-import plumbingPipesImage from '../assets/Services/plumbing_pipes.webp';
-import plumbingWashingMachineImage from '../assets/Services/plumbing_washing_machine.webp';
-import plumbingKitchenSinkImage from '../assets/Services/plumbing_kitchen_sink.webp';
-import plumbingBathTubImage from '../assets/Services/plumbing_bath_tub.webp';
-import plumbingToiletImage from '../assets/Services/plumbing_toilet.webp';
-
 // Newly converted images
 import image2D3D from '../assets/Services/2D & 3D.webp';
 import decoImage from '../assets/Services/Deco.webp';
@@ -107,7 +97,7 @@ import exteriorDesignImage_New from '../assets/Services/Exterior Design.webp';
 import floorPlanImage from '../assets/Services/Floor Plan.webp';
 import lightLayoutImage from '../assets/Services/Light Layout.webp';
 import quartzImage from '../assets/Services/Quartz.webp';
-import renderImage from '../assets/Services/3D Render.webp';
+import renderImage from '../assets/Services/Render.webp';
 
 const serviceImageByName = {
   'All Painting Work': allPaintingWorkImage,
@@ -119,7 +109,7 @@ const serviceImageByName = {
   'Blocked Pipes and Drains removing and installation': blockedPipesAndDrainsRemovingAndInstallationImage,
   'Brickwork': brickworkImage,
   'Civil Brick Work': brickworkImage,
-  'Building Maintenance': plumbingSystemDiagnosisAndInspectionsImage,
+  'Building Maintenance': structuralIntegrityImage,
   'Chandelier Hanging': chandelierHangingImage,
   'Commercial Design': commercialDesignImage,
   'Commercial Renovation': commercialRenovationImage,
@@ -148,16 +138,16 @@ const serviceImageByName = {
   'Light Dimmer Installation': lightDimmerInstallationImage,
   'Living Room Renovation': livingRoomRenovationImage,
   'Marble Fixing': marbleFixingImage,
-  'Civil Works': civilWorksRootImage,
-  'Interior Works': interiorImage,
-  'Designs': residentialDesignImage,
+  'Civil Works': visionaryReachImage,
+  'Interior Works': obsessiveDetailImage,
+  'Designs': heroArchitectureImage,
   'Metal Stud Partitions': metalStudPartitionsImage,
   'Office Design': officeDesignImage,
   'Office Painting': officePaintingImage,
   Plastering: plasteringImage,
   'Plumbing System Diagnosis and Inspections': plumbingSystemDiagnosisAndInspectionsImage,
   'Residential Design': residentialDesignImage,
-  'Renovation Works': fullHomeRenovationImage,
+  'Renovation Works': engineeringMasteryImage,
   'Solid Partition': solidPartitionImage,
   'Switch & Socket Installation': switchAndSocketInstallationImage,
   'Tap Repairs and Installations': tapRepairsAndInstallationsImage,
@@ -203,10 +193,10 @@ const serviceImageByName = {
   'Exterior': exteriorPaintingImage,
   'SS (Stainless Steel)': ssSteelImage,
   'Partition': solidPartitionImage,
-  'Floor Plan': additionOfFloorImage,
-  'Light Layout': lightAndLampFixingImage,
+  'Floor Plan': floorPlanImage,
+  'Light Layout': lightLayoutImage,
   '2D Drawing': image2D3D,
-  'Render': commercialDesignImage,
+  'Render': renderImage,
   'Quartz': quartzImage,
   'Waterproofing Works': terraceWaterproofingImage,
   'Residential Buildings': exteriorDesignImage_New,
@@ -238,7 +228,7 @@ const rawServices = [
   {
     id: 'designs',
     title: 'Designs',
-    icon: Home,
+    icon: SplitSquareHorizontal,
     shortDesc: 'Strategic design solutions that turn ideas into clear, build-ready spaces.',
     description: 'We create thoughtful interior and exterior designs that look beautiful, work efficiently, and match your lifestyle or business goals.',
     fullDesc: 'Our design team turns your ideas into practical, inspiring spaces with strong planning, smart detailing, and clear visual direction. From elegant homes to high-performing commercial environments, we help you see the full concept before execution begins so every decision feels confident and aligned.',
@@ -280,7 +270,7 @@ const rawServices = [
   {
     id: 'interior-works',
     title: 'Interior Works',
-    icon: Home,
+    icon: Paintbrush,
     shortDesc: 'Complete interior execution with polished finishes and dependable craftsmanship.',
     description: 'We deliver interior works that bring your design to life with clean execution, premium materials, and detail-focused finishing.',
     fullDesc: 'This is where planning becomes reality. Our team executes ceilings, cabinetry, wardrobes, painting, and feature elements with disciplined workmanship and consistent supervision. We focus on fit, finish, durability, and neat site coordination so your interiors look refined and feel ready for daily use.',
@@ -326,7 +316,7 @@ const rawServices = [
   {
     id: 'renovation-works',
     title: 'Renovation Works',
-    icon: Hammer,
+    icon: Zap,
     shortDesc: 'Complete renovations that modernize spaces and improve long-term value.',
     description: 'We renovate homes and commercial spaces with a practical, well-managed process that upgrades comfort, function, and appearance.',
     fullDesc: 'Our renovation service is built for clients who want more than cosmetic change. We rework outdated spaces into cleaner, stronger, and more efficient environments while carefully managing demolition, repairs, finishes, and system upgrades. The result is a renewed space that feels modern, dependable, and ready for the future.',
@@ -396,6 +386,7 @@ const rawServices = [
         id: 'railing-work',
         name: 'Railing Work',
         desc: 'We fabricate and install railings that provide safety while complementing the design of your property.',
+        image: ssSteelImage,
         nestedServices: [
           { name: 'MS (Mild Steel)', desc: 'Strong mild steel railings with durable protective finishes.' },
           { name: 'SS (Stainless Steel)', desc: 'Modern stainless steel railings known for clean looks and corrosion resistance.' }

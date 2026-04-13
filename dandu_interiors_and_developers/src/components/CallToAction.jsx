@@ -5,7 +5,7 @@ const CallToAction = () => {
   const { openQuoteModal } = useModal();
   
   return (
-    <section className="bg-[#F8F5F2] py-20 px-4 text-center">
+    <section className="bg-white py-20 px-4 text-center">
       <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] mb-8 leading-none">
         Ready to <span className="font-serif italic text-black/30">Transform</span> Your Space?
       </h2>

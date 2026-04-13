@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import heroBg from '../assets/herosection_banners/hero1.jpeg';
 import whyChooseUsImage from '../assets/Home/why_choose_us.webp';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Clock, Award, Users, ChevronRight, ChevronLeft, Star } from 'lucide-react';
+import { ShieldCheck, Clock, Award, Users, ChevronRight, ChevronLeft, Star, ChevronDown } from 'lucide-react';
 import { services } from '../data/services';
 import { projects } from '../data/projects';
-import { testimonials } from '../data/testimonials';
+import { faqs } from '../data/faqs';
 import SectionWrapper from '../components/SectionWrapper';
 import CallToAction from '../components/CallToAction';
 import HomeDesignIdeas from '../components/HomeDesignIdeas';
@@ -15,12 +15,10 @@ const heroImage = heroBg;
 
 const Home = () => {
   const { openQuoteModal } = useModal();
-  const [expandedTestimonial, setExpandedTestimonial] = useState(null);
+  const [activeFaq, setActiveFaq] = useState(null);
   const scrollRef = useRef(null);
   const [isInteracting, setIsInteracting] = useState(false);
   const [isManualScroll, setIsManualScroll] = useState(false);
-  const testimonialScrollRef = useRef(null);
-  const [isTestimonialInteracting, setIsTestimonialInteracting] = useState(false);
   const [activeProcessStep, setActiveProcessStep] = useState(() => {
     // Start with 0 on desktop for auto-loop, -1 on mobile for scroll-driven
     return typeof window !== 'undefined' && window.innerWidth < 1024 ? -1 : 0;
@@ -29,9 +27,8 @@ const Home = () => {
 
   // Optimization: Visibility tracking to pause animations when off-screen
   const [isServicesVisible, setIsServicesVisible] = useState(false);
-  const [isTestimonialsVisible, setIsTestimonialsVisible] = useState(false);
   const servicesSectionRef = useRef(null);
-  const testimonialsSectionRef = useRef(null);
+  const faqSectionRef = useRef(null);
 
   // Optimization: Detect Apple devices (iOS/Safari) for specialized rendering
   const [isAppleDevice, setIsAppleDevice] = useState(false);
@@ -45,7 +42,6 @@ const Home = () => {
 
   // Timer refs for resuming auto-scroll
   const serviceResumeTimer = useRef(null);
-  const testimonialResumeTimer = useRef(null);
 
   const resetServiceInteraction = () => {
     if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
@@ -53,13 +49,6 @@ const Home = () => {
       setIsInteracting(false);
       setIsManualScroll(false);
     }, 4000); // Resume auto-scroll after 4s of no activity
-  };
-
-  const resetTestimonialInteraction = () => {
-    if (testimonialResumeTimer.current) clearTimeout(testimonialResumeTimer.current);
-    testimonialResumeTimer.current = setTimeout(() => {
-      setIsTestimonialInteracting(false);
-    }, 4000);
   };
 
   // Intersection Observers for performance
@@ -70,16 +59,10 @@ const Home = () => {
       setIsServicesVisible(entry.isIntersecting);
     }, observerOptions);
 
-    const testimonialsObserver = new IntersectionObserver(([entry]) => {
-      setIsTestimonialsVisible(entry.isIntersecting);
-    }, observerOptions);
-
     if (servicesSectionRef.current) servicesObserver.observe(servicesSectionRef.current);
-    if (testimonialsSectionRef.current) testimonialsObserver.observe(testimonialsSectionRef.current);
 
     return () => {
       servicesObserver.disconnect();
-      testimonialsObserver.disconnect();
     };
   }, []);
 
@@ -96,7 +79,6 @@ const Home = () => {
     return () => {
       clearInterval(interval);
       if (serviceResumeTimer.current) clearTimeout(serviceResumeTimer.current);
-      if (testimonialResumeTimer.current) clearTimeout(testimonialResumeTimer.current);
     };
   }, [isHoveringProcess]);
 
@@ -187,47 +169,6 @@ const Home = () => {
     return () => cancelAnimationFrame(animationId);
   }, [isInteracting, isManualScroll, isServicesVisible]);
 
-  // Auto-scroll for Testimonials (Now mobile-only to maintain static desktop grid)
-  useEffect(() => {
-    const isMobile = window.innerWidth < 1024;
-    const scrollContainer = testimonialScrollRef.current;
-    if (!isMobile || !scrollContainer) return;
-
-    // Force initial scroll position to 0 only on first load if needed
-    // scrollContainer.scrollLeft = 0; // Removed to prevent reset on interaction toggle
-
-    let animationId;
-    let lastTime = 0;
-    const speed = 1.0; // Increased speed
-
-    const animate = (time) => {
-      if (!lastTime) lastTime = time;
-      const deltaTime = time - lastTime;
-      lastTime = time;
-
-      // Only run if interaction is off AND section is visible
-      if (!isTestimonialInteracting && isTestimonialsVisible) {
-        const frameAdjust = deltaTime / (1000 / 60);
-        
-        if (!isNaN(frameAdjust) && frameAdjust < 10) {
-          scrollContainer.scrollLeft += speed * frameAdjust;
-        }
-
-        const halfWidth = scrollContainer.scrollWidth / 2;
-        if (halfWidth > 0) {
-          if (Math.ceil(scrollContainer.scrollLeft) >= Math.floor(halfWidth)) {
-            scrollContainer.scrollLeft = 1;
-          } else if (scrollContainer.scrollLeft <= 0) {
-            scrollContainer.scrollLeft = halfWidth - 1;
-          }
-        }
-      }
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animationId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationId);
-  }, [isTestimonialInteracting, isTestimonialsVisible]);
 
   const handleManualScroll = (direction) => {
     setIsManualScroll(true);
@@ -253,7 +194,6 @@ const Home = () => {
   };
 
   const infiniteServices = [...services, ...services];
-  const infiniteTestimonials = [...testimonials, ...testimonials];
 
   return (
     <div>
@@ -299,13 +239,17 @@ const Home = () => {
             // No immediate reset here, let the 4s timer handle it for better control
           }}
         >
-          <div
-            className="text-center mb-20 px-4"
-          >
-            <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] mb-4 leading-none">
+          <div className="relative mb-20 flex flex-col items-center justify-center">
+            <h2 className="text-4xl md:text-6xl font-light tracking-tighter text-[#1A1A1A] text-center mb-4 leading-none">
               Core <span className="font-serif italic text-black/30">Services</span>
             </h2>
-            <div className="w-20 h-[1px] bg-black/10 mx-auto mb-8"></div>
+            <div className="w-20 h-[1px] bg-black/10 mx-auto"></div>
+            <Link to="/services" className="mt-8 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-6 py-2 rounded-full border border-black/5 transition-all">
+              view all <ChevronRight size={14} />
+            </Link>
+          </div>
+
+          <div className="text-center mb-20 px-4">
             <p className="text-black/60 text-base md:text-lg font-light max-w-4xl mx-auto leading-relaxed">
               At Dandu Interior & Developers, we don't just build spaces; we craft life-enhancing environments. Our team of certified professionals and visionary designers bring together years of multidisciplinary expertise in structural engineering, premium interior aesthetics, and seamless project management. We treat every project as a landmark of trust, ensuring your investment results in a space that is as durable as it is beautiful.
             </p>
@@ -341,8 +285,6 @@ const Home = () => {
               ref={scrollRef}
               className="flex overflow-x-auto gap-6 pb-8 px-4 md:px-8 relative hide-scrollbar will-change-scroll"
               style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
                 scrollBehavior: 'auto !important'  // Disable smooth-scroll conflict with JS loop
               }}
               onMouseDown={() => {
@@ -364,15 +306,6 @@ const Home = () => {
                 }
               }}
             >
-              <style>{`
-                .hide-scrollbar::-webkit-scrollbar { display: none !important; }
-                .hide-scrollbar { 
-                  -ms-overflow-style: none !important; 
-                  scrollbar-width: none !important;
-                  -webkit-overflow-scrolling: auto !important; /* Disable OS momentum logic during JS loop */
-                }
-                .will-change-scroll { will-change: scroll-position; }
-              `}</style>
 
               {infiniteServices.map((service, idx) => {
                 const uniqueId = `${service.id}-${idx}`;
@@ -483,7 +416,7 @@ const Home = () => {
           </h2>
           <div className="w-20 h-[1px] bg-black/10"></div>
           <Link to="/gallery" className="mt-8 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-6 py-2 rounded-full border border-black/5 transition-all">
-            View All Work <ChevronRight size={14} />
+            view all <ChevronRight size={14} />
           </Link>
         </div>
 
@@ -567,71 +500,52 @@ const Home = () => {
       {/* Design Ideas Section */}
       <HomeDesignIdeas />
 
-      {/* Client Testimonials - Enhanced Scroll for Mobile */}
-      <div ref={testimonialsSectionRef}>
-        <SectionWrapper
-          bgClass="bg-[#F8F5F2]"
-          onMouseLeave={() => resetTestimonialInteraction()}
-          onTouchEnd={() => resetTestimonialInteraction()}
-        >
-          <div className="text-center mb-16 px-4">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#1A1A1A]">Client Testimonials</h2>
-            <div className="w-24 h-1 bg-[#1A1A1A] mx-auto rounded-full mb-6"></div>
-            <p className="text-black/50 text-[13px] tracking-wide font-light max-w-2xl mx-auto uppercase">Real stories of trust, excellence, and transformed environments.</p>
-          </div>
+      {/* FAQ Section */}
+      <div ref={faqSectionRef}>
+        <SectionWrapper bgClass="bg-[#F8F5F2]" paddingClass="py-24">
+          <div className="max-w-4xl mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-[#37302F]/40 text-[10px] font-bold tracking-[0.4em] uppercase mb-4">
+                Common Questions
+              </h2>
+              <h2 className="text-4xl md:text-5xl font-light tracking-tighter text-[#1A1A1A] leading-none mb-8">
+                Frequently Asked <span className="font-serif italic text-black/20">Questions</span>
+              </h2>
+            </div>
 
-          <div className="relative group/testimonials -mx-4 md:-mx-8">
-            {/* Side Blur Overlays (Only visible on mobile scroll) */}
-            <div className={`absolute left-0 inset-y-0 w-8 md:w-20 bg-gradient-to-r from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent z-40 pointer-events-none rounded-l-2xl md:hidden ${!isAppleDevice ? 'backdrop-blur-[2px]' : ''}`}></div>
-            <div className={`absolute right-0 inset-y-0 w-8 md:w-20 bg-gradient-to-l from-[#F8F5F2] via-[#F8F5F2]/80 to-transparent z-40 pointer-events-none rounded-r-2xl md:hidden ${!isAppleDevice ? 'backdrop-blur-[2px]' : ''}`}></div>
-
-            <div
-              ref={testimonialScrollRef}
-              className="flex lg:grid lg:grid-cols-4 overflow-x-auto lg:overflow-hidden gap-6 md:gap-8 pb-12 px-4 md:px-8 relative hide-scrollbar will-change-scroll"
-              onMouseDown={() => {
-                if (window.innerWidth >= 1024) {
-                  setIsTestimonialInteracting(true);
-                  resetTestimonialInteraction();
-                }
-              }}
-              onTouchStart={() => {
-                if (window.innerWidth < 1024) {
-                  setIsTestimonialInteracting(true);
-                }
-              }}
-              onTouchEnd={() => {
-                if (window.innerWidth < 1024) {
-                  resetTestimonialInteraction();
-                }
-              }}
-            >
-              <style>{`
-                .will-change-scroll { will-change: scroll-position; }
-              `}</style>
-
-              {/* Desktop: Static 4-column grid | Mobile: Infinite flex scroll */}
-              {(typeof window !== 'undefined' && window.innerWidth >= 1024 ? testimonials.slice(0, 4) : infiniteTestimonials).map((testimonial, idx) => (
-                <div
-                  key={`${testimonial.id}-${idx}`}
-                  className="bg-white p-8 rounded-2xl shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] relative mt-8 flex flex-col h-[400px] lg:h-full min-w-[85vw] md:min-w-0 lg:min-w-0 group transition-all duration-300 hover:shadow-2xl justify-between will-change-transform"
-                  style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
-                >
-                  <div className="absolute -top-6 left-8 w-12 h-12 bg-[#1A1A1A] text-white flex items-center justify-center rounded-full text-3xl font-serif">"</div>
-
-                  <div className="flex gap-1 mb-4 text-[#1A1A1A] mt-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} size={16} fill="currentColor" stroke="none" />
-                    ))}
+            <div className="space-y-4">
+              {faqs.map((faq, idx) => {
+                const isOpen = activeFaq === idx;
+                return (
+                  <div 
+                    key={faq.id}
+                    className={`border border-black/5 rounded-2xl overflow-hidden transition-all duration-500 ${isOpen ? 'bg-white shadow-xl translate-x-1' : 'bg-white/40'}`}
+                  >
+                    <button
+                      onClick={() => setActiveFaq(isOpen ? null : idx)}
+                      className="w-full p-6 md:p-8 flex justify-between items-center text-left gap-4"
+                    >
+                      <span className={`text-base md:text-lg font-medium transition-colors duration-300 ${isOpen ? 'text-[#1A1A1A]' : 'text-[#1A1A1A]/70'}`}>
+                        {faq.question}
+                      </span>
+                      <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center border border-black/5 transition-all duration-500 ${isOpen ? 'bg-[#1A1A1A] text-white rotate-180' : 'bg-transparent text-black/20'}`}>
+                        <ChevronDown size={16} />
+                      </div>
+                    </button>
+                    
+                    <div 
+                      className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[300px] opacity-100' : 'max-h-0 opacity-0'}`}
+                    >
+                      <div className="px-6 md:px-8 pb-8 md:pb-10">
+                        <div className="w-full h-[1px] bg-black/5 mb-6"></div>
+                        <p className="text-[#1A1A1A]/60 leading-relaxed font-light text-sm md:text-base">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-
-                  <p className="text-gray-600 italic mb-6 text-sm leading-relaxed flex-grow">"{testimonial.content}"</p>
-
-                  <div className="pt-4 border-t border-gray-50">
-                    <h4 className="font-bold text-[#1A1A1A]">{testimonial.name}</h4>
-                    <p className="text-xs text-gray-500">{testimonial.role}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </SectionWrapper>

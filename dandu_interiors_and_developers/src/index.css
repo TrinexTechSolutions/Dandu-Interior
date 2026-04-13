@@ -88,31 +88,22 @@ body::-webkit-scrollbar,
   display: none !important; /* Chrome/Safari/Edge */
 }
 
-/* Selective Scrollbar Restoration for Drawers/Modals */
-.custom-scrollbar::-webkit-scrollbar {
-  display: block;
-  width: 4px;
-  height: 4px;
+.hide-scrollbar::-webkit-scrollbar {
+  display: none !important;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+.hide-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+  -webkit-overflow-scrolling: auto !important;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #1A1A1A;
-  border-radius: 10px;
+.will-change-scroll {
+  will-change: scroll-position;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #000000;
-}
-
-/* Ensure firefox supports selective restoration if needed */
-.custom-scrollbar {
-  scrollbar-width: thin !important;
-  scrollbar-color: #1A1A1A transparent !important;
-}
+/* Selective Scrollbar Restoration for Drawers/Modals (Optional - currently disabled by user request) */
+/* .custom-scrollbar::-webkit-scrollbar { ... } */
 
 /* Page Transition Stacking - Ensures seamless attached vertical slide */
 .page-transition-container {

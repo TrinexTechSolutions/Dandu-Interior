@@ -127,13 +127,6 @@ const QuoteModal = () => {
               }
             }}
           >
-            {/* Mobile Handle Bar */}
-            <div 
-              className="w-full flex md:hidden justify-center pt-4 pb-2 cursor-grab active:cursor-grabbing touch-none"
-              onPointerDown={(e) => dragControls.start(e)}
-            >
-              <div className="w-12 h-1 bg-gray-200 rounded-full" />
-            </div>
 
             {/* Close Button */}
             <button
@@ -183,7 +176,7 @@ const QuoteModal = () => {
             </div>
 
             {/* Form Content */}
-            <div className="w-full md:w-[67%] bg-[#F8F5F2] p-5 md:p-10 overflow-y-auto custom-scrollbar" data-lenis-prevent>
+            <div className="w-full md:w-[67%] bg-[#F8F5F2] p-5 md:p-10 overflow-y-auto hide-scrollbar" data-lenis-prevent>
               <div className="md:hidden mb-4">
                 <h2 className="text-2xl font-light tracking-tighter text-[#1A1A1A] leading-none mb-1">
                   Request <span className="font-serif italic text-black/30">A Quote</span>
