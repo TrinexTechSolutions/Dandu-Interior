@@ -29,6 +29,28 @@ import diningRoomIdeaImage from '../assets/DesignIdeas/Dining Room.webp';
 import kidsBedroomIdeaImage from '../assets/DesignIdeas/Kids Bedroom.webp';
 import wardrobeIdeaImage from '../assets/DesignIdeas/Wardrobe.webp';
 
+// New Imports for Updated Content
+import kitchenCabinetsImage from '../assets/Services/Kitchen Cabinets.webp';
+import modularKitchenAndWardrobesImage from '../assets/Services/Modular Kitchen & Wardrobes.webp';
+import plumbingToiletImage from '../assets/Services/plumbing_toilet.webp';
+import plumbingBasinImage from '../assets/Services/plumbing_basin.webp';
+import marbleImage from '../assets/Services/Marble.webp';
+import decoImage from '../assets/Services/Deco.webp';
+import allPaintingWorkImage from '../assets/Services/All Painting Work.webp';
+import housePaintingImage from '../assets/Services/House Painting.webp';
+import interiorImage from '../assets/Services/Interior.webp';
+import bedRoom01Image from '../assets/DesignIdeas/BedRoom01.webp';
+import bedRoom02Image from '../assets/DesignIdeas/BedRoom02.webp';
+import bedRoom03Image from '../assets/DesignIdeas/BedRoom03.webp';
+import bedRoom04Image from '../assets/DesignIdeas/BedRoom04.webp';
+import kidsBedroom01Image from '../assets/DesignIdeas/KidsBedroom01.webp';
+import kidsBedroom02Image from '../assets/DesignIdeas/KidsBedroom02.webp';
+import kidsBedroom03Image from '../assets/DesignIdeas/KidsBedroom03.webp';
+import kidsBedroom04Image from '../assets/DesignIdeas/KidsBedroom04.webp';
+import kidsBedroom05Image from '../assets/DesignIdeas/KidsBedroom05.webp';
+import crockeryUnitImage from '../assets/Services/Crockery Unit.webp';
+import wardrobeServiceImage from '../assets/Services/Wardrobe.webp';
+
 const projectImageMap = Object.fromEntries(
   Object.entries(import.meta.glob('../assets/Projects/*.webp', { eager: true, import: 'default' })).map(
     ([path, image]) => [path.split('/').pop(), image]
@@ -43,11 +65,12 @@ export const designIdeas = [
     image: kitchenRenovationImage,
     count: '24 Designs',
     gallery: [
-      kitchenSinkRepairAndInstallationImage,
-      homeAppliancesFixingImage,
-      getProjectImage('project-gallery-36.webp'),
-      getProjectImage('project-gallery-37.webp'),
-      getProjectImage('project-gallery-38.webp')
+      getProjectImage('project-gallery-03.webp'),
+      getProjectImage('project-gallery-24.webp'),
+      getProjectImage('project-gallery-62.webp'),
+      kitchenCabinetsImage,
+      kitchenRenovationImage,
+      modularKitchenAndWardrobesImage
     ]
   },
   {
@@ -55,23 +78,26 @@ export const designIdeas = [
     image: livingRoomRenovationImage,
     count: '45 Designs',
     gallery: [
-      fullHomeRenovationImage,
-      interiorPaintingImage,
-      lightAndLampFixingImage,
-      mirrorInstallationImage,
-      getProjectImage('project-gallery-54.webp')
+      plumbingToiletImage,
+      plumbingBasinImage,
+      marbleImage,
+      livingRoomRenovationImage,
+      flooringImage,
+      decoImage,
+      allPaintingWorkImage
     ]
   },
   {
     title: 'Bedroom',
-    image: residentialDesignImage,
+    image: housePaintingImage,
     count: '38 Designs',
     gallery: [
-      wallpaperFixingImage,
-      mirrorInstallationImage,
-      curtainRodsAndBlindFixingImage,
-      interiorPaintingImage,
-      getProjectImage('project-gallery-41.webp')
+      interiorImage,
+      getProjectImage('project-gallery-02.webp'),
+      bedRoom01Image,
+      bedRoom02Image,
+      bedRoom03Image,
+      bedRoom04Image
     ]
   },
   {
@@ -79,11 +105,11 @@ export const designIdeas = [
     image: kidsBedroomIdeaImage,
     count: '15 Designs',
     gallery: [
-      residentialDesignImage,
-      shelvesFixingImage,
-      curtainRodsAndBlindFixingImage,
-      interiorPaintingImage,
-      getProjectImage('project-gallery-42.webp')
+      kidsBedroom01Image,
+      kidsBedroom02Image,
+      kidsBedroom03Image,
+      kidsBedroom04Image,
+      kidsBedroom05Image
     ]
   },
   {
@@ -91,11 +117,13 @@ export const designIdeas = [
     image: wardrobeIdeaImage,
     count: '31 Designs',
     gallery: [
-      mirrorInstallationImage,
-      shelvesFixingImage,
-      interiorPaintingImage,
-      wallpaperFixingImage,
-      getProjectImage('project-gallery-44.webp')
+      wardrobeServiceImage,
+      crockeryUnitImage,
+      getProjectImage('project-gallery-60.webp'),
+      getProjectImage('project-gallery-59.webp'),
+      getProjectImage('project-gallery-57.webp'),
+      getProjectImage('project-gallery-52.webp'),
+      getProjectImage('project-gallery-45.webp')
     ]
   },
   {

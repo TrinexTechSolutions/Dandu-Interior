@@ -92,12 +92,6 @@ const Services = () => {
         <div className="max-w-xs md:max-w-sm text-left md:text-right mb-6 md:mb-8">
           <p
             className="text-gray-500 text-sm md:text-lg leading-relaxed font-semibold tracking-wide"
-            style={{
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden'
-            }}
           >
             {displayDesc}
           </p>
@@ -164,12 +158,6 @@ const Services = () => {
                   <div className="w-20 h-[1px] bg-black/10 mb-8"></div>
                   <p
                     className="text-gray-600 text-lg leading-relaxed mb-6"
-                    style={{
-                      display: '-webkit-box',
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden'
-                    }}
                   >
                     {sub.desc}
                   </p>

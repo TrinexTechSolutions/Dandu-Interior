@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CallToAction from '../components/CallToAction';
 import { ArrowRight } from 'lucide-react';
 import { useScroll, useTransform, motion } from 'framer-motion';
-import FounderImg from '../assets/about_page_images/Founder_img_3.jpeg';
+import FounderImg from '../assets/about_page_images/Founder_img_3.webp';
 import heroArchitectureImg from '../assets/About/hero_architecture.webp';
 import structuralIntegrityImg from '../assets/About/structural_integrity.webp';
 import obsessiveDetailImg from '../assets/About/obsessive_detail.webp';
