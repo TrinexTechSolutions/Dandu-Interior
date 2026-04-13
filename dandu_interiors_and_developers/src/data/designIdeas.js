@@ -6,7 +6,6 @@ import livingRoomRenovationImage from '../assets/Services/Living Room Renovation
 import bathroomRenovationImage from '../assets/Services/Bathroom Renovation.webp';
 import bathTubInstallationImage from '../assets/Services/Bath Tub Installation.webp';
 import interiorPaintingImage from '../assets/Services/Interior Painting.webp';
-import wallpaperFixingImage from '../assets/Services/Wallpaper Fixing.webp';
 import poojaroomImage from '../assets/Projects/project-gallery-28.webp';
 import shelvesFixingImage from '../assets/Services/Shelves Fixing.webp';
 import officePaintingImage from '../assets/Services/Office Painting.webp';
@@ -14,11 +13,9 @@ import fullHomeRenovationImage from '../assets/Services/Full Home Renovation.web
 import extensionOfAreasImage from '../assets/Services/Extension of Areas.webp';
 import spaceSavingIdeaImage from '../assets/DesignIdeas/Space saving.webp';
 import flooringImage from '../assets/Services/Flooring.webp';
-import kitchenSinkRepairAndInstallationImage from '../assets/Services/Kitchen Sink Repair and Installation.webp';
 import mirrorInstallationImage from '../assets/Services/Mirror Installation.webp';
 import curtainRodsAndBlindFixingImage from '../assets/Services/Curtain Rods & Blind Fixing.webp';
 import handWashBasinRepairAndInstallationImage from '../assets/Services/Hand Wash Basin Repair and Installation.webp';
-import homeAppliancesFixingImage from '../assets/Services/Home Appliances Fixing.webp';
 import solidPartitionImage from '../assets/Services/Solid Partition.webp';
 import lightAndLampFixingImage from '../assets/Services/Light & Lamp Fixing.webp';
 import wallPartitionMakingImage from '../assets/Services/Wall Partition Making.webp';

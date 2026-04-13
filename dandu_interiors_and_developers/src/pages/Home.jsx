@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import heroBg from '../assets/herosection_banners/hero1.webp';
 import whyChooseUsImage from '../assets/Home/why_choose_us.webp';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Clock, Award, Users, ChevronRight, ChevronLeft, Star, ChevronDown } from 'lucide-react';
+import { ShieldCheck, Clock, Award, Users, ChevronRight, ChevronLeft, ChevronDown } from 'lucide-react';
 import { services } from '../data/services';
 import { projects } from '../data/projects';
 import { faqs } from '../data/faqs';

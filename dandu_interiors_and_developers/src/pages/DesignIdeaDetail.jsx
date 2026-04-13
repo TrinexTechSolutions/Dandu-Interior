@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { motion, useIsPresent, AnimatePresence, useDragControls } from 'framer-motion';
+import { motion, AnimatePresence, useDragControls } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 import { designIdeas } from '../data/designIdeas';
@@ -14,7 +14,6 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
   const navigate = useNavigate();
   const id = isDrawer ? drawerId : routeId;
   const { openQuoteFromDrawer, setDetailDrawerOpen } = useModal();
-  const scrollContainerRef = useRef(null);
   const dragControls = useDragControls();
 
   const idea = designIdeas.find(i => i.title.toLowerCase().replace(/\s+/g, '-') === id);

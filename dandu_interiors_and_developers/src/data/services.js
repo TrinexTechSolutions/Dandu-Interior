@@ -1,5 +1,4 @@
-import { Paintbrush, Hammer, Wrench, Zap, SplitSquareHorizontal, Grid, Home } from 'lucide-react';
-import civilWorksRootImage from '../assets/Home/civil_works.webp';
+import { Paintbrush, Wrench, Zap, SplitSquareHorizontal, Grid } from 'lucide-react';
 
 // Premium Branded Assets for Designs
 import engineeringMasteryImage from '../assets/About/engineering_mastery.webp';
