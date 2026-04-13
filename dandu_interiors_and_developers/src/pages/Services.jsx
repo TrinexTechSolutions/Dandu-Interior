@@ -14,12 +14,12 @@ const Services = () => {
   const { openQuoteModal, openCallModal } = useModal();
   const contentRef = React.useRef(null);
   const heroRef = React.useRef(null);
-  const [heroOffset, setHeroOffset] = useState(0);
+  const [heroOffset, setHeroOffset] = useState(600); // Safer initial default to prevent early overlap
 
   const { scrollY } = useScroll();
   const heroTranslateY = useTransform(scrollY, [0, 500], [0, -125]);
 
-  useEffect(() => {
+  React.useLayoutEffect(() => {
     window.scrollTo(0, 0);
     
     // Find Root Service
@@ -38,27 +38,44 @@ const Services = () => {
 
     const updateHeight = () => {
       if (heroRef.current) {
-        const heroHeight = heroRef.current.scrollHeight;
-        const navHeight = document.querySelector('nav')?.offsetHeight || 80;
-        const bottomBuffer = window.innerWidth < 640 ? 120 : 140;
-        setHeroOffset(heroHeight + navHeight + bottomBuffer);
+        // Use getBoundingClientRect for the most accurate visual height including tight line-heights
+        const rect = heroRef.current.getBoundingClientRect();
+        const heroHeight = rect.height;
+        
+        // Measure parent padding top accurately
+        const parentStyle = window.getComputedStyle(heroRef.current.parentElement);
+        const pt = parseFloat(parentStyle.paddingTop) || 112;
+        
+        // Strict 2-line gap (3rem / 48px) as requested by the user
+        const bottomBuffer = 48; 
+        
+        setHeroOffset(heroHeight + pt + bottomBuffer);
       }
     };
+
+    // Use ResizeObserver for perfect tracking across all screen sizes and text wrapping
+    const resizeObserver = new ResizeObserver(() => {
+      // Use requestAnimationFrame to avoid "ResizeObserver loop limit exceeded" warning
+      requestAnimationFrame(updateHeight);
+    });
+
+    if (heroRef.current) {
+      resizeObserver.observe(heroRef.current);
+    }
 
     const handleScroll = () => {
       if (contentRef.current) {
         const top = contentRef.current.getBoundingClientRect().top;
-        const navHeight = document.querySelector('nav')?.offsetHeight || 0;
+        const navHeight = 80; // Fixed nav height for simpler threshold
         setIsCardMode(top > navHeight);
       }
     };
 
     updateHeight();
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', updateHeight);
     return () => {
+      resizeObserver.disconnect();
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', updateHeight);
     };
   }, [id, subId]);
 
@@ -73,14 +90,14 @@ const Services = () => {
   const itemsToRender = activeDisplayService.subServices || activeDisplayService.nestedServices || [];
 
   return (
-    <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
+    <div className="bg-[#F8F5F2] min-h-screen pb-0 relative text-[#1A1A1A]">
 
       {/* Static Fixed Header Section */}
       <motion.div
         className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-visible z-0 bg-[#F8F5F2] pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         style={{ height: heroOffset ? `${heroOffset}px` : '50vh', y: heroTranslateY }}
       >
-        <div ref={heroRef} className="w-full relative px-4 md:px-8 pb-10 md:pb-14">
+        <div ref={heroRef} className="w-full relative px-4 md:px-8">
           
           {/* Breadcrumb / Back Navigation */}
           {subId && rootService && (
@@ -139,14 +156,18 @@ const Services = () => {
         </div>
       </motion.div>
 
+      {/* Spacer to push content down from fixed header */}
+      <div 
+        style={{ height: heroOffset ? `${heroOffset}px` : '60vh' }} 
+        className="pointer-events-none"
+      />
+
       {/* Main Content Sections */}
       <div
         id="services-content"
         ref={contentRef}
-        className={`relative z-10 bg-white will-change-transform transition-all duration-500 ease-out ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'}`}
-        style={{ marginTop: heroOffset ? `${heroOffset}px` : '50vh' }}
+        className={`relative z-10 bg-white will-change-transform ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'} transition-[border-radius,margin-left,margin-right,box-shadow,border-color] duration-500 ease-out overflow-hidden`}
       >
-        <div className="h-[3vh] md:h-[6vh] bg-white rounded-t-2xl md:rounded-t-[32px]"></div>
         {itemsToRender.map((sub, index) => (
           <section key={index} className={`py-8 md:py-16 relative ${index % 2 === 0 ? 'bg-white' : 'bg-[#F8F5F2]'}`}>
             <div className="container-custom">
