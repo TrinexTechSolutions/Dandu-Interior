@@ -5,10 +5,12 @@ import { X } from 'lucide-react';
 import Footer from '../components/Footer';
 import CallToAction from '../components/CallToAction';
 import PageTransition from '../components/PageTransition';
+import FullScreenImageModal from '../components/FullScreenImageModal';
 
 const ProjectDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [selectedImageIndex, setSelectedImageIndex] = React.useState(null);
   
   // Find project
   const project = projects.find(p => p.id === id);
@@ -75,7 +77,8 @@ const ProjectDetail = () => {
             {galleryImages.slice(0, 3).map((img, idx) => (
               <div 
                 key={idx}
-                className={`group relative overflow-hidden rounded-2xl ${idx === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-square md:aspect-[4/3]'}`}
+                className={`group relative overflow-hidden rounded-2xl cursor-pointer ${idx === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-square md:aspect-[4/3]'}`}
+                onClick={() => setSelectedImageIndex(idx)}
               >
                 <img 
                   src={img} 
@@ -93,6 +96,13 @@ const ProjectDetail = () => {
           <CallToAction />
           <Footer />
         </div>
+
+        <FullScreenImageModal
+          isOpen={selectedImageIndex !== null}
+          images={galleryImages}
+          initialIndex={selectedImageIndex || 0}
+          onClose={() => setSelectedImageIndex(null)}
+        />
       </div>
     </PageTransition>
   );

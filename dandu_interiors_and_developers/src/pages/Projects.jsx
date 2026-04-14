@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import SectionWrapper from '../components/SectionWrapper';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import FullScreenImageModal from '../components/FullScreenImageModal';
 
 // Dynamically import all images from the Projects folder using Vite's eager glob
 const projectModules = import.meta.glob('../assets/Projects/*.{webp,png,jpg,jpeg}', { eager: true, import: 'default' });
@@ -20,7 +21,7 @@ const Projects = () => {
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
   // State for image popup
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -132,7 +133,9 @@ const Projects = () => {
   });
 
   const handleProjectClick = useCallback((item) => {
-    setSelectedImage(item.image);
+    // Find index of the clicked image in the galleryImages array
+    const imgIndex = galleryImages.findIndex(g => g.id === item.id);
+    if (imgIndex !== -1) setSelectedImageIndex(imgIndex);
   }, []);
 
   const renderItem = useCallback((item, globalIdx) => {
@@ -275,43 +278,13 @@ const Projects = () => {
         </SectionWrapper>
       </div>
 
-      {/* Full-Screen Image Popup Modal */}
-      {typeof document !== 'undefined' && createPortal(
-        <AnimatePresence>
-          {selectedImage && (
-            <motion.div
-              key="image-modal"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 p-4 sm:p-8"
-              onClick={() => setSelectedImage(null)}
-            >
-              <button
-                type="button"
-                className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-[10000]"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedImage(null);
-                }}
-              >
-                <X size={32} />
-              </button>
-              <motion.img
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.95, opacity: 0 }}
-                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                src={selectedImage}
-                alt="Gallery Preview"
-                className="max-w-full max-h-[90vh] object-contain select-none shadow-2xl rounded-sm"
-                onClick={(e) => e.stopPropagation()} // Prevent close when clicking image itself
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>,
-        document.body
-      )}
+      <FullScreenImageModal
+        isOpen={selectedImageIndex !== null}
+        images={galleryImages.map(g => g.image)}
+        initialIndex={selectedImageIndex || 0}
+        onClose={() => setSelectedImageIndex(null)}
+        showNavigation={false}
+      />
 
     </div>
   );

@@ -48,6 +48,24 @@ import kidsBedroom05Image from '../assets/DesignIdeas/KidsBedroom05.webp';
 import crockeryUnitImage from '../assets/Services/Crockery Unit.webp';
 import wardrobeServiceImage from '../assets/Services/Wardrobe.webp';
 
+// Dining Room updated content
+import diningRoom01Image from '../assets/DesignIdeas/Dining Room01.webp';
+import diningRoom02Image from '../assets/DesignIdeas/Dining Room02.webp';
+import diningRoom03Image from '../assets/DesignIdeas/Dining Room03.webp';
+
+// Pooja Room updated content
+import poojaRoom01Image from '../assets/DesignIdeas/Pooja Room01.webp';
+import poojaRoom02Image from '../assets/DesignIdeas/Pooja Room02.webp';
+import poojaRoom03Image from '../assets/DesignIdeas/Pooja Room03.webp';
+import poojaRoom04Image from '../assets/DesignIdeas/Pooja Room04.webp';
+import poojaRoom05Image from '../assets/DesignIdeas/Pooja Room05.webp';
+
+// Bathroom updated content
+import bathroom01Image from '../assets/DesignIdeas/Bathroom01.webp';
+import bathroom02Image from '../assets/DesignIdeas/Bathroom02.webp';
+import toiletRepairsAndInstallationsImage from '../assets/Services/Toilet Repairs and Installations.webp';
+import washbasinUnitImage from '../assets/Services/Washbasin Unit.webp';
+
 const projectImageMap = Object.fromEntries(
   Object.entries(import.meta.glob('../assets/Projects/*.webp', { eager: true, import: 'default' })).map(
     ([path, image]) => [path.split('/').pop(), image]
@@ -128,11 +146,11 @@ export const designIdeas = [
     image: diningRoomIdeaImage,
     count: '22 Designs',
     gallery: [
-      commercialDesignImage,
-      livingRoomRenovationImage,
-      lightAndLampFixingImage,
-      flooringImage,
-      getProjectImage('project-gallery-45.webp')
+      getProjectImage('project-gallery-69.webp'),
+      getProjectImage('project-gallery-13.webp'),
+      diningRoom01Image,
+      diningRoom02Image,
+      diningRoom03Image
     ]
   },
   {
@@ -140,11 +158,11 @@ export const designIdeas = [
     image: poojaroomImage,
     count: '12 Designs',
     gallery: [
-      residentialDesignImage,
-      interiorPaintingImage,
-      lightAndLampFixingImage,
-      flooringImage,
-      getProjectImage('project-gallery-46.webp')
+      poojaRoom01Image,
+      poojaRoom02Image,
+      poojaRoom03Image,
+      poojaRoom04Image,
+      poojaRoom05Image
     ]
   },
   {
@@ -176,11 +194,11 @@ export const designIdeas = [
     image: bathroomRenovationImage,
     count: '34 Designs',
     gallery: [
-      handWashBasinRepairAndInstallationImage,
       bathTubInstallationImage,
-      tileFixingImage,
-      tileGroutingImage,
-      getProjectImage('project-gallery-58.webp')
+      toiletRepairsAndInstallationsImage,
+      washbasinUnitImage,
+      bathroom01Image,
+      bathroom02Image
     ]
   },
   {

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useDragControls } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
@@ -8,10 +8,12 @@ import { useModal } from '../context/ModalContext';
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import Footer from '../components/Footer';
 import CallToAction from '../components/CallToAction';
+import FullScreenImageModal from '../components/FullScreenImageModal';
 
 const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, isOpen = false }) => {
   const { id: routeId } = useParams();
   const navigate = useNavigate();
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const id = isDrawer ? drawerId : routeId;
   const { openQuoteFromDrawer, setDetailDrawerOpen } = useModal();
   const dragControls = useDragControls();
@@ -104,19 +106,34 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
         <div className="max-w-7xl mx-auto px-8 mb-32">
           <h3 className="text-3xl font-bold mb-10 text-[#1A1A1A]">Curated Inspiration Gallery</h3>
           <div className="grid grid-cols-12 auto-rows-[300px] gap-6">
-            <div className="group relative overflow-hidden rounded-3xl col-span-8 row-span-2 shadow-lg">
+            <div 
+              className="group relative overflow-hidden rounded-3xl col-span-8 row-span-2 shadow-lg cursor-pointer"
+              onClick={() => setSelectedImageIndex(0)}
+            >
               <img src={galleryImages[0]} alt="Gallery 1" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
-            <div className="group relative overflow-hidden rounded-3xl col-span-4 row-span-1 shadow-lg">
+            <div 
+              className="group relative overflow-hidden rounded-3xl col-span-4 row-span-1 shadow-lg cursor-pointer"
+              onClick={() => setSelectedImageIndex(1)}
+            >
               <img src={galleryImages[1]} alt="Gallery 2" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
-            <div className="group relative overflow-hidden rounded-3xl col-span-4 row-span-1 shadow-lg">
+            <div 
+              className="group relative overflow-hidden rounded-3xl col-span-4 row-span-1 shadow-lg cursor-pointer"
+              onClick={() => setSelectedImageIndex(2)}
+            >
               <img src={galleryImages[2]} alt="Gallery 3" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
-            <div className="group relative overflow-hidden rounded-3xl col-span-6 row-span-1 shadow-lg">
+            <div 
+              className="group relative overflow-hidden rounded-3xl col-span-6 row-span-1 shadow-lg cursor-pointer"
+              onClick={() => setSelectedImageIndex(3)}
+            >
               <img src={galleryImages[3]} alt="Gallery 4" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
-            <div className="group relative overflow-hidden rounded-3xl col-span-6 row-span-1 shadow-lg">
+            <div 
+              className="group relative overflow-hidden rounded-3xl col-span-6 row-span-1 shadow-lg cursor-pointer"
+              onClick={() => setSelectedImageIndex(4)}
+            >
               <img src={galleryImages[4]} alt="Gallery 5" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
           </div>
@@ -192,7 +209,10 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
                     </p>
 
                     {/* Main Image */}
-                    <div className="w-full h-[40vh] rounded-[2rem] overflow-hidden shadow-lg mt-8 mb-12">
+                    <div 
+                      className="w-full h-[40vh] rounded-[2rem] overflow-hidden shadow-lg mt-8 mb-12 cursor-pointer"
+                      onClick={() => setSelectedImageIndex(0)}
+                    >
                       <img src={idea.image} alt={idea.title} className="w-full h-full object-cover" />
                     </div>
 
@@ -206,7 +226,8 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
                         {galleryImages.slice(0, 4).map((img, idx) => (
                           <div
                             key={idx}
-                            className={`group relative overflow-hidden rounded-2xl shadow-sm aspect-square md:aspect-[4/3]`}
+                            className="group relative overflow-hidden rounded-2xl shadow-sm aspect-square md:aspect-[4/3] cursor-pointer"
+                            onClick={() => setSelectedImageIndex(idx)}
                           >
                             <img
                               src={img}
@@ -244,6 +265,12 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
   return (
     <PageTransition>
       {content}
+      <FullScreenImageModal
+        isOpen={selectedImageIndex !== null}
+        images={galleryImages}
+        initialIndex={selectedImageIndex || 0}
+        onClose={() => setSelectedImageIndex(null)}
+      />
     </PageTransition>
   );
 };
