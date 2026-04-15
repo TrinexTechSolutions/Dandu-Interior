@@ -396,8 +396,8 @@ const Contact = () => {
                 {
                   city: "Bapatla",
                   address: "Dr No: 9-4-12/B, Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101",
-                  mapUrl: `https://maps.google.com/maps?q=${encodeURIComponent("Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101")}&t=&z=15&ie=UTF8&iwloc=&output=embed`,
-                  directLink: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101")}`
+                  mapUrl: `https://maps.google.com/maps?q=${encodeURIComponent("Dandu Interiors And Developers, Bapatla")}&t=&z=15&ie=UTF8&iwloc=&output=embed`,
+                  directLink: "https://maps.app.goo.gl/WGkUGTgn2SYw515o9"
                 }
               ].map((loc, idx) => (
                 <div key={idx} className="space-y-6">
