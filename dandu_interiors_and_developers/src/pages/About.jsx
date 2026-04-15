@@ -8,6 +8,7 @@ import structuralIntegrityImg from '../assets/About/structural_integrity.webp';
 import obsessiveDetailImg from '../assets/About/obsessive_detail.webp';
 import engineeringMasteryImg from '../assets/About/engineering_mastery.webp';
 import visionaryReachImg from '../assets/About/visionary_reach.webp';
+import designerShowcaseImg from '../assets/about_page_images/DesignerIMG.jpeg';
 
 const About = () => {
   const [hoveredValue, setHoveredValue] = useState(null);
@@ -177,7 +178,68 @@ const About = () => {
         </div>
       </section>
 
-      {/* 4. The Practice (Interactive Vertical Index) */}
+      {/* 4. Meet Our Designer */}
+      <section className="py-12 md:py-16 px-6 md:px-12 max-w-[1600px] mx-auto">
+        <div className="bg-[#F8F5F2]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
+            <div className="lg:col-span-8 px-5 py-5 md:px-7 md:py-6 lg:px-8 lg:py-7">
+              <div className="grid grid-cols-1 items-start">
+                <div>
+                  <h2 className="text-xs font-bold tracking-[0.4em] uppercase text-[#37302F]/60 mb-6 flex items-center gap-4">
+                    <span className="w-8 h-px bg-[#37302F]/30 block"></span> Meet Our Designer
+                  </h2>
+
+                  <h3 className="text-4xl md:text-5xl lg:text-6xl font-serif italic tracking-tight text-[#37302F] mb-3">
+                    Nikhil
+                  </h3>
+                  <p className="text-lg md:text-xl font-light leading-snug text-[#37302F] max-w-2xl mb-4">
+                    A key creative force shaping warm, functional, and refined interiors.
+                  </p>
+
+                  <div className="border-l-2 border-[#C7AA8B] pl-4">
+                    <p className="text-sm md:text-base font-light leading-relaxed text-[#37302F]/80 max-w-2xl">
+                      He brings smart planning, balanced aesthetics, and client-focused design to every project.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-5">
+                <div className="border border-[#37302F]/10 p-4">
+                  <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-2">Experience</p>
+                  <p className="text-xl md:text-2xl font-light text-[#37302F]">5+ Years</p>
+                </div>
+                <div className="border border-[#37302F]/10 p-4">
+                  <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-2">Projects Handled</p>
+                  <p className="text-xl md:text-2xl font-light text-[#37302F]">50+ Spaces</p>
+                </div>
+                <div className="border border-[#37302F]/10 p-4">
+                  <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-2">Role</p>
+                  <p className="text-base md:text-lg font-light text-[#37302F]">Design Expert</p>
+                </div>
+                <div className="border border-[#37302F]/10 p-4">
+                  <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-2">Focus</p>
+                  <p className="text-base md:text-lg font-light text-[#37302F]">Luxury Interiors</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-4 relative min-h-[180px] md:min-h-[220px] overflow-hidden">
+              <img
+                src={designerShowcaseImg}
+                alt="Nikhil - Interior Designer"
+                className="absolute inset-0 w-full h-full object-cover object-center grayscale"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-60"></div>
+              <div className="absolute bottom-4 left-4 text-white text-[10px] md:text-xs tracking-widest font-bold uppercase mix-blend-screen flex items-center gap-3">
+                <span className="w-8 h-px bg-white block"></span> Interior Designer
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. The Practice (Interactive Vertical Index) */}
       <section className="pt-16 pb-24 md:pt-24 md:pb-32 bg-[#1A1A1A] text-[#F8F5F2] px-6 md:px-12 relative overflow-hidden">
         {/* Floating Hover Image Generator */}
         {hoveredValue && (
@@ -237,7 +299,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* 5. Statement & Call To Action */}
+      {/* 6. Statement & Call To Action */}
       <section className="bg-[#F8F5F2]">
         <div className="pt-16 pb-0 md:py-32 px-6 relative overflow-hidden flex flex-col items-center">
           <div className="max-w-[1400px] mx-auto relative z-10 w-full">
