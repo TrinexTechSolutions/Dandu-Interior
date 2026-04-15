@@ -32,6 +32,7 @@ const QuoteModal = () => {
     phone: '',
     email: '',
     location: '',
+    customLocation: '',
     serviceType: '',
     budget: ''
   });
@@ -72,9 +73,14 @@ const QuoteModal = () => {
       return;
     }
 
+    const resolvedLocation = formData.location === 'Other'
+      ? formData.customLocation
+      : formData.location;
+
     // Prepare API Payload
     const payload = {
       ...formData,
+      location: resolvedLocation,
       budget: formData.serviceType === 'Interior Works' ? formData.budget : '',
       source: 'quote'
     };
@@ -97,7 +103,7 @@ const QuoteModal = () => {
       `*Name:* ${formData.name}%0A` +
       `*Phone:* ${formData.phone}%0A` +
       `*Email:* ${formData.email || 'Not provided'}%0A` +
-      `*Location:* ${formData.location || 'Not provided'}%0A` +
+      `*Location:* ${resolvedLocation || 'Not provided'}%0A` +
       `*Service:* ${formData.serviceType || 'Not provided'}%0A` +
       `*Budget:* ${formData.serviceType === 'Interior Works' ? (formData.budget || 'Not provided') : 'Not applicable'}`;
 
@@ -228,8 +234,8 @@ const QuoteModal = () => {
                   <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A] block">Project Scope</span>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-6">
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Email Address *</label>
-                      <input name="email" value={formData.email} onChange={handleChange} type="email" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="hello@example.com" required />
+                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Email Address</label>
+                      <input name="email" value={formData.email} onChange={handleChange} type="email" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="hello@example.com" />
                     </div>
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                       <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Location *</label>
@@ -238,6 +244,7 @@ const QuoteModal = () => {
                           <option value="">Select location</option>
                           <option value="Hyderabad">Hyderabad</option>
                           <option value="Bapatla">Bapatla</option>
+                          <option value="Other">Other</option>
                         </select>
                         <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-black/20">
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -245,6 +252,21 @@ const QuoteModal = () => {
                       </div>
                     </div>
                   </div>
+
+                  {formData.location === 'Other' && (
+                    <div className="space-y-1 focus-within:translate-x-1 transition-transform">
+                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Enter Location *</label>
+                      <input
+                        name="customLocation"
+                        value={formData.customLocation}
+                        onChange={handleChange}
+                        type="text"
+                        className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30"
+                        placeholder="Enter your location"
+                        required={formData.location === 'Other'}
+                      />
+                    </div>
+                  )}
 
                   <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                     <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Service Type</label>

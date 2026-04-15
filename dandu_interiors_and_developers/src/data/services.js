@@ -71,6 +71,7 @@ import wallCrackTreatmentImage from '../assets/Services/External and Internal Wa
 import falseCeilingWorksImage from '../assets/Services/False Ceiling Works.webp';
 import interiorImage from '../assets/Services/Interior.webp';
 import kitchenCabinetsImage from '../assets/Services/Kitchen Cabinets.webp';
+import kitchenCountertopImage from '../assets/Services/Kitchen Countertop.webp';
 import marbleImage from '../assets/Services/Marble.webp';
 import melamineImage from '../assets/Services/Melamine.webp';
 import modularKitchenWardrobesImage from '../assets/Services/Modular Kitchen & Wardrobes.webp';
@@ -210,7 +211,7 @@ const serviceImageByName = {
   'Flooring & Tile Replacement': tileFixingImage,
   'All Room Remodeling': livingRoomRenovationImage,
   'Exterior Renewal': exteriorPaintingImage,
-  'Kitchen Countertop': marbleFixingImage,
+  'Kitchen Countertop': kitchenCountertopImage,
   'Interior Design': residentialDesignImage
 };
 
