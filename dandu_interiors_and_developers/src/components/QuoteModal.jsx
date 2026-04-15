@@ -7,6 +7,7 @@ import { useModal } from '../context/ModalContext';
 const QuoteModal = () => {
   const { isQuoteModalOpen, closeQuoteModal } = useModal();
   const dragControls = useDragControls();
+  const [phoneError, setPhoneError] = React.useState('');
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
@@ -37,7 +38,17 @@ const QuoteModal = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'modal_budget') {
+    if (name === 'phone') {
+      const digitsOnly = value.replace(/\D/g, '');
+
+      if (digitsOnly.length > 10) {
+        setPhoneError('Enter valid phone number');
+      } else {
+        setPhoneError('');
+      }
+
+      setFormData(prev => ({ ...prev, phone: digitsOnly.slice(0, 10) }));
+    } else if (name === 'modal_budget') {
       setFormData(prev => ({ ...prev, budget: value }));
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
@@ -45,15 +56,26 @@ const QuoteModal = () => {
   };
 
   const handleServiceChange = (e) => {
-    setFormData(prev => ({ ...prev, serviceType: e.target.value }));
+    const nextService = e.target.value;
+    setFormData(prev => ({
+      ...prev,
+      serviceType: nextService,
+      budget: nextService === 'Interior Works' ? prev.budget : ''
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (formData.phone.length !== 10) {
+      setPhoneError('Enter valid phone number');
+      return;
+    }
+
     // Prepare API Payload
     const payload = {
       ...formData,
+      budget: formData.serviceType === 'Interior Works' ? formData.budget : '',
       source: 'quote'
     };
 
@@ -77,7 +99,7 @@ const QuoteModal = () => {
       `*Email:* ${formData.email || 'Not provided'}%0A` +
       `*Location:* ${formData.location || 'Not provided'}%0A` +
       `*Service:* ${formData.serviceType || 'Not provided'}%0A` +
-      `*Budget:* ${formData.budget || 'Not provided'}`;
+      `*Budget:* ${formData.serviceType === 'Interior Works' ? (formData.budget || 'Not provided') : 'Not applicable'}`;
 
     const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || "919866166612";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
@@ -187,30 +209,40 @@ const QuoteModal = () => {
 
                 {/* Form Section: Personal Details */}
                 <div className="space-y-2.5 md:space-y-4">
-                  <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-black/20 block">01. Personal Details</span>
+                  <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A] block">Personal Details</span>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-6">
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Full Name</label>
-                      <input name="name" value={formData.name} onChange={handleChange} type="text" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="John Doe" required />
+                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Full Name *</label>
+                      <input name="name" value={formData.name} onChange={handleChange} type="text" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="Enter your name" required />
                     </div>
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Phone Number</label>
-                      <input name="phone" value={formData.phone} onChange={handleChange} type="tel" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="+91 00000 00000" required />
+                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Phone Number *</label>
+                      <input name="phone" value={formData.phone} onChange={handleChange} type="tel" inputMode="numeric" maxLength={10} className={`w-full bg-transparent border rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] outline-none transition-all placeholder:text-black/30 ${phoneError ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200' : 'border-[#37302F]/40 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20'}`} placeholder="Enter your number" required />
+                      {phoneError && <p className="text-[11px] text-red-600 ml-1">{phoneError}</p>}
                     </div>
                   </div>
                 </div>
 
                 {/* Form Section: Project Scope */}
                 <div className="space-y-2.5 md:space-y-4">
-                  <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-black/20 block">02. Project Scope</span>
+                  <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A] block">Project Scope</span>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-6">
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Email Address</label>
-                      <input name="email" value={formData.email} onChange={handleChange} type="email" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="hello@example.com" />
+                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Email Address *</label>
+                      <input name="email" value={formData.email} onChange={handleChange} type="email" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="hello@example.com" required />
                     </div>
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Location</label>
-                      <input name="location" value={formData.location} onChange={handleChange} type="text" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="City or Landmark" />
+                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Location *</label>
+                      <div className="relative">
+                        <select name="location" value={formData.location} onChange={handleChange} className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] appearance-none focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all cursor-pointer" required>
+                          <option value="">Select location</option>
+                          <option value="Hyderabad">Hyderabad</option>
+                          <option value="Bapatla">Bapatla</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-black/20">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -222,7 +254,6 @@ const QuoteModal = () => {
                         {services.map(s => (
                           <option key={s.id} value={s.title}>{s.title}</option>
                         ))}
-                        <option value="Full Project Development">Full Project Development</option>
                       </select>
                       <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none text-black/20">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -232,19 +263,21 @@ const QuoteModal = () => {
                 </div>
 
                 {/* Form Section: Budget */}
-                <div className="space-y-2.5 md:space-y-4">
-                  <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-black/20 block">03. Estimated Budget</span>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 md:gap-3">
-                    {['Under 1L', '1L - 5L', '5L - 25L', '25L+'].map((range, idx) => (
-                      <label key={idx} className="relative group cursor-pointer">
-                        <input type="radio" name="modal_budget" value={range} checked={formData.budget === range} onChange={handleChange} className="peer absolute opacity-0" />
-                        <div className="bg-transparent border border-[#37302F]/40 peer-checked:border-[#1A1A1A] peer-checked:bg-[#1A1A1A] peer-checked:text-white text-[#37302F] rounded-lg md:rounded-xl p-2.5 md:p-3 text-center transition-all duration-300 group-hover:shadow-lg">
-                          <span className="text-[8.5px] font-bold tracking-widest uppercase">{range}</span>
-                        </div>
-                      </label>
-                    ))}
+                {formData.serviceType === 'Interior Works' && (
+                  <div className="space-y-2.5 md:space-y-4">
+                    <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A] block">Estimated Budget</span>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 md:gap-3">
+                      {['Under 1L', '1L - 5L', '5L - 15L', '15L+'].map((range, idx) => (
+                        <label key={idx} className="relative group cursor-pointer">
+                          <input type="radio" name="modal_budget" value={range} checked={formData.budget === range} onChange={handleChange} className="peer absolute opacity-0" required={formData.serviceType === 'Interior Works'} />
+                          <div className="bg-transparent border border-[#37302F]/40 peer-checked:border-[#1A1A1A] peer-checked:bg-[#1A1A1A] peer-checked:text-white text-[#37302F] rounded-lg md:rounded-xl p-2.5 md:p-3 text-center transition-all duration-300 group-hover:shadow-lg">
+                            <span className="text-[8.5px] font-bold tracking-widest uppercase">{range}</span>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div className="pt-2 pb-4">
                   <button type="submit" className="w-full bg-[#1A1A1A] text-white py-3.5 md:py-4 rounded-xl font-bold text-xs tracking-[0.3em] uppercase hover:bg-black transition-all duration-300 shadow-2xl hover:shadow-black/20 group flex items-center justify-center gap-3">

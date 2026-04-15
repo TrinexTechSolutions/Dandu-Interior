@@ -4,6 +4,7 @@ import SectionWrapper from '../components/SectionWrapper';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import FullScreenImageModal from '../components/FullScreenImageModal';
+import CallToAction from '../components/CallToAction';
 
 // Dynamically import all images from the Projects folder using Vite's eager glob
 const projectModules = import.meta.glob('../assets/Projects/*.{webp,png,jpg,jpeg}', { eager: true, import: 'default' });
@@ -285,6 +286,8 @@ const Projects = () => {
         onClose={() => setSelectedImageIndex(null)}
         showNavigation={false}
       />
+
+      <CallToAction />
 
     </div>
   );

@@ -8,6 +8,7 @@ const CallBookingModal = () => {
   const { isCallModalOpen, closeCallModal, callService } = useModal();
   const dragControls = useDragControls();
   const serviceOptions = services.map((service) => service.title);
+  const [phoneError, setPhoneError] = React.useState('');
   const [formData, setFormData] = React.useState({
     name: '',
     phone: '',
@@ -26,6 +27,7 @@ const CallBookingModal = () => {
         phone: '',
         serviceType: callService || ''
       });
+      setPhoneError('');
     } else {
       html.style.overflow = 'unset';
       body.style.overflow = 'unset';
@@ -39,11 +41,29 @@ const CallBookingModal = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'phone') {
+      const digitsOnly = value.replace(/\D/g, '');
+
+      if (digitsOnly.length > 10) {
+        setPhoneError('Enter valid phone number');
+      } else {
+        setPhoneError('');
+      }
+
+      setFormData((prev) => ({ ...prev, phone: digitsOnly.slice(0, 10) }));
+      return;
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (formData.phone.length !== 10) {
+      setPhoneError('Enter valid phone number');
+      return;
+    }
 
     // Prepare API Payload
     const payload = {
@@ -165,7 +185,7 @@ const CallBookingModal = () => {
                       onChange={handleChange}
                       type="text"
                       className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30"
-                      placeholder="John Doe"
+                      placeholder="Enter your name"
                       required
                     />
                   </div>
@@ -176,10 +196,13 @@ const CallBookingModal = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       type="tel"
-                      className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30"
-                      placeholder="+91 00000 00000"
+                      inputMode="numeric"
+                      maxLength={10}
+                      className={`w-full bg-transparent border rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] outline-none transition-all placeholder:text-black/30 ${phoneError ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200' : 'border-[#37302F]/40 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20'}`}
+                      placeholder="Enter your number"
                       required
                     />
+                    {phoneError && <p className="text-[11px] text-red-600 ml-1">{phoneError}</p>}
                   </div>
                 </div>
 

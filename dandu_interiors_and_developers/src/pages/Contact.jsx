@@ -19,6 +19,7 @@ const Contact = () => {
   });
 
   const [toast, setToast] = useState({ show: false, message: "" });
+  const [phoneError, setPhoneError] = useState("");
   const [status, setStatus] = useState({
     submitting: false,
     submitted: false,
@@ -67,11 +68,31 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "phone") {
+      const digitsOnly = value.replace(/\D/g, "");
+
+      if (digitsOnly.length > 10) {
+        setPhoneError("Enter valid phone number");
+      } else {
+        setPhoneError("");
+      }
+
+      setFormData((prev) => ({ ...prev, phone: digitsOnly.slice(0, 10) }));
+      return;
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (formData.phone.length !== 10) {
+      setPhoneError("Enter valid phone number");
+      return;
+    }
+
     setStatus({ submitting: true, submitted: false, error: false, message: "" });
     setToast({ show: false, message: "" });
 
@@ -115,6 +136,7 @@ const Contact = () => {
         setFormData({
           name: "", phone: "", email: "", propertyLocation: "", propertyType: "", requirement: "", customLocation: ""
         });
+        setPhoneError("");
       } else {
         const errorData = await response.json();
         console.error("Brevo API Error:", errorData);
@@ -238,11 +260,11 @@ const Contact = () => {
                 <form onSubmit={handleSubmit} className="space-y-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Your Name</label>
+                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Your Name *</label>
                       <input
                         type="text"
                         name="name"
-                        placeholder="Ex: John Doe"
+                        placeholder="Enter your name"
                         value={formData.name}
                         onChange={handleChange}
                         required
@@ -250,25 +272,28 @@ const Contact = () => {
                       />
                     </div>
                     <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">WhatsApp Number</label>
+                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">WhatsApp Number *</label>
                       <input
                         type="tel"
                         name="phone"
-                        placeholder="+91 00000 00000"
+                        placeholder="Enter your number"
                         value={formData.phone}
                         onChange={handleChange}
+                        inputMode="numeric"
+                        maxLength={10}
                         required
-                        className="w-full bg-transparent border border-[#37302F]/40 rounded-xl py-4 px-5 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all text-sm font-medium placeholder:text-black/30 text-[#37302F]"
+                        className={`w-full bg-transparent border rounded-xl py-4 px-5 outline-none transition-all text-sm font-medium placeholder:text-black/30 text-[#37302F] ${phoneError ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200' : 'border-[#37302F]/40 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20'}`}
                       />
+                      {phoneError && <p className="text-[11px] text-red-600 ml-1">{phoneError}</p>}
                     </div>
                   </div>
 
                   <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
-                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Email Address</label>
+                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Email Address *</label>
                     <input
                       type="email"
                       name="email"
-                      placeholder="hello@example.com"
+                      placeholder="Enter your email"
                       value={formData.email}
                       onChange={handleChange}
                       required
@@ -278,7 +303,7 @@ const Contact = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-1.5 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Location</label>
+                      <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-black/40 ml-1">Location *</label>
                       <div className="relative">
                         <select
                           name="propertyLocation"
