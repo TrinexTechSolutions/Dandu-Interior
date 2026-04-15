@@ -28,6 +28,7 @@ import electricShortCircuitFixingImage from '../assets/Services/Electric Short C
 import extensionOfAreasImage from '../assets/Services/Extension of Areas.webp';
 import extendWaterConnectionImage from '../assets/Services/Extend Water Connection.webp';
 import exteriorPaintingImage from '../assets/Services/Exterior Painting.webp';
+import exteriorPaintImage from '../assets/Services/ExteriorPaint.webp';
 import flooringImage from '../assets/Services/Flooring.webp';
 import framelessGlassPartitionsImage from '../assets/Services/Frameless Glass Partitions.webp';
 import fullHomeRenovationImage from '../assets/Services/Full Home Renovation.webp';
@@ -93,7 +94,8 @@ import consoleUnitImage from '../assets/Services/Console Unit.webp';
 import crockeryUnitImage from '../assets/Services/Crockery Unit.webp';
 
 // Final Gap Filling Technical Images
-import exteriorDesignImage_New from '../assets/Services/Exterior Design.webp';
+import exteriorDesignImage_New from '../assets/Services/Exterior Design1.webp';
+import exteriorRenewalImage from '../assets/Services/Exterior Renewal.webp';
 import floorPlanImage from '../assets/Services/Floor Plan.webp';
 import lightLayoutImage from '../assets/Services/Light Layout.webp';
 import quartzImage from '../assets/Services/Quartz.webp';
@@ -187,10 +189,10 @@ const serviceImageByName = {
   'Tiles': tilesImage,
   'Console Unit': consoleUnitImage,
   'Crockery Unit': crockeryUnitImage,
-  'Exterior Design': exteriorPaintingImage, 
+  'Exterior Design': exteriorDesignImage_New, 
   'Residential': residentialDesignImage,
   'Commercial': commercialDesignImage,
-  'Exterior': exteriorPaintingImage,
+  'Exterior': exteriorPaintImage,
   'SS (Stainless Steel)': ssSteelImage,
   'Partition': solidPartitionImage,
   'Floor Plan': floorPlanImage,
@@ -210,7 +212,7 @@ const serviceImageByName = {
   'Damaged Tile & Grout Replacement': tileFixingImage,
   'Flooring & Tile Replacement': tileFixingImage,
   'All Room Remodeling': livingRoomRenovationImage,
-  'Exterior Renewal': exteriorPaintingImage,
+  'Exterior Renewal': exteriorRenewalImage,
   'Kitchen Countertop': kitchenCountertopImage,
   'Interior Design': residentialDesignImage
 };
