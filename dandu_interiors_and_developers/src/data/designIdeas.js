@@ -78,7 +78,6 @@ export const designIdeas = [
   {
     title: 'Modular Kitchen',
     image: kitchenRenovationImage,
-    count: '24 Designs',
     gallery: [
       getProjectImage('project-gallery-03.webp'),
       getProjectImage('project-gallery-24.webp'),
@@ -91,7 +90,6 @@ export const designIdeas = [
   {
     title: 'Living Room',
     image: livingRoomRenovationImage,
-    count: '45 Designs',
     gallery: [
       plumbingToiletImage,
       plumbingBasinImage,
@@ -103,9 +101,8 @@ export const designIdeas = [
     ]
   },
   {
-    title: 'Bedroom',
+    title: 'Master Bedroom',
     image: housePaintingImage,
-    count: '38 Designs',
     gallery: [
       interiorImage,
       getProjectImage('project-gallery-02.webp'),
@@ -118,7 +115,6 @@ export const designIdeas = [
   {
     title: 'Kids Bedroom',
     image: kidsBedroomIdeaImage,
-    count: '15 Designs',
     gallery: [
       kidsBedroom01Image,
       kidsBedroom02Image,
@@ -130,7 +126,6 @@ export const designIdeas = [
   {
     title: 'Wardrobe',
     image: wardrobeIdeaImage,
-    count: '31 Designs',
     gallery: [
       wardrobeServiceImage,
       crockeryUnitImage,
@@ -144,7 +139,6 @@ export const designIdeas = [
   {
     title: 'Dining Room',
     image: diningRoomIdeaImage,
-    count: '22 Designs',
     gallery: [
       getProjectImage('project-gallery-69.webp'),
       getProjectImage('project-gallery-13.webp'),
@@ -156,7 +150,6 @@ export const designIdeas = [
   {
     title: 'Pooja Room',
     image: poojaroomImage,
-    count: '12 Designs',
     gallery: [
       poojaRoom01Image,
       poojaRoom02Image,
@@ -168,7 +161,6 @@ export const designIdeas = [
   {
     title: 'Space Saving',
     image: spaceSavingIdeaImage,
-    count: '28 Designs',
     gallery: [
       wallPartitionMakingImage,
       solidPartitionImage,
@@ -180,7 +172,6 @@ export const designIdeas = [
   {
     title: 'Home Office',
     image: officeDesignImage,
-    count: '19 Designs',
     gallery: [
       officePaintingImage,
       solidPartitionImage,
@@ -192,7 +183,6 @@ export const designIdeas = [
   {
     title: 'Bathroom',
     image: bathroomRenovationImage,
-    count: '34 Designs',
     gallery: [
       bathTubInstallationImage,
       toiletRepairsAndInstallationsImage,
@@ -204,7 +194,6 @@ export const designIdeas = [
   {
     title: 'Balcony',
     image: extensionOfAreasImage,
-    count: '14 Designs',
     gallery: [
       flooringImage,
       exteriorPaintingImage,
@@ -216,7 +205,6 @@ export const designIdeas = [
   {
     title: '1, 2, 3 BHK Plans',
     image: fullHomeRenovationImage,
-    count: '40 Designs',
     gallery: [
       residentialDesignImage,
       livingRoomRenovationImage,

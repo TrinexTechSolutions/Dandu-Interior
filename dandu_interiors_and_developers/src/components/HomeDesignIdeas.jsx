@@ -20,7 +20,7 @@ const HomeDesignIdeas = () => {
     const isMobile = windowWidth < 1024; // Matching Home.jsx mobile breakpoint
     if (isMobile) {
       e.preventDefault();
-      const id = idea.title.toLowerCase().replace(/\s+/g, '-');
+      const id = idea.title.toLowerCase().replace(/[\s,]+/g, '-');
       openIdeaDrawer(id);
     }
   };
@@ -64,7 +64,7 @@ const HomeDesignIdeas = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 lg:auto-rows-[250px] gap-4">
           {displayIdeas.map((idea, idx) => (
             <Link 
-              to={`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`} 
+              to={`/design-ideas/${idea.title.toLowerCase().replace(/[\s,]+/g, '-')}`} 
               key={idx} 
               onClick={(e) => handleIdeaClick(e, idea)}
               className={`

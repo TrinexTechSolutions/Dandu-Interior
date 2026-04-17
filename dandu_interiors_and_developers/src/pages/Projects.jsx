@@ -287,7 +287,9 @@ const Projects = () => {
         showNavigation={false}
       />
 
-      <CallToAction />
+      <div className="relative z-20 bg-[#F8F5F2]">
+        <CallToAction />
+      </div>
 
     </div>
   );

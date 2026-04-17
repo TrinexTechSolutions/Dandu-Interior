@@ -25,10 +25,10 @@ const DesignIdeas = () => {
 
   const handleIdeaClick = useCallback((idea) => {
     if (windowWidth < 768) {
-      const id = idea.title.toLowerCase().replace(/\s+/g, '-');
+      const id = idea.title.toLowerCase().replace(/[\s,]+/g, '-');
       openIdeaDrawer(id);
     } else {
-      navigate(`/design-ideas/${idea.title.toLowerCase().replace(/\s+/g, '-')}`);
+      navigate(`/design-ideas/${idea.title.toLowerCase().replace(/[\s,]+/g, '-')}`);
     }
   }, [windowWidth, navigate, openIdeaDrawer]);
 

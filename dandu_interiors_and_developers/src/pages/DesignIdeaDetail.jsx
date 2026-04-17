@@ -18,7 +18,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
   const { openQuoteFromDrawer, setDetailDrawerOpen } = useModal();
   const dragControls = useDragControls();
 
-  const idea = designIdeas.find(i => i.title.toLowerCase().replace(/\s+/g, '-') === id);
+  const idea = designIdeas.find(i => i.title.toLowerCase().replace(/[\s,]+/g, '-') === id);
 
   // If we're on a standalone page, we're effectively "open"
   const isActuallyOpen = isDrawer ? isOpen : true;
@@ -98,7 +98,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
             Incredible <span className="font-bold">design concepts</span> tailored to elevate your {idea.title.toLowerCase()} aesthetics.
           </h2>
           <p className="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto">
-            Explore our handpicked curation of {idea.count.toLowerCase()} specifically crafted for your {idea.title.toLowerCase()}. We blend modern functional utility with timeless premium elegance to make your space completely uniquely yours.
+            Explore our handpicked curation of designs specifically crafted for your {idea.title.toLowerCase()}. We blend modern functional utility with timeless premium elegance to make your space completely uniquely yours.
           </p>
         </div>
 

@@ -14,7 +14,7 @@ const Services = () => {
   const { openQuoteModal, openCallModal } = useModal();
   const contentRef = React.useRef(null);
   const heroRef = React.useRef(null);
-  const buttonRef = React.useRef(null);
+  const sentinelRef = React.useRef(null);
 
   const { scrollY } = useScroll();
   const heroTranslateY = useTransform(scrollY, [0, 500], [0, -125]);
@@ -35,19 +35,25 @@ const Services = () => {
     }
 
     setExpandedSubServices({});
-
-    const handleScroll = () => {
-      if (contentRef.current) {
-        const top = contentRef.current.getBoundingClientRect().top;
-        const navHeight = 84; 
-        setIsCardMode(top > navHeight);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
   }, [id, subId]);
+
+  // Performance optimized Intersection Observer for Hero-to-Content transition
+  useEffect(() => {
+    const navHeight = 84; 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // When the sentinel is at the top of the viewport (considering nav height), toggle card mode
+        setIsCardMode(entry.isIntersecting);
+      },
+      {
+        rootMargin: `99999px 0px -${window.innerHeight - navHeight}px 0px`,
+        threshold: 0
+      }
+    );
+
+    if (sentinelRef.current) observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [window.innerHeight]);
 
   if (id && !services.find(s => s.id === id)) {
     return <Navigate to="/services" replace />;
@@ -88,8 +94,8 @@ const Services = () => {
       </h1>
 
       {/* Static Description */}
-      <div className="w-full flex flex-col items-start md:items-end mt-4 md:mt-4">
-        <div className="max-w-xs md:max-w-sm text-left md:text-right mb-6 md:mb-8">
+      <div className="w-full flex flex-col items-end mt-4">
+        <div className="max-w-xs md:max-w-sm text-right mb-6 md:mb-8">
           <p
             className="text-gray-500 text-sm md:text-lg leading-relaxed font-semibold tracking-wide"
           >
@@ -129,15 +135,22 @@ const Services = () => {
 
       {/* 2. GHOST LAYOUT SPACER (Document Flow) */}
       {/* This invisible div naturally pushes the content down exactly the right amount on any resolution */}
-      <div className="pt-24 md:pt-28 select-none">
+      <div className="pt-24 md:pt-28 select-none relative">
         <HeroContent isGhost />
+        {/* Intersection Sentinel placed at the transition point */}
+        <div 
+          ref={sentinelRef}
+          className="absolute bottom-0 left-0 w-full h-[1px] pointer-events-none" 
+          style={{ bottom: '84px' }}
+        />
       </div>
 
       {/* 3. MAIN CONTENT */}
       <div
         id="services-content"
         ref={contentRef}
-        className={`relative z-10 bg-white will-change-transform ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'} transition-[border-radius,margin-left,margin-right,box-shadow,border-color] duration-500 ease-out overflow-hidden`}
+        className={`relative z-10 bg-white will-change-[transform,border-radius] ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'} transition-[border-radius,margin-left,margin-right,box-shadow,border-color] duration-500 ease-out overflow-hidden transform-gpu`}
+        style={{ transform: 'translateZ(0)' }}
       >
         {itemsToRender.map((sub, index) => (
           <section key={index} className={`py-8 md:py-16 relative ${index % 2 === 0 ? 'bg-white' : 'bg-[#F8F5F2]'}`}>
