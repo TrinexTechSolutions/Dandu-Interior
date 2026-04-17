@@ -282,7 +282,7 @@ const rawServices = [
       {
         id: 'modular-kitchen-wardrobes',
         name: 'Modular Kitchen & Wardrobes',
-        desc: 'We provide smart, tailor-made storage solutions that keep your home organized, elegant, and efficient. Our team designs and builds modular kitchens and wardrobes using premium materials and the latest hardware. We focus on maximizing space while creating a seamless, modern look that matches your interior theme.',
+        desc: 'Smart, tailor-made modular kitchens and wardrobes designed for elegance and efficiency. We use premium materials to maximize your space with a seamless, modern look that perfectly matches your home’s theme.',
         nestedServices: [
           { name: 'Kitchen Cabinets', desc: 'Our custom kitchen cabinets are built to maximize storage while making your cooking space easy to navigate. We use durable materials and smart layout designs to ensure everything you need is always within reach, making your kitchen the heart of the home.' },
           { name: 'TV Unit', desc: 'Create a stunning focal point in your living room with our custom TV units. We design media centers that combine elegant display areas, hidden cable management, and smart storage. These units are built to complement your overall interior style while keeping your electronics organized.' },

@@ -14,7 +14,6 @@ const Services = () => {
   const { openQuoteModal, openCallModal } = useModal();
   const contentRef = React.useRef(null);
   const heroRef = React.useRef(null);
-  const sentinelRef = React.useRef(null);
 
   const { scrollY } = useScroll();
   const heroTranslateY = useTransform(scrollY, [0, 500], [0, -125]);
@@ -37,23 +36,22 @@ const Services = () => {
     setExpandedSubServices({});
   }, [id, subId]);
 
-  // Performance optimized Intersection Observer for Hero-to-Content transition
+  // Robust scroll listener for card-to-full-screen transition
   useEffect(() => {
-    const navHeight = 84; 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // When the sentinel is at the top of the viewport (considering nav height), toggle card mode
-        setIsCardMode(entry.isIntersecting);
-      },
-      {
-        rootMargin: `99999px 0px -${window.innerHeight - navHeight}px 0px`,
-        threshold: 0
+    const handleScroll = () => {
+      if (contentRef.current) {
+        const top = contentRef.current.getBoundingClientRect().top;
+        const navHeight = document.querySelector('nav')?.offsetHeight || 84;
+        setIsCardMode(top > navHeight);
       }
-    );
+    };
 
-    if (sentinelRef.current) observer.observe(sentinelRef.current);
-    return () => observer.disconnect();
-  }, [window.innerHeight]);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Initial check on mount to ensure correct state if starting scrolled
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   if (id && !services.find(s => s.id === id)) {
     return <Navigate to="/services" replace />;
@@ -127,7 +125,7 @@ const Services = () => {
 
       {/* 1. VISIBLE FIXED HEADER (Parallax) */}
       <motion.div
-        className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-visible z-0 bg-[#F8F5F2] pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-visible z-[1] bg-[#F8F5F2] pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         style={{ y: heroTranslateY }}
       >
         <HeroContent />
@@ -135,14 +133,10 @@ const Services = () => {
 
       {/* 2. GHOST LAYOUT SPACER (Document Flow) */}
       {/* This invisible div naturally pushes the content down exactly the right amount on any resolution */}
-      <div className="pt-24 md:pt-28 select-none relative">
+      <div className="pt-24 md:pt-28 select-none relative pointer-events-none">
         <HeroContent isGhost />
         {/* Intersection Sentinel placed at the transition point */}
-        <div 
-          ref={sentinelRef}
-          className="absolute bottom-0 left-0 w-full h-[1px] pointer-events-none" 
-          style={{ bottom: '84px' }}
-        />
+        {/* Sentinel removed in favor of scroll observer */}
       </div>
 
       {/* 3. MAIN CONTENT */}
