@@ -82,7 +82,8 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
           <img
             src={idea.image}
             alt={idea.title}
-            className="absolute inset-0 w-full h-full object-cover"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover gpu-accelerated"
           />
           <div className="absolute inset-0 z-20 flex flex-col justify-end p-16 lg:p-24 max-w-7xl mx-auto w-full">
 
@@ -110,7 +111,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
               className="group relative overflow-hidden rounded-3xl col-span-8 row-span-2 shadow-lg cursor-pointer"
               onClick={() => setSelectedImageIndex(0)}
             >
-              <img src={galleryImages[0]} alt="Gallery 1" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={galleryImages[0]} alt="Gallery 1" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 gpu-accelerated" />
             </div>
             <div 
               className="group relative overflow-hidden rounded-3xl col-span-4 row-span-1 shadow-lg cursor-pointer"
@@ -213,7 +214,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
                       className="w-full h-[40vh] rounded-[2rem] overflow-hidden shadow-lg mt-8 mb-12 cursor-pointer"
                       onClick={() => setSelectedImageIndex(0)}
                     >
-                      <img src={idea.image} alt={idea.title} className="w-full h-full object-cover" />
+                      <img src={idea.image} alt={idea.title} decoding="async" className="w-full h-full object-cover gpu-accelerated" />
                     </div>
 
                     {/* Mobile Image Gallery Grid */}

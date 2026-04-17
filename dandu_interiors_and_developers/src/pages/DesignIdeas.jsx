@@ -75,16 +75,23 @@ const DesignIdeas = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    let rafId;
     const handleScroll = () => {
-      if (contentRef.current) {
-        const top = contentRef.current.getBoundingClientRect().top;
-        const navEl = document.querySelector('nav');
-        const navHeight = navEl ? navEl.offsetHeight : 0;
-        setIsCardMode(top > navHeight);
-      }
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        if (contentRef.current) {
+          const top = contentRef.current.getBoundingClientRect().top;
+          const navEl = document.querySelector('nav');
+          const navHeight = navEl ? navEl.offsetHeight : 0;
+          setIsCardMode(top > navHeight);
+        }
+      });
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
@@ -111,7 +118,7 @@ const DesignIdeas = () => {
       {/* Hero Section */}
       <motion.div
         style={{ y: heroTranslateY }}
-        className={`fixed top-0 left-0 h-screen w-full flex flex-col justify-start z-0 bg-[#F8F5F2] pt-24 md:pt-32 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed top-0 left-0 h-screen w-full flex flex-col justify-start z-0 bg-[#F8F5F2] pt-24 md:pt-32 transition-opacity duration-300 gpu-accelerated ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <div className="w-full relative px-4 md:px-8">
           <h1 ref={heroTitleRef} className="design-ideas-hero-title select-none whitespace-nowrap leading-[0.85]">
@@ -124,7 +131,7 @@ const DesignIdeas = () => {
       <div
         ref={contentRef}
         style={{ marginTop: heroOffset > 0 ? `${heroOffset}px` : '38vh' }}
-        className="relative z-10 bg-[#F8F5F2] will-change-transform"
+        className="relative z-10 bg-[#F8F5F2] gpu-accelerated"
       >
         <SectionWrapper bgClass="bg-transparent" paddingClass="pt-0.5 pb-16" containerClass="w-full px-4 lg:px-8">
           <div className="w-full flex justify-start mt-6 mb-8 md:mb-16">
@@ -199,6 +206,7 @@ const DesignIdeas = () => {
               src={commercialDesignImage}
               alt="Interior Background"
               loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </div>

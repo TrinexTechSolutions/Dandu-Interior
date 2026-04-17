@@ -68,7 +68,7 @@ const HomeDesignIdeas = () => {
               key={idx} 
               onClick={(e) => handleIdeaClick(e, idea)}
               className={`
-                group relative overflow-hidden block rounded-xl transition-all duration-700 hover:shadow-2xl
+                group relative overflow-hidden block rounded-xl transition-all duration-700 hover:shadow-2xl gpu-accelerated
                 ${mobileGridClasses[idx]}
                 ${desktopGridClasses[idx]}
               `}
@@ -78,7 +78,8 @@ const HomeDesignIdeas = () => {
                 src={idea.image} 
                 alt={idea.title} 
                 loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                decoding="async"
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 gpu-accelerated" 
               />
               
               {/* Immersive Gradient Overlay */}

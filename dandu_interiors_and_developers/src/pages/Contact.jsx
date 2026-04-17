@@ -42,12 +42,16 @@ const Contact = () => {
       }
     };
 
+    let rafId;
     const handleScroll = () => {
-      if (contentRef.current) {
-        const top = contentRef.current.getBoundingClientRect().top;
-        const navHeight = document.querySelector('nav')?.offsetHeight || 80;
-        setIsCardMode(top > navHeight);
-      }
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        if (contentRef.current) {
+          const top = contentRef.current.getBoundingClientRect().top;
+          const navHeight = document.querySelector('nav')?.offsetHeight || 80;
+          setIsCardMode(top > navHeight);
+        }
+      });
     };
 
     updateHeight();
@@ -59,6 +63,7 @@ const Contact = () => {
     const timer = setTimeout(updateHeight, 100);
 
     return () => {
+      if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', updateHeight);
       window.removeEventListener('load', updateHeight);
@@ -167,13 +172,13 @@ const Contact = () => {
 
       {/* Monumental Marquee Hero Section - FIXED */}
       <section
-        className={`fixed top-0 left-0 w-full flex items-center bg-[#F8F5F2] select-none pt-2 md:pt-4 z-0 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed top-0 left-0 w-full flex items-center bg-[#F8F5F2] select-none pt-2 md:pt-4 z-0 transition-opacity duration-300 gpu-accelerated ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         style={{ height: heroOffset ? `${heroOffset}px` : '50vh' }}
       >
         <motion.div
           ref={heroRef}
           style={{ y: bouncyY, scale: bouncyScale }}
-          className="w-full overflow-hidden whitespace-nowrap flex py-4"
+          className="w-full overflow-hidden whitespace-nowrap flex py-4 gpu-accelerated"
         >
           <motion.div
             initial={{ x: 0 }}

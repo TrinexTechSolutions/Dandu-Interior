@@ -38,19 +38,27 @@ const Services = () => {
 
   // Robust scroll listener for card-to-full-screen transition
   useEffect(() => {
+    let rafId;
     const handleScroll = () => {
-      if (contentRef.current) {
-        const top = contentRef.current.getBoundingClientRect().top;
-        const navHeight = document.querySelector('nav')?.offsetHeight || 84;
-        setIsCardMode(top > navHeight);
-      }
+      if (rafId) cancelAnimationFrame(rafId);
+      
+      rafId = requestAnimationFrame(() => {
+        if (contentRef.current) {
+          const top = contentRef.current.getBoundingClientRect().top;
+          const navHeight = document.querySelector('nav')?.offsetHeight || 84;
+          setIsCardMode(top > navHeight);
+        }
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     // Initial check on mount to ensure correct state if starting scrolled
     handleScroll();
     
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   if (id && !services.find(s => s.id === id)) {
@@ -125,7 +133,7 @@ const Services = () => {
 
       {/* 1. VISIBLE FIXED HEADER (Parallax) */}
       <motion.div
-        className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-visible z-[1] bg-[#F8F5F2] pt-24 md:pt-28 transition-opacity duration-300 ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed top-0 left-0 w-full flex flex-col justify-start overflow-visible z-[1] bg-[#F8F5F2] pt-24 md:pt-28 transition-opacity duration-300 gpu-accelerated ${isCardMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         style={{ y: heroTranslateY }}
       >
         <HeroContent />
@@ -143,7 +151,7 @@ const Services = () => {
       <div
         id="services-content"
         ref={contentRef}
-        className={`relative z-10 bg-white will-change-[transform,border-radius] ${isCardMode ? 'rounded-t-2xl md:rounded-t-[32px] mx-2 md:mx-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border border-gray-100' : 'rounded-t-none mx-0 shadow-none border-transparent'} transition-[border-radius,margin-left,margin-right,box-shadow,border-color] duration-500 ease-out overflow-hidden transform-gpu`}
+        className={`relative z-10 transition-all duration-500 ease-out gpu-accelerated ${isCardMode ? 'mx-2 md:mx-6 rounded-t-[32px] md:rounded-t-[48px] shadow-2xl border border-gray-100' : 'mx-0 rounded-t-0 shadow-none border-transparent'} overflow-hidden transform-gpu`}
         style={{ transform: 'translateZ(0)' }}
       >
         {itemsToRender.map((sub, index) => (

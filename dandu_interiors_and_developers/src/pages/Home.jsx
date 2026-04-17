@@ -202,7 +202,8 @@ const Home = () => {
         <img
           src={heroImage}
           alt="Dandu Interior Banner"
-          className="absolute inset-0 w-full h-full object-cover"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover gpu-accelerated"
         />
 
 
@@ -313,7 +314,7 @@ const Home = () => {
                 return (
                   <div
                     key={uniqueId}
-                    className="relative w-[85vw] md:w-[45vw] lg:w-[calc(25%-1.5rem)] shrink-0 h-[370px] flex flex-col items-start group/card will-change-transform"
+                    className="relative w-[85vw] md:w-[45vw] lg:w-[calc(25%-1.5rem)] shrink-0 h-[370px] flex flex-col items-start group/card gpu-accelerated"
                     style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }}
                   >
                     {/* Top-Left Cutout Layer (Design matching DesignIdeas) */}
@@ -401,7 +402,8 @@ const Home = () => {
               src={whyChooseUsImage}
               alt="Craftsmanship"
               loading="lazy"
-              className="rounded-2xl shadow-2xl relative z-10"
+              decoding="async"
+              className="rounded-2xl shadow-2xl relative z-10 gpu-accelerated"
             />
             <div className="absolute -inset-4 bg-[#1A1A1A]/20 rounded-2xl z-0 translate-x-4 -translate-y-4"></div>
           </div>
@@ -433,7 +435,8 @@ const Home = () => {
                   src={project.image}
                   alt={project.title}
                   loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-100"
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-100 gpu-accelerated"
                 />
 
                 {/* Immersive Overlay */}

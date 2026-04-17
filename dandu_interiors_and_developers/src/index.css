@@ -73,6 +73,27 @@
   }
 }
 
+/* Performance & adaptive refresh rate optimizations */
+@layer utilities {
+  .gpu-accelerated {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+  }
+
+  .optimize-scrolling {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+}
+
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* Universal Scrollbar Hiding - achieve premium, seamless look */
 html,
 body,
@@ -101,9 +122,6 @@ body::-webkit-scrollbar,
 .will-change-scroll {
   will-change: scroll-position;
 }
-
-/* Selective Scrollbar Restoration for Drawers/Modals (Optional - currently disabled by user request) */
-/* .custom-scrollbar::-webkit-scrollbar { ... } */
 
 /* Page Transition Stacking - Ensures seamless attached vertical slide */
 .page-transition-container {

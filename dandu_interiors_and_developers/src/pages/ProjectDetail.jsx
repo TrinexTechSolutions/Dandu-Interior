@@ -77,13 +77,14 @@ const ProjectDetail = () => {
             {galleryImages.slice(0, 3).map((img, idx) => (
               <div 
                 key={idx}
-                className={`group relative overflow-hidden rounded-2xl cursor-pointer ${idx === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-square md:aspect-[4/3]'}`}
+                className={`group relative overflow-hidden rounded-2xl cursor-pointer gpu-accelerated ${idx === 0 ? 'md:col-span-2 aspect-[21/9]' : 'aspect-square md:aspect-[4/3]'}`}
                 onClick={() => setSelectedImageIndex(idx)}
               >
                 <img 
                   src={img} 
                   alt={`${project.title} gallery ${idx + 1}`} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 gpu-accelerated" 
                 />
                 <div className="absolute inset-0 bg-black/[0.03] group-hover:bg-transparent transition-colors duration-500" />
               </div>
