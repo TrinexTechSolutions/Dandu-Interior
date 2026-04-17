@@ -13,6 +13,7 @@ const DesignIdeas = () => {
     setDetailDrawerOpen, 
     openIdeaDrawer, 
     closeIdeaDrawer, 
+    openQuoteModal,
     isDetailDrawerOpen: isGlobalDrawerOpen,
     selectedIdea: globalSelectedIdea
   } = useModal();
@@ -133,7 +134,7 @@ const DesignIdeas = () => {
         style={{ marginTop: heroOffset > 0 ? `${heroOffset}px` : '38vh' }}
         className="relative z-10 bg-[#F8F5F2] gpu-accelerated"
       >
-        <SectionWrapper bgClass="bg-transparent" paddingClass="pt-0.5 pb-16" containerClass="w-full px-4 lg:px-8">
+        <SectionWrapper bgClass="bg-transparent" paddingClass="pt-0.5 pb-0" containerClass="w-full px-4 lg:px-8">
           <div className="w-full flex justify-start mt-6 mb-8 md:mb-16">
             <div className="text-left max-w-4xl">
               <p
@@ -145,7 +146,7 @@ const DesignIdeas = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-8">
             {designIdeas.map((idea, idx) => (
               <div 
                 key={idx} 
@@ -198,29 +199,40 @@ const DesignIdeas = () => {
           </div>
         </SectionWrapper>
 
-        {/* CTA Section */}
-        <section className="relative py-20 lg:py-24 overflow-hidden border-t border-gray-200 mt-10">
-          {/* Background Overlay - Full Width */}
-          <div className="absolute inset-0 z-0">
-            <img
-              src={commercialDesignImage}
-              alt="Interior Background"
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover"
-            />
-          </div>
+        {/* CTA Section - Redesigned Light Theme Pattern */}
+        <section className="relative py-24 lg:py-40 overflow-hidden bg-[#F8F5F2]">
+          <div className="container-custom relative z-10 w-full px-4 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0 items-center">
+              
+              {/* Left Column: Heading & Local SEO */}
+              <div className="lg:col-span-7 pr-0 lg:pr-20">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="w-8 h-px bg-[#1A1A1A]/20"></span>
+                  <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]/40">Serving Hyderabad & Bapatla</span>
+                </div>
+                <h2 className="text-[2.8rem] md:text-5xl lg:text-7xl font-sans font-medium tracking-tighter leading-[0.9] text-[#37302F] mb-8">
+                  FOUND SOMETHING <br /> <span className="font-serif italic text-[#37302F]/70">YOU LIKE?</span>
+                </h2>
+                <p className="text-[#37302F]/60 text-base md:text-xl font-light leading-relaxed max-w-xl">
+                  Let our expert designers customize these ideas to fit your space perfectly. Book a free consultation today.
+                </p>
+              </div>
 
-          <div className="container-custom relative z-10">
-            <div className="bg-[#1A1A1A] p-8 md:p-14 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] text-center relative overflow-hidden border border-white/5 max-w-7xl mx-auto">
+              {/* Right Column: Curvy High-Conversion Button */}
+              <div className="lg:col-span-5 flex flex-col items-start lg:items-end gap-6 w-full">
+                <button 
+                  onClick={openQuoteModal}
+                  className="group relative inline-flex items-center justify-center px-10 py-6 bg-[#1A1A1A] text-white font-bold uppercase tracking-widest text-[11px] rounded-full overflow-hidden transition-all duration-500 hover:bg-black hover:px-12 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.4)] w-full lg:w-fit"
+                >
+                  <span className="relative z-10">Book Free Consultation</span>
+                  <MoveRight size={18} className="ml-3 transition-transform duration-500 group-hover:translate-x-2" />
+                </button>
+                <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-[#37302F]/30 pr-4">
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                  Expert Guidance Included
+                </div>
+              </div>
 
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 relative z-10">Found something you like?</h2>
-              <p className="text-gray-400 text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto mb-10 relative z-10">
-                Let our expert designers customize these ideas to fit your space perfectly. Book a free consultation today.
-              </p>
-              <a href="/get-quote" className="inline-block bg-white text-[#1A1A1A] hover:bg-gray-100 px-8 py-4 rounded-md font-bold transition-transform hover:-translate-y-1 shadow-2xl relative z-10 text-sm md:text-base">
-                Book Free Consultation
-              </a>
             </div>
           </div>
         </section>

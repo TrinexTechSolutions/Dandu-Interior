@@ -222,38 +222,44 @@ const Services = () => {
         ))}
       </div>
 
-      {/* Horizontal Bottom Navigation for All Services */}
-      <section className="relative py-8 lg:py-12 overflow-hidden border-t-2 border-[#1A1A1A]/20">
-        {/* Background Overlay - No Filter, Full Width */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=75&w=1600"
-            alt="Interior Ambience"
-            loading="lazy"
-            className="w-full h-full object-cover"
-          />
-        </div>
-
-        <div className="container-custom relative z-10">
-          <div className="bg-[#1A1A1A] p-6 md:p-8 rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] flex flex-col lg:flex-row items-center gap-6 lg:gap-10 border border-white/5 max-w-7xl mx-auto">
-
-            {/* Left Side: Content & Button */}
-            <div className="w-full lg:w-1/2 text-left">
-              <h3 className="text-2xl md:text-4xl font-bold text-white mb-3">Explore Our Services</h3>
-              <div className="w-12 h-1 bg-[#1A1A1A] rounded-full mb-4 relative"></div>
-              <p className="text-white/70 text-sm md:text-base tracking-wide font-light leading-relaxed mb-6 max-w-xl">
-                From visionary interior design to robust structural masonry, our multi-disciplinary approach ensures every phase of your project is handled with precision.
-              </p>
-              <div className="w-full max-w-xl flex justify-end">
-                <button onClick={openQuoteModal} className="bg-white text-[#1A1A1A] hover:bg-gray-100 px-6 py-3 rounded-md font-bold inline-flex items-center justify-center transition-transform hover:-translate-y-1 shadow-2xl text-xs md:text-sm">
-                  Get a Free Quote
+      {/* Horizontal Bottom Navigation for All Services - Refined SEO & Curvy CTA */}
+      <section className="relative py-12 lg:py-20 overflow-hidden bg-[#F8F5F2]">
+        <div className="container-custom relative z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch gap-10 lg:gap-0">
+            
+            {/* Left Column: Local SEO & Branding */}
+            <div className="lg:col-span-5 flex flex-col justify-between pr-0 lg:pr-16 py-2">
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="w-8 h-px bg-[#1A1A1A]/20"></span>
+                  <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]/40">Serving Hyderabad & Bapatla</span>
+                </div>
+                <h3 className="text-[2.5rem] md:text-5xl lg:text-6xl font-sans font-medium tracking-tighter leading-[0.9] text-[#1A1A1A] mb-8">
+                  EXPLORE <br /> <span className="font-serif italic text-[#1A1A1A]/60">SERVICES.</span>
+                </h3>
+                <p className="text-[#1A1A1A]/60 text-sm md:text-base font-light leading-relaxed max-w-sm mb-10">
+                  A multi-disciplinary approach ensuring precision from visionary design to final handover.
+                </p>
+              </div>
+              
+              <div className="flex flex-col gap-6 items-start">
+                <button 
+                  onClick={openQuoteModal} 
+                  className="group relative inline-flex items-center justify-center px-10 py-5 bg-[#1A1A1A] text-white font-bold uppercase tracking-widest text-[11px] rounded-full overflow-hidden transition-all duration-500 hover:bg-black hover:px-12 shadow-[0_15px_30px_-10px_rgba(0,0,0,0.3)]"
+                >
+                  <span className="relative z-10">Get a Free Quote</span>
+                  <ArrowRight size={16} className="ml-3 transition-transform duration-500 group-hover:translate-x-2" />
                 </button>
+                <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-[#1A1A1A]/30 pl-4">
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                  Free Site Visit Included
+                </div>
               </div>
             </div>
 
-            {/* Right Side: Links */}
-            <div className="w-full lg:w-1/2">
-              <div className="flex flex-col w-full divide-y divide-white/10 border border-white/10 rounded-2xl overflow-hidden">
+            {/* Right Column: Compact Service Directory */}
+            <div className="lg:col-span-7 lg:border-l lg:border-black/5 pl-0 lg:pl-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-px bg-black/5 border border-black/5 rounded-none overflow-hidden">
                 {services.map(service => {
                   const isActive = rootService && rootService.id === service.id;
                   return (
@@ -261,25 +267,31 @@ const Services = () => {
                       key={service.id}
                       to={`/services/${service.id}`}
                       className={`
-                        flex items-center justify-between gap-x-3 transition-all 
-                        p-4 md:px-6 md:py-4 
-                        text-sm md:text-base
-                        ${isActive 
-                           ? 'bg-white text-[#1A1A1A] font-bold shadow-[inset_0_4px_10px_rgba(0,0,0,0.1)]' 
-                           : 'bg-transparent text-white/70 hover:bg-white/5 hover:text-white'
-                        }
+                        flex items-center justify-between gap-x-4 transition-all 
+                        p-4 md:px-8 md:py-5
+                        bg-[#F8F5F2]
+                        hover:bg-white group relative
+                        ${isActive ? 'bg-white' : ''}
                       `}
                     >
-                      <div className="flex items-center gap-4">
-                        <service.icon size={20} strokeWidth={isActive ? 2.5 : 2} className="flex-shrink-0" />
-                        <span className="tracking-wide whitespace-nowrap">{service.title}</span>
+                      <div className="flex items-center gap-6">
+                        <span className="text-[9px] font-bold text-[#1A1A1A]/20 transition-colors group-hover:text-[#1A1A1A]/40 w-4">
+                          {service.id.slice(0, 2).toUpperCase()}
+                        </span>
+                        <div className="flex items-center gap-4">
+                          <service.icon size={18} strokeWidth={isActive ? 2 : 1.5} className="text-[#1A1A1A]/70 transition-colors group-hover:text-black shrink-0" />
+                          <span className={`text-base md:text-lg tracking-tight transition-all ${isActive ? 'font-medium text-black underline underline-offset-8' : 'font-light text-[#1A1A1A]/50 group-hover:text-black'}`}>
+                            {service.title}
+                          </span>
+                        </div>
                       </div>
-                      <ArrowRight size={18} className={`flex-shrink-0 transition-transform ${isActive ? 'text-[#1A1A1A] translate-x-1' : 'text-white/30'}`} />
+                      <ArrowRight size={16} className={`transition-all ${isActive ? 'text-black translate-x-1' : 'text-[#1A1A1A]/10 group-hover:text-black group-hover:translate-x-1'}`} />
                     </Link>
                   );
                 })}
               </div>
             </div>
+
           </div>
         </div>
       </section>
