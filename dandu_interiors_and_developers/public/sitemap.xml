@@ -3,103 +3,129 @@
   <!-- Static Pages -->
   <url>
     <loc>https://www.danduinteriors.com/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.00</priority>
   </url>
   <url>
     <loc>https://www.danduinteriors.com/about</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.danduinteriors.com/services</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://www.danduinteriors.com/gallery</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://www.danduinteriors.com/design-ideas</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
     <loc>https://www.danduinteriors.com/contact</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.danduinteriors.com/privacy-policy</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.30</priority>
   </url>
   <url>
     <loc>https://www.danduinteriors.com/terms-and-conditions</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.30</priority>
   </url>
 
   <!-- Service Root Pages -->
   <url>
     <loc>https://www.danduinteriors.com/services/designs</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.danduinteriors.com/services/interior-works</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.danduinteriors.com/services/renovation-works</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.danduinteriors.com/services/building-maintenance</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.danduinteriors.com/services/civil-works</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <!-- Service sub-categories -->
-  <url><loc>https://www.danduinteriors.com/services/designs/interior-design</loc><priority>0.75</priority></url>
-  <url><loc>https://www.danduinteriors.com/services/designs/exterior-design</loc><priority>0.75</priority></url>
-  <url><loc>https://www.danduinteriors.com/services/designs/2d-3d</loc><priority model_thought="I'll use 0.75 for these sub-services.">0.75</priority></url>
-  <url><loc>https://www.danduinteriors.com/services/interior-works/modular-kitchen-wardrobes</loc><priority>0.75</priority></url>
-  <url><loc>https://www.danduinteriors.com/services/interior-works/painting-works</loc><priority>0.75</priority></url>
-  <url><loc>https://www.danduinteriors.com/services/interior-works/kitchen-countertop</loc><priority>0.75</priority></url>
-  <url><loc>https://www.danduinteriors.com/services/civil-works/flooring-works</loc><priority>0.75</priority></url>
-  <url><loc>https://www.danduinteriors.com/services/civil-works/painting-works-civil</loc><priority>0.75</priority></url>
-  <url><loc>https://www.danduinteriors.com/services/civil-works/railing-work</loc><priority>0.75</priority></url>
+  <url><loc>https://www.danduinteriors.com/services/designs/interior-design</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://www.danduinteriors.com/services/designs/exterior-design</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://www.danduinteriors.com/services/designs/2d-3d</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://www.danduinteriors.com/services/interior-works/modular-kitchen-wardrobes</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://www.danduinteriors.com/services/interior-works/painting-works</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://www.danduinteriors.com/services/interior-works/kitchen-countertop</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://www.danduinteriors.com/services/civil-works/flooring-works</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://www.danduinteriors.com/services/civil-works/painting-works-civil</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://www.danduinteriors.com/services/civil-works/railing-work</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
 
   <!-- Projects (Gallery Detail) -->
-  <url><loc>https://www.danduinteriors.com/gallery/1</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/2</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/3</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/4</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/5</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/6</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/7</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/8</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/9</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/10</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/11</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/12</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/13</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/14</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/15</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/16</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/17</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/18</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/19</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/gallery/20</loc><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/1</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/2</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/3</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/4</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/5</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/6</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/7</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/8</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/9</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/10</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/11</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/12</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/13</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/14</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/15</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/16</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/17</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/18</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/19</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/gallery/20</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
 
   <!-- Design Ideas (Detail) -->
-  <url><loc>https://www.danduinteriors.com/design-ideas/modular-kitchen</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/design-ideas/living-room</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/design-ideas/bedroom</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/design-ideas/kids-bedroom</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/design-ideas/wardrobe</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/design-ideas/dining-room</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/design-ideas/pooja-room</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/design-ideas/space-saving</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/design-ideas/home-office</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/design-ideas/bathroom</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/design-ideas/balcony</loc><priority>0.70</priority></url>
-  <url><loc>https://www.danduinteriors.com/design-ideas/1,-2,-3-bhk-plans</loc><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/modular-kitchen</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/living-room</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/bedroom</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/kids-bedroom</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/wardrobe</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/dining-room</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/pooja-room</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/space-saving</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/home-office</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/bathroom</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/balcony</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://www.danduinteriors.com/design-ideas/1,-2,-3-bhk-plans</loc><lastmod>2026-04-17</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
 </urlset>
