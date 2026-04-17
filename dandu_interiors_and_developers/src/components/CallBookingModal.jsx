@@ -135,12 +135,7 @@ const CallBookingModal = () => {
               <div className="w-12 h-1 bg-gray-200 rounded-full" />
             </div>
 
-            <button
-              onClick={closeCallModal}
-              className="absolute top-5 right-5 z-20 p-2 bg-black/5 hover:bg-black text-[#1A1A1A] hover:text-white rounded-full transition-all duration-300"
-            >
-              <X size={20} />
-            </button>
+
 
             <div className="hidden md:flex bg-[#1A1A1A] p-10 text-white w-[38%] flex-col justify-between relative overflow-hidden">
               <div className="absolute top-[-5%] right-[-5%] text-[15rem] font-serif italic text-white/[0.03] pointer-events-none select-none">
@@ -168,14 +163,20 @@ const CallBookingModal = () => {
               </div>
             </div>
 
-            <div className="w-full md:w-[62%] bg-[#F8F5F2] p-5 md:p-10 overflow-y-auto custom-scrollbar" data-lenis-prevent>
-              <div className="md:hidden mb-4">
-                <h2 className="text-2xl font-light tracking-tighter text-[#1A1A1A] leading-none mb-1">
-                  Book <span className="font-serif italic text-black/30">A Call</span>
-                </h2>
-              </div>
+            <div className="w-full md:w-[62%] bg-[#F8F5F2] flex flex-col h-full overflow-hidden" data-lenis-prevent>
+              <form onSubmit={handleSubmit} className="flex flex-col h-full overflow-hidden">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-20">
+                  <h2 className="text-[10px] font-bold text-[#1A1A1A] tracking-[0.3em] uppercase">Book A Call</h2>
+                  <button
+                    onClick={closeCallModal}
+                    className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
+                    aria-label="Close"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
 
-              <form onSubmit={handleSubmit} className="space-y-5 md:space-y-7">
+                <div className="flex-grow overflow-y-auto p-5 md:p-10 custom-scrollbar space-y-5 md:space-y-7">
                 <div className="space-y-2.5 md:space-y-4">
                   <div className="space-y-1 focus-within:translate-x-1 transition-transform">
                     <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Full Name *</label>
@@ -229,7 +230,9 @@ const CallBookingModal = () => {
                   </div>
                 </div>
 
-                <div className="pt-2 pb-4">
+                </div>
+
+                <div className="p-5 md:px-10 md:pb-10 md:pt-4 bg-[#F8F5F2] border-t border-black/5">
                   <button type="submit" className="w-full bg-[#1A1A1A] text-white py-3.5 md:py-4 rounded-xl font-bold text-xs tracking-[0.3em] uppercase hover:bg-black transition-all duration-300 shadow-2xl hover:shadow-black/20 group flex items-center justify-center gap-3">
                     Proceed Booking
                     <ArrowRight size={16} className="translate-x-0 group-hover:translate-x-2 transition-transform duration-300" />

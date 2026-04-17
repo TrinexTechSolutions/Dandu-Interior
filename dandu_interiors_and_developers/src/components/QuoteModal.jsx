@@ -156,13 +156,13 @@ const QuoteModal = () => {
             }}
           >
 
-            {/* Close Button */}
-            <button
-              onClick={closeQuoteModal}
-              className="absolute top-5 right-5 z-20 p-2 bg-black/5 hover:bg-black text-[#1A1A1A] hover:text-white rounded-full transition-all duration-300"
+            {/* Handle Bar (Mobile Only) */}
+            <div
+              className="w-full flex md:hidden justify-center pt-4 pb-2 cursor-grab active:cursor-grabbing touch-none"
+              onPointerDown={(e) => dragControls.start(e)}
             >
-              <X size={20} />
-            </button>
+              <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
+            </div>
 
             {/* Info Sidebar (Desktop Only) */}
             <div className="hidden md:flex bg-[#1A1A1A] p-10 text-white w-[33%] flex-col justify-between relative overflow-hidden">
@@ -204,14 +204,20 @@ const QuoteModal = () => {
             </div>
 
             {/* Form Content */}
-            <div className="w-full md:w-[67%] bg-[#F8F5F2] p-5 md:p-10 overflow-y-auto hide-scrollbar" data-lenis-prevent>
-              <div className="md:hidden mb-4">
-                <h2 className="text-2xl font-light tracking-tighter text-[#1A1A1A] leading-none mb-1">
-                  Request <span className="font-serif italic text-black/30">A Quote</span>
-                </h2>
-              </div>
+            <div className="w-full md:w-[67%] bg-[#F8F5F2] flex flex-col h-full overflow-hidden" data-lenis-prevent>
+              <form onSubmit={handleSubmit} className="flex flex-col h-full overflow-hidden">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-20">
+                  <h2 className="text-[10px] font-bold text-[#1A1A1A] tracking-[0.3em] uppercase">Request A Quote</h2>
+                  <button
+                    onClick={closeQuoteModal}
+                    className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
+                    aria-label="Close"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4 md:space-y-7">
+                <div className="flex-grow overflow-y-auto p-5 md:p-10 hide-scrollbar space-y-4 md:space-y-7">
 
                 {/* Form Section: Personal Details */}
                 <div className="space-y-2.5 md:space-y-4">
@@ -301,7 +307,9 @@ const QuoteModal = () => {
                   </div>
                 )}
 
-                <div className="pt-2 pb-4">
+                </div>
+
+                <div className="p-5 md:px-10 md:pb-10 md:pt-4 bg-[#F8F5F2] border-t border-black/5">
                   <button type="submit" className="w-full bg-[#1A1A1A] text-white py-3.5 md:py-4 rounded-xl font-bold text-xs tracking-[0.3em] uppercase hover:bg-black transition-all duration-300 shadow-2xl hover:shadow-black/20 group flex items-center justify-center gap-3">
                     Submit Requirement
                     <ArrowRight size={16} className="translate-x-0 group-hover:translate-x-2 transition-transform duration-300" />
@@ -310,7 +318,7 @@ const QuoteModal = () => {
                     By submitting, you agree to our contact terms.
                   </p>
                 </div>
-              </form>
+              </form>  
             </div>
           </motion.div>
         </div>

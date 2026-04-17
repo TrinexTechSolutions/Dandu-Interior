@@ -74,7 +74,7 @@ const Home = () => {
       if (!isMobile && !isHoveringProcess) {
         setActiveProcessStep((prev) => (prev + 1) % 4);
       }
-    }, 3000);
+    }, 2000);
 
     return () => {
       clearInterval(interval);
@@ -476,18 +476,18 @@ const Home = () => {
                 <div
                   key={idx}
                   data-step-index={idx}
-                  className={`process-step-card p-8 md:p-10 relative flex flex-col items-start transition-all duration-700 ${isActive ? 'bg-white shadow-2xl scale-[1.02] z-20' : 'bg-transparent filter grayscale-[0.5] opacity-60'} ${idx !== 3 ? 'md:border-r border-b md:border-b-0 border-black/5' : ''}`}
+                  className={`process-step-card p-8 md:p-10 relative flex flex-col items-start transition-all duration-500 ${isActive ? 'bg-white shadow-2xl scale-[1.02] z-20' : 'bg-transparent filter grayscale-[0.5] opacity-60'} ${idx !== 3 ? 'md:border-r border-b md:border-b-0 border-black/5' : ''}`}
                 >
                   {/* Step Marker */}
-                  <div className={`text-[32px] font-serif italic mb-6 transition-all duration-700 ${isActive ? 'text-[#37302F] scale-110' : 'text-black/10'}`}>
+                  <div className={`text-[32px] font-serif italic mb-6 transition-all duration-500 ${isActive ? 'text-[#37302F] scale-110' : 'text-black/10'}`}>
                     {item.step}
                   </div>
 
-                  <h3 className={`text-[11px] font-bold tracking-[0.3em] uppercase transition-all duration-700 mb-4 ${isActive ? 'text-[#37302F] translate-x-1' : 'text-[#1A1A1A]'}`}>
+                  <h3 className={`text-[11px] font-bold tracking-[0.3em] uppercase transition-all duration-500 mb-4 ${isActive ? 'text-[#37302F] translate-x-1' : 'text-[#1A1A1A]'}`}>
                     {item.title}
                   </h3>
 
-                  <p className={`text-[13px] leading-relaxed font-light transition-all duration-700 ${isActive ? 'text-[#1A1A1A]' : 'text-[#1A1A1A]/60'}`}>
+                  <p className={`text-[13px] leading-relaxed font-light transition-all duration-500 ${isActive ? 'text-[#1A1A1A]' : 'text-[#1A1A1A]/60'}`}>
                     {item.desc}
                   </p>
 
@@ -508,9 +508,7 @@ const Home = () => {
         <SectionWrapper bgClass="bg-[#F8F5F2]" paddingClass="py-24">
           <div className="max-w-4xl mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-[#37302F]/40 text-[10px] font-bold tracking-[0.4em] uppercase mb-4">
-                Common Questions
-              </h2>
+
               <h2 className="text-4xl md:text-5xl font-light tracking-tighter text-[#1A1A1A] leading-none mb-8">
                 Frequently Asked <span className="font-serif italic text-black/20">Questions</span>
               </h2>
