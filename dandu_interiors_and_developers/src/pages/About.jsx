@@ -8,7 +8,7 @@ import structuralIntegrityImg from '../assets/About/structural_integrity.webp';
 import obsessiveDetailImg from '../assets/About/obsessive_detail.webp';
 import engineeringMasteryImg from '../assets/About/engineering_mastery.webp';
 import visionaryReachImg from '../assets/About/visionary_reach.webp';
-import designerShowcaseImg from '../assets/about_page_images/DesignerIMG.jpeg';
+import designerShowcaseImg from '../assets/about_page_images/Nikhil_designer_img.png';
 
 const About = () => {
   const [hoveredValue, setHoveredValue] = useState(null);
@@ -23,7 +23,7 @@ const About = () => {
       const stepElements = document.querySelectorAll('.foundation-step-card');
       const centerY = window.innerHeight / 2;
       const triggerZone = window.innerHeight * 0.2; // 20% of screen height as trigger zone
-      
+
       let currentActiveId = null;
       let minDistance = Infinity;
 
@@ -82,7 +82,7 @@ const About = () => {
 
       {/* 1. Editorial Hero */}
       <section className="pt-24 pb-12 md:pt-32 md:pb-24 px-6 md:px-12 max-w-[1600px] mx-auto relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-start relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-stretch relative z-10 w-full">
 
           <div className="lg:col-span-7 xl:col-span-8 z-10">
             <span className="text-[#37302F]/60 text-xs font-bold tracking-[0.3em] uppercase mb-4 md:mb-8 block">Dandu Interiors & Developers</span>
@@ -97,7 +97,7 @@ const About = () => {
             </p>
           </div>
 
-          <div className="lg:col-span-5 xl:col-span-4 relative h-[45vw] max-h-[400px] lg:h-[75vh] lg:max-h-none w-full overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl">
+          <div className="lg:col-span-5 xl:col-span-4 relative h-[60vw] md:h-[50vw] lg:h-full w-full overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl">
             <img
               src={heroArchitectureImg}
               alt="Hero Architecture"
@@ -127,18 +127,20 @@ const About = () => {
 
       {/* 3. The Principal (Founder Profile) */}
       <section className="py-16 md:py-24 px-6 md:px-12 max-w-[1600px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-stretch">
 
-          {/* Portrait */}
-          <div className="lg:col-span-5 h-[60vh] md:h-[80vh] w-full relative overflow-hidden">
-            <img
-              src={FounderImg}
-              alt="D. Anudeep - Founder"
-              className="w-full h-full object-cover object-top grayscale contrast-125"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60"></div>
-            <div className="absolute bottom-8 left-8 text-white text-xs tracking-widest font-bold uppercase mix-blend-screen flex items-center gap-3">
-              <span className="w-8 h-px bg-white block"></span> Founder & Director
+          {/* Portrait - Matching Content Height */}
+          <div className="lg:col-span-5 w-full h-full relative overflow-hidden bg-white">
+            <div className="relative w-full h-full min-h-[400px] lg:min-h-0 overflow-hidden">
+              <img
+                src={FounderImg}
+                alt="D. Anudeep - Founder"
+                className="absolute inset-0 w-full h-full object-cover object-top grayscale contrast-125"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60"></div>
+              <div className="absolute bottom-8 left-8 text-white text-xs tracking-widest font-bold uppercase mix-blend-screen flex items-center gap-3">
+                <span className="w-8 h-px bg-white block"></span> Founder & Director
+              </div>
             </div>
           </div>
 
@@ -178,12 +180,11 @@ const About = () => {
         </div>
       </section>
 
-      {/* 4. Meet Our Designer */}
-      <section className="py-12 md:py-16 px-6 md:px-12 max-w-[1600px] mx-auto">
-        <div className="bg-[#F8F5F2]">
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch">
-            <div className="lg:col-span-8 px-5 py-5 md:px-7 md:py-6 lg:px-8 lg:py-7">
-              <div className="grid grid-cols-1 items-start">
+      <section className="py-16 md:py-24 px-6 md:px-12 max-w-[1600px] mx-auto">
+        <div className="">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch gap-12 lg:gap-24">
+            <div className="lg:col-span-8 order-2 lg:order-1 flex flex-col justify-between py-2">
+              <div className="max-w-2xl">
                 <div>
                   <h2 className="text-xs font-bold tracking-[0.4em] uppercase text-[#37302F]/60 mb-6 flex items-center gap-4">
                     <span className="w-8 h-px bg-[#37302F]/30 block"></span> Meet Our Designer
@@ -196,15 +197,22 @@ const About = () => {
                     A key creative force shaping warm, functional, and refined interiors.
                   </p>
 
-                  <div className="border-l-2 border-[#C7AA8B] pl-4">
+                  <div className="border-l-2 border-[#C7AA8B] pl-4 mb-10">
                     <p className="text-sm md:text-base font-light leading-relaxed text-[#37302F]/80 max-w-2xl">
                       He brings smart planning, balanced aesthetics, and client-focused design to every project.
+                    </p>
+                  </div>
+
+                  <div className="space-y-6 pt-6 border-t border-[#37302F]/5">
+                    <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#37302F]/40 block">Design Philosophy</span>
+                    <p className="text-xl md:text-2xl font-light leading-relaxed tracking-tight text-[#37302F]">
+                      "Design is not just about how it looks, but how it works and feels. We focus on 'Functional Minimalism'—ensuring every element serves a purpose while maintaining a premium, lived-in luxury."
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-5">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-12 pt-8 border-t border-[#37302F]/10">
                 <div className="border border-[#37302F]/10 p-4">
                   <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-2">Experience</p>
                   <p className="text-xl md:text-2xl font-light text-[#37302F]">5+ Years</p>
@@ -224,15 +232,17 @@ const About = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-4 relative min-h-[180px] md:min-h-[220px] overflow-hidden">
-              <img
-                src={designerShowcaseImg}
-                alt="Nikhil - Interior Designer"
-                className="absolute inset-0 w-full h-full object-cover object-center grayscale"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-60"></div>
-              <div className="absolute bottom-4 left-4 text-white text-[10px] md:text-xs tracking-widest font-bold uppercase mix-blend-screen flex items-center gap-3">
-                <span className="w-8 h-px bg-white block"></span> Interior Designer
+            <div className="lg:col-span-4 order-1 lg:order-2">
+              <div className="relative aspect-[2/3] w-full overflow-hidden bg-white">
+                <img
+                  src={designerShowcaseImg}
+                  alt="Nikhil - Interior Designer"
+                  className="absolute inset-0 w-full h-full object-cover object-center grayscale hover:grayscale-0 transition-all duration-1000 transform hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+                <div className="absolute bottom-6 left-6 text-white text-[10px] md:text-xs tracking-widest font-bold uppercase mix-blend-screen flex items-center gap-3">
+                  <span className="w-8 h-px bg-white block"></span> Lead Designer
+                </div>
               </div>
             </div>
           </div>

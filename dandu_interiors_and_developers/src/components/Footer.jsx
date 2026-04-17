@@ -70,7 +70,7 @@ const Footer = () => {
                 onClick={() => {
                   if (social.name === 'WhatsApp') trackWhatsAppClick();
                 }}
-                className="text-white/40 hover:text-white transition-colors duration-300 flex items-center justify-center w-8 h-8"
+                className="text-white hover:text-white/70 transition-colors duration-300 flex items-center justify-center w-8 h-8"
                 aria-label={social.name}
               >
                 <social.icon size={18} strokeWidth={1.5} />
@@ -84,7 +84,7 @@ const Footer = () => {
 
           {/* Navigation Section */}
           <div className="lg:col-span-6 flex flex-col gap-4">
-            <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/30">Navigation</span>
+            <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white">Navigation</span>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {[
                 { name: 'About', path: '/about' },
@@ -117,9 +117,10 @@ const Footer = () => {
 
           {/* Primary Services Section */}
           <div className="lg:col-span-6 flex flex-col gap-4">
-            <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/30">Primary Services</span>
-            <div className="grid grid-cols-2 gap-4">
+            <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white">Primary Services</span>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {[
+                { name: 'Designs', path: '/services/designs' },
                 { name: 'Interior Works', path: '/services/interior-works' },
                 { name: 'Civil Works', path: '/services/civil-works' },
                 { name: 'Renovation works', path: '/services/renovation-works' },
@@ -141,21 +142,21 @@ const Footer = () => {
             <div className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-12 items-start">
               
               <div className="flex flex-col gap-4 lg:flex-1">
-                <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/30">Hyderabad Office</span>
+                <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white">Hyderabad Office</span>
                 <p className="text-[13px] font-light leading-relaxed text-white/50 max-w-sm">
                   D-603, Vertex Pristine, Nizampet Road, Hyderabad, Telangana.
                 </p>
               </div>
 
               <div className="flex flex-col gap-4 lg:flex-1">
-                <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/30">Bapatla Office</span>
+                <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white">Bapatla Office</span>
                 <p className="text-[13px] font-light leading-relaxed text-white/50 max-w-sm">
                   Dr No: 9-4-12/B, Kamaraju Vari Street, Bapatla, Andhra Pradesh 522101.
                 </p>
               </div>
 
               <div className="flex flex-col gap-4 lg:min-w-[280px]">
-                <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white/30">Direct Contact</span>
+                <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-white">Direct Contact</span>
                 <div className="flex flex-col gap-3">
                   <a 
                     href={`tel:+${import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612'}`} 
