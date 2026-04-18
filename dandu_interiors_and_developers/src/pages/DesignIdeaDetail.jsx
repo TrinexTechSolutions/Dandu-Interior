@@ -267,8 +267,9 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
   return (
     <PageTransition>
       <SEO 
-        title={idea.title}
-        description={`Modern ${idea.title} design ideas by Dandu Interiors & Developers. Explore premium ${idea.category.toLowerCase()} concepts and professional execution.`}
+        title={`${idea.title} | Premium Design Ideas in Hyderabad & Bapatla`}
+        description={`Modern ${idea.title.toLowerCase()} design ideas by Dandu Interiors & Developers. Explore premium ${idea.category.toLowerCase()} concepts and professional execution in Hyderabad and Bapatla.`}
+        keywords={`${idea.title}, ${idea.category} Ideas, Interior Designs Hyderabad, Bapatla Home Improvement, Modular Design concepts`}
       />
       {content}
       <FullScreenImageModal

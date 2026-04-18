@@ -99,8 +99,9 @@ const DesignIdeas = () => {
   return (
     <>
       <SEO 
-        title="Design Inspiration & Ideas"
-        description="Explore curated interior design ideas by Dandu Interiors & Developers. From modular kitchens to master bedrooms and space-saving solutions, get inspired for your next renovation."
+        title="Modern Interior Design Ideas | Hyderabad & Bapatla"
+        description="Explore curated interior design ideas by Dandu Interiors & Developers. From modular kitchens to space-saving solutions in Hyderabad and Bapatla, get inspired for your dream home."
+        keywords="Interior Design Ideas Hyderabad, Modular Kitchen Bapatla, Living Room Decor, Space Saving Interiors, Modern Home Designs, Bedroom Inspiration"
       />
       <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
       <style>{`

@@ -199,8 +199,36 @@ const Home = () => {
   return (
     <>
       <SEO 
-        title="Premium Interior Design & Construction"
-        description="Dandu Interiors & Developers provides premium interior design, civil works, and professional renovations in Hyderabad and Andhra Pradesh. Transforming visions into masterpiece spaces."
+        title="Best Interior Designers in Hyderabad & Bapatla"
+        description="Premium interior design, structural civil works, and professional renovations by Dandu Interiors & Developers. Transforming homes in Hyderabad and Bapatla with expert craftsmanship."
+        keywords="Interior Designers Hyderabad, Home Interiors Bapatla, Modular Kitchen Hyderabad, Civil Works Hyderabad, Premium Renovations Bapatla, Dandu Interiors"
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "HomeAndConstructionBusiness",
+          "name": "Dandu Interiors & Developers",
+          "alternateName": "Dandu Interior",
+          "description": "Premium interior design and construction services specializing in residential and commercial spaces in Hyderabad and Bapatla.",
+          "url": "https://www.danduinteriors.com",
+          "telephone": "+919866166612",
+          "address": [
+            {
+              "@type": "PostalAddress",
+              "streetAddress": "D-603, Vertex Pristine, Nizampet Road",
+              "addressLocality": "Hyderabad",
+              "addressRegion": "Telangana",
+              "postalCode": "500090",
+              "addressCountry": "IN"
+            },
+            {
+              "@type": "PostalAddress",
+              "streetAddress": "Dr No: 9-4-12/B, Kamaraju Vari Street",
+              "addressLocality": "Bapatla",
+              "addressRegion": "Andhra Pradesh",
+              "postalCode": "522101",
+              "addressCountry": "IN"
+            }
+          ]
+        }}
       />
       <div className="bg-[#F8F5F2] overflow-hidden">
       {/* Banner with Refined Hero Section */}

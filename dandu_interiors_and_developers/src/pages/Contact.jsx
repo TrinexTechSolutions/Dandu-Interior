@@ -171,8 +171,9 @@ const Contact = () => {
   return (
     <>
       <SEO 
-        title="Contact Us"
-        description="Get in touch with Dandu Interiors & Developers for premium design and construction services. Visit our Hyderabad or Bapatla locations, or request a free quote online today."
+        title="Contact Dandu Interiors | Offices in Hyderabad & Bapatla"
+        description="Get in touch with Dandu Interiors & Developers. Visit our design studios in Hyderabad and Bapatla for premium home interiors and renovation consultations."
+        keywords="Contact Interior Designer Hyderabad, Bapatla Design Office, Hire Interior Designers, Dandu Interiors Support, Office Locations Hyderabad Bapatla"
       />
       <div className="bg-[#F8F5F2] min-h-screen relative font-sans overflow-x-hidden">
 

@@ -224,8 +224,9 @@ const Projects = () => {
   return (
     <>
       <SEO 
-        title="Gallery | Our Work"
-        description="Explore the finished masterpieces of Dandu Interiors & Developers. From luxury villas in Jubilee Hills to modern corporate offices in HITEC City, our gallery showcases our commitment to premium design and engineering."
+        title="Project Gallery | Best Portfolios in Hyderabad & Bapatla"
+        description="Explore the finished masterpieces of Dandu Interiors & Developers. From luxury villas to modern corporate offices, our gallery showcases our commitment to premium design and engineering in Hyderabad and Bapatla."
+        keywords="Interior Design Gallery, Finished Projects Hyderabad, Luxury Home Portfolio Bapatla, Modern Office Design, Renovation Showcase, Dandu Interiors Work"
       />
       <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
       <style>{`

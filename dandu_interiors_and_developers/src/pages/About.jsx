@@ -81,8 +81,9 @@ const About = () => {
   return (
     <>
       <SEO 
-        title="About Our Practice"
-        description="Learn about Dandu Interiors & Developers, where we blend civil engineering precision with elegant interior design. Serving Hyderabad and Andhra Pradesh with obsessive attention to detail."
+        title="Interior Design Excellence in Hyderabad & Bapatla"
+        description="Dandu Interiors & Developers blends civil engineering precision with premium interior design. Leading interior designers serving Hyderabad and Bapatla with obsessive quality."
+        keywords="About Dandu Interiors, Interior Design Firm Hyderabad, Civil Engineering Bapatla, Premium Home Renovations, D. Anudeep Founder, Nikhil Designer"
       />
       <div className="bg-[#F8F5F2] min-h-screen text-[#37302F] selection:bg-[#37302F] selection:text-[#F8F5F2] font-sans overflow-hidden">
 

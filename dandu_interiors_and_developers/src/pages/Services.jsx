@@ -132,8 +132,9 @@ const Services = () => {
   return (
     <>
       <SEO 
-        title={displayTitle}
-        description={displayDesc}
+        title={`${displayTitle} | Premium Services in Hyderabad & Bapatla`}
+        description={`${displayDesc} Dandu Interiors & Developers offers professional ${displayTitle.toLowerCase()} with technical precision and elegant design in Hyderabad and Bapatla.`}
+        keywords={`${displayTitle}, Interior Services Hyderabad, Civil Works Bapatla, Home Renovation Services, ${displayTitle} Experts, Dandu Interiors`}
       />
       <div className="bg-[#F8F5F2] min-h-screen pb-0 relative text-[#1A1A1A]">
 

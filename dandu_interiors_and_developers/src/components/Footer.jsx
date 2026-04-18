@@ -178,6 +178,8 @@ const Footer = () => {
         {/* Bottom: Legal & Credits */}
         <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[10px] font-bold tracking-widest uppercase text-white/20 text-center md:text-left">
+            Serving Hyderabad | Bapatla
+            <span className="mx-2 opacity-50">|</span> 
             Developed by{' '}
             <a
               href="https://www.trinextechsolutions.site/"
