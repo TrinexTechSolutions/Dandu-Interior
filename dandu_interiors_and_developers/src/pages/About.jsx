@@ -134,11 +134,11 @@ const About = () => {
 
       {/* 3. The Principal (Founder Profile) */}
       <section className="py-16 md:py-24 px-6 md:px-12 max-w-[1600px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-stretch">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-16 lg:gap-24">
 
           {/* Portrait - Matching Content Height */}
-          <div className="lg:col-span-5 w-full h-full relative overflow-hidden bg-white">
-            <div className="relative w-full h-full min-h-[400px] lg:min-h-0 overflow-hidden">
+          <div className="xl:col-span-5 w-full relative overflow-hidden bg-white">
+            <div className="relative w-full aspect-[4/5] xl:aspect-auto xl:h-full overflow-hidden">
               <img
                 src={FounderImg}
                 alt="D. Anudeep - Founder and Principal Engineer of Dandu Interiors Hyderabad & Bapatla"
@@ -152,7 +152,7 @@ const About = () => {
           </div>
 
           {/* Minimalist Data */}
-          <div className="lg:col-span-7 flex flex-col justify-between h-full py-0 lg:py-8">
+          <div className="xl:col-span-7 flex flex-col py-0 xl:py-8">
             <div>
               <h3 className="text-5xl md:text-7xl font-serif italic text-[#37302F] mb-16 tracking-tight">D. Anudeep</h3>
 
@@ -189,8 +189,8 @@ const About = () => {
 
       <section className="py-16 md:py-24 px-6 md:px-12 max-w-[1600px] mx-auto">
         <div className="">
-          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch gap-12 lg:gap-24">
-            <div className="lg:col-span-8 order-2 lg:order-1 flex flex-col justify-between py-2">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-12 lg:gap-24">
+            <div className="xl:col-span-8 order-2 xl:order-1 flex flex-col py-2">
               <div className="max-w-2xl">
                 <div>
                   <h2 className="text-xs font-bold tracking-[0.4em] uppercase text-[#37302F]/60 mb-6 flex items-center gap-4">
@@ -239,7 +239,7 @@ const About = () => {
               </div>
             </div>
 
-            <div className="lg:col-span-4 order-1 lg:order-2">
+            <div className="xl:col-span-4 order-1 xl:order-2">
               <div className="relative aspect-[2/3] w-full overflow-hidden bg-white">
                 <img
                   src={designerShowcaseImg}

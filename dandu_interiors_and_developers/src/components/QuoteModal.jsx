@@ -158,7 +158,7 @@ const QuoteModal = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0.5 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="relative w-full max-w-4xl h-[92dvh] md:h-auto md:max-h-[85vh] bg-[#F8F5F2] rounded-t-[32px] md:rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col md:flex-row m-0 md:m-4"
+            className="relative w-full max-w-4xl h-[92dvh] md:h-[85vh] bg-[#F8F5F2] rounded-t-[32px] md:rounded-[32px] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col md:flex-row m-0 md:m-4"
             drag="y"
             dragControls={dragControls}
             dragListener={false}
@@ -221,7 +221,7 @@ const QuoteModal = () => {
             {/* Form Content */}
             <div className="w-full md:w-[67%] bg-[#F8F5F2] flex flex-col h-full overflow-hidden" data-lenis-prevent>
               <form onSubmit={handleSubmit} className="flex flex-col h-full overflow-hidden">
-                <div className="flex items-center justify-between px-6 py-3.5 md:py-5 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-20">
+                <div className="flex items-center justify-between px-6 py-3.5 md:py-4 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-20">
                   <h2 className="text-3xl md:text-4xl font-light tracking-tighter leading-none text-[#1A1A1A]">
                     Request <span className="font-serif italic opacity-30">A Quote</span>
                   </h2>
