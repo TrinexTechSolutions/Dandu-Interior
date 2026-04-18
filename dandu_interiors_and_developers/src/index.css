@@ -24,14 +24,11 @@
   }
 
   html,
-  body,
-  #root {
+  body {
     overflow-x: hidden;
-    overflow-y: auto;
     width: 100%;
-    scrollbar-width: thin;
-    scrollbar-color: #37302F transparent;
-    overscroll-behavior: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   html {
