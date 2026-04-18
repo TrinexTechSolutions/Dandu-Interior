@@ -36,6 +36,10 @@ const SmoothScroll = ({ children }) => {
     // Store lenis on window for PageTransition to access if needed
     window.lenis = lenis;
 
+    // Force scroll to top on initial mount/reload
+    window.scrollTo(0, 0);
+    lenis.scrollTo(0, { immediate: true });
+
     // cleanup
     return () => {
       lenis.destroy();

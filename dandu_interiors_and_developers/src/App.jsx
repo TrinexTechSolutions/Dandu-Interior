@@ -56,7 +56,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 4000); // 4 seconds allows for full animation + curtain exit transition
+    }, 2000); // Optimization: Reduced from 4s to 2s to improve PageSpeed FCP/LCP scores
     return () => clearTimeout(timer);
   }, []);
 

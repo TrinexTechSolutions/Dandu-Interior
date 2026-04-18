@@ -10,7 +10,7 @@ const LoadingScreen = () => {
         
         const exitTimer = setTimeout(() => {
             setIsExiting(true);
-        }, 3000); // Animation phases completion
+        }, 800); // Optimization: Reduced from 3s to 800ms for faster content reveal
 
         return () => {
             document.body.style.overflow = 'unset';
@@ -32,6 +32,7 @@ const LoadingScreen = () => {
                         src={danduLogo} 
                         alt="Dandu Logo" 
                         className="w-32 md:w-48 h-auto opacity-0 animate-logo-fade-in"
+                        fetchpriority="high"
                     />
                     {/* Revelator Mask */}
                     <div className="absolute inset-0 bg-[#37302F] transform -translate-x-full animate-mask-slide"></div>
@@ -88,15 +89,15 @@ const LoadingScreen = () => {
                 }
 
                 .animate-mask-slide {
-                    animation: mask-slide 2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+                    animation: mask-slide 1.2s cubic-bezier(0.85, 0, 0.15, 1) forwards;
                 }
 
                 .animate-logo-fade-in {
-                    animation: logo-fade-in 1.5s ease-out 0.5s forwards;
+                    animation: logo-fade-in 0.8s ease-out 0.4s forwards;
                 }
 
                 .animate-tracking-expand {
-                    animation: tracking-expand 2s cubic-bezier(0.22, 1, 0.36, 1) 0.8s forwards;
+                    animation: tracking-expand 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
                     opacity: 0;
                 }
 

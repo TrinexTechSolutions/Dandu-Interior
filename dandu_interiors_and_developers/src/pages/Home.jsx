@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, lazy, Suspense } from 'react';
 import heroBg from '../assets/herosection_banners/hero1.webp';
 import whyChooseUsImage from '../assets/Home/why_choose_us.webp';
 import { Link } from 'react-router-dom';
@@ -7,10 +7,12 @@ import { services } from '../data/services';
 import { projects } from '../data/projects';
 import { faqs } from '../data/faqs';
 import SectionWrapper from '../components/SectionWrapper';
-import CallToAction from '../components/CallToAction';
-import HomeDesignIdeas from '../components/HomeDesignIdeas';
 import SEO from '../components/SEO';
 import { useModal } from '../context/ModalContext';
+
+// Optimization: Lazy load below-the-fold components
+const CallToAction = lazy(() => import('../components/CallToAction'));
+const HomeDesignIdeas = lazy(() => import('../components/HomeDesignIdeas'));
 
 const heroImage = heroBg;
 
@@ -253,6 +255,8 @@ const Home = () => {
         <img
           src={heroImage}
           alt="Premium Interior Design and Construction Banner - Dandu Interiors Hyderabad & Bapatla"
+          fetchpriority="high"
+          loading="eager"
           decoding="async"
           className="absolute inset-0 w-full h-full object-cover gpu-accelerated"
         />
@@ -555,8 +559,10 @@ const Home = () => {
         </div>
       </SectionWrapper>
 
-      {/* Design Ideas Section */}
-      <HomeDesignIdeas />
+      {/* Design Ideas Section - Lazy Loaded */}
+      <Suspense fallback={<div className="h-96 bg-[#F8F5F2]" />}>
+        <HomeDesignIdeas />
+      </Suspense>
 
       {/* FAQ Section */}
       <div ref={faqSectionRef}>
@@ -607,7 +613,9 @@ const Home = () => {
         </SectionWrapper>
       </div>
 
-      <CallToAction />
+      <Suspense fallback={<div className="h-64 bg-[#1A1A1A]" />}>
+        <CallToAction />
+      </Suspense>
     </div>
   </>
   );

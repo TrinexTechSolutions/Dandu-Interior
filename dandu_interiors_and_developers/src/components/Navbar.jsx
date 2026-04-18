@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { X, ChevronDown } from 'lucide-react';
 import brandLogo from '../assets/logos_and_bg_images/dandu_logo.svg';
 import { useModal } from '../context/ModalContext';
 
@@ -60,7 +60,7 @@ const Navbar = () => {
       className={`fixed top-0 left-0 w-full z-[50] py-3 transition-all duration-500 border-b ${
         isDetailDrawerOpen ? 'backdrop-blur-xl bg-[#F8F5F2]/40 opacity-50 pointer-events-none' : ''
       } ${
-        !isDetailDrawerOpen && location.pathname === '/' && !scrolled
+        (!isDetailDrawerOpen && location.pathname === '/' && !scrolled && !isOpen)
           ? 'bg-transparent border-[#37302F]/15'
           : 'bg-[#F8F5F2] border-[#37302F]/5'
       }`}
@@ -176,10 +176,18 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <button 
-              className="lg:hidden text-[#37302F]"
+              className="lg:hidden w-11 h-11 flex items-center justify-center border border-[#37302F]/20 rounded-xl text-[#37302F] transition-all duration-300 hover:bg-[#37302F]/5 active:scale-95"
               onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle Menu"
             >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
+              {isOpen ? (
+                <X size={22} strokeWidth={2.5} />
+              ) : (
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="4" y1="9" x2="20" y2="9" />
+                  <line x1="4" y1="15" x2="20" y2="15" />
+                </svg>
+              )}
             </button>
           </div>
         </div>

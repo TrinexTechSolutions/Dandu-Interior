@@ -71,6 +71,7 @@ const SEO = ({
       <script type="application/ld+json">
         {JSON.stringify(breadcrumbSchema)}
       </script>
+      {schemaData && (
         <script type="application/ld+json">
           {JSON.stringify(schemaData)}
         </script>
