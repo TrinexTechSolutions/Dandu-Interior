@@ -189,7 +189,7 @@ const serviceImageByName = {
   'Tiles': tilesImage,
   'Console Unit': consoleUnitImage,
   'Crockery Unit': crockeryUnitImage,
-  'Exterior Design': exteriorDesignImage_New, 
+  'Exterior Design': exteriorDesignImage_New,
   'Residential': residentialDesignImage,
   'Commercial': commercialDesignImage,
   'Exterior': exteriorPaintImage,
@@ -202,7 +202,7 @@ const serviceImageByName = {
   'Quartz': quartzImage,
   'Waterproofing Works': terraceWaterproofingImage,
   'Residential Buildings': exteriorDesignImage_New,
-  'Plastering & Premium POP': plasteringImage,
+  'Plastering & POP/Gypsum punning': plasteringImage,
   'Electrical Works': completeNewElectricSystemsInstallationImage,
   'Plumbing Works': completeNewPlumbingSystemInstallationImage,
   'Flooring Works': flooringImage,
@@ -361,7 +361,7 @@ const rawServices = [
     benefits: ['Solid Construction', 'Technical Accuracy', 'Safety Focused', 'Long-Lasting Results'],
     subServices: [
       { name: 'Block Work', desc: 'We execute high-quality masonry and block work that serves as the strong foundation for your walls and structures. Our team focuses on structural integrity, ensuring every block is laid with precision and every partition is built to last. We use top-grade materials to guarantee long-term safety and durability.' },
-      { name: 'Plastering & Premium POP', desc: 'Our plastering and premium POP services create the perfect smooth canvas for your interior designs. We provide expert finishing that covers imperfections and prepares your walls for painting or wallpaper. Our skilled craftsmen ensure a flawless, level surface that adds a professional touch to any room.' },
+      { name: 'Plastering & POP/Gypsum punning', desc: 'Our plastering and POP/Gypsum punning services create the perfect smooth canvas for your interior designs. We provide expert finishing that covers imperfections and prepares your walls for painting or wallpaper. Our skilled craftsmen ensure a flawless, level surface that adds a professional touch to any room.' },
       { name: 'Electrical Works', desc: 'We provide complete electrical installation services for homes and offices, focusing on safety and efficiency. Our team handles everything from wiring and circuit installation to socket and switch placement. We ensure all electrical systems are well-planned and meet safety standards for worry-free everyday use.' },
       { name: 'Plumbing Works', desc: 'Our plumbing services are designed to provide a reliable, leak-free network for your property. We specialize in installing clean water lines, drainage systems, and high-quality fixtures. Our team focuses on long-term performance and ease of maintenance, ensuring your plumbing works perfectly from day one.' },
       {

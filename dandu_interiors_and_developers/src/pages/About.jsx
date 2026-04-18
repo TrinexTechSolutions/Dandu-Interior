@@ -125,7 +125,7 @@ const About = () => {
         <section className="py-16 md:py-32 px-6 md:px-12 max-w-[1400px] mx-auto">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-[1.3] text-[#37302F] tracking-tight">
-              "Founded on the principle that the spaces we inhabit must be masterpieces of both engineering and art. We blend structural integrity with refined luxury to forge lifelong foundations."
+              "Where engineering meets architectural art. We blend technical precision with creative context to craft spaces that balance form, function, and feeling, forging foundations that are as structurally sound as they are aesthetically timeless."
             </h2>
           </div>
         </section>
@@ -193,48 +193,42 @@ const About = () => {
               <div className="xl:col-span-8 order-2 xl:order-1 flex flex-col py-2">
                 <div className="max-w-2xl">
                   <div>
-                    <h2 className="text-xs font-bold tracking-[0.4em] uppercase text-[#37302F]/60 mb-6 flex items-center gap-4">
+                    <h2 className="text-xs font-bold tracking-[0.4em] uppercase text-[#37302F]/60 mb-4 flex items-center gap-4">
                       <span className="w-8 h-px bg-[#37302F]/30 block"></span> Meet Our Designer
                     </h2>
 
-                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-serif italic tracking-tight text-[#37302F] mb-3">
-                      Nikhil
+                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-serif italic tracking-tight text-[#37302F] mb-2">
+                      Ar. T. Nikhileswar
                     </h3>
-                    <p className="text-lg md:text-xl font-light leading-snug text-[#37302F] max-w-2xl mb-4">
-                      A key creative force shaping warm, functional, and refined interiors.
+                    <p className="text-[#37302F]/40 text-xs font-bold tracking-[0.3em] uppercase mb-4">
+                      Registered Architect
                     </p>
 
-                    <div className="border-l-2 border-[#C7AA8B] pl-4 mb-10">
-                      <p className="text-sm md:text-base font-light leading-relaxed text-[#37302F]/80 max-w-2xl">
-                        He brings smart planning, balanced aesthetics, and client-focused design to every project.
-                      </p>
-                    </div>
+                    <p className="text-lg md:text-xl font-light leading-snug text-[#37302F] max-w-2xl mb-5">
+                      Dedicated to creating thoughtful, functional, and timeless spaces. We specialize in residential, commercial, and real estate projects, blending innovation with practicality to transform ideas into architectural excellence.
+                    </p>
 
                     <div className="space-y-6 pt-6 border-t border-[#37302F]/5">
                       <span className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#37302F]/40 block">Design Philosophy</span>
                       <p className="text-xl md:text-2xl font-light leading-relaxed tracking-tight text-[#37302F]">
-                        "Design is not just about how it looks, but how it works and feels. We focus on 'Functional Minimalism'—ensuring every element serves a purpose while maintaining a premium, lived-in luxury."
+                        "At Dandu, we believe every space tells a story. Our approach combines creativity, context, and technology to craft environments that inspire and endure. From private homes to large-scale developments, we design spaces that balance form, function, and feeling."
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mt-12 pt-8 border-t border-[#37302F]/10">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mt-6 pt-4 border-t border-[#37302F]/10">
                   <div className="border border-[#37302F]/10 p-4">
-                    <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-2">Experience</p>
-                    <p className="text-xl md:text-2xl font-light text-[#37302F]">5+ Years</p>
+                    <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-1">Experience</p>
+                    <p className="text-xl md:text-2xl font-light text-[#37302F]">4+ Years</p>
                   </div>
                   <div className="border border-[#37302F]/10 p-4">
-                    <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-2">Projects Handled</p>
+                    <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-1">Projects</p>
                     <p className="text-xl md:text-2xl font-light text-[#37302F]">50+ Spaces</p>
                   </div>
                   <div className="border border-[#37302F]/10 p-4">
-                    <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-2">Role</p>
-                    <p className="text-base md:text-lg font-light text-[#37302F]">Design Expert</p>
-                  </div>
-                  <div className="border border-[#37302F]/10 p-4">
-                    <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-2">Focus</p>
-                    <p className="text-base md:text-lg font-light text-[#37302F]">Luxury Interiors</p>
+                    <p className="text-xs font-bold tracking-[0.3em] uppercase text-[#37302F]/45 mb-1">Role</p>
+                    <p className="text-xl md:text-2xl font-light text-[#37302F]">Architect and interior designer</p>
                   </div>
                 </div>
               </div>
