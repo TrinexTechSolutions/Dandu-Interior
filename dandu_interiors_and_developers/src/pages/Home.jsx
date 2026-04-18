@@ -9,6 +9,7 @@ import { faqs } from '../data/faqs';
 import SectionWrapper from '../components/SectionWrapper';
 import CallToAction from '../components/CallToAction';
 import HomeDesignIdeas from '../components/HomeDesignIdeas';
+import SEO from '../components/SEO';
 import { useModal } from '../context/ModalContext';
 
 const heroImage = heroBg;
@@ -196,7 +197,12 @@ const Home = () => {
   const infiniteServices = [...services, ...services];
 
   return (
-    <div>
+    <>
+      <SEO 
+        title="Premium Interior Design & Construction"
+        description="Dandu Interiors & Developers provides premium interior design, civil works, and professional renovations in Hyderabad and Andhra Pradesh. Transforming visions into masterpiece spaces."
+      />
+      <div className="bg-[#F8F5F2] overflow-hidden">
       {/* Banner with Refined Hero Section */}
       <section className="relative h-screen w-full overflow-hidden">
         <img
@@ -553,8 +559,8 @@ const Home = () => {
       </div>
 
       <CallToAction />
-
     </div>
+  </>
   );
 };
 

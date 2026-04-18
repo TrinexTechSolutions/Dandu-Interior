@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import CallToAction from '../components/CallToAction';
 import PageTransition from '../components/PageTransition';
 import FullScreenImageModal from '../components/FullScreenImageModal';
+import SEO from '../components/SEO';
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -30,6 +31,10 @@ const ProjectDetail = () => {
 
   return (
     <PageTransition>
+      <SEO 
+        title={project.title}
+        description={`Explore the ${project.title} project by Dandu Interiors & Developers. A masterpiece of premium interior design and civil engineering.`}
+      />
       <div className="bg-[#F8F5F2] min-h-screen text-gray-900 relative">
         
         {/* Top Right Close Button */}

@@ -1,9 +1,14 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 
 const PrivacyPolicy = () => {
   return (
-    <div className="bg-[#F8F5F2] min-h-screen pt-32 pb-20 font-sans">
+    <>
+      <SEO 
+        title="Privacy Policy"
+        description="Privacy Policy for Dandu Interiors & Developers. Learn about how we handle and protect your personal data during your journey with us."
+      />
+      <div className="bg-[#F8F5F2] min-h-screen pt-32 pb-20 font-sans">
       <div className="container-custom max-w-4xl px-6 lg:px-12">
         
         {/* Header */}
@@ -109,7 +114,8 @@ const PrivacyPolicy = () => {
         </motion.div>
       </div>
     </div>
-  );
+  </>
+);
 };
 
 export default PrivacyPolicy;

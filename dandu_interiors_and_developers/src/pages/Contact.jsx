@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { MapPin, Phone, Mail, Send, CheckCircle2, ChevronDown } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const Contact = () => {
   const heroRef = React.useRef(null);
@@ -168,7 +169,12 @@ const Contact = () => {
   const marqueeText = "Let's Build Your Dream Space. ";
 
   return (
-    <div className="bg-[#F8F5F2] min-h-screen relative font-sans overflow-x-hidden">
+    <>
+      <SEO 
+        title="Contact Us"
+        description="Get in touch with Dandu Interiors & Developers for premium design and construction services. Visit our Hyderabad or Bapatla locations, or request a free quote online today."
+      />
+      <div className="bg-[#F8F5F2] min-h-screen relative font-sans overflow-x-hidden">
 
       {/* Monumental Marquee Hero Section - FIXED */}
       <section
@@ -497,7 +503,8 @@ const Contact = () => {
       </AnimatePresence>
 
     </div>
-  );
+  </>
+);
 };
 
 export default Contact;

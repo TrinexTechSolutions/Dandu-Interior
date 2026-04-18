@@ -9,6 +9,7 @@ import ScrollToTopButton from '../components/ScrollToTopButton';
 import Footer from '../components/Footer';
 import CallToAction from '../components/CallToAction';
 import FullScreenImageModal from '../components/FullScreenImageModal';
+import SEO from '../components/SEO';
 
 const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, isOpen = false }) => {
   const { id: routeId } = useParams();
@@ -265,6 +266,10 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
 
   return (
     <PageTransition>
+      <SEO 
+        title={idea.title}
+        description={`Modern ${idea.title} design ideas by Dandu Interiors & Developers. Explore premium ${idea.category.toLowerCase()} concepts and professional execution.`}
+      />
       {content}
       <FullScreenImageModal
         isOpen={selectedImageIndex !== null}

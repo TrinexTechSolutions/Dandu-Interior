@@ -9,6 +9,7 @@ import obsessiveDetailImg from '../assets/About/obsessive_detail.webp';
 import engineeringMasteryImg from '../assets/About/engineering_mastery.webp';
 import visionaryReachImg from '../assets/About/visionary_reach.webp';
 import designerShowcaseImg from '../assets/about_page_images/Nikhil_designer_img.png';
+import SEO from '../components/SEO';
 
 const About = () => {
   const [hoveredValue, setHoveredValue] = useState(null);
@@ -78,7 +79,12 @@ const About = () => {
   ];
 
   return (
-    <div className="bg-[#F8F5F2] min-h-screen text-[#37302F] selection:bg-[#37302F] selection:text-[#F8F5F2] font-sans overflow-hidden">
+    <>
+      <SEO 
+        title="About Our Practice"
+        description="Learn about Dandu Interiors & Developers, where we blend civil engineering precision with elegant interior design. Serving Hyderabad and Andhra Pradesh with obsessive attention to detail."
+      />
+      <div className="bg-[#F8F5F2] min-h-screen text-[#37302F] selection:bg-[#37302F] selection:text-[#F8F5F2] font-sans overflow-hidden">
 
       {/* 1. Editorial Hero */}
       <section className="pt-24 pb-12 md:pt-32 md:pb-24 px-6 md:px-12 max-w-[1600px] mx-auto relative">
@@ -325,7 +331,8 @@ const About = () => {
         <CallToAction />
       </section>
     </div>
-  );
+  </>
+);
 };
 
 export default About;

@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { services } from '../data/services';
 import { useModal } from '../context/ModalContext';
+import SEO from '../components/SEO';
 
 const Services = () => {
   const { id, subId } = useParams();
@@ -129,7 +130,12 @@ const Services = () => {
   );
 
   return (
-    <div className="bg-[#F8F5F2] min-h-screen pb-0 relative text-[#1A1A1A]">
+    <>
+      <SEO 
+        title={displayTitle}
+        description={displayDesc}
+      />
+      <div className="bg-[#F8F5F2] min-h-screen pb-0 relative text-[#1A1A1A]">
 
       {/* 1. VISIBLE FIXED HEADER (Parallax) */}
       <motion.div
@@ -295,9 +301,9 @@ const Services = () => {
           </div>
         </div>
       </section>
-
     </div>
-  );
+  </>
+);
 };
 
 export default Services;

@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'fra
 import { X } from 'lucide-react';
 import FullScreenImageModal from '../components/FullScreenImageModal';
 import CallToAction from '../components/CallToAction';
+import SEO from '../components/SEO';
 
 // Dynamically import all images from the Projects folder using Vite's eager glob
 const projectModules = import.meta.glob('../assets/Projects/*.{webp,png,jpg,jpeg}', { eager: true, import: 'default' });
@@ -221,7 +222,12 @@ const Projects = () => {
   };
 
   return (
-    <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
+    <>
+      <SEO 
+        title="Gallery | Our Work"
+        description="Explore the finished masterpieces of Dandu Interiors & Developers. From luxury villas in Jubilee Hills to modern corporate offices in HITEC City, our gallery showcases our commitment to premium design and engineering."
+      />
+      <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
       <style>{`
         .projects-hero-title {
           font-family: "Inter", "Inter Placeholder", sans-serif;
@@ -290,9 +296,9 @@ const Projects = () => {
       <div className="relative z-20 bg-[#F8F5F2]">
         <CallToAction />
       </div>
-
     </div>
-  );
+  </>
+);
 };
 
 export default Projects;

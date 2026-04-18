@@ -5,6 +5,7 @@ import { designIdeas } from '../data/designIdeas';
 import { MoveRight } from 'lucide-react';
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { useModal } from '../context/ModalContext';
+import SEO from '../components/SEO';
 import commercialDesignImage from '../assets/Services/Commercial Design.webp';
 
 const DesignIdeas = () => {
@@ -96,7 +97,12 @@ const DesignIdeas = () => {
   }, []);
 
   return (
-    <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
+    <>
+      <SEO 
+        title="Design Inspiration & Ideas"
+        description="Explore curated interior design ideas by Dandu Interiors & Developers. From modular kitchens to master bedrooms and space-saving solutions, get inspired for your next renovation."
+      />
+      <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
       <style>{`
         .design-ideas-hero-title {
           font-family: "Inter", "Inter Placeholder", sans-serif;
@@ -236,10 +242,10 @@ const DesignIdeas = () => {
             </div>
           </div>
         </section>
-      </div>
-
     </div>
-  );
+    </div>
+  </>
+);
 };
 
 export default DesignIdeas;

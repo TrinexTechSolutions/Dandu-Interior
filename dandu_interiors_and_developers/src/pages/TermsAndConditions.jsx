@@ -1,9 +1,14 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 
 const TermsAndConditions = () => {
   return (
-    <div className="bg-[#F8F5F2] min-h-screen pt-32 pb-20 font-sans">
+    <>
+      <SEO 
+        title="Terms & Conditions"
+        description="Terms and Conditions for using Dandu Interior and Developers services. Please read our agreement carefully regarding our design, renovation, and construction services."
+      />
+      <div className="bg-[#F8F5F2] min-h-screen pt-32 pb-20 font-sans">
       <div className="container-custom max-w-4xl px-6 lg:px-12">
         
         {/* Header */}
@@ -97,7 +102,8 @@ const TermsAndConditions = () => {
         </motion.div>
       </div>
     </div>
-  );
+  </>
+);
 };
 
 export default TermsAndConditions;
