@@ -5,7 +5,7 @@ const TermsAndConditions = () => {
   return (
     <>
       <SEO 
-        title="Terms & Conditions"
+        title="Terms & Conditions | Dandu Interiors & Developers"
         description="Terms and Conditions for using Dandu Interior and Developers services. Please read our agreement carefully regarding our design, renovation, and construction services."
       />
       <div className="bg-[#F8F5F2] min-h-screen pt-32 pb-20 font-sans">

@@ -276,6 +276,8 @@ const Contact = () => {
                       <input
                         type="text"
                         name="name"
+                        id="user_name"
+                        aria-label="Your Full Name"
                         placeholder="Enter your name"
                         value={formData.name}
                         onChange={handleChange}
@@ -288,6 +290,8 @@ const Contact = () => {
                       <input
                         type="tel"
                         name="phone"
+                        id="user_phone"
+                        aria-label="WhatsApp Phone Number"
                         placeholder="Enter your number"
                         value={formData.phone}
                         onChange={handleChange}
@@ -305,6 +309,8 @@ const Contact = () => {
                     <input
                       type="email"
                       name="email"
+                      id="user_email"
+                      aria-label="Email Address"
                       placeholder="Enter your email"
                       value={formData.email}
                       onChange={handleChange}
@@ -319,6 +325,8 @@ const Contact = () => {
                       <div className="relative">
                         <select
                           name="propertyLocation"
+                          id="property_location"
+                          aria-label="Select Project Location"
                           value={formData.propertyLocation}
                           onChange={handleChange}
                           required
@@ -339,6 +347,8 @@ const Contact = () => {
                       <div className="relative">
                         <select
                           name="propertyType"
+                          id="property_type"
+                          aria-label="Select Property Type"
                           value={formData.propertyType}
                           onChange={handleChange}
                           required
@@ -363,6 +373,8 @@ const Contact = () => {
                       <input
                         type="text"
                         name="customLocation"
+                        id="custom_location"
+                        aria-label="Custom City or Area"
                         placeholder="Please specify your city or area"
                         value={formData.customLocation}
                         onChange={handleChange}
@@ -377,6 +389,8 @@ const Contact = () => {
                     <div className="relative">
                       <select
                         name="requirement"
+                        id="user_requirement"
+                        aria-label="Select Project Requirement"
                         value={formData.requirement}
                         onChange={handleChange}
                         required
@@ -458,6 +472,7 @@ const Contact = () => {
                           href={loc.directLink} 
                           target="_blank" 
                           rel="noopener noreferrer"
+                          aria-label={`Open ${loc.city} Office on Google Maps`}
                           className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A]"
                         >
                           Open in Maps

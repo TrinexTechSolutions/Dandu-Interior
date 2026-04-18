@@ -70,6 +70,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
             </div>
             <Link
               to="/design-ideas"
+              aria-label="Back to Design Ideas"
               className="w-12 h-12 bg-white/20 backdrop-blur-md border border-white/50 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-[#1A1A1A] transition-all duration-300 shadow-xl group"
             >
               <X size={24} strokeWidth={2.5} className="group-hover:rotate-90 transition-transform duration-300" />
@@ -82,7 +83,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
           <div className="absolute inset-0 bg-black/40 z-10"></div>
           <img
             src={idea.image}
-            alt={idea.title}
+            alt={`${idea.title} - Luxury Interior Concept - Dandu Interiors Hyderabad & Bapatla`}
             decoding="async"
             className="absolute inset-0 w-full h-full object-cover gpu-accelerated"
           />
@@ -100,7 +101,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
             Incredible <span className="font-bold">design concepts</span> tailored to elevate your {idea.title.toLowerCase()} aesthetics.
           </h2>
           <p className="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto">
-            Explore our handpicked curation of designs specifically crafted for your {idea.title.toLowerCase()}. We blend modern functional utility with timeless premium elegance to make your space completely uniquely yours.
+            Explore our handpicked curation of designs specifically crafted for your {idea.title.toLowerCase()}. Available for professional execution in Hyderabad and Bapatla, we blend modern functional utility with timeless premium elegance to make your space completely uniquely yours.
           </p>
         </div>
 
@@ -112,31 +113,31 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
               className="group relative overflow-hidden rounded-3xl col-span-8 row-span-2 shadow-lg cursor-pointer"
               onClick={() => setSelectedImageIndex(0)}
             >
-              <img src={galleryImages[0]} alt="Gallery 1" decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 gpu-accelerated" />
+              <img src={galleryImages[0]} alt={`${idea.title} Design Inspiration 1 - Dandu Interiors`} decoding="async" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 gpu-accelerated" />
             </div>
             <div 
               className="group relative overflow-hidden rounded-3xl col-span-4 row-span-1 shadow-lg cursor-pointer"
               onClick={() => setSelectedImageIndex(1)}
             >
-              <img src={galleryImages[1]} alt="Gallery 2" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={galleryImages[1]} alt={`${idea.title} Design Inspiration 2 - Dandu Interiors`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
             <div 
               className="group relative overflow-hidden rounded-3xl col-span-4 row-span-1 shadow-lg cursor-pointer"
               onClick={() => setSelectedImageIndex(2)}
             >
-              <img src={galleryImages[2]} alt="Gallery 3" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={galleryImages[2]} alt={`${idea.title} Design Inspiration 3 - Dandu Interiors`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
             <div 
               className="group relative overflow-hidden rounded-3xl col-span-6 row-span-1 shadow-lg cursor-pointer"
               onClick={() => setSelectedImageIndex(3)}
             >
-              <img src={galleryImages[3]} alt="Gallery 4" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={galleryImages[3]} alt={`${idea.title} Design Inspiration 4 - Dandu Interiors`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
             <div 
               className="group relative overflow-hidden rounded-3xl col-span-6 row-span-1 shadow-lg cursor-pointer"
               onClick={() => setSelectedImageIndex(4)}
             >
-              <img src={galleryImages[4]} alt="Gallery 5" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={galleryImages[4]} alt={`${idea.title} Design Inspiration 5 - Dandu Interiors`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             </div>
           </div>
         </div>
@@ -207,7 +208,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
 
                     <h1 className="text-5xl font-light tracking-tighter text-[#1A1A1A] mb-8 leading-[0.85]">{idea.title}</h1>
                     <p className="text-gray-600 text-lg leading-relaxed font-light mb-8">
-                      Explore our handpicked curation of designs specifically crafted for your {idea.title.toLowerCase()}. We blend modern functional utility with timeless premium elegance to make your space completely uniquely yours.
+                      Explore our handpicked curation of designs specifically crafted for your {idea.title.toLowerCase()}. Available for expert project execution in Hyderabad and Bapatla, we blend modern functional utility with timeless premium elegance to make your space uniquely yours.
                     </p>
 
                     {/* Main Image */}
@@ -215,7 +216,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
                       className="w-full h-[40vh] rounded-[2rem] overflow-hidden shadow-lg mt-8 mb-12 cursor-pointer"
                       onClick={() => setSelectedImageIndex(0)}
                     >
-                      <img src={idea.image} alt={idea.title} decoding="async" className="w-full h-full object-cover gpu-accelerated" />
+                      <img src={idea.image} alt={`${idea.title} - Premium Design - Dandu Interiors`} decoding="async" className="w-full h-full object-cover gpu-accelerated" />
                     </div>
 
                     {/* Mobile Image Gallery Grid */}
@@ -233,7 +234,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
                           >
                             <img
                               src={img}
-                              alt={`Gallery ${idx + 1}`}
+                              alt={`${idea.title} Gallery Image ${idx + 1}`}
                               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             />
                             <div className="absolute inset-0 bg-black/[0.03] group-hover:bg-transparent transition-colors duration-500" />

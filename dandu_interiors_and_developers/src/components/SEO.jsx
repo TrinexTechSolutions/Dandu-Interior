@@ -11,7 +11,8 @@ const SEO = ({
   description = "Elevating spaces with premium interior design and construction services in Hyderabad and Bapatla. Expertise in interior works and renovations.",
   keywords = "Dandu Interiors, Interior Design Hyderabad, Home Renovation Bapatla, Civil Works Hyderabad, Premium Interior Designers Bapatla",
   canonical = "https://www.danduinteriors.com",
-  schemaData = null
+  schemaData = null,
+  preloads = []
 }) => {
   const location = useLocation();
   const baseTitle = "Dandu Interiors & Developers";
@@ -22,6 +23,30 @@ const SEO = ({
     // Scroll to top on route change
     window.scrollTo(0, 0);
   }, [location]);
+
+  // Dynamic Breadcrumb Schema
+  const pathnames = location.pathname.split('/').filter(x => x);
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.danduinteriors.com"
+      },
+      ...pathnames.map((path, index) => {
+        const url = `https://www.danduinteriors.com/${pathnames.slice(0, index + 1).join('/')}`;
+        return {
+          "@type": "ListItem",
+          "position": index + 2,
+          "name": path.charAt(0).toUpperCase() + path.slice(1).replace(/-/g, ' '),
+          "item": url
+        };
+      })
+    ]
+  };
 
   return (
     <Helmet>
@@ -43,11 +68,25 @@ const SEO = ({
       <meta name="twitter:description" content={description} />
 
       {/* Structured Data: JSON-LD */}
-      {schemaData && (
+      <script type="application/ld+json">
+        {JSON.stringify(breadcrumbSchema)}
+      </script>
         <script type="application/ld+json">
           {JSON.stringify(schemaData)}
         </script>
       )}
+
+      {/* Preload Critical Assets */}
+      {preloads.map((preload, index) => (
+        <link 
+          key={index}
+          rel="preload"
+          as={preload.as}
+          href={preload.href}
+          type={preload.type}
+          crossOrigin={preload.crossOrigin}
+        />
+      ))}
     </Helmet>
   );
 };

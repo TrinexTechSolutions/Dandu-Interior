@@ -107,7 +107,7 @@ const About = () => {
           <div className="lg:col-span-5 xl:col-span-4 relative h-[60vw] md:h-[50vw] lg:h-full w-full overflow-hidden filter grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl">
             <img
               src={heroArchitectureImg}
-              alt="Hero Architecture"
+              alt="Architectural Precision and Structural Civil Works by Dandu Interiors"
               className="w-full h-full object-cover object-center absolute inset-0 transform hover:scale-105 transition-transform duration-1000"
             />
           </div>
@@ -141,7 +141,7 @@ const About = () => {
             <div className="relative w-full h-full min-h-[400px] lg:min-h-0 overflow-hidden">
               <img
                 src={FounderImg}
-                alt="D. Anudeep - Founder"
+                alt="D. Anudeep - Founder and Principal Engineer of Dandu Interiors Hyderabad & Bapatla"
                 className="absolute inset-0 w-full h-full object-cover object-top grayscale contrast-125"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60"></div>
@@ -243,7 +243,7 @@ const About = () => {
               <div className="relative aspect-[2/3] w-full overflow-hidden bg-white">
                 <img
                   src={designerShowcaseImg}
-                  alt="Nikhil - Interior Designer"
+                  alt="Nikhil - Lead Interior Designer at Dandu Interiors & Developers"
                   className="absolute inset-0 w-full h-full object-cover object-center grayscale hover:grayscale-0 transition-all duration-1000 transform hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
@@ -261,11 +261,11 @@ const About = () => {
         {/* Floating Hover Image Generator */}
         {hoveredValue && (
           <div className="hidden lg:block fixed top-1/2 left-1/2 -translate-y-1/2 w-[35vw] h-[65vh] pointer-events-none z-50 transition-opacity duration-500 ease-out shadow-2xl animate-fade-in mix-blend-lighten opacity-80">
-            <img
-              src={coreValues.find(v => v.id === hoveredValue)?.img}
-              alt="Core Value Preview"
-              className="w-full h-full object-cover filter grayscale sepia-[0.2]"
-            />
+              <img
+                src={coreValues.find(v => v.id === hoveredValue)?.img}
+                alt={`Dandu Interiors Core Value: ${coreValues.find(v => v.id === hoveredValue)?.title} Illustration`}
+                className="w-full h-full object-cover filter grayscale sepia-[0.2]"
+              />
           </div>
         )}
 

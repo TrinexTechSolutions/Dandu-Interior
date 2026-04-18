@@ -162,7 +162,7 @@ const Projects = () => {
       >
         <img
           src={item.image}
-          alt={item.title}
+          alt={`Premium Interior Design Project ${globalIdx + 1} - Dandu Interiors Hyderabad & Bapatla`}
           loading={globalIdx < 8 ? 'eager' : 'lazy'}
           className={`w-full ${item.aspect} object-cover transition-transform duration-700 group-hover:scale-110`}
         />
@@ -227,6 +227,17 @@ const Projects = () => {
         title="Project Gallery | Best Portfolios in Hyderabad & Bapatla"
         description="Explore the finished masterpieces of Dandu Interiors & Developers. From luxury villas to modern corporate offices, our gallery showcases our commitment to premium design and engineering in Hyderabad and Bapatla."
         keywords="Interior Design Gallery, Finished Projects Hyderabad, Luxury Home Portfolio Bapatla, Modern Office Design, Renovation Showcase, Dandu Interiors Work"
+        schemaData={{
+          "@context": "https://schema.org",
+          "@type": "ImageGallery",
+          "name": "Dandu Interiors Project Portfolio",
+          "description": "A collection of luxury interior design and construction projects in Hyderabad and Bapatla.",
+          "author": {
+            "@type": "Person",
+            "name": "D. Anudeep"
+          },
+          "image": galleryImages.slice(0, 5).map(g => g.image)
+        }}
       />
       <div className="bg-[#F8F5F2] min-h-screen pb-0 relative">
       <style>{`

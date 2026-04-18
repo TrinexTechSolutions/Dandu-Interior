@@ -207,7 +207,7 @@ const Services = () => {
                     {sub.image ? (
                       <img
                         src={sub.image}
-                        alt={sub.name}
+                        alt={`${sub.name} - Professional ${rootService?.title || 'Interior'} Service by Dandu Interiors`}
                         loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         onError={(e) => {

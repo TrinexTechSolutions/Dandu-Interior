@@ -32,8 +32,9 @@ const ProjectDetail = () => {
   return (
     <PageTransition>
       <SEO 
-        title={project.title}
-        description={`Explore the ${project.title} project by Dandu Interiors & Developers. A masterpiece of premium interior design and civil engineering.`}
+        title={`${project.title} - Luxury Interior Design in ${project.location}`}
+        description={`Explore the ${project.title} project by Dandu Interiors & Developers. A masterpiece of premium interior design and civil engineering located in ${project.location}.`}
+        keywords={`${project.title}, Interior Design ${project.location}, Luxury Home ${project.location}, Dandu Interiors projects`}
       />
       <div className="bg-[#F8F5F2] min-h-screen text-gray-900 relative">
         
@@ -87,7 +88,7 @@ const ProjectDetail = () => {
               >
                 <img 
                   src={img} 
-                  alt={`${project.title} gallery ${idx + 1}`} 
+                  alt={`${project.title} - ${project.category} Interior View ${idx + 1}`} 
                   decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 gpu-accelerated" 
                 />

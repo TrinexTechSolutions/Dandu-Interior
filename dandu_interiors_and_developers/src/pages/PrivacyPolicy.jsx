@@ -5,7 +5,7 @@ const PrivacyPolicy = () => {
   return (
     <>
       <SEO 
-        title="Privacy Policy"
+        title="Privacy Policy | Dandu Interiors & Developers"
         description="Privacy Policy for Dandu Interiors & Developers. Learn about how we handle and protect your personal data during your journey with us."
       />
       <div className="bg-[#F8F5F2] min-h-screen pt-32 pb-20 font-sans">

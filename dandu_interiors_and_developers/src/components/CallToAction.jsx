@@ -25,6 +25,7 @@ const CallToAction = () => {
         <div className="flex flex-col items-center gap-6">
           <button 
             onClick={openQuoteModal} 
+            aria-label="Get Started Now and Request a Free Quote"
             className="group relative inline-flex items-center justify-center px-10 py-6 bg-[#1A1A1A] text-white font-bold uppercase tracking-widest text-[11px] rounded-full overflow-hidden transition-all duration-500 hover:bg-black hover:px-12 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.4)]"
           >
             <span className="relative z-10">Get Started Now</span>

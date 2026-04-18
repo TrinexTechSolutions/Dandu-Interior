@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
 
-# Sitemaps
+# Sitemap Location
 Sitemap: https://www.danduinteriors.com/sitemap.xml
+
+# Disallow sensitive paths if any
+Disallow: /api/
+Disallow: /admin/

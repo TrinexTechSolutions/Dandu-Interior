@@ -202,40 +202,57 @@ const Home = () => {
         title="Best Interior Designers in Hyderabad & Bapatla"
         description="Premium interior design, structural civil works, and professional renovations by Dandu Interiors & Developers. Transforming homes in Hyderabad and Bapatla with expert craftsmanship."
         keywords="Interior Designers Hyderabad, Home Interiors Bapatla, Modular Kitchen Hyderabad, Civil Works Hyderabad, Premium Renovations Bapatla, Dandu Interiors"
-        schemaData={{
-          "@context": "https://schema.org",
-          "@type": "HomeAndConstructionBusiness",
-          "name": "Dandu Interiors & Developers",
-          "alternateName": "Dandu Interior",
-          "description": "Premium interior design and construction services specializing in residential and commercial spaces in Hyderabad and Bapatla.",
-          "url": "https://www.danduinteriors.com",
-          "telephone": "+919866166612",
-          "address": [
-            {
-              "@type": "PostalAddress",
-              "streetAddress": "D-603, Vertex Pristine, Nizampet Road",
-              "addressLocality": "Hyderabad",
-              "addressRegion": "Telangana",
-              "postalCode": "500090",
-              "addressCountry": "IN"
-            },
-            {
-              "@type": "PostalAddress",
-              "streetAddress": "Dr No: 9-4-12/B, Kamaraju Vari Street",
-              "addressLocality": "Bapatla",
-              "addressRegion": "Andhra Pradesh",
-              "postalCode": "522101",
-              "addressCountry": "IN"
-            }
-          ]
-        }}
+        preloads={[
+          { rel: 'preload', as: 'image', href: heroImage, type: 'image/webp' }
+        ]}
+        schemaData={[
+          {
+            "@context": "https://schema.org",
+            "@type": "HomeAndConstructionBusiness",
+            "name": "Dandu Interiors & Developers",
+            "alternateName": "Dandu Interior",
+            "description": "Premium interior design and construction services specializing in residential and commercial spaces in Hyderabad and Bapatla.",
+            "url": "https://www.danduinteriors.com",
+            "telephone": "+919866166612",
+            "address": [
+              {
+                "@type": "PostalAddress",
+                "streetAddress": "D-603, Vertex Pristine, Nizampet Road",
+                "addressLocality": "Hyderabad",
+                "addressRegion": "Telangana",
+                "postalCode": "500090",
+                "addressCountry": "IN"
+              },
+              {
+                "@type": "PostalAddress",
+                "streetAddress": "Dr No: 9-4-12/B, Kamaraju Vari Street",
+                "addressLocality": "Bapatla",
+                "addressRegion": "Andhra Pradesh",
+                "postalCode": "522101",
+                "addressCountry": "IN"
+              }
+            ]
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqs.map(faq => ({
+              "@type": "Question",
+              "name": faq.question,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+              }
+            }))
+          }
+        ]}
       />
       <div className="bg-[#F8F5F2] overflow-hidden">
       {/* Banner with Refined Hero Section */}
       <section className="relative h-screen w-full overflow-hidden">
         <img
           src={heroImage}
-          alt="Dandu Interior Banner"
+          alt="Premium Interior Design and Construction Banner - Dandu Interiors Hyderabad & Bapatla"
           decoding="async"
           className="absolute inset-0 w-full h-full object-cover gpu-accelerated"
         />
@@ -279,7 +296,7 @@ const Home = () => {
               Core <span className="font-serif italic text-black/30">Services</span>
             </h2>
             <div className="w-20 h-[1px] bg-black/10 mx-auto"></div>
-            <Link to="/services" className="mt-8 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-6 py-2 rounded-full border border-black/5 transition-all">
+            <Link to="/services" aria-label="View all our services" className="mt-8 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-6 py-2 rounded-full border border-black/5 transition-all">
               view all <ChevronRight size={14} />
             </Link>
           </div>
@@ -376,7 +393,11 @@ const Home = () => {
 
                         {/* Explore Button - Now tightly following the text */}
                         <div className="mt-2 mb-4">
-                          <Link to={`/services/${service.id}`} className="inline-flex items-center gap-2 text-[8px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-3 py-1.5 rounded-full border border-black/10 transition-all">
+                          <Link 
+                            to={`/services/${service.id}`} 
+                            aria-label={`Explore ${service.title} services`}
+                            className="inline-flex items-center gap-2 text-[8px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-3 py-1.5 rounded-full border border-black/10 transition-all"
+                          >
                             Explore <ChevronRight size={12} />
                           </Link>
                         </div>
@@ -386,7 +407,7 @@ const Home = () => {
                       <div className="overflow-hidden border border-black/5 shadow-sm group h-[140px] w-full rounded-xl mt-auto relative">
                         <img
                           src={service.image || service.subServices?.[0]?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800"}
-                          alt={service.title}
+                          alt={`${service.title} Expert Services in Hyderabad & Bapatla`}
                           className="w-full h-full object-cover transition-transform duration-700 scale-110 group-hover:scale-100"
                         />
                       </div>
@@ -434,7 +455,7 @@ const Home = () => {
           <div className="relative">
             <img
               src={whyChooseUsImage}
-              alt="Craftsmanship"
+              alt="Expert Interior Craftsmanship and Civil Works by Dandu Interiors"
               loading="lazy"
               decoding="async"
               className="rounded-2xl shadow-2xl relative z-10 gpu-accelerated"
@@ -451,7 +472,7 @@ const Home = () => {
             Our <span className="font-serif italic text-black/30">Gallery</span>
           </h2>
           <div className="w-20 h-[1px] bg-black/10"></div>
-          <Link to="/gallery" className="mt-8 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-6 py-2 rounded-full border border-black/5 transition-all">
+          <Link to="/gallery" aria-label="View all projects in gallery" className="mt-8 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] uppercase text-[#1A1A1A] hover:bg-black hover:text-white px-6 py-2 rounded-full border border-black/5 transition-all">
             view all <ChevronRight size={14} />
           </Link>
         </div>
@@ -467,7 +488,7 @@ const Home = () => {
               >
                 <img
                   src={project.image}
-                  alt={project.title}
+                  alt={`${project.title} - Luxury Interior Project by Dandu Interiors`}
                   loading="lazy"
                   decoding="async"
                   className="w-full h-full object-cover transition-transform duration-1000 scale-110 group-hover:scale-100 gpu-accelerated"
