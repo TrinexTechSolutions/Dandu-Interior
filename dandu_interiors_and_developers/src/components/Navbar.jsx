@@ -71,7 +71,13 @@ const Navbar = () => {
           {/* Left: Logo */}
           <div className="flex-1 lg:flex-none flex items-center justify-start z-10 relative">
             <Link to="/" onClick={() => setIsOpen(false)} className="flex items-center group py-1">
-              <img src={brandLogo} alt="Dandu Interiors & Developers" className="h-10 w-auto transition-opacity" />
+              <img 
+                src={brandLogo} 
+                alt="Dandu Interiors & Developers" 
+                className="h-10 w-auto transition-opacity" 
+                width="160"
+                height="40"
+              />
             </Link>
           </div>
 

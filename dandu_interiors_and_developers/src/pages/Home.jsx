@@ -463,6 +463,8 @@ const Home = () => {
               loading="lazy"
               decoding="async"
               className="rounded-2xl shadow-2xl relative z-10 gpu-accelerated"
+              width="800"
+              height="586"
             />
             <div className="absolute -inset-4 bg-[#1A1A1A]/20 rounded-2xl z-0 translate-x-4 -translate-y-4"></div>
           </div>

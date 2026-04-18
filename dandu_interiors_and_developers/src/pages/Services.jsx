@@ -40,25 +40,35 @@ const Services = () => {
   // Robust scroll listener for card-to-full-screen transition
   useEffect(() => {
     let rafId;
+    let cachedNavHeight = 84;
+
+    const updateNavHeight = () => {
+      cachedNavHeight = document.querySelector('nav')?.offsetHeight || 84;
+    };
+
     const handleScroll = () => {
       if (rafId) cancelAnimationFrame(rafId);
       
       rafId = requestAnimationFrame(() => {
         if (contentRef.current) {
           const top = contentRef.current.getBoundingClientRect().top;
-          const navHeight = document.querySelector('nav')?.offsetHeight || 84;
-          setIsCardMode(top > navHeight);
+          // Optimization: Use cached height to avoid forced reflow
+          setIsCardMode(top > cachedNavHeight);
         }
       });
     };
 
+    updateNavHeight();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Initial check on mount to ensure correct state if starting scrolled
+    window.addEventListener('resize', updateNavHeight);
+    
+    // Initial check on mount
     handleScroll();
     
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateNavHeight);
     };
   }, []);
 

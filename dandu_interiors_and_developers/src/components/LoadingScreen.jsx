@@ -33,6 +33,8 @@ const LoadingScreen = () => {
                         alt="Dandu Logo" 
                         className="w-32 md:w-48 h-auto opacity-0 animate-logo-fade-in"
                         fetchpriority="high"
+                        width="192"
+                        height="48"
                     />
                     {/* Revelator Mask */}
                     <div className="absolute inset-0 bg-[#37302F] transform -translate-x-full animate-mask-slide"></div>
