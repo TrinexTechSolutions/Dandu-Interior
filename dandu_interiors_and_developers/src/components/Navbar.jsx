@@ -40,6 +40,21 @@ const Navbar = () => {
     setMobileServicesOpen(false);
   }, [location.pathname]);
 
+  // Lock scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      window.lenis?.stop();
+    } else {
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
+    };
+  }, [isOpen]);
+
   const handleMouseEnter = () => {
     if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
     setServicesOpen(true);

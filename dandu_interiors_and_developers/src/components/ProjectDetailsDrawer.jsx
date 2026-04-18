@@ -11,21 +11,26 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
 
   // Prevent body scroll when drawer is open
   useEffect(() => {
-    const html = document.documentElement;
-    const body = document.body;
-    
     if (isOpen) {
-      html.style.overflow = 'hidden';
-      body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      window.lenis?.stop();
     } else {
-      html.style.overflow = 'unset';
-      body.style.overflow = 'unset';
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
     }
     return () => {
-      html.style.overflow = 'unset';
-      body.style.overflow = 'unset';
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
     };
   }, [isOpen]);
+
+  // Robust closing handler to fix mobile keyboard issues
+  const handleClose = () => {
+    if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    onClose();
+  };
 
   return (
     <AnimatePresence>
@@ -39,7 +44,7 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={handleClose}
             className="fixed inset-0 bg-black/60 z-[998] backdrop-blur-sm"
           />
 
@@ -57,7 +62,7 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
             dragElastic={{ top: 0, bottom: 0.5 }}
             onDragEnd={(e, info) => {
               if (info.offset.y > 100 || info.velocity.y > 500) {
-                onClose();
+                handleClose();
               }
             }}
           >
@@ -70,11 +75,13 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
             </div>
 
             {/* Header */}
-            <div className="flex items-center justify-between px-6 pb-4 border-b border-black/5 bg-[#F8F5F2]/80 backdrop-blur-md sticky top-0 z-10">
-              <h2 className="text-sm font-bold text-[#1A1A1A] tracking-[0.2em] uppercase">{project.title}</h2>
+            <div className="flex items-center justify-between px-6 py-6 md:py-8 border-b border-black/5 bg-[#F8F5F2]/80 backdrop-blur-md sticky top-0 z-10">
+              <h2 className="text-3xl md:text-4xl font-light tracking-tighter leading-none text-[#1A1A1A]">
+                {project.title.split(' ')[0]} <span className="font-serif italic opacity-30">{project.title.split(' ').slice(1).join(' ')}</span>
+              </h2>
               <button
-                onClick={onClose}
-                className="p-2 hover:bg-black/5 rounded-full transition-colors"
+                onClick={handleClose}
+                className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
                 aria-label="Close"
               >
                 <X size={24} />
@@ -109,13 +116,13 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
                   <div className="flex flex-col items-center justify-center text-center space-y-2 relative z-10">
                     <Tag size={20} />
                     <span className="text-xl font-bold text-[#1A1A1A]">{project.category || 'Villa'}</span>
-                    <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Category</span>
+                    <span className="text-[8px] text-gray-400 uppercase tracking-[0.3em] font-bold">Category</span>
                   </div>
                   
                   <div className="flex flex-col items-center justify-center text-center space-y-2 relative z-10">
                     <MapPin size={20} />
                     <span className="text-xl font-bold text-[#1A1A1A]">{project.location}</span>
-                    <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Location</span>
+                    <span className="text-[8px] text-gray-400 uppercase tracking-[0.3em] font-bold">Location</span>
                   </div>
                 </div>
 

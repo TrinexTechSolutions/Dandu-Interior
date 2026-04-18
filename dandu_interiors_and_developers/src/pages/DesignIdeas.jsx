@@ -26,11 +26,13 @@ const DesignIdeas = () => {
   const heroTitleRef = useRef(null);
 
   const handleIdeaClick = useCallback((idea) => {
-    if (windowWidth < 768) {
+    // Standard Tablet/Desktop redirection (768px+)
+    if (windowWidth >= 768) {
+      navigate(`/design-ideas/${idea.title.toLowerCase().replace(/[\s,]+/g, '-')}`);
+    } else {
+      // Mobile drawer fallback
       const id = idea.title.toLowerCase().replace(/[\s,]+/g, '-');
       openIdeaDrawer(id);
-    } else {
-      navigate(`/design-ideas/${idea.title.toLowerCase().replace(/[\s,]+/g, '-')}`);
     }
   }, [windowWidth, navigate, openIdeaDrawer]);
 

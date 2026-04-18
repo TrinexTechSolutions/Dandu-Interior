@@ -11,21 +11,26 @@ const QuoteModal = () => {
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
-    const html = document.documentElement;
-    const body = document.body;
-
     if (isQuoteModalOpen) {
-      html.style.overflow = 'hidden';
-      body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      window.lenis?.stop();
     } else {
-      html.style.overflow = 'unset';
-      body.style.overflow = 'unset';
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
     }
     return () => {
-      html.style.overflow = 'unset';
-      body.style.overflow = 'unset';
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
     };
   }, [isQuoteModalOpen]);
+
+  // Robust closing handler to fix mobile keyboard issues
+  const handleClose = () => {
+    if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    closeQuoteModal();
+  };
 
   const [formData, setFormData] = React.useState({
     name: '',
@@ -121,7 +126,7 @@ const QuoteModal = () => {
 
     // Redirect to WhatsApp
     window.open(whatsappUrl, '_blank');
-    closeQuoteModal();
+    handleClose();
   };
 
   return (
@@ -134,7 +139,7 @@ const QuoteModal = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={closeQuoteModal}
+            onClick={handleClose}
           />
 
           {/* Modal/Drawer Container */}
@@ -151,7 +156,7 @@ const QuoteModal = () => {
             dragElastic={{ top: 0, bottom: 0.5 }}
             onDragEnd={(e, info) => {
               if (info.offset.y > 100 || info.velocity.y > 500) {
-                closeQuoteModal();
+                handleClose();
               }
             }}
           >
@@ -206,14 +211,16 @@ const QuoteModal = () => {
             {/* Form Content */}
             <div className="w-full md:w-[67%] bg-[#F8F5F2] flex flex-col h-full overflow-hidden" data-lenis-prevent>
               <form onSubmit={handleSubmit} className="flex flex-col h-full overflow-hidden">
-                <div className="flex items-center justify-between px-6 py-4 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-20">
-                  <h2 className="text-[10px] font-bold text-[#1A1A1A] tracking-[0.3em] uppercase">Request A Quote</h2>
+                <div className="flex items-center justify-between px-6 py-6 md:py-8 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-20">
+                  <h2 className="text-3xl md:text-4xl font-light tracking-tighter leading-none text-[#1A1A1A]">
+                    Request <span className="font-serif italic opacity-30">A Quote</span>
+                  </h2>
                   <button
-                    onClick={closeQuoteModal}
+                    onClick={handleClose}
                     className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
                     aria-label="Close"
                   >
-                    <X size={20} />
+                    <X size={24} />
                   </button>
                 </div>
 
@@ -221,14 +228,14 @@ const QuoteModal = () => {
 
                 {/* Form Section: Personal Details */}
                 <div className="space-y-2.5 md:space-y-4">
-                  <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A] block">Personal Details</span>
+                  <span className="text-[8px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]/40 block">Personal Details</span>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-6">
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Full Name *</label>
+                      <label className="text-[8px] font-bold tracking-[0.15em] uppercase text-black/30 ml-1">Full Name *</label>
                       <input name="name" value={formData.name} onChange={handleChange} type="text" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="Enter your name" required />
                     </div>
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Phone Number *</label>
+                      <label className="text-[8px] font-bold tracking-[0.15em] uppercase text-black/30 ml-1">Phone Number *</label>
                       <input name="phone" value={formData.phone} onChange={handleChange} type="tel" inputMode="numeric" maxLength={10} className={`w-full bg-transparent border rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] outline-none transition-all placeholder:text-black/30 ${phoneError ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-200' : 'border-[#37302F]/40 focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20'}`} placeholder="Enter your number" required />
                       {phoneError && <p className="text-[11px] text-red-600 ml-1">{phoneError}</p>}
                     </div>
@@ -237,14 +244,14 @@ const QuoteModal = () => {
 
                 {/* Form Section: Project Scope */}
                 <div className="space-y-2.5 md:space-y-4">
-                  <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A] block">Project Scope</span>
+                  <span className="text-[8px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]/40 block">Project Scope</span>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-6">
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Email Address</label>
+                      <label className="text-[8px] font-bold tracking-[0.15em] uppercase text-black/30 ml-1">Email Address</label>
                       <input name="email" value={formData.email} onChange={handleChange} type="email" className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all placeholder:text-black/30" placeholder="hello@example.com" />
                     </div>
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Location *</label>
+                      <label className="text-[8px] font-bold tracking-[0.15em] uppercase text-black/30 ml-1">Location *</label>
                       <div className="relative">
                         <select name="location" value={formData.location} onChange={handleChange} className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] appearance-none focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all cursor-pointer" required>
                           <option value="">Select location</option>
@@ -261,7 +268,7 @@ const QuoteModal = () => {
 
                   {formData.location === 'Other' && (
                     <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                      <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Enter Location *</label>
+                      <label className="text-[8px] font-bold tracking-[0.15em] uppercase text-black/30 ml-1">Enter Location *</label>
                       <input
                         name="customLocation"
                         value={formData.customLocation}
@@ -275,7 +282,7 @@ const QuoteModal = () => {
                   )}
 
                   <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                    <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Service Type</label>
+                    <label className="text-[8px] font-bold tracking-[0.15em] uppercase text-black/30 ml-1">Service Type</label>
                     <div className="relative">
                       <select name="serviceType" value={formData.serviceType} onChange={handleServiceChange} className="w-full bg-transparent border border-[#37302F]/40 rounded-lg p-3 md:p-3.5 text-xs text-[#37302F] appearance-none focus:border-[#37302F]/80 focus:ring-1 focus:ring-[#37302F]/20 outline-none transition-all cursor-pointer" required>
                         <option value="" disabled>Select a theme or service</option>
@@ -293,13 +300,13 @@ const QuoteModal = () => {
                 {/* Form Section: Budget */}
                 {formData.serviceType === 'Interior Works' && (
                   <div className="space-y-2.5 md:space-y-4">
-                    <span className="text-[9px] font-bold tracking-[0.4em] uppercase text-[#1A1A1A] block">Estimated Budget</span>
+                    <span className="text-[8px] font-bold tracking-[0.3em] uppercase text-[#1A1A1A]/40 block">Estimated Budget</span>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 md:gap-3">
                       {['Under 1L', '1L - 5L', '5L - 15L', '15L+'].map((range, idx) => (
                         <label key={idx} className="relative group cursor-pointer">
                           <input type="radio" name="modal_budget" value={range} checked={formData.budget === range} onChange={handleChange} className="peer absolute opacity-0" required={formData.serviceType === 'Interior Works'} />
                           <div className="bg-transparent border border-[#37302F]/40 peer-checked:border-[#1A1A1A] peer-checked:bg-[#1A1A1A] peer-checked:text-white text-[#37302F] rounded-lg md:rounded-xl p-2.5 md:p-3 text-center transition-all duration-300 group-hover:shadow-lg">
-                            <span className="text-[8.5px] font-bold tracking-widest uppercase">{range}</span>
+                            <span className="text-[8px] font-bold tracking-widest uppercase">{range}</span>
                           </div>
                         </label>
                       ))}

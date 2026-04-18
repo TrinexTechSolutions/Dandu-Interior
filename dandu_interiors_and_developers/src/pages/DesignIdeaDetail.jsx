@@ -28,16 +28,31 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
   useEffect(() => {
     if (isDrawer && isOpen) {
       document.body.style.overflow = 'hidden';
-    } else if (isDrawer && !isOpen) {
+      window.lenis?.stop();
+    } else {
       document.body.style.overflow = 'unset';
+      window.lenis?.start();
     }
 
     return () => {
       if (isDrawer) {
         document.body.style.overflow = 'unset';
+        window.lenis?.start();
       }
     };
   }, [isDrawer, isOpen]);
+
+  // Robust closing handler to fix mobile keyboard issues
+  const handleClose = () => {
+    if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    if (isDrawer && onClose) {
+      onClose();
+    } else {
+      navigate('/design-ideas');
+    }
+  };
 
   if (!idea) {
     if (isDrawer) return null; // Safe return for root-level global drawer when no idea is selected
@@ -156,7 +171,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   className="fixed inset-0 bg-black/40 z-[998] backdrop-blur-sm"
-                  onClick={onClose}
+                  onClick={handleClose}
                 />
               )}
 
@@ -173,7 +188,7 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
                 dragElastic={{ top: 0, bottom: 0.5 }}
                 onDragEnd={(e, info) => {
                   if (isDrawer && (info.offset.y > 100 || info.velocity.y > 500)) {
-                    onClose();
+                    handleClose();
                   }
                 }}
               >
@@ -188,10 +203,12 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
                 )}
 
                 {/* Header */}
-                <div className={`flex items-center justify-between px-6 pb-4 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-10 ${!isDrawer ? 'pt-6' : ''}`}>
-                  <h2 className="text-xs font-bold text-[#1A1A1A] tracking-[0.2em] uppercase">{idea.title} Ideas</h2>
+                <div className={`flex items-center justify-between px-6 py-6 md:py-8 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-10 ${!isDrawer ? 'pt-6' : ''}`}>
+                  <h2 className="text-3xl md:text-4xl font-light tracking-tighter leading-none text-[#1A1A1A]">
+                    {idea.title.split(' ')[0]} <span className="font-serif italic opacity-30">{idea.title.split(' ').slice(1).join(' ')}</span>
+                  </h2>
                   <button
-                    onClick={isDrawer ? onClose : () => navigate('/design-ideas')}
+                    onClick={handleClose}
                     className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
                     aria-label="Close"
                   >
@@ -269,8 +286,8 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
     <PageTransition>
       <SEO 
         title={`${idea.title} | Premium Design Ideas in Hyderabad & Bapatla`}
-        description={`Modern ${idea.title.toLowerCase()} design ideas by Dandu Interiors & Developers. Explore premium ${idea.category.toLowerCase()} concepts and professional execution in Hyderabad and Bapatla.`}
-        keywords={`${idea.title}, ${idea.category} Ideas, Interior Designs Hyderabad, Bapatla Home Improvement, Modular Design concepts`}
+        description={`Modern ${idea.title.toLowerCase()} design ideas by Dandu Interiors & Developers. Explore premium ${(idea.category || 'Interior Design').toLowerCase()} concepts and professional execution in Hyderabad and Bapatla.`}
+        keywords={`${idea.title}, ${idea.category || 'Interior Design'} Ideas, Interior Designs Hyderabad, Bapatla Home Improvement, Modular Design concepts`}
       />
       {content}
       <FullScreenImageModal

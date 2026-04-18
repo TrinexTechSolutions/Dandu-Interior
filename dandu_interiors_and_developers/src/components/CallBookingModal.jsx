@@ -16,12 +16,9 @@ const CallBookingModal = () => {
   });
 
   useEffect(() => {
-    const html = document.documentElement;
-    const body = document.body;
-
     if (isCallModalOpen) {
-      html.style.overflow = 'hidden';
-      body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      window.lenis?.stop();
       setFormData({
         name: '',
         phone: '',
@@ -29,15 +26,23 @@ const CallBookingModal = () => {
       });
       setPhoneError('');
     } else {
-      html.style.overflow = 'unset';
-      body.style.overflow = 'unset';
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
     }
 
     return () => {
-      html.style.overflow = 'unset';
-      body.style.overflow = 'unset';
+      document.body.style.overflow = 'unset';
+      window.lenis?.start();
     };
   }, [isCallModalOpen, callService]);
+
+  // Robust closing handler to fix mobile keyboard issues
+  const handleClose = () => {
+    if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    closeCallModal();
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -96,7 +101,7 @@ const CallBookingModal = () => {
 
     // Redirect to WhatsApp
     window.open(whatsappUrl, '_blank');
-    closeCallModal();
+    handleClose();
   };
 
   return (
@@ -108,7 +113,7 @@ const CallBookingModal = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            onClick={closeCallModal}
+            onClick={handleClose}
           />
 
           <motion.div
@@ -124,7 +129,7 @@ const CallBookingModal = () => {
             dragElastic={{ top: 0, bottom: 0.5 }}
             onDragEnd={(e, info) => {
               if (info.offset.y > 100 || info.velocity.y > 500) {
-                closeCallModal();
+                handleClose();
               }
             }}
           >
@@ -165,21 +170,23 @@ const CallBookingModal = () => {
 
             <div className="w-full md:w-[62%] bg-[#F8F5F2] flex flex-col h-full overflow-hidden" data-lenis-prevent>
               <form onSubmit={handleSubmit} className="flex flex-col h-full overflow-hidden">
-                <div className="flex items-center justify-between px-6 py-4 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-20">
-                  <h2 className="text-[10px] font-bold text-[#1A1A1A] tracking-[0.3em] uppercase">Book A Call</h2>
+                <div className="flex items-center justify-between px-6 py-6 md:py-8 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-20">
+                  <h2 className="text-3xl md:text-4xl font-light tracking-tighter leading-none text-[#1A1A1A]">
+                    Book <span className="font-serif italic opacity-30">A Call</span>
+                  </h2>
                   <button
-                    onClick={closeCallModal}
+                    onClick={handleClose}
                     className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
                     aria-label="Close"
                   >
-                    <X size={20} />
+                    <X size={24} />
                   </button>
                 </div>
 
                 <div className="flex-grow overflow-y-auto p-5 md:p-10 custom-scrollbar space-y-5 md:space-y-7">
                 <div className="space-y-2.5 md:space-y-4">
                   <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                    <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Full Name *</label>
+                    <label className="text-[8px] font-bold tracking-[0.15em] uppercase text-black/30 ml-1">Full Name *</label>
                     <input
                       name="name"
                       value={formData.name}
@@ -191,7 +198,7 @@ const CallBookingModal = () => {
                     />
                   </div>
                   <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                    <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Phone Number *</label>
+                    <label className="text-[8px] font-bold tracking-[0.15em] uppercase text-black/30 ml-1">Phone Number *</label>
                     <input
                       name="phone"
                       value={formData.phone}
@@ -209,7 +216,7 @@ const CallBookingModal = () => {
 
                 <div className="space-y-2.5 md:space-y-4">
                   <div className="space-y-1 focus-within:translate-x-1 transition-transform">
-                    <label className="text-[9px] font-bold tracking-[0.2em] uppercase text-black/40 ml-1">Select Service *</label>
+                    <label className="text-[8px] font-bold tracking-[0.15em] uppercase text-black/30 ml-1">Select Service *</label>
                     <div className="relative">
                       <select
                         name="serviceType"

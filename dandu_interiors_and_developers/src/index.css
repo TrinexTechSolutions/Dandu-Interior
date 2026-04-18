@@ -123,6 +123,23 @@ body::-webkit-scrollbar,
   will-change: scroll-position;
 }
 
+/* Mobile UX Stability Fixes */
+@media (max-width: 768px) {
+  input, 
+  select, 
+  textarea,
+  .text-xs,
+  .text-\[9px\] {
+    font-size: 16px !important; /* Prevents iOS auto-zoom */
+  }
+}
+
+button, 
+a, 
+select {
+  touch-action: manipulation; /* Prevents double-tap to zoom */
+}
+
 /* Page Transition Stacking - Ensures seamless attached vertical slide */
 .page-transition-container {
   position: relative;

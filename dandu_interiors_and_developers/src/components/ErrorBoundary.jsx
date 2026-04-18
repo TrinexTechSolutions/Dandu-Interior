@@ -27,10 +27,10 @@ class ErrorBoundary extends Component {
             This is often caused by aggressive browser blockers.
           </p>
           <button 
-            onClick={() => window.location.reload()}
+            onClick={() => { window.location.href = '/'; }}
             className="px-8 py-3 bg-[#1A1A1A] text-white text-[10px] font-bold tracking-[0.3em] uppercase rounded-full hover:bg-black transition-all"
           >
-            Refresh Experience
+            Return to Home
           </button>
         </div>
       );

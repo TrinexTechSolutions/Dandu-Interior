@@ -17,8 +17,8 @@ const HomeDesignIdeas = () => {
   }, []);
 
   const handleIdeaClick = (e, idea) => {
-    const isMobile = windowWidth < 1024; // Matching Home.jsx mobile breakpoint
-    if (isMobile) {
+    const isMobileOnly = windowWidth < 768; // Only use drawers on mobile phones
+    if (isMobileOnly) {
       e.preventDefault();
       const id = idea.title.toLowerCase().replace(/[\s,]+/g, '-');
       openIdeaDrawer(id);
