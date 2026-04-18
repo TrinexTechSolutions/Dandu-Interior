@@ -77,6 +77,7 @@ const getProjectImage = (fileName) => projectImageMap[fileName];
 export const designIdeas = [
   {
     title: 'Modular Kitchen',
+    category: 'Kitchen Design',
     image: kitchenRenovationImage,
     gallery: [
       getProjectImage('project-gallery-03.webp'),
@@ -89,6 +90,7 @@ export const designIdeas = [
   },
   {
     title: 'Living Room',
+    category: 'Interior Design',
     image: livingRoomRenovationImage,
     gallery: [
       plumbingToiletImage,
@@ -102,6 +104,7 @@ export const designIdeas = [
   },
   {
     title: 'Master Bedroom',
+    category: 'Bedroom Design',
     image: housePaintingImage,
     gallery: [
       interiorImage,
@@ -114,6 +117,7 @@ export const designIdeas = [
   },
   {
     title: 'Kids Bedroom',
+    category: 'Kids Room',
     image: kidsBedroomIdeaImage,
     gallery: [
       kidsBedroom01Image,
@@ -125,6 +129,7 @@ export const designIdeas = [
   },
   {
     title: 'Wardrobe',
+    category: 'Furniture Design',
     image: wardrobeIdeaImage,
     gallery: [
       wardrobeServiceImage,
@@ -138,6 +143,7 @@ export const designIdeas = [
   },
   {
     title: 'Dining Room',
+    category: 'Interior Design',
     image: diningRoomIdeaImage,
     gallery: [
       getProjectImage('project-gallery-69.webp'),
@@ -149,6 +155,7 @@ export const designIdeas = [
   },
   {
     title: 'Pooja Room',
+    category: 'Spiritual Spaces',
     image: poojaroomImage,
     gallery: [
       poojaRoom01Image,
@@ -160,6 +167,7 @@ export const designIdeas = [
   },
   {
     title: 'Space Saving',
+    category: 'Functional Design',
     image: spaceSavingIdeaImage,
     gallery: [
       wallPartitionMakingImage,
@@ -171,6 +179,7 @@ export const designIdeas = [
   },
   {
     title: 'Home Office',
+    category: 'Workspace Design',
     image: officeDesignImage,
     gallery: [
       officePaintingImage,
@@ -182,6 +191,7 @@ export const designIdeas = [
   },
   {
     title: 'Bathroom',
+    category: 'Bathroom Design',
     image: bathroomRenovationImage,
     gallery: [
       bathTubInstallationImage,
@@ -193,6 +203,7 @@ export const designIdeas = [
   },
   {
     title: 'Balcony',
+    category: 'Outdoor Design',
     image: extensionOfAreasImage,
     gallery: [
       flooringImage,
@@ -204,6 +215,7 @@ export const designIdeas = [
   },
   {
     title: '1, 2, 3 BHK Plans',
+    category: 'Home Planning',
     image: fullHomeRenovationImage,
     gallery: [
       residentialDesignImage,

@@ -43,15 +43,25 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
   }, [isDrawer, isOpen]);
 
   // Robust closing handler to fix mobile keyboard issues
-  const handleClose = () => {
+  const handleClose = (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
     if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
-    if (isDrawer && onClose) {
-      onClose();
-    } else {
-      navigate('/design-ideas');
-    }
+    
+    // Tiny delay to ensure the keyboard-hide event is processed by the OS 
+    // before the DOM element is unmounted. 
+    setTimeout(() => {
+      if (isDrawer && onClose) {
+        onClose();
+      } else {
+        navigate('/design-ideas');
+      }
+    }, 10);
   };
 
   if (!idea) {
@@ -203,13 +213,14 @@ const DesignIdeaDetail = ({ isDrawer = false, drawerId = null, onClose = null, i
                 )}
 
                 {/* Header */}
-                <div className={`flex items-center justify-between px-6 py-6 md:py-8 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-10 ${!isDrawer ? 'pt-6' : ''}`}>
+                <div className={`flex items-center justify-between px-6 py-3.5 md:py-5 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-10 ${!isDrawer ? 'pt-6' : ''}`}>
                   <h2 className="text-3xl md:text-4xl font-light tracking-tighter leading-none text-[#1A1A1A]">
                     {idea.title.split(' ')[0]} <span className="font-serif italic opacity-30">{idea.title.split(' ').slice(1).join(' ')}</span>
                   </h2>
                   <button
-                    onClick={handleClose}
-                    className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
+                    type="button"
+                    onClick={(e) => handleClose(e)}
+                    className="p-2 hover:bg-black/5 rounded-full transition-colors text-black touch-manipulation"
                     aria-label="Close"
                   >
                     <X size={24} />

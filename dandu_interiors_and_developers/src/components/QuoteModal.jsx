@@ -25,11 +25,21 @@ const QuoteModal = () => {
   }, [isQuoteModalOpen]);
 
   // Robust closing handler to fix mobile keyboard issues
-  const handleClose = () => {
+  const handleClose = (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
     if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
-    closeQuoteModal();
+    
+    // Tiny delay to ensure the keyboard-hide event is processed by the OS 
+    // before the DOM element is unmounted. 
+    setTimeout(() => {
+      closeQuoteModal();
+    }, 10);
   };
 
   const [formData, setFormData] = React.useState({
@@ -211,13 +221,14 @@ const QuoteModal = () => {
             {/* Form Content */}
             <div className="w-full md:w-[67%] bg-[#F8F5F2] flex flex-col h-full overflow-hidden" data-lenis-prevent>
               <form onSubmit={handleSubmit} className="flex flex-col h-full overflow-hidden">
-                <div className="flex items-center justify-between px-6 py-6 md:py-8 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-20">
+                <div className="flex items-center justify-between px-6 py-3.5 md:py-5 border-b border-black/5 sticky top-0 bg-[#F8F5F2] z-20">
                   <h2 className="text-3xl md:text-4xl font-light tracking-tighter leading-none text-[#1A1A1A]">
                     Request <span className="font-serif italic opacity-30">A Quote</span>
                   </h2>
                   <button
-                    onClick={handleClose}
-                    className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
+                    type="button"
+                    onClick={(e) => handleClose(e)}
+                    className="p-2 hover:bg-black/5 rounded-full transition-colors text-black touch-manipulation"
                     aria-label="Close"
                   >
                     <X size={24} />
@@ -316,8 +327,8 @@ const QuoteModal = () => {
 
                 </div>
 
-                <div className="p-5 md:px-10 md:pb-10 md:pt-4 bg-[#F8F5F2] border-t border-black/5">
-                  <button type="submit" className="w-full bg-[#1A1A1A] text-white py-3.5 md:py-4 rounded-xl font-bold text-xs tracking-[0.3em] uppercase hover:bg-black transition-all duration-300 shadow-2xl hover:shadow-black/20 group flex items-center justify-center gap-3">
+                <div className="px-6 py-4 bg-[#F8F5F2] border-t border-black/5">
+                  <button type="submit" className="w-full bg-[#1A1A1A] text-white py-3.5 rounded-xl font-bold text-xs tracking-[0.3em] uppercase hover:bg-black transition-all duration-300 shadow-2xl hover:shadow-black/20 group flex items-center justify-center gap-3">
                     Submit Requirement
                     <ArrowRight size={16} className="translate-x-0 group-hover:translate-x-2 transition-transform duration-300" />
                   </button>

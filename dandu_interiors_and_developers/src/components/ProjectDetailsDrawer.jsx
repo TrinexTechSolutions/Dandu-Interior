@@ -25,11 +25,21 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
   }, [isOpen]);
 
   // Robust closing handler to fix mobile keyboard issues
-  const handleClose = () => {
+  const handleClose = (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
     if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
-    onClose();
+    
+    // Tiny delay to ensure the keyboard-hide event is processed by the OS 
+    // before the DOM element is unmounted. 
+    setTimeout(() => {
+      onClose();
+    }, 10);
   };
 
   return (
@@ -75,13 +85,14 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
             </div>
 
             {/* Header */}
-            <div className="flex items-center justify-between px-6 py-6 md:py-8 border-b border-black/5 bg-[#F8F5F2]/80 backdrop-blur-md sticky top-0 z-10">
+            <div className="flex items-center justify-between px-6 py-3.5 md:py-5 border-b border-black/5 bg-[#F8F5F2]/80 backdrop-blur-md sticky top-0 z-10">
               <h2 className="text-3xl md:text-4xl font-light tracking-tighter leading-none text-[#1A1A1A]">
                 {project.title.split(' ')[0]} <span className="font-serif italic opacity-30">{project.title.split(' ').slice(1).join(' ')}</span>
               </h2>
               <button
-                onClick={handleClose}
-                className="p-2 hover:bg-black/5 rounded-full transition-colors text-black"
+                type="button"
+                onClick={(e) => handleClose(e)}
+                className="p-2 hover:bg-black/5 rounded-full transition-colors text-black touch-manipulation"
                 aria-label="Close"
               >
                 <X size={24} />
@@ -153,14 +164,15 @@ const ProjectDetailsDrawer = ({ isOpen, onClose, project }) => {
             </div>
 
             {/* Sticky Floating CTA */}
-            <div className="p-4 md:p-6 bg-[#F8F5F2] border-t border-black/5 flex items-center justify-between gap-4">
+            <div className="px-6 py-4 bg-[#F8F5F2] border-t border-black/5 flex items-center justify-between gap-4">
               <div className="hidden sm:block">
-                <p className="text-xs text-gray-400 uppercase tracking-widest font-bold">Ready to start?</p>
-                <p className="text-lg font-bold text-[#1A1A1A]">Get a free quote today</p>
+                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Ready to start?</p>
+                <p className="text-base font-bold text-[#1A1A1A]">Get a free quote today</p>
               </div>
               <button 
+                type="button"
                 onClick={openQuoteFromDrawer}
-                className="flex-1 sm:flex-none py-4 px-8 bg-[#1A1A1A] text-white rounded-2xl font-bold hover:bg-black/90 transition-all duration-300 shadow-xl"
+                className="flex-1 sm:flex-none py-3 px-8 bg-[#1A1A1A] text-white rounded-2xl font-bold hover:bg-black/90 transition-all duration-300 shadow-xl"
               >
                 Get free quote
               </button>
