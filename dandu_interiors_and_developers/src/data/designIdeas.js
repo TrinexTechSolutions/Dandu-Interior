@@ -1,27 +1,8 @@
-import residentialDesignImage from '../assets/Services/Residential Design.webp';
-import officeDesignImage from '../assets/Services/Office Design.webp';
-import commercialDesignImage from '../assets/Services/Commercial Design.webp';
 import kitchenRenovationImage from '../assets/Services/Kitchen Renovation.webp';
 import livingRoomRenovationImage from '../assets/Services/Living Room Renovation.webp';
 import bathroomRenovationImage from '../assets/Services/Bathroom Renovation.webp';
 import bathTubInstallationImage from '../assets/Services/Bath Tub Installation.webp';
-import interiorPaintingImage from '../assets/Services/Interior Painting.webp';
-import poojaroomImage from '../assets/Projects/project-gallery-28.webp';
-import shelvesFixingImage from '../assets/Services/Shelves Fixing.webp';
-import officePaintingImage from '../assets/Services/Office Painting.webp';
-import fullHomeRenovationImage from '../assets/Services/Full Home Renovation.webp';
-import extensionOfAreasImage from '../assets/Services/Extension of Areas.webp';
-import spaceSavingIdeaImage from '../assets/DesignIdeas/Space saving.webp';
-import flooringImage from '../assets/Services/Flooring.webp';
-import mirrorInstallationImage from '../assets/Services/Mirror Installation.webp';
-import curtainRodsAndBlindFixingImage from '../assets/Services/Curtain Rods & Blind Fixing.webp';
-import handWashBasinRepairAndInstallationImage from '../assets/Services/Hand Wash Basin Repair and Installation.webp';
-import solidPartitionImage from '../assets/Services/Solid Partition.webp';
-import lightAndLampFixingImage from '../assets/Services/Light & Lamp Fixing.webp';
-import wallPartitionMakingImage from '../assets/Services/Wall Partition Making.webp';
-import exteriorPaintingImage from '../assets/Services/Exterior Painting.webp';
-import tileFixingImage from '../assets/Services/Tile Fixing.webp';
-import tileGroutingImage from '../assets/Services/Tile Grouting.webp';
+import poojaroomImage from '../assets/DesignIdeas/Pooja Room02.webp';
 import diningRoomIdeaImage from '../assets/DesignIdeas/Dining Room.webp';
 import kidsBedroomIdeaImage from '../assets/DesignIdeas/Kids Bedroom.webp';
 import wardrobeIdeaImage from '../assets/DesignIdeas/Wardrobe.webp';
@@ -34,6 +15,7 @@ import plumbingBasinImage from '../assets/Services/plumbing_basin.webp';
 import marbleImage from '../assets/Services/Marble.webp';
 import decoImage from '../assets/Services/Deco.webp';
 import allPaintingWorkImage from '../assets/Services/All Painting Work.webp';
+import flooringImage from '../assets/Services/Flooring.webp';
 import housePaintingImage from '../assets/Services/House Painting.webp';
 import interiorImage from '../assets/Services/Interior.webp';
 import bedRoom01Image from '../assets/DesignIdeas/BedRoom01.webp';
@@ -60,11 +42,42 @@ import poojaRoom03Image from '../assets/DesignIdeas/Pooja Room03.webp';
 import poojaRoom04Image from '../assets/DesignIdeas/Pooja Room04.webp';
 import poojaRoom05Image from '../assets/DesignIdeas/Pooja Room05.webp';
 
+// Space Saving updated content
+import spaceSaving01Image from '../assets/DesignIdeas/Space Saving01.webp';
+import spaceSaving02Image from '../assets/DesignIdeas/Space Saving02.webp';
+import spaceSaving03Image from '../assets/DesignIdeas/Space Saving03.webp';
+import spaceSaving04Image from '../assets/DesignIdeas/Space Saving04.webp';
+import spaceSaving05Image from '../assets/DesignIdeas/Space Saving05.webp';
+import spaceSaving06Image from '../assets/DesignIdeas/Space Saving06.webp';
+
+// Home Office updated content
+import homeOffice01Image from '../assets/DesignIdeas/Home Office01.webp';
+import homeOffice02Image from '../assets/DesignIdeas/Home Office02.webp';
+import homeOffice03Image from '../assets/DesignIdeas/Home Office03.webp';
+import homeOffice04Image from '../assets/DesignIdeas/Home Office04.webp';
+import homeOffice05Image from '../assets/DesignIdeas/Home Office05.webp';
+
 // Bathroom updated content
 import bathroom01Image from '../assets/DesignIdeas/Bathroom01.webp';
 import bathroom02Image from '../assets/DesignIdeas/Bathroom02.webp';
 import toiletRepairsAndInstallationsImage from '../assets/Services/Toilet Repairs and Installations.webp';
 import washbasinUnitImage from '../assets/Services/Washbasin Unit.webp';
+
+// Balcony updated content
+import balcony01Image from '../assets/DesignIdeas/Balcony01.webp';
+import balcony02Image from '../assets/DesignIdeas/Balcony02.webp';
+import balcony03Image from '../assets/DesignIdeas/Balcony03.webp';
+import balcony04Image from '../assets/DesignIdeas/Balcony04.webp';
+import balcony05Image from '../assets/DesignIdeas/Balcony05.webp';
+import balcony06Image from '../assets/DesignIdeas/Balcony06.webp';
+
+// 1, 2, 3 BHK Plans updated content
+import bhkPlans01Image from '../assets/DesignIdeas/1, 2, 3 BHK Plans01.webp';
+import bhkPlans02Image from '../assets/DesignIdeas/1, 2, 3 BHK Plans02.webp';
+import bhkPlans03Image from '../assets/DesignIdeas/1, 2, 3 BHK Plans03.webp';
+import bhkPlans04Image from '../assets/DesignIdeas/1, 2, 3 BHK Plans04.webp';
+import bhkPlans05Image from '../assets/DesignIdeas/1, 2, 3 BHK Plans05.webp';
+import bhkPlans06Image from '../assets/DesignIdeas/1, 2, 3 BHK Plans06.webp';
 
 const projectImageMap = Object.fromEntries(
   Object.entries(import.meta.glob('../assets/Projects/*.webp', { eager: true, import: 'default' })).map(
@@ -77,8 +90,8 @@ const getProjectImage = (fileName) => projectImageMap[fileName];
 export const designIdeas = [
   {
     title: 'Modular Kitchen',
-    category: 'Kitchen Design',
     image: kitchenRenovationImage,
+    count: '24 Designs',
     gallery: [
       getProjectImage('project-gallery-03.webp'),
       getProjectImage('project-gallery-24.webp'),
@@ -90,8 +103,8 @@ export const designIdeas = [
   },
   {
     title: 'Living Room',
-    category: 'Interior Design',
     image: livingRoomRenovationImage,
+    count: '45 Designs',
     gallery: [
       plumbingToiletImage,
       plumbingBasinImage,
@@ -103,9 +116,9 @@ export const designIdeas = [
     ]
   },
   {
-    title: 'Master Bedroom',
-    category: 'Bedroom Design',
+    title: 'Bedroom',
     image: housePaintingImage,
+    count: '38 Designs',
     gallery: [
       interiorImage,
       getProjectImage('project-gallery-02.webp'),
@@ -117,8 +130,8 @@ export const designIdeas = [
   },
   {
     title: 'Kids Bedroom',
-    category: 'Kids Room',
     image: kidsBedroomIdeaImage,
+    count: '15 Designs',
     gallery: [
       kidsBedroom01Image,
       kidsBedroom02Image,
@@ -129,8 +142,8 @@ export const designIdeas = [
   },
   {
     title: 'Wardrobe',
-    category: 'Furniture Design',
     image: wardrobeIdeaImage,
+    count: '31 Designs',
     gallery: [
       wardrobeServiceImage,
       crockeryUnitImage,
@@ -143,8 +156,8 @@ export const designIdeas = [
   },
   {
     title: 'Dining Room',
-    category: 'Interior Design',
     image: diningRoomIdeaImage,
+    count: '22 Designs',
     gallery: [
       getProjectImage('project-gallery-69.webp'),
       getProjectImage('project-gallery-13.webp'),
@@ -155,8 +168,8 @@ export const designIdeas = [
   },
   {
     title: 'Pooja Room',
-    category: 'Spiritual Spaces',
     image: poojaroomImage,
+    count: '12 Designs',
     gallery: [
       poojaRoom01Image,
       poojaRoom02Image,
@@ -167,32 +180,33 @@ export const designIdeas = [
   },
   {
     title: 'Space Saving',
-    category: 'Functional Design',
-    image: spaceSavingIdeaImage,
+    image: spaceSaving01Image,
+    count: '28 Designs',
     gallery: [
-      wallPartitionMakingImage,
-      solidPartitionImage,
-      shelvesFixingImage,
-      curtainRodsAndBlindFixingImage,
-      mirrorInstallationImage
+      spaceSaving01Image,
+      spaceSaving02Image,
+      spaceSaving03Image,
+      spaceSaving04Image,
+      spaceSaving05Image,
+      spaceSaving06Image
     ]
   },
   {
     title: 'Home Office',
-    category: 'Workspace Design',
-    image: officeDesignImage,
+    image: homeOffice01Image,
+    count: '19 Designs',
     gallery: [
-      officePaintingImage,
-      solidPartitionImage,
-      wallPartitionMakingImage,
-      lightAndLampFixingImage,
-      getProjectImage('project-gallery-63.webp')
+      homeOffice01Image,
+      homeOffice02Image,
+      homeOffice03Image,
+      homeOffice04Image,
+      homeOffice05Image
     ]
   },
   {
     title: 'Bathroom',
-    category: 'Bathroom Design',
     image: bathroomRenovationImage,
+    count: '34 Designs',
     gallery: [
       bathTubInstallationImage,
       toiletRepairsAndInstallationsImage,
@@ -203,26 +217,28 @@ export const designIdeas = [
   },
   {
     title: 'Balcony',
-    category: 'Outdoor Design',
-    image: extensionOfAreasImage,
+    image: balcony01Image,
+    count: '14 Designs',
     gallery: [
-      flooringImage,
-      exteriorPaintingImage,
-      curtainRodsAndBlindFixingImage,
-      lightAndLampFixingImage,
-      getProjectImage('project-gallery-59.webp')
+      balcony01Image,
+      balcony02Image,
+      balcony03Image,
+      balcony04Image,
+      balcony05Image,
+      balcony06Image
     ]
   },
   {
     title: '1, 2, 3 BHK Plans',
-    category: 'Home Planning',
-    image: fullHomeRenovationImage,
+    image: bhkPlans01Image,
+    count: '40 Designs',
     gallery: [
-      residentialDesignImage,
-      livingRoomRenovationImage,
-      kitchenRenovationImage,
-      bathroomRenovationImage,
-      getProjectImage('project-gallery-60.webp')
+      bhkPlans01Image,
+      bhkPlans02Image,
+      bhkPlans03Image,
+      bhkPlans04Image,
+      bhkPlans05Image,
+      bhkPlans06Image
     ]
   }
 ];

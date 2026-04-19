@@ -92,6 +92,9 @@ import graniteImage from '../assets/Services/Granite.webp';
 import tilesImage from '../assets/Services/Tiles.webp';
 import consoleUnitImage from '../assets/Services/Console Unit.webp';
 import crockeryUnitImage from '../assets/Services/Crockery Unit.webp';
+import municipalDrawingsImage from '../assets/Services/Municipal Drawings.webp';
+import retailImage from '../assets/Services/Retail.webp';
+import bhkPlans06Image from '../assets/DesignIdeas/1, 2, 3 BHK Plans06.webp';
 
 // Final Gap Filling Technical Images
 import exteriorDesignImage_New from '../assets/Services/Exterior Design1.webp';
@@ -216,10 +219,10 @@ const serviceImageByName = {
   'All Room Remodeling': livingRoomRenovationImage,
   'Exterior Renewal': exteriorRenewalImage,
   'Kitchen Countertop': kitchenCountertopImage,
-  'Municipal Drawings': image2D3D,
-  'Space Planning': floorPlanImage,
+  'Municipal Drawings': municipalDrawingsImage,
+  'Space Planning': bhkPlans06Image,
   'Interior Design': residentialDesignImage,
-  Retail: commercialDesignImage,
+  Retail: retailImage,
   Hospitality: commercialRenovationImage
 };
 
