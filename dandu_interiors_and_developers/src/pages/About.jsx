@@ -18,8 +18,8 @@ const About = () => {
     window.scrollTo(0, 0);
 
     const handleScroll = () => {
-      // Only auto-highlight on mobile/tablet (< 1024px)
-      if (window.innerWidth >= 1024) return;
+      // Only auto-highlight on mobile/tablet (< 1280px)
+      if (window.innerWidth >= 1280) return;
 
       const stepElements = document.querySelectorAll('.foundation-step-card');
       const centerY = window.innerHeight / 2;
@@ -252,9 +252,9 @@ const About = () => {
 
         {/* 5. The Practice (Interactive Vertical Index) */}
         <section className="pt-16 pb-24 md:pt-24 md:pb-32 bg-[#1A1A1A] text-[#F8F5F2] px-6 md:px-12 relative overflow-hidden">
-          {/* Floating Hover Image Generator */}
+          {/* Floating Hover Image Generator - Desktop Only */}
           {hoveredValue && (
-            <div className="hidden lg:block fixed top-1/2 left-1/2 -translate-y-1/2 w-[35vw] h-[65vh] pointer-events-none z-50 transition-opacity duration-500 ease-out shadow-2xl animate-fade-in mix-blend-lighten opacity-80">
+            <div className="hidden xl:block fixed top-1/2 left-1/2 -translate-y-1/2 w-[35vw] h-[65vh] pointer-events-none z-50 transition-opacity duration-500 ease-out shadow-2xl animate-fade-in mix-blend-lighten opacity-80">
               <img
                 src={coreValues.find(v => v.id === hoveredValue)?.img}
                 alt={`Dandu Interiors Core Value: ${coreValues.find(v => v.id === hoveredValue)?.title} Illustration`}
@@ -284,10 +284,10 @@ const About = () => {
                     data-id={value.id}
                     className={`foundation-step-card group flex flex-col lg:flex-row lg:items-center justify-between py-12 lg:py-20 transition-all duration-700 lg:cursor-crosshair cursor-default px-6 lg:px-12 -mx-6 lg:-mx-12 ${isActive ? 'bg-[#F8F5F2] text-[#1A1A1A]' : 'lg:hover:bg-[#F8F5F2] lg:hover:text-[#1A1A1A]'}`}
                     onMouseEnter={() => {
-                      if (window.innerWidth >= 1024) setHoveredValue(value.id);
+                      if (window.innerWidth >= 1280) setHoveredValue(value.id);
                     }}
                     onMouseLeave={() => {
-                      if (window.innerWidth >= 1024) setHoveredValue(null);
+                      if (window.innerWidth >= 1280) setHoveredValue(null);
                     }}
                   >
                     <div className="flex items-start lg:items-center gap-8 lg:gap-16 mb-8 lg:mb-0">

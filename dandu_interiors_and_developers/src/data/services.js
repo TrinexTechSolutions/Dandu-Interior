@@ -123,6 +123,7 @@ const serviceImageByName = {
   'Electric Short Circuit Fixing': electricShortCircuitFixingImage,
   'Extension of Areas': extensionOfAreasImage,
   'Extend Water Connection': extendWaterConnectionImage,
+  'Elevation Design': exteriorDesignImage_New,
   'Exterior Painting': exteriorPaintingImage,
   Flooring: flooringImage,
   'Frameless Glass Partitions': framelessGlassPartitionsImage,
@@ -161,6 +162,7 @@ const serviceImageByName = {
   'Wall Partition Making': wallPartitionMakingImage,
   'Washing Machine Installation': washingMachineInstallationImage,
   'Water Leak Repair': waterLeakRepairImage,
+  '2D & 3D Visualization': image2D3D,
   '2D & 3D': image2D3D,
   'Deco': decoImage,
   'Demolition Work': demolitionWorkImage,
@@ -214,7 +216,11 @@ const serviceImageByName = {
   'All Room Remodeling': livingRoomRenovationImage,
   'Exterior Renewal': exteriorRenewalImage,
   'Kitchen Countertop': kitchenCountertopImage,
-  'Interior Design': residentialDesignImage
+  'Municipal Drawings': image2D3D,
+  'Space Planning': floorPlanImage,
+  'Interior Design': residentialDesignImage,
+  Retail: commercialDesignImage,
+  Hospitality: commercialRenovationImage
 };
 
 const serviceImageAliases = {
@@ -232,40 +238,46 @@ const rawServices = [
     title: 'Designs',
     icon: SplitSquareHorizontal,
     shortDesc: 'Smart design ideas that turn your vision into beautiful, ready-to-build spaces.',
-    description: 'We create realistic 3D designs and expert plans for homes and offices that blend style, comfort, and your specific goals.',
-    fullDesc: 'Our design team brings your dreams to life with creative planning and realistic 3D visuals. Whether you are building a new home or updating a professional office, we help you see every detail before the work begins. We focus on smart layouts, beautiful aesthetics, and practical solutions that make your space feel perfect.',
+    description: 'We create realistic 3D designs and expert architectural plans blending style and comfort for both residential and commercial projects.',
+    fullDesc: 'Visualize your dream space with creative planning and realistic 3D renderings. We ensure your project is perfect before construction begins.',
     benefits: ['Accurate 3D Previews', 'Smart Space Planning', 'Beautiful Aesthetics', 'Expert Design Guidance'],
     subServices: [
       {
         id: 'interior-design',
         name: 'Interior Design',
-        desc: 'We create personalized interior spaces that perfectly balance beauty and function. Our experts help you choose the right color palettes, materials, and furniture layouts to make your home or office feel unique. We focus on creating a space that enhances your daily life and reflects your personal style.',
+        desc: 'Our experts create personalized interior environments balancing beauty and function. We optimize layouts to craft spaces that reflect your unique lifestyle.',
         image: residentialDesignImage,
         nestedServices: [
-          { name: 'Residential', desc: 'Transform your home into a sanctuary with our residential design services. We specialize in creating warm, comfortable, and highly functional living spaces for families and individuals. From cozy living rooms to modern bedrooms, we ensure every corner is designed for comfort and everyday ease.' },
-          { name: 'Commercial', desc: 'Elevate your business presence with our professional commercial interior designs. We create efficient, stylish workspaces that improve employee productivity and leave a lasting impression on your clients. Our team focuses on flow, branding, and modern aesthetics for offices and retail shops.' }
+          { name: 'Residential', desc: 'Transform your home into a sanctuary with specialized design services. We focus on functional, comfortable living areas tailored to your family.' },
+          { name: 'Commercial', desc: 'Elevate your business with professional interior designs that boost productivity. We specialize in efficient, stylish layouts that enhance your brand presence.' },
+          { name: 'Retail', desc: 'Create engaging shopping experiences with professional retail designs. We specialize in stylish, customer-focused layouts that showcase your products and brand perfectly.' },
+          { name: 'Hospitality', desc: 'Transform restaurants and hotels with sophisticated hospitality designs. We create inviting spaces that enhance guest experiences and reflect premium architectural luxury.' }
         ]
       },
       {
         id: 'exterior-design',
-        name: 'Exterior Design',
-        desc: 'Your property\'s exterior is its first impression, and we make sure it\'s a stunning one. We design architectural exteriors that reflect modern elegance and structural strength. Our designs focus on curb appeal, durable materials, and a polished look that stands out in any neighborhood.',
-        image: exteriorPaintingImage,
-        nestedServices: [
-          { name: 'Residential Buildings', desc: 'Give your home a premium look with our custom exterior design solutions. We use modern architectural styles and durable materials to ensure your villa or house looks beautiful for years to come. Our focus is on creating a clean, sophisticated presence that makes your property stand out.' }
-        ]
+        name: 'Elevation Design',
+        desc: 'Create a powerful first impression with modern architectural elevation designs. We focus on premium curb appeal, structural elegance, and sophisticated property presence.',
+        image: exteriorDesignImage_New
       },
       {
         id: '2d-3d',
-        name: '2D & 3D',
-        desc: 'Experience your dream project before construction even begins with our high-end 2D and 3D visualization services. We provide detailed technical drawings and realistic 3D renders that give you a complete understanding of every space. This clear visual guidance helps you make confident design decisions and ensures a smooth construction process.',
+        name: '2D & 3D Visualization',
+        desc: 'Make confident architectural decisions with precision 2D technical drawings and photorealistic 3D renderings. We provide clear, accurate visual guidance throughout your project.',
         image: image2D3D,
         nestedServices: [
-          { name: 'Floor Plan', desc: 'Our floor plans are more than just drawings; they are efficient space strategies. We optimize every square foot to ensure smooth movement, maximum comfort, and smart functionality. Whether you have a small apartment or a large commercial space, we create layouts that just work.' },
-          { name: 'Light Layout', desc: 'Accurate lighting layouts for better room ambiance, safety, and usability.' },
-          { name: '2D Drawing', desc: 'Technical 2D drawings that ensure smooth and accurate project execution.' },
-          { name: 'Render', desc: 'Visualize your finished space with our photorealistic 3D renders. We include accurate lighting, textures, and furniture to give you a true sense of the final environment. These high-quality previews help you finalize your choices and move forward with total confidence.' }
+          { name: 'Floor Plan', desc: 'Our floor plans optimize every square foot for smooth movement and maximum comfort. We create layouts that work for all spaces.' },
+          { name: 'Light Layout', desc: 'Accurate lighting layouts designed to enhance room ambiance and everyday usability for both residential and commercial environments throughout your property.' },
+          { name: '2D Drawing', desc: 'Detailed technical 2D drawings ensuring smooth project execution and clear communication between our designers and the on-site engineering team.' },
+          { name: 'Render', desc: 'Visualize your finished space with photorealistic 3D renders. We include accurate lighting and textures to preview the final architectural environment.' },
+          { name: 'Municipal Drawings', desc: 'Expert municipal and approval drawings ensuring your project complies with local regulations. We prepare technical documentation for smooth site permissions.' }
         ]
+      },
+      {
+        id: 'space-planning',
+        name: 'Space Planning',
+        desc: 'Optimize your property layout with professional space planning. We focus on ergonomic flow, efficient navigation, and maximizing every square foot beautifully.',
+        image: floorPlanImage
       }
     ]
   },
@@ -274,45 +286,45 @@ const rawServices = [
     title: 'Interior Works',
     icon: Paintbrush,
     shortDesc: 'Premium interior finishing, modular kitchens, and custom woodwork for a polished look.',
-    description: 'We handle everything from custom wardrobes and modular kitchens to professional painting, ensuring every corner is finished with perfection.',
-    fullDesc: 'Transform your empty space into a fully furnished masterpiece. Our interior specialists focus on high-quality materials and expert craftsmanship to deliver modular kitchens, smart storage, and elegant finishes. We manage the entire process to ensure your interiors are durable, functional, and beautiful.',
+    description: 'We handle custom wardrobes, modular kitchens, and professional painting, ensuring your home is finished with meticulous attention to detail and craftsmanship.',
+    fullDesc: 'Transform empty spaces into furnished masterpieces. Our specialists focus on high-quality materials to deliver modular kitchens, smart storage, and elegant finishes.',
     benefits: ['Expert Craftsmanship', 'Premium Materials', 'Custom Furniture', 'Fixed Timelines'],
     subServices: [
-      { name: 'False Ceiling Works', desc: 'Upgrade your space with modern false ceiling solutions that add a touch of luxury and depth. We specialize in high-quality POP and gypsum designs that incorporate smart lighting features. These ceilings not only hide wiring and ducts but also improve acoustics and give your rooms a refined, polished appearance.' },
+      { name: 'False Ceiling Works', desc: 'Upgrade your space with modern false ceilings that add luxury. We specialize in designs that improve acoustics and incorporate lighting.' },
       {
         id: 'modular-kitchen-wardrobes',
         name: 'Modular Kitchen & Wardrobes',
-        desc: 'Smart, tailor-made modular kitchens and wardrobes designed for elegance and efficiency. We use premium materials to maximize your space with a seamless, modern look that perfectly matches your home’s theme.',
+        desc: 'Tailor-made modular kitchens and wardrobes designed for elegance and maximum storage. We create a seamless, modern look matching your home’s theme.',
         nestedServices: [
-          { name: 'Kitchen Cabinets', desc: 'Our custom kitchen cabinets are built to maximize storage while making your cooking space easy to navigate. We use durable materials and smart layout designs to ensure everything you need is always within reach, making your kitchen the heart of the home.' },
-          { name: 'TV Unit', desc: 'Create a stunning focal point in your living room with our custom TV units. We design media centers that combine elegant display areas, hidden cable management, and smart storage. These units are built to complement your overall interior style while keeping your electronics organized.' },
-          { name: 'Console Unit', desc: 'Stylish consoles that add a premium touch and extra utility to your living spaces.' },
-          { name: 'Crockery Unit', desc: 'Elegant storage and display units to keep your dining area organized and beautiful.' },
-          { name: 'Wardrobe', desc: 'Custom-made wardrobes designed for better organization and a clutter-free bedroom.' },
-          { name: 'Washbasin Unit', desc: 'Neat vanity units that add storage and elevate your bathroom’s overall design.' },
-          { name: 'Partition', desc: 'Decorative partitions that define areas without making your space feel cramped.' }
+          { name: 'Kitchen Cabinets', desc: 'Custom kitchen cabinets built to maximize storage and navigation. We use durable materials ensuring your kitchen remains functional and beautiful.' },
+          { name: 'TV Unit', desc: 'Create a stunning focal point with custom TV units blending display areas and cable management. Designed to complement your interior style.' },
+          { name: 'Console Unit', desc: 'Stylish consoles adding a premium touch and extra utility. Ideal for entryways and living rooms, enhancing both organization and aesthetic appeal.' },
+          { name: 'Crockery Unit', desc: 'Elegant storage units designed to keep your dining area organized. Perfect for showcasing fine dinnerware while maintaining a clutter-free environment.' },
+          { name: 'Wardrobe', desc: 'Custom-made wardrobes designed for superior organization and a clutter-free bedroom. Tailored to your specific storage needs and matching your room’s design.' },
+          { name: 'Washbasin Unit', desc: 'Neat vanity units adding storage and elevating bathroom design. We maintain a clean, modern aesthetic improving both functionality and visual appeal.' },
+          { name: 'Partition', desc: 'Decorative partitions defining living areas without making your space feel cramped. Modern designs that allow light and air to flow freely.' }
         ]
       },
       {
         id: 'painting-works',
         name: 'Painting Works',
-        desc: 'Our professional painting services provide more than just a fresh coat of color; we deliver a long-lasting, premium finish for your furniture and walls. We use high-quality, durable paints and specialized coatings like PU and Deco to ensure a smooth, professional appearance. Our team focuses on meticulous surface preparation and even application to create a flawless look that enhances the overall atmosphere of your space.',
+        desc: 'Professional painting services providing a long-lasting, premium finish. We use high-quality paints ensuring a smooth, flawless appearance that enhances your entire space.',
         nestedServices: [
-          { name: 'Melamine', desc: 'A smooth protective finish that enhances the natural beauty of wooden surfaces while providing a durable, heat-resistant layer.' },
-          { name: 'Deco', desc: 'A rich, opaque coating that gives furniture and joinery a refined, seamless finish with an elegant matte or glossy look.' },
-          { name: 'PU', desc: 'A high-performance premium coating known for exceptional durability, easy maintenance, and a long-lasting, sophisticated shine.' }
+          { name: 'Melamine', desc: 'A smooth protective finish enhancing the natural beauty of wood while providing a durable, heat-resistant layer for long-term surface protection.' },
+          { name: 'Deco', desc: 'A rich coating giving furniture a refined, seamless finish with an elegant matte or glossy look for a sophisticated aesthetic.' },
+          { name: 'PU', desc: 'A high-performance premium coating known for exceptional durability, easy maintenance, and a long-lasting, sophisticated shine for all premium furniture pieces.' }
         ]
       },
       {
         id: 'kitchen-countertop',
         name: 'Kitchen Countertop',
-        desc: 'Complete your dream kitchen with our durable and beautiful countertop solutions. We specialize in installing premium granite and quartz surfaces that add both strength and modern elegance to your cooking space. Our experts ensure precise measurement and seamless execution, creating a heat-resistant and easy-to-maintain workspace that stands up to daily life while looking stunning.',
+        desc: 'Complete your kitchen with durable, beautiful countertops. We install premium granite and quartz surfaces that add strength and modern elegance.',
         nestedServices: [
           { name: 'Granite', desc: 'Hard-wearing natural stone countertops built for long-term kitchen use.' },
           { name: 'Quartz', desc: 'Elegant engineered stone surfaces with a clean, modern appearance.' }
         ]
       },
-      { name: 'Wall Paper', desc: 'Instantly upgrade the character of your rooms with our premium wallpaper and feature wall solutions. We offer a wide range of modern textures, elegant patterns, and durable finishes that add depth and personality to any space. Our expert installation ensures a perfect, seamless fit, making your feature walls a stunning focal point in your home or office.' }
+      { name: 'Wall Paper', desc: 'Instantly upgrade room character with premium wallpaper. We offer modern textures and elegant patterns that add depth and personality to interiors.' }
     ]
   },
   {
@@ -320,17 +332,17 @@ const rawServices = [
     title: 'Renovation Works',
     icon: Zap,
     shortDesc: 'Complete renovations that modernize your old space and increase property value.',
-    description: 'We transform outdated homes and commercial properties with modern designs, fresh flooring, and updated electrical or plumbing systems.',
-    fullDesc: 'Give your property a new life with our end-to-end renovation services. We handle everything from safe demolition and structural changes to fresh flooring and modern upgrades. Whether it is a single room or a whole building, we make the renovation process smooth and worry-free.',
+    description: 'We transform outdated properties with modern designs, fresh flooring, and updated utilities to increase property value and overall structural functionality.',
+    fullDesc: 'Give your property new life with end-to-end renovations. We handle everything from safe demolition to modern upgrades, ensuring a worry-free process.',
     benefits: ['Full Transformation', 'Modern Upgrades', 'Increased Property Value', 'Reliable Process'],
     subServices: [
-      { name: 'Demolition Work', desc: 'We offer safe, efficient, and clean demolition services to prepare your property for a major transformation. Our experienced team handles the removal of old structures and finishes with precision, ensuring minimal disruption to the surrounding areas. We focus on site safety and thorough debris removal to provide a clean slate for your new project.' },
-      { name: 'Waterproofing Works', desc: 'Professional waterproofing to protect your roofs, walls, and bathrooms from leaks and dampness.' },
-      { name: 'Flooring & Tile Replacement', desc: 'Upgrade your property’s look and value with our premium flooring and tile replacement services. We handle everything from removing old surfaces to installing new, high-quality tiles, marble, or granite. Our focus is on precision alignment, durable grouting, and a level finish that improves the safety, cleanliness, and visual appeal of your entire property.' },
-      { name: 'Walls & Ceiling Removal', desc: 'Expert structural changes to open up your space and create a better layout.' },
-      { name: 'Electrical & Plumbing Upgrades', desc: 'Modern electrical and plumbing upgrades to make your property safer and more efficient.' },
-      { name: 'All Room Remodeling', desc: 'Complete remodeling for living rooms, bedrooms, and dining areas to match your modern lifestyle.' },
-      { name: 'Exterior Renewal', desc: 'Breathe new life into your building with our professional exterior renewal services. We specialize in refreshing building facades with high-quality, weather-resistant paints and structural repairs. Our team focuses on improving your property’s curb appeal while ensuring long-term protection against the elements, making your building look brand new again.' }
+      { name: 'Demolition Work', desc: 'Safe, efficient demolition services preparing your property for transformation. Our team handles structure removal with precision and minimal disruption to surroundings.' },
+      { name: 'Waterproofing Works', desc: 'Professional waterproofing services designed to protect roofs, walls, and bathrooms from leaks. We ensure your property remains dry and safe.' },
+      { name: 'Flooring & Tile Replacement', desc: 'Upgrade your property with premium flooring and tile replacement. We handle everything from removal to expert installation of marble or granite.' },
+      { name: 'Walls & Ceiling Removal', desc: 'Expert structural changes to open up your space. We create better layouts by safely removing old walls and ceilings quickly.' },
+      { name: 'Electrical & Plumbing Upgrades', desc: 'Modern electrical and plumbing upgrades designed to make your property safer. We replace outdated systems with high-performance components for reliability.' },
+      { name: 'All Room Remodeling', desc: 'Complete remodeling for living rooms, bedrooms, and dining areas. We transform dated interiors into contemporary, comfortable spaces through smart planning.' },
+      { name: 'Exterior Renewal', desc: 'Refresh building facades with professional renewal services. We use high-quality, weather-resistant paints and structural repairs to improve long-term curb appeal.' }
     ]
   },
   {
@@ -338,17 +350,17 @@ const rawServices = [
     title: 'Building Maintenance',
     icon: Wrench,
     shortDesc: 'Professional maintenance and repair to keep your property safe and problem-free.',
-    description: 'We fix wall cracks, water seepage, and plumbing issues using expert methods that address the root cause, not just the surface.',
-    fullDesc: 'Protect your investment with reliable maintenance services. Our team solves common property issues like dampness, wall cracks, and broken tiles before they become major problems. We provide fast, dependable support to keep your home or office in top condition.',
+    description: 'We fix wall cracks, seepage, and plumbing issues addressing root causes. Our reliable maintenance keeps your property safe and functional year-round.',
+    fullDesc: 'Protect your investment with reliable maintenance. Our team solves common property issues before they become major problems, keeping your space in condition.',
     benefits: ['Fast Response', 'Root-Cause Fixes', 'Property Care', 'Reliable Repairs'],
     subServices: [
-      { name: 'Civil Brick Work', desc: 'High-quality masonry repair to restore the strength and stability of your walls.' },
-      { name: 'External and Internal Wall Crack Treatment', desc: 'Professional wall crack treatment to ensure your structure stays safe and look beautiful.' },
-      { name: 'Wall Seepage / Dampness Rectification Work', desc: 'Protect your property from moisture damage with our expert wall seepage and dampness rectification services. We don\'t just patch up the symptoms; we find and fix the root cause of the leaks. Using advanced diagnostic tools and high-quality waterproofing materials, we ensure your walls stay dry and your home remains healthy for years to come.' },
-      { name: 'Toilet Grouting Replacement', desc: 'New tile grouting to improve hygiene and prevent leaks in your bathroom.' },
-      { name: 'Terrace Waterproofing Work', desc: 'Powerful waterproofing systems to protect your terrace from rain damage and seepage.' },
-      { name: 'Paint Work', desc: 'Maintenance painting to keep your property looking fresh, modern, and well-protected.' },
-      { name: 'Damaged Tile & Grout Replacement', desc: 'Quick replacement of broken tiles and grout to restore the beauty of your floors and walls.' }
+      { name: 'Civil Brick Work', desc: 'High-quality masonry repair services restoring building strength. We focus on structural integrity and seamless finishing to ensure your masonry performs perfectly.' },
+      { name: 'External and Internal Wall Crack Treatment', desc: 'Professional wall crack treatment ensuring your structure stays safe and beautiful. We address deep-seated issues to prevent future cracking and damage.' },
+      { name: 'Wall Seepage / Dampness Rectification Work', desc: 'Protect your property from moisture damage with expert seepage rectification. We fix the root cause of leaks using high-quality waterproofing.' },
+      { name: 'Toilet Grouting Replacement', desc: 'New tile grouting services improving hygiene and preventing water leaks. We use durable materials that restore the clean look and performance.' },
+      { name: 'Terrace Waterproofing Work', desc: 'Powerful waterproofing systems protecting your terrace from rain damage. We apply multi-layer protective coatings that ensure your roof remains totally leak-free.' },
+      { name: 'Paint Work', desc: 'Maintenance painting to keep your property looking fresh and well-protected. We provide specialized coatings that maintain the vibrant aesthetic appeal.' },
+      { name: 'Damaged Tile & Grout Replacement', desc: 'Quick replacement of broken tiles and grout restoring beauty. We ensure a perfect color match and level finish integrating with existing surfaces.' }
     ]
   },
   {
@@ -356,42 +368,42 @@ const rawServices = [
     title: 'Civil Works',
     icon: Grid,
     shortDesc: 'Strong foundation and construction works built with precision and safety.',
-    description: 'From block work and plastering to plumbing and electrical systems, we deliver solid structural quality for any building project.',
-    fullDesc: 'Quality construction starts with strong civil work. We specialize in masonry, plastering, and essential services like plumbing and electrical wiring. Our experienced team ensures every part of the structure is safe, durable, and built according to technical standards.',
+    description: 'From block work and plastering to plumbing and electrical, we deliver solid structural quality and technical accuracy for every building project.',
+    fullDesc: 'Quality construction starts with strong civil work. We specialize in masonry, plastering, and essential utilities, ensuring every structure is safe and durable.',
     benefits: ['Solid Construction', 'Technical Accuracy', 'Safety Focused', 'Long-Lasting Results'],
     subServices: [
-      { name: 'Block Work', desc: 'We execute high-quality masonry and block work that serves as the strong foundation for your walls and structures. Our team focuses on structural integrity, ensuring every block is laid with precision and every partition is built to last. We use top-grade materials to guarantee long-term safety and durability.' },
-      { name: 'Plastering & POP/Gypsum punning', desc: 'Our plastering and POP/Gypsum punning services create the perfect smooth canvas for your interior designs. We provide expert finishing that covers imperfections and prepares your walls for painting or wallpaper. Our skilled craftsmen ensure a flawless, level surface that adds a professional touch to any room.' },
-      { name: 'Electrical Works', desc: 'We provide complete electrical installation services for homes and offices, focusing on safety and efficiency. Our team handles everything from wiring and circuit installation to socket and switch placement. We ensure all electrical systems are well-planned and meet safety standards for worry-free everyday use.' },
-      { name: 'Plumbing Works', desc: 'Our plumbing services are designed to provide a reliable, leak-free network for your property. We specialize in installing clean water lines, drainage systems, and high-quality fixtures. Our team focuses on long-term performance and ease of maintenance, ensuring your plumbing works perfectly from day one.' },
+      { name: 'Block Work', desc: 'High-quality block work serving as a strong foundation for your walls. We focus on structural integrity ensuring every partition lasts.' },
+      { name: 'Plastering & POP/Gypsum punning', desc: 'Expert plastering and POP services creating a smooth canvas for interior designs. We ensure a flawless, level surface adding a touch.' },
+      { name: 'Electrical Works', desc: 'Complete electrical installation services focusing on safety and efficiency. We handle everything from wiring to socket placement ensuring high-performance standards.' },
+      { name: 'Plumbing Works', desc: 'Reliable, leak-free plumbing networks for your property. We specialize in clean water lines and drainage systems focusing on long-term performance.' },
       {
         id: 'flooring-works',
         name: 'Flooring Works',
-        desc: 'We install elegant and strong flooring options like marble and granite that elevate the look and feel of your space.',
+        desc: 'We install strong flooring like marble and granite elevating your space with high-end finishes that combine luxury with exceptional durability.',
         nestedServices: [
-          { name: 'Marble', desc: 'Premium marble flooring that brings timeless luxury and strength.' },
-          { name: 'Tiles', desc: 'Versatile tile flooring options suited for both modern and classic spaces.' },
-          { name: 'Granite', desc: 'Durable granite flooring with a rich, long-lasting finish.' }
+          { name: 'Marble', desc: 'Premium marble flooring bringing timeless luxury and strength to interiors. We offer patterns and colors creating a sophisticated atmosphere for any room.' },
+          { name: 'Tiles', desc: 'Versatile tile flooring suited for modern and classic spaces. Our installation ensures level surfaces and durable grout lines for a professional finish.' },
+          { name: 'Granite', desc: 'Durable granite flooring with a long-lasting finish standing up to traffic. Ideal for areas where beauty and performance are essential requirements.' }
         ]
       },
       {
         id: 'painting-works-civil',
         name: 'Painting Works',
-        desc: 'Professional painting services that protect surfaces and complete the overall finish of the project.',
+        desc: 'Professional painting services protecting surfaces and completing the overall finish of your project. We use weather-resistant coatings ensuring a beautiful, durable result.',
         nestedServices: [
-          { name: 'Interior', desc: 'Interior coatings that bring freshness, coverage, and a refined final appearance.' },
-          { name: 'Exterior', desc: 'Weather-resistant exterior paints designed for protection and curb appeal.' },
-          { name: 'Texture', desc: 'Decorative texture finishes that add depth and design character to walls.' }
+          { name: 'Interior', desc: 'Interior coatings bringing freshness and coverage to your home. We use premium emulsions that are easy to maintain while providing rich color.' },
+          { name: 'Exterior', desc: 'Weather-resistant exterior paints designed for protection and curb appeal. These coatings withstand harsh sunlight and heavy rain while keeping properties looking brand new.' },
+          { name: 'Texture', desc: 'Decorative texture finishes adding depth and character to feature walls. We provide patterns that transform flat surfaces into architectural works of art.' }
         ]
       },
       {
         id: 'railing-work',
         name: 'Railing Work',
-        desc: 'We specialize in fabricating and installing custom railings that blend safety with modern architectural design. Whether you need strong mild steel (MS) railings with durable finishes or sleek, corrosion-resistant stainless steel (SS) designs, we deliver high-quality craftsmanship. Our railings are built to provide secure protection while complementing the aesthetic presence of your balconies, stairs, and terraces.',
+        desc: 'Custom fabrication of high-quality railings blending safety with architectural design. We deliver durable steel solutions for balconies and stairs with expert craftsmanship.',
         image: ssSteelImage,
         nestedServices: [
-          { name: 'MS (Mild Steel)', desc: 'Strong mild steel railings with durable protective finishes.' },
-          { name: 'SS (Stainless Steel)', desc: 'Modern stainless steel railings known for clean looks and corrosion resistance.' }
+          { name: 'MS (Mild Steel)', desc: 'Strong mild steel railings treated with professional durable finishes. We offer custom designs providing safety while enhancing architectural style and property presence.' },
+          { name: 'SS (Stainless Steel)', desc: 'Modern stainless steel railings known for clean looks and corrosion resistance. Ideal for humid environments where low maintenance and aesthetics are required.' }
         ]
       }
     ]
