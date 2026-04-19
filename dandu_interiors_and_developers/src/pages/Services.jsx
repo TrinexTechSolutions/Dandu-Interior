@@ -182,7 +182,7 @@ const Services = () => {
                     <span className="text-7xl md:text-[10rem] font-extrabold text-[#1A1A1A]/15 absolute bottom-0 -left-2 z-0 pointer-events-none select-none leading-[0.75]">
                       {String(index + 1).padStart(2, '0')}
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-medium tracking-tighter text-[#37302F] relative z-10 leading-none pb-1 whitespace-nowrap lg:whitespace-normal">
+                    <h2 className="text-4xl md:text-6xl font-medium tracking-tighter text-[#37302F] relative z-10 leading-[1.1] md:leading-none pb-1">
                       {sub.name.split(' ')[0]}{' '}
                       <span className="font-serif italic text-[#37302F]/70">{sub.name.split(' ').slice(1).join(' ')}</span>
                     </h2>
