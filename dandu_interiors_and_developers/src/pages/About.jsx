@@ -8,7 +8,7 @@ import structuralIntegrityImg from '../assets/About/structural_integrity.webp';
 import obsessiveDetailImg from '../assets/About/obsessive_detail.webp';
 import engineeringMasteryImg from '../assets/About/engineering_mastery.webp';
 import visionaryReachImg from '../assets/About/visionary_reach.webp';
-import designerShowcaseImg from '../assets/about_page_images/Nikhil_designer_img.png';
+import designerShowcaseImg from '../assets/about_page_images/Nikhil_designer_img.webp';
 import SEO from '../components/SEO';
 
 const About = () => {
