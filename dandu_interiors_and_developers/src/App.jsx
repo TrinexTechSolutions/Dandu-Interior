@@ -15,6 +15,8 @@ const DesignIdeaDetail = lazy(() => import('./pages/DesignIdeaDetail'));
 const Contact = lazy(() => import('./pages/Contact'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
+const Blogs = lazy(() => import('./pages/Blogs.jsx'));
+const BlogDetail = lazy(() => import('./pages/BlogDetail.jsx'));
 
 import LoadingScreen from './components/LoadingScreen';
 import SmoothScroll from './components/SmoothScroll';
@@ -39,6 +41,8 @@ const AnimatedRoutes = () => {
             <Route path="contact" element={<Contact />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms-and-conditions" element={<TermsAndConditions />} />
+            <Route path="blogs" element={<Blogs />} />
+            <Route path="blogs/:id" element={<BlogDetail />} />
           </Route>
           <Route path="/gallery/:id" element={<ProjectDetail />} />
           <Route path="/design-ideas/:id" element={<DesignIdeaDetail />} />

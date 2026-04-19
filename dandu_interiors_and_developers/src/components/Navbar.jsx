@@ -160,6 +160,7 @@ const Navbar = () => {
 
             {[
               { name: 'Gallery', path: '/gallery' },
+              { name: 'Blogs', path: '/blogs' },
               { name: 'Design Ideas', path: '/design-ideas' },
               { name: 'Contact', path: '/contact' }
             ].map((item) => (
@@ -271,6 +272,7 @@ const Navbar = () => {
 
           {[
             { name: 'Gallery', path: '/gallery' },
+            { name: 'Blogs', path: '/blogs' },
             { name: 'Design Ideas', path: '/design-ideas' },
             { name: 'Contact', path: '/contact' }
           ].map((item) => (
