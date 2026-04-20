@@ -230,7 +230,8 @@ export default async function handler(req, res) {
     };
 
     // 5. PREPARE USER CONFIRMATION
-    if (email) {
+    // Skip confirmation email for Quote requests as per user requirement
+    if (email && websiteSource !== 'quote') {
       const userReplyPayload = {
         sender: { name: businessName, email: senderEmail },
         to: [{ email: email, name: name }],
