@@ -247,7 +247,8 @@ const Contact = () => {
                         }}
                         className="text-2xl md:text-3xl font-light text-[#1A1A1A] tracking-tighter hover:opacity-70 transition-opacity"
                       >
-                        +{import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612'}
+                        +91 {import.meta.env.VITE_WHATSAPP_NUMBER?.slice(2) || '9866166612'}
+
                       </a>
                     </div>
                   </div>

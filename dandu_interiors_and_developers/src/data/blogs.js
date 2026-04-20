@@ -12,7 +12,8 @@ export const blogs = [
     date: 'April 15, 2026',
     category: 'Luxury Interiors',
     image: heroArchitectureImg,
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Demo Link
+    videoUrl: 'https://www.youtube.com/embed/zXyPx6WsC3I',
+
     excerpt: 'Deep dive into our full interior execution for a premium villa in Jubilee Hills, focusing on structural elegance and high-end finishes.',
     content: [
       {
@@ -53,7 +54,8 @@ export const blogs = [
     date: 'April 10, 2026',
     category: 'Design Trends',
     image: visionaryReachImg,
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Demo Link
+    videoUrl: 'https://www.youtube.com/embed/zXyPx6WsC3I',
+
     excerpt: 'How we used acoustic glass partitions and smart lighting to redefine the corporate workspace in Hyderabad.',
     content: [
       {
@@ -82,7 +84,8 @@ export const blogs = [
     date: 'March 28, 2026',
     category: 'Luxury Interiors',
     image: structuralIntegrityImg,
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Demo Link
+    videoUrl: 'https://www.youtube.com/embed/zXyPx6WsC3I',
+
     excerpt: 'An exploration of editorial space management in high-rise residences.',
     content: [
       {
@@ -102,7 +105,8 @@ export const blogs = [
     date: 'March 15, 2026',
     category: 'Design Trends',
     image: designIdeasImg,
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Demo Link
+    videoUrl: 'https://www.youtube.com/embed/zXyPx6WsC3I',
+
     excerpt: 'A study on how to achieve endless depth using only three shades of grey.',
     content: [
       {

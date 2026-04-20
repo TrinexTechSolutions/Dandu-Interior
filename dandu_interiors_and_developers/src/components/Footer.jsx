@@ -164,7 +164,8 @@ const Footer = () => {
                     onClick={trackPhoneClick}
                     className="text-[14px] font-medium tracking-[0.1em] text-white/70 hover:text-white transition-colors leading-none"
                   >
-                    +{import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612'}
+                    +91 {import.meta.env.VITE_WHATSAPP_NUMBER?.slice(2) || '9866166612'}
+
                   </a>
                   <a href="mailto:danduinteriordesigns@gmail.com" className="text-[14px] font-medium tracking-[0.1em] text-white/70 hover:text-white transition-colors leading-none">
                     danduinteriordesigns@gmail.com

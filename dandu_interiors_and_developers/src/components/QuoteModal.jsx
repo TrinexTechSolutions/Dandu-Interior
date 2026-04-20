@@ -213,7 +213,8 @@ const QuoteModal = () => {
                   }}
                   className="text-xl font-light tracking-tighter text-white hover:text-white/70 transition-colors"
                 >
-                  +{import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612'}
+                  +91 {import.meta.env.VITE_WHATSAPP_NUMBER?.slice(2) || '9866166612'}
+
                 </a>
               </div>
             </div>

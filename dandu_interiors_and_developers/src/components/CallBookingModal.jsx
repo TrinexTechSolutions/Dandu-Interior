@@ -173,7 +173,8 @@ const CallBookingModal = () => {
               <div className="relative z-10 border-t border-white/5 pt-8">
                 <span className="text-[9px] font-bold tracking-[0.3em] uppercase text-white/30 block mb-3">Direct Contact</span>
                 <a href={`tel:+${import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612'}`} className="text-xl font-light tracking-tighter text-white hover:text-white/70 transition-colors">
-                  +{import.meta.env.VITE_WHATSAPP_NUMBER || '919866166612'}
+                  +91 {import.meta.env.VITE_WHATSAPP_NUMBER?.slice(2) || '9866166612'}
+
                 </a>
               </div>
             </div>
