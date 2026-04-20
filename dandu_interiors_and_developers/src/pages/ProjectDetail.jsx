@@ -35,6 +35,7 @@ const ProjectDetail = () => {
         title={`${project.title} - Luxury Interior Design in ${project.location}`}
         description={`Explore the ${project.title} project by Dandu Interiors & Developers. A masterpiece of premium interior design and civil engineering located in ${project.location}.`}
         keywords={`${project.title}, Interior Design ${project.location}, Luxury Home ${project.location}, Dandu Interiors projects`}
+        image={project.image}
       />
       <div className="bg-[#F8F5F2] min-h-screen text-gray-900 relative">
         

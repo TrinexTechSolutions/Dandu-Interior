@@ -11,6 +11,7 @@ const SEO = ({
   description = "Elevating spaces with premium interior design and construction services in Hyderabad and Bapatla. Expertise in interior works and renovations.",
   keywords = "Dandu Interiors, Interior Design Hyderabad, Home Renovation Bapatla, Civil Works Hyderabad, Premium Interior Designers Bapatla",
   canonical = "https://www.danduinteriors.com",
+  image = "https://www.danduinteriors.com/favicon_io/android-chrome-512x512.png",
   schemaData = null,
   preloads = []
 }) => {
@@ -61,11 +62,13 @@ const SEO = ({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={currentUrl} />
       <meta property="og:type" content="website" />
+      <meta property="og:image" content={image} />
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={displayTitle} />
       <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
 
       {/* Structured Data: JSON-LD */}
       <script type="application/ld+json">

@@ -27,6 +27,7 @@ const BlogDetail = () => {
         title={`${blog.title} | Dandu Interiors Journal`}
         description={blog.excerpt}
         keywords={`${blog.category}, ${blog.author}, Interior Design Tips, Construction Insights Hyderabad`}
+        image={blog.image}
       />
       <div className="bg-[#F8F5F2] min-h-screen text-[#37302F]">
         
