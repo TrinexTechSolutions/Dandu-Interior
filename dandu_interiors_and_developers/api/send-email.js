@@ -49,22 +49,22 @@ export default async function handler(req, res) {
   const cleanPhone = normalize(phone).replace(/[^0-9]/g, "");
 
   // Reusable Brevo API Caller
-  const callBrevo = async (endpoint, payload) => {
+  const callBrevo = async (endpoint, payload, method = "POST") => {
     try {
       const response = await fetch(`https://api.brevo.com/v3/${endpoint}`, {
-        method: "POST",
+        method: method,
         headers: {
           "accept": "application/json",
           "api-key": brevoApiKey,
           "content-type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: method !== "GET" ? JSON.stringify(payload) : undefined,
       });
       const data = await response.json().catch(() => ({}));
-      console.log(`Brevo API Response [${endpoint}]:`, { ok: response.ok, status: response.status, data });
+      console.log(`Brevo API Response [${method} ${endpoint}]:`, { ok: response.ok, status: response.status, data });
       return { ok: response.ok, status: response.status, data };
     } catch (err) {
-      console.error(`Brevo API Error [${endpoint}]:`, err);
+      console.error(`Brevo API Error [${method} ${endpoint}]:`, err);
       return { ok: false, status: 500, data: { message: err.message } };
     }
   };
@@ -105,11 +105,34 @@ export default async function handler(req, res) {
     // Diagnostic: Log exactly what we are sending to Brevo
     console.log("📡 SYNCING TO BREVO CRM:", JSON.stringify(contactPayload, null, 2));
 
-    // Create/Update contact in CRM (Await to ensure completion in serverless context)
-    const crmResult = await callBrevo("contacts", contactPayload).catch(err => ({ ok: false, data: { message: err.message } }));
+    // Create/Update contact in CRM
+    let crmResult = await callBrevo("contacts", contactPayload).catch(err => ({ ok: false, data: { message: err.message } }));
     
+    // FALLBACK: Handle "SMS already associated with another Contact" conflict
+    if (!crmResult.ok && crmResult.data?.code === 'duplicate_parameter' && crmResult.data?.metadata?.duplicate_identifiers?.includes('SMS')) {
+      console.log("🔄 DUPLICATE SMS CONFLICT: Trying to find and update existing contact owner...");
+      
+      // 1. Search for the contact who owns this SMS
+      const searchResult = await callBrevo(`contacts/${encodeURIComponent(formattedSms)}?identifierType=phone_id`, null, "GET");
+      
+      if (searchResult.ok && searchResult.data?.email) {
+        const existingEmail = searchResult.data.email;
+        console.log(`📍 Found original owner: ${existingEmail}. Redirecting update.`);
+        
+        // 2. Perform a targeted update on the actual owner's record
+        const updateResult = await callBrevo(`contacts/${encodeURIComponent(existingEmail)}`, contactPayload, "PUT");
+        
+        if (updateResult.ok) {
+          console.log("✅ RECOVERY SUCCESSful: Lead updated via SMS identification.");
+          crmResult = updateResult; // Mark as success for downstream logging
+        }
+      } else {
+        console.error("⚠️ Fallback failed: Could not retrieve original contact by SMS.");
+      }
+    }
+
     if (!crmResult.ok) {
-      console.error("❌ BREVO CRM SYNC FAILURE DETAILS:", JSON.stringify(crmResult.data, null, 2));
+      console.error("❌ BREVO CRM SYNC FAILURE:", JSON.stringify(crmResult.data, null, 2));
     } else {
       console.log("✅ BREVO CRM SYNC SUCCESS");
     }

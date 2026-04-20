@@ -4,6 +4,8 @@ import { AnimatePresence } from 'framer-motion';
 import Layout from './layouts/Layout';
 import { ModalProvider } from './context/ModalContext';
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
+
 
 
 // Optimization: Route-based Code Splitting (Reduces Unused JS on initial load)
@@ -76,6 +78,8 @@ function App() {
       {isLoading && <LoadingScreen />}
       <GoogleAnalytics />
       <Analytics />
+      <SpeedInsights />
+
 
       <SmoothScroll>
         <ErrorBoundary>
