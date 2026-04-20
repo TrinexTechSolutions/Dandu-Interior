@@ -8,7 +8,9 @@ import PageTransition from '../components/PageTransition';
 
 import { useModal } from '../context/ModalContext';
 import ProjectDetailsDrawer from '../components/ProjectDetailsDrawer';
-import DesignIdeaDetail from '../pages/DesignIdeaDetail';
+
+// Fix: Resolve [INEFFECTIVE_DYNAMIC_IMPORT] by making this lazy in Layout as well
+const DesignIdeaDetail = React.lazy(() => import('../pages/DesignIdeaDetail'));
 
 const Layout = () => {
   const element = useOutlet();
@@ -31,12 +33,14 @@ const Layout = () => {
         project={selectedProject}
       />
 
-      <DesignIdeaDetail 
-        isDrawer={true} 
-        drawerId={selectedIdea} 
-        onClose={closeIdeaDrawer} 
-        isOpen={isDetailDrawerOpen && !!selectedIdea}
-      />
+      <React.Suspense fallback={null}>
+        <DesignIdeaDetail 
+          isDrawer={true} 
+          drawerId={selectedIdea} 
+          onClose={closeIdeaDrawer} 
+          isOpen={isDetailDrawerOpen && !!selectedIdea}
+        />
+      </React.Suspense>
 
       <AnimatePresence>
         <PageTransition key={location.pathname}>
