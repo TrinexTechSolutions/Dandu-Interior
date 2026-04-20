@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Layout from './layouts/Layout';
 import { ModalProvider } from './context/ModalContext';
+import { Analytics } from "@vercel/analytics/react"
+
 
 // Optimization: Route-based Code Splitting (Reduces Unused JS on initial load)
 const Home = lazy(() => import('./pages/Home'));
@@ -73,6 +75,8 @@ function App() {
     <BrowserRouter>
       {isLoading && <LoadingScreen />}
       <GoogleAnalytics />
+      <Analytics />
+
       <SmoothScroll>
         <ErrorBoundary>
           <ModalProvider>
